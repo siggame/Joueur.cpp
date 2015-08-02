@@ -1,0 +1,21 @@
+#ifndef JOUEUR_ERRORCODE_H
+#define JOUEUR_ERRORCODE_H
+
+#include "joueur.h"
+
+enum Joueur::ErrorCode
+{
+    NONE = 0,
+    INVALID_ARGS = 20,
+    COULD_NOT_CONNECT = 21,
+    DISCONNECTED_UNEXPECTEDLY = 22,
+    CANNOT_READ_SOCKET = 23,
+    DELTA_MERGE_FAILURE = 24,
+    REFLECTION_FAILED = 25,
+    UNKNOWN_EVENT_FROM_SERVER = 26,
+    SERVER_TIMEOUT = 27,
+    INVALID_EVENT = 28,
+    GAME_NOT_FOUND = 29
+};
+
+#endif
