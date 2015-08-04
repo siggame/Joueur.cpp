@@ -7,7 +7,9 @@
 #include <boost/asio.hpp>
 #include "joueur.h"
 #include "errorCode.h"
-//#include "gameManager.h"
+#include "baseAI.h"
+#include "baseGame.h"
+#include "gameManager.h"
 
 class Joueur::Client
 {
@@ -15,23 +17,26 @@ class Joueur::Client
         #pragma region Singleton Pattern
         static bool instanceFlag;
         static Client *single;
-        Client()
-        {
-        }
+        Client() {}
         #pragma endregion
 
         static const int BUFFER_SIZE = 1024;
+        static const char EOT_CHAR = char(4);
+
+        Joueur::BaseAI* ai;
+        Joueur::BaseGame* game;
 
         boost::asio::io_service* ioService;
         boost::asio::ip::tcp::socket* socket;
         std::string receivedBuffer;
         bool started = false;
+        bool printIO = false;
         std::stack<ServerEvent> eventsStack;
 
-        void sendRaw(char* chars, size_t length);
+        void sendRaw(const std::string& str);
         void waitForEvents();
         
-        void autoHandle(std::string eventName, boost::property_tree::ptree data);
+        void autoHandle(const std::string& eventName, boost::property_tree::ptree data);
         void autoHandleDelta(boost::property_tree::ptree data);
         void autoHandleInvalid(boost::property_tree::ptree data);
         void autoHandleOver();
@@ -46,14 +51,16 @@ class Joueur::Client
         }
         #pragma endregion
 
-        //std::shared_ptr<Joueur::GameManager> gameManager;
+        std::shared_ptr<Joueur::GameManager> gameManager;
 
-        void connectTo(BaseGame game, BaseAI ai, char* server, char* port, bool printIO);
+        void connectTo(BaseGame* game, BaseAI* ai, const std::string server, const std::string port, bool printIO);
+        void send(const std::string& eventName);
+        void send(const std::string& eventName, boost::property_tree::ptree& data);
+        void send(const std::string& eventName, boost::property_tree::ptree* data);
         void start();
-        void send(char* eventName, boost::property_tree::ptree data);
         void disconnect();
-        void handleError(std::exception& e, ErrorCode errorCode, std::string errorMessage);
-        boost::property_tree::ptree waitForEvent(char* eventName);
+        void handleError(std::exception& e, int errorCode, std::string errorMessage);
+        boost::property_tree::ptree waitForEvent(const std::string& eventName);
         boost::property_tree::ptree runOnServer(BaseGameObject caller, std::string functionName, boost::property_tree::ptree args);
 };
 

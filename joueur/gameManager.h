@@ -2,30 +2,38 @@
 #define JOUEUR_GAMEMANAGER_H
 
 #include <string>
-#include <memory>
-
 #include "joueur.h"
 #include "client.h"
 
 class Joueur::GameManager
 {
     private:
-        std::shared_ptr<Client> client;
-        std::shared_ptr<BaseGame> game;
-
         std::shared_ptr<std::map<std::string, BaseGameObject*>> gameObjects;
-
         std::string DELTA_LIST_LENGTH;
         std::string DELTA_REMOVED;
 
-        virtual BaseGameObject* createGameObject(const std::string& gameObjectName);
         bool hasGameObject(const std::string& id);
 
+    protected:
+        virtual BaseGameObject* createGameObject(const std::string& gameObjectName);
+        std::shared_ptr<Joueur::Client> client;
+        std::shared_ptr<Joueur::BaseGame> game;
+
     public:
+        std::shared_ptr<Joueur::BasePlayer> basePlayer;
         GameManager(BaseGame* game);
         void setConstants(boost::property_tree::ptree& constants);
+
+        virtual void setupAI(const std::string& playerID);
+        virtual boost::property_tree::ptree* orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args);
+
         void deltaUpdate(boost::property_tree::ptree& delta);
         void initGameObjects(boost::property_tree::ptree& delta);
+
+        boost::property_tree::ptree* serialize(bool boolean);
+        boost::property_tree::ptree* serialize(int number);
+        boost::property_tree::ptree* serialize(float number);
+        boost::property_tree::ptree* serialize(BaseGameObject* gameObject);
 
         Joueur::BaseGameObject* getGameObject(const std::string& id);
         bool getDeltaBool(boost::property_tree::ptree& delta);

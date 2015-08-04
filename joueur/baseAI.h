@@ -2,22 +2,19 @@
 #define JOUEUR_BASEAI_H
 
 #include <string>
-
+#include <boost/optional/optional.hpp>
 #include "joueur.h"
 
-using namespace std;
 
 class Joueur::BaseAI
 {
     public:
         BaseAI() {};
 
-        virtual string getName();
-        void start();
-        void ended(bool won, string reason);
-        void ended();
-        void gameUpdated();
-        void* doOrder(string order /*someJsonObject data */);
+        virtual std::string getName();
+        virtual void start();
+        virtual void ended(const bool& won, const std::string& reason);
+        virtual void gameUpdated();
 };
 
 #endif

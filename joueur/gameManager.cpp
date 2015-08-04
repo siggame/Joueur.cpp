@@ -2,6 +2,7 @@
 #include "gameManager.h"
 #include "baseGame.h"
 #include "baseGameObject.h"
+#include "basePlayer.h"
 #include "client.h"
 
 Joueur::GameManager::GameManager(Joueur::BaseGame* game)
@@ -15,6 +16,47 @@ void Joueur::GameManager::setConstants(boost::property_tree::ptree& constants)
     this->DELTA_LIST_LENGTH = constants.get_child_optional("DELTA_ARRAY_LENGTH")->data();
     this->DELTA_REMOVED = constants.get_child_optional("DELTA_REMOVED")->data();
 }
+
+void Joueur::GameManager::setupAI(const std::string& playerID)
+{
+    *this->basePlayer = *dynamic_cast<Joueur::BasePlayer*>(this->getGameObject(playerID));
+}
+
+boost::property_tree::ptree* Joueur::GameManager::orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args)
+{
+    throw new std::exception("Joueur::GameManager::orderAI should not be called directly");
+}
+
+// Serialization \\
+
+boost::property_tree::ptree* Joueur::GameManager::serialize(bool boolean)
+{
+    return new boost::property_tree::ptree(boolean ? "true" : "false");
+}
+
+boost::property_tree::ptree* Joueur::GameManager::serialize(int number)
+{
+    return new boost::property_tree::ptree(std::to_string(number));
+}
+
+boost::property_tree::ptree* Joueur::GameManager::serialize(float number)
+{
+    return new boost::property_tree::ptree(std::to_string(number));
+}
+
+boost::property_tree::ptree* Joueur::GameManager::serialize(BaseGameObject* gameObject)
+{
+    boost::property_tree::ptree* node = new boost::property_tree::ptree();
+    node->add_child("id", boost::property_tree::ptree(gameObject->id));
+
+    return node;
+}
+
+// TODO: serialize List and Dictionary
+
+
+
+// Delta Updating \\
 
 void Joueur::GameManager::deltaUpdate(boost::property_tree::ptree& delta)
 {

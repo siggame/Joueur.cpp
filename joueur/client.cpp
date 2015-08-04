@@ -3,20 +3,18 @@
 #include <boost/asio.hpp>
 #include <boost/algorithm/string.hpp>
 #include <boost/property_tree/json_parser.hpp>
+#include <boost/lexical_cast.hpp>
 #include <boost/optional/optional.hpp>
-
 #include "client.h"
+#include "basePlayer.h"
 #include "baseGame.h"
 #include "baseAI.h"
-
-using boost::asio::ip::tcp;
-using namespace std;
-using namespace Joueur;
+#include "errorCode.h"
 
 #pragma region Singleton Pattern
-bool Client::instanceFlag = false;
-Client* Client::single = NULL;
-Client* Client::getInstance()
+bool Joueur::Client::instanceFlag = false;
+Joueur::Client* Joueur::Client::single = nullptr;
+Joueur::Client* Joueur::Client::getInstance()
 {
     if(! instanceFlag)
     {
@@ -31,46 +29,89 @@ Client* Client::getInstance()
 }
 #pragma endregion
 
-void Client::method()
+void Joueur::Client::start()
 {
-    std::cout << "Method of the Client class" << std::endl;
+    this->started = true;
 }
 
-void Client::connectTo(BaseGame game, BaseAI ai, char* server, char* port, bool printIO)
+void Joueur::Client::connectTo(Joueur::BaseGame* game, BaseAI* ai, const std::string server, const std::string port, bool printIO)
 {
+    this->printIO = true;
+
     try
     {
         this->ioService = new boost::asio::io_service();
-        tcp::resolver resolver(*this->ioService);
-        tcp::resolver::query query(tcp::v4(), server, port);
-        tcp::resolver::iterator iterator = resolver.resolve(query);
 
-        this->socket = new tcp::socket(*this->ioService);
+        boost::asio::ip::tcp::resolver resolver(*ioService);
+        boost::asio::ip::tcp::resolver::query query(boost::asio::ip::tcp::v4(), server, port);
+        boost::asio::ip::tcp::resolver::iterator iterator = resolver.resolve(query);
 
-        boost::asio::connect(*this->socket, iterator);
+        this->socket = new boost::asio::ip::tcp::socket(*ioService);
+
+        boost::asio::connect(*socket, iterator);
     }
     catch (std::exception& e)
     {
-        std::cerr << "Exception: " << e.what() << "\n";
+        this->handleError(e, ErrorCode::COULD_NOT_CONNECT, "Could not connect to " + server + ":" + port);
     }
 }
 
-void Client::sendRaw(char* chars, size_t length)
+void Joueur::Client::sendRaw(const std::string& str)
 {
-    boost::asio::write(*this->socket, boost::asio::buffer(chars, length));
+    if (this->printIO)
+    {
+        std::cout << "TO SERVER <--" << str << "\n";
+    }
+    boost::asio::write(*(this->socket), boost::asio::buffer(str, str.length()));
 }
 
-void Client::handleError(std::exception& e, ErrorCode errorCode, std::string errorMessage)
+void Joueur::Client::send(const std::string& eventName)
 {
-    throw new std::exception("Not Yet Implimented");
+    this->send(eventName, nullptr);
 }
 
-void Client::disconnect()
+void Joueur::Client::send(const std::string& eventName, boost::property_tree::ptree& data)
 {
-    throw new std::exception("Not Yet Implimented");
+    this->send(eventName, &data);
 }
 
-boost::property_tree::ptree Client::waitForEvent(char* eventName)
+void Joueur::Client::send(const std::string& eventName, boost::property_tree::ptree* data)
+{
+    boost::property_tree::ptree jsonNode;
+    jsonNode.add_child("event", boost::property_tree::ptree(eventName));
+    if (data != nullptr)
+    {
+        jsonNode.add_child("data", *data);
+    }
+
+    jsonNode.add_child("sentTime", boost::property_tree::ptree(boost::lexical_cast<std::string>(std::time(0))));
+
+    std::stringstream ss;
+    boost::property_tree::write_json(ss, jsonNode, false);
+    ss << Joueur::Client::EOT_CHAR;
+    this->sendRaw(ss.str());
+}
+
+void Joueur::Client::handleError(std::exception& e, int errorCode, std::string errorMessage)
+{
+    this->disconnect();
+    Joueur::ErrorCode::handleError(e, errorCode, errorMessage);
+}
+
+void Joueur::Client::disconnect()
+{
+    try
+    {
+        this->socket->shutdown(boost::asio::ip::tcp::socket::shutdown_both);
+        this->socket->close();
+    }
+    catch (...)
+    {
+        // ignore exceptions if we are disconnecting, because we are about to exit anyways
+    }
+}
+
+boost::property_tree::ptree Joueur::Client::waitForEvent(const std::string& eventName)
 {
     while (true)
     {
@@ -93,7 +134,7 @@ boost::property_tree::ptree Client::waitForEvent(char* eventName)
     }
 }
 
-void Client::waitForEvents()
+void Joueur::Client::waitForEvents()
 {
     if (!this->eventsStack.empty())
     {
@@ -105,21 +146,20 @@ void Client::waitForEvents()
         char chars[Client::BUFFER_SIZE];
         try
         {
-            size_t charsRead = boost::asio::read(*this->socket, boost::asio::buffer(chars, Client::BUFFER_SIZE));
-
-            if (charsRead > 0)
+            size_t charsRead = 0;//boost::asio::read(this->socket, boost::asio::buffer(chars, Client::BUFFER_SIZE));
+            if (charsRead > 0) // then we actually read some data from the server, so parse it
             {
                 std::string responseString(chars, charsRead);
                 std::string total = this->receivedBuffer + responseString;
 
-                vector<string> split;
+                std::vector<std::string> split;
                 boost::algorithm::split(split, total, boost::algorithm::is_any_of(" "));
 
                 this->receivedBuffer = split.back();
 
                 for (auto jsonStr : split)
                 {
-                    stringstream ss;
+                    std::stringstream ss;
                     ss << jsonStr;
 
                     boost::property_tree::ptree pt;
@@ -137,25 +177,59 @@ void Client::waitForEvents()
                 }
             }
         }
-        catch (exception& e)
+        catch (std::exception& e)
         {
             this->handleError(e, ErrorCode::CANNOT_READ_SOCKET, "Could not read from socket");
         }
     }
 }
 
-void Client::autoHandle(string eventName, boost::property_tree::ptree data)
+void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tree::ptree data)
 {
     if (eventName == "delta")
     {
-        //this->autoHandleDelta(data);
+        this->autoHandleDelta(data);
     }
     else if (eventName == "over")
     {
-        //this->autoHandleOver();
+        this->autoHandleOver();
     }
     else if (eventName == "invalid")
     {
-        //this->autoHandleInvalid(data);
+        this->autoHandleInvalid(data);
     }
+}
+
+void Joueur::Client::autoHandleDelta(boost::property_tree::ptree data)
+{
+    try
+    {
+        this->gameManager->deltaUpdate(data);
+    }
+    catch (std::exception& e)
+    {
+        this->handleError(e, Joueur::ErrorCode::DELTA_MERGE_FAILURE, "Error handling delta");
+    }
+}
+
+void Joueur::Client::autoHandleOver()
+{
+    bool won = false;
+    std::string reason = "";
+
+    if (this->gameManager->basePlayer)
+    {
+        won = this->gameManager->basePlayer->won;
+        reason = won ? this->gameManager->basePlayer->reasonWon : this->gameManager->basePlayer->reasonLost;
+    }
+
+    this->ai->ended(won, reason);
+}
+
+void Joueur::Client::autoHandleInvalid(boost::property_tree::ptree data)
+{
+    std::stringstream ss;
+    ss << "Invalid event data: ";
+    boost::property_tree::write_json(ss, data);
+    this->handleError(std::exception("Invalid Event"), Joueur::ErrorCode::INVALID_EVENT, ss.str());
 }

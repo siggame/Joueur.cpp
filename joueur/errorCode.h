@@ -1,21 +1,69 @@
 #ifndef JOUEUR_ERRORCODE_H
 #define JOUEUR_ERRORCODE_H
 
+#include <iostream>
 #include "joueur.h"
 
-enum Joueur::ErrorCode
+namespace Joueur
 {
-    NONE = 0,
-    INVALID_ARGS = 20,
-    COULD_NOT_CONNECT = 21,
-    DISCONNECTED_UNEXPECTEDLY = 22,
-    CANNOT_READ_SOCKET = 23,
-    DELTA_MERGE_FAILURE = 24,
-    REFLECTION_FAILED = 25,
-    UNKNOWN_EVENT_FROM_SERVER = 26,
-    SERVER_TIMEOUT = 27,
-    INVALID_EVENT = 28,
-    GAME_NOT_FOUND = 29
+    namespace ErrorCode
+    {
+        const static int NONE = 0;
+        const static int INVALID_ARGS = 20;
+        const static int COULD_NOT_CONNECT = 21;
+        const static int DISCONNECTED_UNEXPECTEDLY = 22;
+        const static int CANNOT_READ_SOCKET = 23;
+        const static int DELTA_MERGE_FAILURE = 24;
+        const static int REFLECTION_FAILED = 25; // impossible with c++?
+        const static int UNKNOWN_EVENT_FROM_SERVER = 26;
+        const static int SERVER_TIMEOUT = 27;
+        const static int INVALID_EVENT = 28;
+        const static int GAME_NOT_FOUND = 29;
+
+        static void handleError(std::exception& e, int errorCode, std::string errorMessage)
+        {
+            std::string name = "NO ERROR CODE";
+            switch (errorCode)
+            {
+            case Joueur::ErrorCode::NONE:
+                name = "None";
+                break;
+            case Joueur::ErrorCode::INVALID_ARGS:
+                name = "INVALID_ARGS";
+                break;
+            case Joueur::ErrorCode::COULD_NOT_CONNECT:
+                name = "Could Not Connect";
+                break;
+            case Joueur::ErrorCode::DISCONNECTED_UNEXPECTEDLY:
+                name = "Disconnected Unexpectedly";
+                break;
+            case Joueur::ErrorCode::CANNOT_READ_SOCKET:
+                name = "Cannot Read SOcket";
+                break;
+            case Joueur::ErrorCode::DELTA_MERGE_FAILURE:
+                name = "Delta Merge Failure";
+                break;
+            case Joueur::ErrorCode::REFLECTION_FAILED:
+                name = "Reflection Failed";
+                break;
+            case Joueur::ErrorCode::UNKNOWN_EVENT_FROM_SERVER:
+                name = "Unknown Event From Server";
+                break;
+            case Joueur::ErrorCode::SERVER_TIMEOUT:
+                name = "Server Timeout";
+                break;
+            case Joueur::ErrorCode::INVALID_EVENT:
+                name = "Invalid Event";
+                break;
+            case Joueur::ErrorCode::GAME_NOT_FOUND:
+                name = "Game Not Found";
+                break;
+            }
+
+            std::cerr << "Exception: '" << name << "' " << errorMessage << "\n" << e.what() << "\n";
+            exit(errorCode);
+        }
+    }
 };
 
 #endif
