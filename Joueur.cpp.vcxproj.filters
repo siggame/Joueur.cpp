@@ -63,9 +63,6 @@
     <ClInclude Include="joueur\errorCode.h">
       <Filter>Header Files\joueur</Filter>
     </ClInclude>
-    <ClInclude Include="joueur\gameManager.h">
-      <Filter>Header Files\joueur</Filter>
-    </ClInclude>
     <ClInclude Include="games\checkers\gameManager.h">
       <Filter>Header Files\games\checkers</Filter>
     </ClInclude>
@@ -82,6 +79,9 @@
       <Filter>Header Files\joueur</Filter>
     </ClInclude>
     <ClInclude Include="joueur\basePlayer.h">
+      <Filter>Header Files\joueur</Filter>
+    </ClInclude>
+    <ClInclude Include="joueur\baseGameManager.h">
       <Filter>Header Files\joueur</Filter>
     </ClInclude>
   </ItemGroup>
@@ -107,9 +107,6 @@
     <ClCompile Include="games\checkers\game.cpp">
       <Filter>Source Files\games\checkers</Filter>
     </ClCompile>
-    <ClCompile Include="joueur\gameManager.cpp">
-      <Filter>Source Files\joueur</Filter>
-    </ClCompile>
     <ClCompile Include="games\checkers\gameManager.cpp">
       <Filter>Source Files\games\checkers</Filter>
     </ClCompile>
@@ -123,6 +120,9 @@
       <Filter>Source Files\games\checkers</Filter>
     </ClCompile>
     <ClCompile Include="joueur\deltaMergeable.cpp">
+      <Filter>Source Files\joueur</Filter>
+    </ClCompile>
+    <ClCompile Include="joueur\baseGameManager.cpp">
       <Filter>Source Files\joueur</Filter>
     </ClCompile>
   </ItemGroup>

@@ -4,6 +4,13 @@
 #include "player.h"
 #include "ai.h"
 
+Checkers::GameManager::GameManager(Checkers::Game* game, Checkers::AI* ai)
+    : Joueur::BaseGameManager((Joueur::BaseGame*)game, (Joueur::BaseAI*)ai)
+{
+    this->checkersGame = game;
+    this->checkersAI = ai;
+}
+
 // @overrides
 Joueur::BaseGameObject* Checkers::GameManager::createGameObject(const std::string& gameObjectName)
 {
@@ -23,10 +30,10 @@ Joueur::BaseGameObject* Checkers::GameManager::createGameObject(const std::strin
 // @overrides
 void Checkers::GameManager::setupAI(const std::string& playerID)
 {
-    Joueur::GameManager::setupAI(playerID);
+    Joueur::BaseGameManager::setupAI(playerID);
 
     this->checkersAI->player = (Checkers::Player*)(this->getGameObject(playerID));
-    this->checkersAI->game = (Checkers::Game*)(this->game.get());
+    this->checkersAI->game = this->checkersGame;
 }
 
 // @overrides

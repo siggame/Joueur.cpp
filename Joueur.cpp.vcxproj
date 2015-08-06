@@ -97,7 +97,7 @@
     <ClInclude Include="joueur\client.h" />
     <ClInclude Include="joueur\deltaMergeable.h" />
     <ClInclude Include="joueur\errorCode.h" />
-    <ClInclude Include="joueur\gameManager.h" />
+    <ClInclude Include="joueur\baseGameManager.h" />
     <ClInclude Include="joueur\joueur.h" />
   </ItemGroup>
   <ItemGroup>
@@ -112,7 +112,7 @@
     <ClCompile Include="joueur\baseGameObject.cpp" />
     <ClCompile Include="joueur\client.cpp" />
     <ClCompile Include="joueur\deltaMergeable.cpp" />
-    <ClCompile Include="joueur\gameManager.cpp" />
+    <ClCompile Include="joueur\baseGameManager.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

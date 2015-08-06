@@ -13,7 +13,7 @@ class Joueur::BaseGame : public Joueur::DeltaMergeable
 
     public:
         std::string name;
-        std::map<std::string, BaseGameObject*>* gameObjects;
+        std::map<std::string, BaseGameObject*> gameObjects;
 
         BaseGame()
         {

@@ -1,27 +1,31 @@
-#ifndef JOUEUR_GAMEMANAGER_H
-#define JOUEUR_GAMEMANAGER_H
+#ifndef JOUEUR_BASEGAMEMANAGER_H
+#define JOUEUR_BASEGAMEMANAGER_H
 
 #include <string>
 #include "joueur.h"
 #include "client.h"
 
-class Joueur::GameManager
+class Joueur::BaseGameManager
 {
     private:
-        std::shared_ptr<std::map<std::string, BaseGameObject*>> gameObjects;
+        std::map<std::string, BaseGameObject*>* gameObjects;
         std::string DELTA_LIST_LENGTH;
         std::string DELTA_REMOVED;
 
         bool hasGameObject(const std::string& id);
 
     protected:
+        BaseGameManager();
+        
         virtual BaseGameObject* createGameObject(const std::string& gameObjectName);
-        std::shared_ptr<Joueur::Client> client;
-        std::shared_ptr<Joueur::BaseGame> game;
+        Joueur::Client* client;
+        Joueur::BaseGame* game;
+        Joueur::BaseAI* ai;
 
     public:
-        std::shared_ptr<Joueur::BasePlayer> basePlayer;
-        GameManager(BaseGame* game);
+        BaseGameManager(Joueur::BaseGame* game, Joueur::BaseAI* ai);
+        Joueur::BasePlayer* basePlayer;
+
         void setConstants(boost::property_tree::ptree& constants);
 
         virtual void setupAI(const std::string& playerID);
@@ -55,7 +59,7 @@ class Joueur::GameManager
 };
 
 template<typename T>
-void Joueur::GameManager::resizeVectorFromDelta(std::vector<T>& list, boost::property_tree::ptree& delta)
+void Joueur::BaseGameManager::resizeVectorFromDelta(std::vector<T>& list, boost::property_tree::ptree& delta)
 {
     int listLength = stoi(delta.get_child(this->DELTA_LIST_LENGTH).data());
     list.resize(listLength);
@@ -63,7 +67,7 @@ void Joueur::GameManager::resizeVectorFromDelta(std::vector<T>& list, boost::pro
 }
 
 template<typename T>
-std::vector<T>& Joueur::GameManager::getDeltaVectorOfGameObjects(boost::property_tree::ptree& delta, std::vector<T>& list)
+std::vector<T>& Joueur::BaseGameManager::getDeltaVectorOfGameObjects(boost::property_tree::ptree& delta, std::vector<T>& list)
 {
     this->resizeVectorFromDelta<T>(list, delta);
 
@@ -81,7 +85,7 @@ std::vector<T>& Joueur::GameManager::getDeltaVectorOfGameObjects(boost::property
 
 
 template<typename T>
-std::map<std::string, T>& Joueur::GameManager::getDeltaStringMapOfGameObjects(boost::property_tree::ptree& delta, std::map<std::string, T>& dict)
+std::map<std::string, T>& Joueur::BaseGameManager::getDeltaStringMapOfGameObjects(boost::property_tree::ptree& delta, std::map<std::string, T>& dict)
 {
     for (auto kv : delta)
     {

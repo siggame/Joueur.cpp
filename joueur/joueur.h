@@ -2,6 +2,7 @@
 #define JOUEUR_H
 
 #include <string>
+#include <boost/optional/optional.hpp>
 #include <boost/property_tree/ptree.hpp>
 
 namespace Joueur
@@ -12,9 +13,9 @@ namespace Joueur
     class BasePlayer;
     class BaseAI;
     class Client;
-    class GameManager;
+    class BaseGameManager;
 
-    struct ServerEvent { std::string eventName; std::shared_ptr<boost::property_tree::ptree> data; };
+    struct ServerEvent { std::string eventName; boost::property_tree::ptree* data = nullptr; };
 }
 
 #endif

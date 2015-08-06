@@ -9,7 +9,7 @@
 #include "errorCode.h"
 #include "baseAI.h"
 #include "baseGame.h"
-#include "gameManager.h"
+#include "baseGameManager.h"
 
 class Joueur::Client
 {
@@ -36,7 +36,7 @@ class Joueur::Client
         void sendRaw(const std::string& str);
         void waitForEvents();
         
-        void autoHandle(const std::string& eventName, boost::property_tree::ptree data);
+        void autoHandle(const std::string& eventName, boost::property_tree::ptree* data);
         void autoHandleDelta(boost::property_tree::ptree data);
         void autoHandleInvalid(boost::property_tree::ptree data);
         void autoHandleOver();
@@ -51,17 +51,17 @@ class Joueur::Client
         }
         #pragma endregion
 
-        std::shared_ptr<Joueur::GameManager> gameManager;
+        Joueur::BaseGameManager* gameManager;
 
-        void connectTo(BaseGame* game, BaseAI* ai, const std::string server, const std::string port, bool printIO);
+        void connectTo(Joueur::BaseGame* game, Joueur::BaseAI* ai, Joueur::BaseGameManager* gameManager, const std::string server, const std::string port, bool printIO);
         void send(const std::string& eventName);
         void send(const std::string& eventName, boost::property_tree::ptree& data);
         void send(const std::string& eventName, boost::property_tree::ptree* data);
         void start();
         void disconnect();
         void handleError(std::exception& e, int errorCode, std::string errorMessage);
-        boost::property_tree::ptree waitForEvent(const std::string& eventName);
-        boost::property_tree::ptree runOnServer(BaseGameObject caller, std::string functionName, boost::property_tree::ptree args);
+        boost::property_tree::ptree* waitForEvent(const std::string& eventName);
+        boost::property_tree::ptree* runOnServer(BaseGameObject caller, std::string functionName, boost::property_tree::ptree args);
 };
 
 #endif

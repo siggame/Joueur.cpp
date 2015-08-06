@@ -1,5 +1,5 @@
 #include "baseGame.h"
-#include "gameManager.h"
+#include "baseGameManager.h"
 
 void Joueur::BaseGame::deltaUpdateField(const std::string& fieldName, boost::property_tree::ptree& delta)
 {

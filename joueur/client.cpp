@@ -1,10 +1,9 @@
 #include <iostream>
 #include <sstream>
 #include <boost/asio.hpp>
-#include <boost/algorithm/string.hpp>
 #include <boost/property_tree/json_parser.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/optional/optional.hpp>
+
 #include "client.h"
 #include "basePlayer.h"
 #include "baseGame.h"
@@ -34,9 +33,12 @@ void Joueur::Client::start()
     this->started = true;
 }
 
-void Joueur::Client::connectTo(Joueur::BaseGame* game, BaseAI* ai, const std::string server, const std::string port, bool printIO)
+void Joueur::Client::connectTo(Joueur::BaseGame* game, BaseAI* ai, Joueur::BaseGameManager* gameManager, const std::string server, const std::string port, bool printIO)
 {
     this->printIO = true;
+    this->ai = ai;
+    this->game = game;
+    this->gameManager = gameManager;
 
     try
     {
@@ -95,7 +97,7 @@ void Joueur::Client::send(const std::string& eventName, boost::property_tree::pt
 void Joueur::Client::handleError(std::exception& e, int errorCode, std::string errorMessage)
 {
     this->disconnect();
-    Joueur::ErrorCode::handleError(e, errorCode, errorMessage);
+    Joueur::ErrorCode::handleError(&e, errorCode, errorMessage);
 }
 
 void Joueur::Client::disconnect()
@@ -111,7 +113,7 @@ void Joueur::Client::disconnect()
     }
 }
 
-boost::property_tree::ptree Joueur::Client::waitForEvent(const std::string& eventName)
+boost::property_tree::ptree* Joueur::Client::waitForEvent(const std::string& eventName)
 {
     while (true)
     {
@@ -122,13 +124,15 @@ boost::property_tree::ptree Joueur::Client::waitForEvent(const std::string& even
             auto serverEvent = eventsStack.top();
             eventsStack.pop();
 
+            std::cout << "got event: " << serverEvent.eventName << std::endl;
+
             if (eventName == serverEvent.eventName)
             {
-                return *serverEvent.data;
+                return serverEvent.data;
             }
             else
             {
-                this->autoHandle(serverEvent.eventName, *serverEvent.data);
+                this->autoHandle(serverEvent.eventName, serverEvent.data);
             }
         }
     }
@@ -146,35 +150,73 @@ void Joueur::Client::waitForEvents()
         char chars[Client::BUFFER_SIZE];
         try
         {
-            size_t charsRead = 0;//boost::asio::read(this->socket, boost::asio::buffer(chars, Client::BUFFER_SIZE));
+            size_t charsRead = this->socket->read_some(boost::asio::buffer(chars, Client::BUFFER_SIZE));
             if (charsRead > 0) // then we actually read some data from the server, so parse it
             {
                 std::string responseString(chars, charsRead);
+
+                if (this->printIO)
+                {
+                    std::cout << "FROM SERVER --> " << responseString << std::endl;
+                }
+
                 std::string total = this->receivedBuffer + responseString;
 
                 std::vector<std::string> split;
-                boost::algorithm::split(split, total, boost::algorithm::is_any_of(" "));
+                std::string tempStr = "";
+                for (char c : total)
+                {
+                    if (c == Joueur::Client::EOT_CHAR)
+                    {
+                        split.push_back(tempStr);
+                        tempStr = "";
+                    }
+                    else
+                    {
+                        tempStr += c;
+                    }
+                }
+                split.push_back(tempStr); // as it's going to have any remaining chars that have not been EOT terminated in it
 
                 this->receivedBuffer = split.back();
+                split.pop_back();
 
-                for (auto jsonStr : split)
+                for (auto rit = split.rbegin(); rit != split.rend(); ++rit) // we are pushing events onto a stack, which is FIFO, so we want the top to be the first recieved event, which is at the beginning of 'split'
                 {
+                    auto jsonStr = *rit;
                     std::stringstream ss;
                     ss << jsonStr;
 
-                    boost::property_tree::ptree pt;
-                    boost::property_tree::read_json(ss, pt);
+                    boost::property_tree::ptree* pt = new boost::property_tree::ptree();
+
+                    try
+                    {
+                        boost::property_tree::read_json(ss, *pt);
+                    }
+                    catch (std::exception& e)
+                    {
+                        this->handleError(e, ErrorCode::MALFORMED_JSON, "Malformed json '" + jsonStr + "'.");
+                    }
 
                     ServerEvent serverEvent;
-                    serverEvent.eventName = pt.get_child("event").data();
-                    boost::optional<boost::property_tree::ptree&> optionalData = pt.get_child_optional("data");
+                    serverEvent.eventName = pt->get_child("event").data();
+                    boost::optional<boost::property_tree::ptree&> optionalData = pt->get_child_optional("data");
                     if (optionalData)
                     {
-                        *serverEvent.data = optionalData.get();
+                        serverEvent.data = &optionalData.get();
                     }
 
                     this->eventsStack.push(serverEvent);
                 }
+
+                if (!this->eventsStack.empty())
+                {
+                    return; // as we now have events to handle...
+                }
+            }
+            else
+            {
+                std::cout << "read no chars from socket..." << std::endl;
             }
         }
         catch (std::exception& e)
@@ -184,11 +226,11 @@ void Joueur::Client::waitForEvents()
     }
 }
 
-void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tree::ptree data)
+void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tree::ptree* data)
 {
     if (eventName == "delta")
     {
-        this->autoHandleDelta(data);
+        this->autoHandleDelta(*data);
     }
     else if (eventName == "over")
     {
@@ -196,7 +238,7 @@ void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tr
     }
     else if (eventName == "invalid")
     {
-        this->autoHandleInvalid(data);
+        this->autoHandleInvalid(*data);
     }
 }
 
@@ -224,6 +266,10 @@ void Joueur::Client::autoHandleOver()
     }
 
     this->ai->ended(won, reason);
+
+    this->disconnect();
+    std::cout << "Game Over!";
+    exit(0);
 }
 
 void Joueur::Client::autoHandleInvalid(boost::property_tree::ptree data)
