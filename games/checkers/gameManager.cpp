@@ -37,8 +37,10 @@ void Checkers::GameManager::setupAI(const std::string& playerID)
 }
 
 // @overrides
-boost::property_tree::ptree* Checkers::GameManager::orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args)
+boost::property_tree::ptree* Checkers::GameManager::orderAI(const std::string& order, boost::property_tree::ptree* args)
 {
+    auto ptrees = this->getOrderArgsPtrees(args);
+
     if (order == "runTurn") {
         auto returned = this->checkersAI->runTurn(
         );

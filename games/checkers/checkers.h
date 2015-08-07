@@ -3,14 +3,13 @@
 
 namespace Checkers
 {
+    class Checker;
     class GameObject;
     class Player;
-    class Checker;
     
     class Game;
-    class AI;
-
     class GameManager;
+    class AI;
 }
 
 #endif

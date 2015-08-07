@@ -16,7 +16,7 @@ class Checkers::GameManager : public Joueur::BaseGameManager
         GameManager(Checkers::Game* game, Checkers::AI* ai);
 
         void setupAI(const std::string& playerID);
-        boost::property_tree::ptree* orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args);
+        boost::property_tree::ptree* orderAI(const std::string& order, boost::property_tree::ptree* args);
 };
 
 

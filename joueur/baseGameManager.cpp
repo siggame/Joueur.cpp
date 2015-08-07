@@ -25,7 +25,7 @@ void Joueur::BaseGameManager::setupAI(const std::string& playerID)
     this->basePlayer = dynamic_cast<Joueur::BasePlayer*>(this->getGameObject(playerID));
 }
 
-boost::property_tree::ptree* Joueur::BaseGameManager::orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args)
+boost::property_tree::ptree* Joueur::BaseGameManager::orderAI(const std::string& order, boost::property_tree::ptree* args)
 {
     throw new std::exception("Joueur::BaseGameManager::orderAI should not be called directly");
 }
@@ -45,6 +45,11 @@ boost::property_tree::ptree* Joueur::BaseGameManager::serialize(int number)
 boost::property_tree::ptree* Joueur::BaseGameManager::serialize(float number)
 {
     return new boost::property_tree::ptree(std::to_string(number));
+}
+
+boost::property_tree::ptree* Joueur::BaseGameManager::serialize(std::string str)
+{
+    return new boost::property_tree::ptree(str);
 }
 
 boost::property_tree::ptree* Joueur::BaseGameManager::serialize(BaseGameObject* gameObject)
@@ -104,6 +109,26 @@ void Joueur::BaseGameManager::initGameObjects(boost::property_tree::ptree& delta
     }
 }
 
+boost::property_tree::ptree* Joueur::BaseGameManager::orderAI(const std::string& order, boost::property_tree::ptree* args)
+{
+    throw new std::exception("Joueur::BaseGameManager::orderAI should not be called directly. Intended as interface function.");
+}
+
+std::vector<boost::property_tree::ptree&>& Joueur::BaseGameManager::getOrderArgsPtrees(boost::property_tree::ptree* args)
+{
+    std::vector<boost::property_tree::ptree&> ptrees;
+
+    if (args != nullptr)
+    {
+        for (auto kv : *args)
+        {
+            ptrees.push_back(kv.second);
+        }
+    }
+
+    return ptrees;
+}
+
 bool Joueur::BaseGameManager::hasGameObject(const std::string& id)
 {
     return (this->gameObjects->find(id) != this->gameObjects->end());
@@ -124,24 +149,36 @@ Joueur::BaseGameObject* Joueur::BaseGameManager::getGameObject(const std::string
     return nullptr;
 }
 
-bool Joueur::BaseGameManager::getDeltaBool(boost::property_tree::ptree& delta)
+boost::property_tree::ptree* Joueur::BaseGameManager::runOnServer(Joueur::BaseGameObject& caller, const std::string& functionName, boost::property_tree::ptree& args)
 {
-    return (delta.data() == "true");
+    boost::property_tree::ptree runData;
+    runData.put_child("caller", *this->serialize(&caller));
+    runData.put_child("functionName", *this->serialize(functionName));
+    runData.put_child("args", args);
+
+    this->client->send("run", runData);
+
+    return client->waitForEvent("ran"); // blocks here untill we get the data from the run event back from the server
 }
 
-int Joueur::BaseGameManager::getDeltaInt(boost::property_tree::ptree& delta)
+bool Joueur::BaseGameManager::unserializeBool(boost::property_tree::ptree& ptree)
 {
-    return stoi(delta.data());
+    return (ptree.data() == "true");
 }
 
-float Joueur::BaseGameManager::getDeltaFloat(boost::property_tree::ptree& delta)
+int Joueur::BaseGameManager::unserializeInt(boost::property_tree::ptree& ptree)
 {
-    return stof(delta.data());
+    return stoi(ptree.data());
 }
 
-std::string Joueur::BaseGameManager::getDeltaString(boost::property_tree::ptree& delta)
+float Joueur::BaseGameManager::unserializeFloat(boost::property_tree::ptree& ptree)
 {
-    auto data = delta.data();
+    return stof(ptree.data());
+}
+
+std::string Joueur::BaseGameManager::unserializeString(boost::property_tree::ptree& ptree)
+{
+    auto data = ptree.data();
     if (data == this->DELTA_REMOVED) {
         return "";
     }
@@ -149,7 +186,7 @@ std::string Joueur::BaseGameManager::getDeltaString(boost::property_tree::ptree&
     return data;
 }
 
-Joueur::BaseGameObject* Joueur::BaseGameManager::getDeltaGameObject(boost::property_tree::ptree& delta)
+Joueur::BaseGameObject* Joueur::BaseGameManager::unserializeGameObject(boost::property_tree::ptree& delta)
 {
     if (delta.size() == 1 && delta.get_child_optional("id")) // then it's a game object reference
     {
@@ -161,67 +198,67 @@ Joueur::BaseGameObject* Joueur::BaseGameManager::getDeltaGameObject(boost::prope
 
 // setting lists
 // TODO: none of this is DRY at all, currently can't figure out a type safe way to do it :P
-std::vector<bool>& Joueur::BaseGameManager::getDeltaVector(boost::property_tree::ptree& delta, std::vector<bool>& list)
+std::vector<bool>& Joueur::BaseGameManager::unserializeVector(boost::property_tree::ptree& delta, std::vector<bool>* list)
 {
-    this->resizeVectorFromDelta<bool>(list, delta);
+    list = this->resizeVectorFromDelta<bool>(list, delta);
 
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list.size())
+        if (index <= list->size())
         {
-            list[index] = this->getDeltaBool(kv.second);
+            (*list)[index] = this->unserializeBool(kv.second);
         }
     }
 
-    return list;
+    return *list;
 }
 
-std::vector<int>& Joueur::BaseGameManager::getDeltaVector(boost::property_tree::ptree& delta, std::vector<int>& list)
+std::vector<int>& Joueur::BaseGameManager::unserializeVector(boost::property_tree::ptree& delta, std::vector<int>* list)
 {
-    this->resizeVectorFromDelta<int>(list, delta);
+    list = this->resizeVectorFromDelta<int>(list, delta);
 
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list.size())
+        if (index <= list->size())
         {
-            list[index] = this->getDeltaInt(kv.second);
+            (*list)[index] = this->unserializeInt(kv.second);
         }
     }
 
-    return list;
+    return *list;
 }
 
-std::vector<float>& Joueur::BaseGameManager::getDeltaVector(boost::property_tree::ptree& delta, std::vector<float>& list)
+std::vector<float>& Joueur::BaseGameManager::unserializeVector(boost::property_tree::ptree& delta, std::vector<float>* list)
 {
-    this->resizeVectorFromDelta<float>(list, delta);
+    list = this->resizeVectorFromDelta<float>(list, delta);
 
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list.size())
+        if (index <= list->size())
         {
-            list[index] = this->getDeltaFloat(kv.second);
+            (*list)[index] = this->unserializeFloat(kv.second);
         }
     }
 
-    return list;
+    return *list;
 }
 
-std::vector<std::string>& Joueur::BaseGameManager::getDeltaVector(boost::property_tree::ptree& delta, std::vector<std::string>& list)
+std::vector<std::string>& Joueur::BaseGameManager::unserializeVector(boost::property_tree::ptree& delta, std::vector<std::string>* list)
 {
-    this->resizeVectorFromDelta<std::string>(list, delta);
+
+    list = this->resizeVectorFromDelta<std::string>(list, delta);
 
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list.size())
+        if (index <= list->size())
         {
-            list[index] = this->getDeltaString(kv.second);
+            (*list)[index] = this->unserializeString(kv.second);
         }
     }
 
-    return list;
+    return *list;
 }
-

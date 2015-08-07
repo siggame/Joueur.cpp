@@ -20,3 +20,12 @@ void Checkers::Checker::deltaUpdateField(const std::string& fieldName, boost::pr
         this->y = this->gameManager->getDeltaInt(delta);
     }
 }
+
+Checkers::Checker* Checkers::Checker::move(int x, int y)
+{
+    boost::property_tree::ptree args;
+    args.put_child("x", *this->gameManager->serialize(x));
+    args.put_child("y", *this->gameManager->serialize(y));
+
+    return (Checkers::Checker*)this->gameManager->unserializeGameObject(*this->gameManager->runOnServer(*this, "move", args));
+}

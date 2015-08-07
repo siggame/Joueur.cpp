@@ -15,12 +15,14 @@ class Joueur::BaseGameManager
         bool hasGameObject(const std::string& id);
 
     protected:
-        BaseGameManager();
-        
-        virtual BaseGameObject* createGameObject(const std::string& gameObjectName);
         Joueur::Client* client;
         Joueur::BaseGame* game;
         Joueur::BaseAI* ai;
+
+        BaseGameManager();
+        
+        virtual BaseGameObject* createGameObject(const std::string& gameObjectName);
+        std::vector<boost::property_tree::ptree&>& getOrderArgsPtrees(boost::property_tree::ptree* args);
 
     public:
         BaseGameManager(Joueur::BaseGame* game, Joueur::BaseAI* ai);
@@ -29,63 +31,73 @@ class Joueur::BaseGameManager
         void setConstants(boost::property_tree::ptree& constants);
 
         virtual void setupAI(const std::string& playerID);
-        virtual boost::property_tree::ptree* orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args);
+        virtual boost::property_tree::ptree* orderAI(const std::string& order, boost::property_tree::ptree* args);
 
-        void deltaUpdate(boost::property_tree::ptree& delta);
-        void initGameObjects(boost::property_tree::ptree& delta);
+
+        void deltaUpdate(boost::property_tree::ptree& ptree);
+        void initGameObjects(boost::property_tree::ptree& ptree);
+        boost::property_tree::ptree* runOnServer(Joueur::BaseGameObject& caller, const std::string& functionName, boost::property_tree::ptree& args);
 
         boost::property_tree::ptree* serialize(bool boolean);
         boost::property_tree::ptree* serialize(int number);
         boost::property_tree::ptree* serialize(float number);
+        boost::property_tree::ptree* serialize(std::string str);
         boost::property_tree::ptree* serialize(BaseGameObject* gameObject);
 
         Joueur::BaseGameObject* getGameObject(const std::string& id);
-        bool getDeltaBool(boost::property_tree::ptree& delta);
-        int getDeltaInt(boost::property_tree::ptree& delta);
-        float getDeltaFloat(boost::property_tree::ptree& delta);
-        std::string getDeltaString(boost::property_tree::ptree& delta);
-        Joueur::BaseGameObject* getDeltaGameObject(boost::property_tree::ptree& delta);
+        bool unserializeBool(boost::property_tree::ptree& ptree);
+        int unserializeInt(boost::property_tree::ptree& ptree);
+        float unserializeFloat(boost::property_tree::ptree& ptree);
+        std::string unserializeString(boost::property_tree::ptree& ptree);
+        Joueur::BaseGameObject* unserializeGameObject(boost::property_tree::ptree& ptree);
 
         // vectors
-        template<typename T> void resizeVectorFromDelta(std::vector<T>& list, boost::property_tree::ptree& delta);
-        std::vector<bool>& getDeltaVector(boost::property_tree::ptree& delta, std::vector<bool>& list);
-        std::vector<int>& getDeltaVector(boost::property_tree::ptree& delta, std::vector<int>& list);
-        std::vector<float>& getDeltaVector(boost::property_tree::ptree& delta, std::vector<float>& list);
-        std::vector<std::string>& getDeltaVector(boost::property_tree::ptree& delta, std::vector<std::string>& list);
-        template<typename T> std::vector<T>& getDeltaVectorOfGameObjects(boost::property_tree::ptree& delta, std::vector<T>& list);
+        template<typename T> std::vector<T>* resizeVectorFromDelta(std::vector<T>* list, boost::property_tree::ptree& ptree);
+        std::vector<bool>& unserializeVector(boost::property_tree::ptree& ptree, std::vector<bool>* list);
+        std::vector<int>& unserializeVector(boost::property_tree::ptree& ptree, std::vector<int>* list);
+        std::vector<float>& unserializeVector(boost::property_tree::ptree& ptree, std::vector<float>* list);
+        std::vector<std::string>& unserializeVector(boost::property_tree::ptree& ptree, std::vector<std::string>* list);
+        template<typename T> std::vector<T>& unserializeVectorOfGameObjects(boost::property_tree::ptree& ptree, std::vector<T>* list);
 
         // maps
-        template<typename T> std::map<std::string, T>& getDeltaStringMapOfGameObjects(boost::property_tree::ptree& delta, std::map<std::string, T>& dict);
+        template<typename T> std::map<std::string, T>& unserializeStringMapOfGameObjects(boost::property_tree::ptree& ptree, std::map<std::string, T>& dict);
 };
 
 template<typename T>
-void Joueur::BaseGameManager::resizeVectorFromDelta(std::vector<T>& list, boost::property_tree::ptree& delta)
+std::vector<T> Joueur::BaseGameManager::resizeVectorFromDelta(std::vector<T>* list, boost::property_tree::ptree& ptree)
 {
+    if (list == nullptr)
+    {
+        list = new std::vector<T>();
+    }
+
     int listLength = stoi(delta.get_child(this->DELTA_LIST_LENGTH).data());
     list.resize(listLength);
     delta.erase(this->DELTA_LIST_LENGTH);
-}
-
-template<typename T>
-std::vector<T>& Joueur::BaseGameManager::getDeltaVectorOfGameObjects(boost::property_tree::ptree& delta, std::vector<T>& list)
-{
-    this->resizeVectorFromDelta<T>(list, delta);
-
-    for (auto kv : delta)
-    {
-        unsigned int index = stoi(kv.first);
-        if (index <= list.size())
-        {
-            list[index] = (T)this->getDeltaGameObject(kv.second);
-        }
-    }
 
     return list;
 }
 
-
 template<typename T>
-std::map<std::string, T>& Joueur::BaseGameManager::getDeltaStringMapOfGameObjects(boost::property_tree::ptree& delta, std::map<std::string, T>& dict)
+std::vector<T>& Joueur::BaseGameManager::unserializeVectorOfGameObjects(boost::property_tree::ptree& ptree, std::vector<T>* list)
+{
+    list = this->resizeVectorFromDelta<T>(list, delta);
+
+    for (auto kv : delta)
+    {
+        unsigned int index = stoi(kv.first);
+        if (index <= list->size())
+        {
+            (*list)[index] = (T)this->unserializeGameObject(kv.second);
+        }
+    }
+
+    return *list;
+}
+
+// Maps are untested
+template<typename T>
+std::map<std::string, T>& Joueur::BaseGameManager::unserializeStringMapOfGameObjects(boost::property_tree::ptree& ptree, std::map<std::string, T>& dict)
 {
     for (auto kv : delta)
     {
@@ -93,7 +105,7 @@ std::map<std::string, T>& Joueur::BaseGameManager::getDeltaStringMapOfGameObject
             dict.erase(kv.first);
         }
         else {
-            dict[kv.first] = (T)this->getDeltaGameObject(kv.second);
+            dict[kv.first] = (T)this->unserializeGameObject(kv.second);
         }
     }
 

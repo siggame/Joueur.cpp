@@ -73,7 +73,13 @@ int main()
 
         try
         {
-           returnedData = gameManager->orderAI(order, orderData->get_child_optional("args"));
+            auto optionalOrderArgs = orderData->get_child_optional("args");
+            boost::property_tree::ptree* args = nullptr;
+            if (optionalOrderArgs)
+            {
+                args = optionalOrderArgs.get_ptr();
+            }
+            returnedData = gameManager->orderAI(order, args);
         }
         catch (std::exception& e)
         {

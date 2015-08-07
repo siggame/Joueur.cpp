@@ -5,7 +5,7 @@ void Checkers::Player::deltaUpdateField(const std::string& fieldName, boost::pro
 {
     Checkers::GameObject::deltaUpdateField(fieldName, delta);
 
-    if (fieldName == "kinged") {
+    if (fieldName == "checkers") {
         this->checkers = this->gameManager->getDeltaVectorOfGameObjects<Checkers::Checker*>(delta, this->checkers);
     }
     else if (fieldName == "clientType") {

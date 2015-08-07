@@ -1,8 +1,6 @@
 #ifndef CHECKERS_AI_H
 #define CHECKERS_AI_H
 
-#include <string>
-
 #include "checkers.h"
 #include "../../joueur/baseAI.h"
 
