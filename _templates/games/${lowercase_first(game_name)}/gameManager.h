@@ -22,7 +22,7 @@ class ${game_name}::GameManager : public Joueur::BaseGameManager
         GameManager(${game_name}::Game* game, ${game_name}::AI* ai);
 
         void setupAI(const std::string& playerID);
-        boost::property_tree::ptree* orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args);
+        boost::property_tree::ptree* orderAI(const std::string& order, boost::property_tree::ptree* args);
 };
 
 #endif

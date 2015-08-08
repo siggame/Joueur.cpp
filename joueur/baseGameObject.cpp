@@ -5,10 +5,10 @@ void Joueur::BaseGameObject::deltaUpdateField(const std::string& fieldName, boos
 {
     if (fieldName == "id")
     {
-        this->id = this->gameManager->getDeltaString(delta);
+        this->id = this->gameManager->unserializeString(delta);
     }
     else if (fieldName == "gameObjectName")
     {
-        this->gameObjectName = this->gameManager->getDeltaString(delta);
+        this->gameObjectName = this->gameManager->unserializeString(delta);
     }
 }

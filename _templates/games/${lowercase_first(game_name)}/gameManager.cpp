@@ -25,7 +25,7 @@ Joueur::BaseGameObject* ${game_name}::GameManager::createGameObject(const std::s
     }
 % endfor
 
-    throw new std::exception("Game object '" + gameObjectName + "' not found to create new instance of");
+    throw new std::exception(("Game object '" + gameObjectName + "' not found to create new instance of").c_str());
 }
 
 // @overrides
@@ -38,7 +38,7 @@ void ${game_name}::GameManager::setupAI(const std::string& playerID)
 }
 
 // @overrides
-boost::property_tree::ptree* ${game_name}::GameManager::orderAI(const std::string& order, boost::optional<boost::property_tree::ptree&> args)
+boost::property_tree::ptree* ${game_name}::GameManager::orderAI(const std::string& order, boost::property_tree::ptree* args)
 {
     auto ptrees = this->getOrderArgsPtrees(args);
 <% i = 0 %>
@@ -64,6 +64,6 @@ arg_i = -1
     }
 % endfor
 
+    delete ptrees;
     return nullptr;
 }
-

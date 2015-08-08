@@ -34,7 +34,11 @@ if not 'c++' in shared:
                 return 'std::map<' + cpp_type(type_obj['keyType']) + ", " + cpp_type(type_obj['valueType']) + ">"
         elif base_type == "boolean":
             return "bool"
-        elif base_type == "int" or base_type == "float" or base_type == "null" or base_type == "string":
+        elif base_type == "string":
+            return "std::string"
+        elif base_type == "null":
+            return "void"
+        elif base_type == "int" or base_type == "float":
             return base_type
         else: # it's a game object, so include it's namespace
             return game_name + "::" + base_type + "*"

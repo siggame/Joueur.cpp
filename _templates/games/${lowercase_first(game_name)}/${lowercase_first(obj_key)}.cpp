@@ -19,6 +19,13 @@ ${merge("// ", "includes", "// you can add additional #includes(s) here.")}
 
 
 
+% if obj_key == "Game":
+${game_name}::Game::Game()
+{
+    this->name = "${game_name}";
+}
+
+% endif
 void ${game_name}::${obj_key}::deltaUpdateField(const std::string& fieldName, boost::property_tree::ptree& delta)
 {
 % for parent_class in parent_classes:
@@ -27,12 +34,12 @@ void ${game_name}::${obj_key}::deltaUpdateField(const std::string& fieldName, bo
 <% i = 0 %>
 % for attr_name in obj['attribute_names']:
 <% attr_parms = obj['attributes'][attr_name]
-i += 1
 if shared['c++']['skippable'](obj_key, attr_name, skipPlayerCheck=true):
     continue
+i += 1
 %>    ${"else " if i > 1 else ""}if (fieldName == "${attr_name}")
     {
-        this->${attr_name} = ${shared['c++']['cast_type'](attr_parms)}this->gameManager->${shared['c++']['unserialize_function'](attr_parms, "delta", list_name=("this->" + attr_name))};
+        this->${attr_name} = ${shared['c++']['cast_type'](attr_parms)}this->gameManager->${shared['c++']['unserialize_function'](attr_parms, "delta", list_name=("&this->" + attr_name))};
     }
 % endfor
 }

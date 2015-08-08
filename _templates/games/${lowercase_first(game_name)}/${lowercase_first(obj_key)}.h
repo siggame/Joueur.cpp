@@ -21,7 +21,7 @@ if obj_key == "Game":
     parent_classes = [ 'BaseGame' ]
 else:
     parent_classes = [ 'BaseGameObject' ]
-%>#include "../../joueur/${lowercase_first(parent_classes[0])}"
+%>#include "../../joueur/${lowercase_first(parent_classes[0])}.h"
 % endif
 
 ${merge("// ", "includes", "// you can add addtional #includes(s) here.")}

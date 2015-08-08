@@ -22,7 +22,7 @@ class Joueur::BaseGameManager
         BaseGameManager();
         
         virtual BaseGameObject* createGameObject(const std::string& gameObjectName);
-        std::vector<boost::property_tree::ptree&>& getOrderArgsPtrees(boost::property_tree::ptree* args);
+        std::vector<boost::property_tree::ptree*>* getOrderArgsPtrees(boost::property_tree::ptree* args);
 
     public:
         BaseGameManager(Joueur::BaseGame* game, Joueur::BaseAI* ai);
@@ -64,16 +64,16 @@ class Joueur::BaseGameManager
 };
 
 template<typename T>
-std::vector<T> Joueur::BaseGameManager::resizeVectorFromDelta(std::vector<T>* list, boost::property_tree::ptree& ptree)
+std::vector<T>* Joueur::BaseGameManager::resizeVectorFromDelta(std::vector<T>* list, boost::property_tree::ptree& ptree)
 {
     if (list == nullptr)
     {
         list = new std::vector<T>();
     }
 
-    int listLength = stoi(delta.get_child(this->DELTA_LIST_LENGTH).data());
-    list.resize(listLength);
-    delta.erase(this->DELTA_LIST_LENGTH);
+    int listLength = stoi(ptree.get_child(this->DELTA_LIST_LENGTH).data());
+    list->resize(listLength);
+    ptree.erase(this->DELTA_LIST_LENGTH);
 
     return list;
 }
@@ -81,9 +81,9 @@ std::vector<T> Joueur::BaseGameManager::resizeVectorFromDelta(std::vector<T>* li
 template<typename T>
 std::vector<T>& Joueur::BaseGameManager::unserializeVectorOfGameObjects(boost::property_tree::ptree& ptree, std::vector<T>* list)
 {
-    list = this->resizeVectorFromDelta<T>(list, delta);
+    list = this->resizeVectorFromDelta<T>(list, ptree);
 
-    for (auto kv : delta)
+    for (auto kv : ptree)
     {
         unsigned int index = stoi(kv.first);
         if (index <= list->size())
@@ -99,7 +99,7 @@ std::vector<T>& Joueur::BaseGameManager::unserializeVectorOfGameObjects(boost::p
 template<typename T>
 std::map<std::string, T>& Joueur::BaseGameManager::unserializeStringMapOfGameObjects(boost::property_tree::ptree& ptree, std::map<std::string, T>& dict)
 {
-    for (auto kv : delta)
+    for (auto kv : ptree)
     {
         if (kv.second.data() == this->DELTA_REMOVED) {
             dict.erase(kv.first);

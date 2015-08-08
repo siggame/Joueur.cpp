@@ -109,20 +109,15 @@ void Joueur::BaseGameManager::initGameObjects(boost::property_tree::ptree& delta
     }
 }
 
-boost::property_tree::ptree* Joueur::BaseGameManager::orderAI(const std::string& order, boost::property_tree::ptree* args)
+std::vector<boost::property_tree::ptree*>* Joueur::BaseGameManager::getOrderArgsPtrees(boost::property_tree::ptree* args)
 {
-    throw new std::exception("Joueur::BaseGameManager::orderAI should not be called directly. Intended as interface function.");
-}
-
-std::vector<boost::property_tree::ptree&>& Joueur::BaseGameManager::getOrderArgsPtrees(boost::property_tree::ptree* args)
-{
-    std::vector<boost::property_tree::ptree&> ptrees;
+    auto ptrees = new std::vector<boost::property_tree::ptree*>;
 
     if (args != nullptr)
     {
         for (auto kv : *args)
         {
-            ptrees.push_back(kv.second);
+            ptrees->push_back(&kv.second);
         }
     }
 
@@ -158,7 +153,7 @@ boost::property_tree::ptree* Joueur::BaseGameManager::runOnServer(Joueur::BaseGa
 
     this->client->send("run", runData);
 
-    return client->waitForEvent("ran"); // blocks here untill we get the data from the run event back from the server
+    return client->waitForEvent("ran"); // blocks here until we get the data from the run event back from the server
 }
 
 bool Joueur::BaseGameManager::unserializeBool(boost::property_tree::ptree& ptree)
@@ -248,7 +243,6 @@ std::vector<float>& Joueur::BaseGameManager::unserializeVector(boost::property_t
 
 std::vector<std::string>& Joueur::BaseGameManager::unserializeVector(boost::property_tree::ptree& delta, std::vector<std::string>* list)
 {
-
     list = this->resizeVectorFromDelta<std::string>(list, delta);
 
     for (auto kv : delta)
