@@ -5,9 +5,14 @@
 #define JOUEUR_${game_name.upper()}_AI_H
 
 #include "${lowercase_first(game_name)}.h"
+#Include "game.h"
+% for game_obj_key in sort_dict_keys(game_objs):
+#include "${game_obj_key}.h"
+% endfor
+
 #include "../../joueur/baseAI.h"
 
-${merge("// ", "includes", '        // you can add additional #includes here for your AI.')}
+${merge("// ", "includes", '// you can add additional #includes here for your AI.')}
 
 /// <summary>
 /// This the header file for where you build your AI for the ${game_name} game.

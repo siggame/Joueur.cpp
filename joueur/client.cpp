@@ -247,6 +247,11 @@ void Joueur::Client::autoHandleDelta(boost::property_tree::ptree data)
     try
     {
         this->gameManager->deltaUpdate(data);
+
+        if (this->started)
+        {
+            this->ai->gameUpdated();
+        }
     }
     catch (std::exception& e)
     {

@@ -5,10 +5,14 @@
 #define JOUEUR_CHECKERS_AI_H
 
 #include "checkers.h"
+#include "game.h"
+#include "checker.h"
+#include "gameObject.h"
+#include "player.h"
 #include "../../joueur/baseAI.h"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add additional #includes here for your AI.
+#include "checker.h"
 // <<-- /Creer-Merge: includes -->>
 
 /// <summary>
@@ -28,7 +32,25 @@ class Checkers::AI : public Joueur::BaseAI
         Checkers::Player* player;
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add additional fields here for your AI to use
+        struct Point
+        {
+            Point() {};
+            Point(int inX, int inY) : x(inX), y(inY) {};
+            Point(int inX, int inY, bool jump) : x(inX), y(inY), requiresJump(jump) {};
+            int x = -1;
+            int y = -1;
+            bool requiresJump = false;
+        };
+
+        struct MoveData
+        {
+            Checkers::Checker* checker;
+            Point point;
+        };
+
+        bool cantMove = false;
+        Checkers::Checker* forceChecker;
+        std::vector<std::vector<Checkers::Checker*>> checkersMap;
         // <<-- /Creer-Merge: fields -->>
 
 
@@ -63,7 +85,8 @@ class Checkers::AI : public Joueur::BaseAI
         bool runTurn();
 
         // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add additional methods here for your AI to call
+        void clearCheckersMap();
+        MoveData* findMove();
         // <<-- /Creer-Merge: methods -->>
 };
 

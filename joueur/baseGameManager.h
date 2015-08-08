@@ -86,7 +86,7 @@ std::vector<T>& Joueur::BaseGameManager::unserializeVectorOfGameObjects(boost::p
     for (auto kv : ptree)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list->size())
+        if (index < list->size())
         {
             (*list)[index] = (T)this->unserializeGameObject(kv.second);
         }

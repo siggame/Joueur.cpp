@@ -3,7 +3,6 @@
 #include "baseGameObject.h"
 #include "basePlayer.h"
 #include "client.h"
-#include <string>
 
 Joueur::BaseGameManager::BaseGameManager(Joueur::BaseGame* game, Joueur::BaseAI* ai)
 {
@@ -174,18 +173,19 @@ float Joueur::BaseGameManager::unserializeFloat(boost::property_tree::ptree& ptr
 std::string Joueur::BaseGameManager::unserializeString(boost::property_tree::ptree& ptree)
 {
     auto data = ptree.data();
-    if (data == this->DELTA_REMOVED) {
+    if (data == this->DELTA_REMOVED)
+    {
         return "";
     }
 
     return data;
 }
 
-Joueur::BaseGameObject* Joueur::BaseGameManager::unserializeGameObject(boost::property_tree::ptree& delta)
+Joueur::BaseGameObject* Joueur::BaseGameManager::unserializeGameObject(boost::property_tree::ptree& ptree)
 {
-    if (delta.size() == 1 && delta.get_child_optional("id")) // then it's a game object reference
+    if (&ptree != nullptr && ptree.size() == 1 && ptree.get_child_optional("id")) // then it's a game object reference
     {
-        return this->getGameObject(delta.get_child("id").data());
+        return this->getGameObject(ptree.get_child("id").data());
     }
 
     return nullptr;
@@ -200,7 +200,7 @@ std::vector<bool>& Joueur::BaseGameManager::unserializeVector(boost::property_tr
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list->size())
+        if (index < list->size())
         {
             (*list)[index] = this->unserializeBool(kv.second);
         }
@@ -216,7 +216,7 @@ std::vector<int>& Joueur::BaseGameManager::unserializeVector(boost::property_tre
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list->size())
+        if (index < list->size())
         {
             (*list)[index] = this->unserializeInt(kv.second);
         }
@@ -232,7 +232,7 @@ std::vector<float>& Joueur::BaseGameManager::unserializeVector(boost::property_t
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list->size())
+        if (index < list->size())
         {
             (*list)[index] = this->unserializeFloat(kv.second);
         }
@@ -248,7 +248,7 @@ std::vector<std::string>& Joueur::BaseGameManager::unserializeVector(boost::prop
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
-        if (index <= list->size())
+        if (index < list->size())
         {
             (*list)[index] = this->unserializeString(kv.second);
         }
