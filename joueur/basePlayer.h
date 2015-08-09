@@ -7,9 +7,24 @@
 class Joueur::BasePlayer
 {
     public:
+        /// <summary>
+        /// if the player lost the game or not
+        /// </summary>
         bool lost;
+
+        /// <summary>
+        /// the reason why the player lost the game
+        /// </summary>
         std::string reasonLost;
+
+        /// <summary>
+        /// the reason why the player won the game
+        /// </summary>
         std::string reasonWon;
+
+        /// <summary>
+        /// if the player won the game or not
+        /// </summary>
         bool won;
 };
 

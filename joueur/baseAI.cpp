@@ -15,7 +15,7 @@ void Joueur::BaseAI::gameUpdated()
     // empty, used as an interface function for competitiors
 }
 
-void Joueur::BaseAI::ended(const bool& won, const std::string& reason)
+void Joueur::BaseAI::ended(bool won, std::string reason)
 {
     // empty, used as an interface function for competitiors
 }
