@@ -16,16 +16,15 @@ class Joueur::BaseGameManager
 
     protected:
         Joueur::Client* client;
-        Joueur::BaseGame* game;
-        Joueur::BaseAI* ai;
 
-        BaseGameManager();
-        
+        BaseGameManager() {};
+        void setup(Joueur::BaseGame* game, Joueur::BaseAI* ai);
         virtual BaseGameObject* createGameObject(const std::string& gameObjectName);
         std::vector<boost::property_tree::ptree*>* getOrderArgsPtrees(boost::property_tree::ptree* args);
 
     public:
-        BaseGameManager(Joueur::BaseGame* game, Joueur::BaseAI* ai);
+        Joueur::BaseGame* game;
+        Joueur::BaseAI* ai;
         Joueur::BasePlayer* basePlayer;
 
         void setConstants(boost::property_tree::ptree& constants);

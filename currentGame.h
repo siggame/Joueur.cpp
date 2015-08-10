@@ -17,10 +17,15 @@ struct CurrentGame
 CurrentGame getCurrentGame(std::string gameName)
 {
     CurrentGame c;
-    if (gameName == "Checkers") {
-        c.game = new Checkers::Game();
-        c.ai = new Checkers::AI();
-        c.gameManager = new Checkers::GameManager((Checkers::Game*)c.game, (Checkers::AI*)c.ai);
+    if (gameName == "Checkers")
+    {
+        c.gameManager = new Checkers::GameManager();
+    }
+
+    if (c.gameManager != nullptr)
+    {
+        c.game = c.gameManager->game;
+        c.ai = c.gameManager->ai;
     }
 
     return c;

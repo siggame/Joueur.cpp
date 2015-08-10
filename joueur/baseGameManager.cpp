@@ -4,7 +4,7 @@
 #include "basePlayer.h"
 #include "client.h"
 
-Joueur::BaseGameManager::BaseGameManager(Joueur::BaseGame* game, Joueur::BaseAI* ai)
+void Joueur::BaseGameManager::setup(Joueur::BaseGame* game, Joueur::BaseAI* ai)
 {
     this->game = game;
     this->ai = ai;

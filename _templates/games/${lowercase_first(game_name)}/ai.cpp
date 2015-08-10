@@ -29,7 +29,7 @@ ${merge("    // ", "start", '    // This is a good place to initialize any varia
 /// </summary>
 void ${game_name}::AI::gameUpdated()
 {
-${merge("    // ", "start", '    // If a function you call triggers an update this will be called before that function returns.')}
+${merge("    // ", "game-updated", '    // If a function you call triggers an update this will be called before that function returns.')}
 }
 
 /// <summary>

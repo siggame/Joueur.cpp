@@ -8,11 +8,13 @@
 #include "${lowercase_first(game_obj_key)}.h"
 % endfor
 
-${game_name}::GameManager::GameManager(${game_name}::Game* game, ${game_name}::AI* ai)
-    : Joueur::BaseGameManager((Joueur::BaseGame*)game, (Joueur::BaseAI*)ai)
+${game_name}::GameManager::GameManager() :
+    Joueur::BaseGameManager()
 {
-    this->${lowercase_first(game_name)}Game = game;
-    this->${lowercase_first(game_name)}AI = ai;
+    this->${lowercase_first(game_name)}Game = new ${game_name}::Game();
+    this->${lowercase_first(game_name)}AI = new ${game_name}::AI();
+
+    this->setup(this->${lowercase_first(game_name)}Game, this->${lowercase_first(game_name)}AI);
 }
 
 // @overrides

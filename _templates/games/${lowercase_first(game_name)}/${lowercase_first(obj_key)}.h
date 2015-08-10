@@ -31,8 +31,12 @@ ${merge("// ", "includes", "// you can add addtional #includes(s) here.")}
 /// </summary>
 class ${game_name}::${obj_key} : public ${parent_namespace}::${(", public " + parent_namespace + "::").join(parent_classes)}${", public Joueur::BasePlayer" if obj_key == "Player" else ""}
 {
+    friend ${game_name}::GameManager;
+
     protected:
         virtual void deltaUpdateField(const std::string& fieldName, boost::property_tree::ptree& delta);
+        ${obj_key}() {${"" if (obj_key != "Game") else (' this->name = "' + game_name + '"; ')}};
+        ~${obj_key}() {};
 
     public:
 % for attr_name in obj['attribute_names']:
@@ -45,16 +49,8 @@ if shared['c++']['skippable'](obj_key, attr_name):
         ${shared['c++']['type'](attr_parms['type'])} ${attr_name};
 
 % endfor
+
 ${merge("        // ", "fields", "        // you can add addtional fields(s) here. None of them will be tracked or updated by the server.")}
-
-
-
-% if obj_key == "Game":
-        /// <summary>
-        /// Creates a new instance of ${obj_key}. Used during game initialization, do not call directly.
-        /// </summary>
-        ${obj_key}();
-% endif
 
 % for function_name in obj['function_names']:
 <% function_parms = obj['functions'][function_name]

@@ -19,13 +19,7 @@ ${merge("// ", "includes", "// you can add additional #includes(s) here.")}
 
 
 
-% if obj_key == "Game":
-${game_name}::Game::Game()
-{
-    this->name = "${game_name}";
-}
 
-% endif
 void ${game_name}::${obj_key}::deltaUpdateField(const std::string& fieldName, boost::property_tree::ptree& delta)
 {
 % for parent_class in parent_classes:

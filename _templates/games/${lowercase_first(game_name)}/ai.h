@@ -5,7 +5,7 @@
 #define JOUEUR_${game_name.upper()}_AI_H
 
 #include "${lowercase_first(game_name)}.h"
-#Include "game.h"
+#include "game.h"
 % for game_obj_key in sort_dict_keys(game_objs):
 #include "${game_obj_key}.h"
 % endfor
