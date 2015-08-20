@@ -29,3 +29,7 @@ Only `GAME_NAME` is required to run this client.
 ## Other notes
 
 C++ is the only client that can not do reflection (A language limitation). Most of that limitation is handled by the Creer templates, but when new games are added there is no way for the main function to know. Just register the game in `currentGame.h` as the others are registered. The Creer templates should handle the rest of the "reflection".
+
+### Missing features
+
+This client does not support multi-dimensional objects (e.g. an array of arrays). And no dictionaries outside the special GameObjects dictionary will merge correctly for similar reasons. The main issue is because we want to keep the delta-merging code as DRY as possible.
