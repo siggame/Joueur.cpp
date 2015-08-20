@@ -113,5 +113,5 @@ int main(int argc, char* argv[])
 
     client->play();
 
-    return 0;
+    return 1;
 }
