@@ -90,50 +90,28 @@ int main(int argc, char* argv[])
 
     client->start();
     gameManager->setupAI(startData->get_child("playerID").data());
-    ai->start();
-    ai->gameUpdated();
+
+    try
+    {
+        ai->start();
+        ai->gameUpdated();
+    }
+    catch (std::exception& e)
+    {
+        client->handleError(e, Joueur::ErrorCode::AI_ERRORED, "AI erroed during inital game start.");
+    }
+    catch (std::string& s)
+    {
+        client->handleError(std::exception(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI erroed during inital game start.");
+    }
+    catch (...)
+    {
+        client->handleError(std::exception("Unknown exception thrown"), Joueur::ErrorCode::AI_ERRORED, "AI erroed during inital game start.");
+    }
+
     //delete startData;
 
-    while (true)
-    {
-        boost::property_tree::ptree* orderData = client->waitForEvent("order");
-
-        std::string order = orderData->get_child("order").data();
-        boost::property_tree::ptree* returnedData = nullptr;
-
-        try
-        {
-            auto optionalOrderArgs = orderData->get_child_optional("args");
-            boost::property_tree::ptree* args = nullptr;
-            if (optionalOrderArgs)
-            {
-                args = optionalOrderArgs.get_ptr();
-            }
-            returnedData = gameManager->orderAI(order, args);
-        }
-        catch (std::exception& e)
-        {
-            client->handleError(e, Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
-        }
-        catch (std::string& s)
-        {
-            client->handleError(std::exception(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
-        }
-        catch (...)
-        {
-            client->handleError(std::exception("Unknown exception thrown"), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
-        }
-
-        boost::property_tree::ptree finishedData;
-        finishedData.add_child("finished", boost::property_tree::ptree(order));
-        if (returnedData != nullptr)
-        {
-            finishedData.add_child("returned", *returnedData);
-        }
-
-        client->send("finished", finishedData);
-        delete returnedData;
-    }
+    client->play();
 
     return 0;
 }

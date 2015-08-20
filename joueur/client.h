@@ -38,6 +38,7 @@ class Joueur::Client
         
         void autoHandle(const std::string& eventName, boost::property_tree::ptree* data);
         void autoHandleDelta(boost::property_tree::ptree data);
+        void autoHandleOrder(boost::property_tree::ptree data);
         void autoHandleInvalid(boost::property_tree::ptree data);
         void autoHandleOver();
 
@@ -58,6 +59,7 @@ class Joueur::Client
         void send(const std::string& eventName, boost::property_tree::ptree& data);
         void send(const std::string& eventName, boost::property_tree::ptree* data);
         void start();
+        void play();
         void disconnect();
         void handleError(std::exception& e, int errorCode, std::string errorMessage);
         boost::property_tree::ptree* waitForEvent(const std::string& eventName);

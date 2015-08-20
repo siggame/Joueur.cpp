@@ -63,7 +63,6 @@ namespace Joueur
                 case Joueur::ErrorCode::AI_ERRORED:
                     name = "AI Errored";
                     break;
-
             }
 
             std::cerr << "Exception: '" << name << "' " << errorMessage << "\n";
@@ -78,7 +77,6 @@ namespace Joueur
         {
             Joueur::ErrorCode::handleError(nullptr, errorCode, errorMessage);
         }
-
     }
 };
 

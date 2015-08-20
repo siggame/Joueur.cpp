@@ -33,9 +33,14 @@ void Joueur::Client::start()
     this->started = true;
 }
 
+void Joueur::Client::play()
+{
+    this->waitForEvent("");
+}
+
 void Joueur::Client::connectTo(Joueur::BaseGame* game, BaseAI* ai, Joueur::BaseGameManager* gameManager, const std::string server, const std::string port, bool printIO)
 {
-    this->printIO = true;
+    this->printIO = printIO;
     this->ai = ai;
     this->game = game;
     this->gameManager = gameManager;
@@ -124,9 +129,7 @@ boost::property_tree::ptree* Joueur::Client::waitForEvent(const std::string& eve
             auto serverEvent = eventsStack.top();
             eventsStack.pop();
 
-            std::cout << "got event: " << serverEvent.eventName << std::endl;
-
-            if (eventName == serverEvent.eventName)
+            if (eventName != "" && eventName == serverEvent.eventName)
             {
                 return serverEvent.data;
             }
@@ -232,6 +235,10 @@ void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tr
     {
         this->autoHandleDelta(*data);
     }
+    else if (eventName == "order")
+    {
+        this->autoHandleOrder(*data);
+    }
     else if (eventName == "over")
     {
         this->autoHandleOver();
@@ -257,6 +264,45 @@ void Joueur::Client::autoHandleDelta(boost::property_tree::ptree data)
     {
         this->handleError(e, Joueur::ErrorCode::DELTA_MERGE_FAILURE, "Error handling delta");
     }
+}
+
+void Joueur::Client::autoHandleOrder(boost::property_tree::ptree data)
+{
+    std::string order = data.get_child("order").data();
+    boost::property_tree::ptree* returnedData = nullptr;
+
+    try
+    {
+        auto optionalOrderArgs = data.get_child_optional("args");
+        boost::property_tree::ptree* args = nullptr;
+        if (optionalOrderArgs)
+        {
+            args = optionalOrderArgs.get_ptr();
+        }
+        returnedData = gameManager->orderAI(order, args);
+    }
+    catch (std::exception& e)
+    {
+        this->handleError(e, Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
+    }
+    catch (std::string& s)
+    {
+        this->handleError(std::exception(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
+    }
+    catch (...)
+    {
+        this->handleError(std::exception("Unknown exception thrown"), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
+    }
+
+    boost::property_tree::ptree finishedData;
+    finishedData.add_child("finished", boost::property_tree::ptree(order));
+    if (returnedData != nullptr)
+    {
+        finishedData.add_child("returned", *returnedData);
+    }
+
+    this->send("finished", finishedData);
+    delete returnedData;
 }
 
 void Joueur::Client::autoHandleOver()
