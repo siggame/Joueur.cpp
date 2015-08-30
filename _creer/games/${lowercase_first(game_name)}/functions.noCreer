@@ -18,13 +18,24 @@ if not 'c++' in shared:
             else: # should be null and GameObjects
                 return "NULL"
         else:
-            if base_type == "string":
-                return '"' + default + '"'
-            elif base_type == "boolean":
-                return str(default).lower()
-            elif base_type == "float":
-                return "" + default + "f"
+            cpp_value(type_obj, default)
     shared['c++']['default'] = cpp_default
+
+    def cpp_value(type_obj, default):
+        base_type = type_obj['name']
+        if base_type == "string":
+            return '"' + default + '"'
+        elif base_type == "boolean":
+            return str(default).lower()
+        elif base_type == "float":
+            return str(default) + "f"
+        elif base_type == "int":
+            return str(default)
+        elif base_type == "dictionary" or base_type == "list":
+            raise Exception("C++ client does not support default values for dicts/lists, someone should figure that out")
+        else: # should be null and GameObjects
+            return "nullptr"
+    shared['c++']['value'] = cpp_value
 
     def cpp_type(type_obj):
         base_type = type_obj['name']
@@ -79,12 +90,16 @@ if not 'c++' in shared:
             return 'unserializeGameObject(' + ptree_name + ')'
     shared['c++']['unserialize_function'] = cpp_unserialize_function
 
-    def cpp_inline_args(parms):
+    def cpp_inline_args(parms, optional=False):
         if 'arguments' in parms:
             args = parms['arguments']
             arg_strings = []
             for arg_parms in args:
-                arg_strings.append(cpp_type(arg_parms['type']) + " " + arg_parms['name'])
+                arg_string = cpp_type(arg_parms['type']) + " " + arg_parms['name']
+                if optional and arg_parms['optional']:
+                    arg_string += " = " + cpp_value(arg_parms['type'], arg_parms['default'])
+                arg_strings.append(arg_string)
+
             return ", ".join(arg_strings)
         return ""
     shared['c++']['inline_args'] = cpp_inline_args

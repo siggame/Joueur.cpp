@@ -67,7 +67,7 @@ return_type = None
 <% return_type = shared['c++']['type'](function_parms['returns']['type'])
 %>        /// <returns>${function_parms['returns']['description']}</returns>
 % endif
-        ${return_type or 'void'} ${function_name}(${shared['c++']['inline_args'](function_parms)});
+        ${return_type or 'void'} ${function_name}(${shared['c++']['inline_args'](function_parms, optional=True)});
 
 % endfor
 
