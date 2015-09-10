@@ -247,6 +247,10 @@ void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tr
     {
         this->autoHandleInvalid(*data);
     }
+    else if (eventName == "unauthenticated")
+    {
+        this->autoHandleUnauthenticated();
+    }
 }
 
 void Joueur::Client::autoHandleDelta(boost::property_tree::ptree data)
@@ -329,4 +333,9 @@ void Joueur::Client::autoHandleInvalid(boost::property_tree::ptree data)
     ss << "Invalid event data: ";
     boost::property_tree::write_json(ss, data);
     this->handleError(std::exception("Invalid Event"), Joueur::ErrorCode::INVALID_EVENT, ss.str());
+}
+
+void Joueur::Client::autoHandleUnauthenticated()
+{
+    this->handleError(std::exception("Authentication Error"), Joueur::ErrorCode::UNAUTHENTICATED, "Could not log into server");
 }

@@ -20,6 +20,7 @@ namespace Joueur
         const static int INVALID_EVENT = 28;
         const static int GAME_NOT_FOUND = 29;
         const static int MALFORMED_JSON = 30;
+        const static int UNAUTHENTICATED = 31;
         const static int AI_ERRORED = 42;
 
         static void handleError(std::exception* e, int errorCode, const std::string& errorMessage)
@@ -59,6 +60,9 @@ namespace Joueur
                     break;
                 case Joueur::ErrorCode::GAME_NOT_FOUND:
                     name = "Game Not Found";
+                    break;
+                case Joueur::ErrorCode::UNAUTHENTICATED:
+                    name = "Unauthenticated";
                     break;
                 case Joueur::ErrorCode::AI_ERRORED:
                     name = "AI Errored";
