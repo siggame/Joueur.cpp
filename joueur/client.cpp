@@ -272,7 +272,7 @@ void Joueur::Client::autoHandleDelta(boost::property_tree::ptree data)
 
 void Joueur::Client::autoHandleOrder(boost::property_tree::ptree data)
 {
-    std::string order = data.get_child("order").data();
+    std::string order = data.get_child("name").data();
     boost::property_tree::ptree* returnedData = nullptr;
 
     try
@@ -299,7 +299,7 @@ void Joueur::Client::autoHandleOrder(boost::property_tree::ptree data)
     }
 
     boost::property_tree::ptree finishedData;
-    finishedData.add_child("finished", boost::property_tree::ptree(order));
+    finishedData.add_child("orderIndex", boost::property_tree::ptree(data.get_child("index").data()));
     if (returnedData != nullptr)
     {
         finishedData.add_child("returned", *returnedData);
