@@ -15,7 +15,7 @@ void Joueur::BaseGameManager::setup(Joueur::BaseGame* game, Joueur::BaseAI* ai)
 
 void Joueur::BaseGameManager::setConstants(boost::property_tree::ptree& constants)
 {
-    this->DELTA_LIST_LENGTH = constants.get_child("DELTA_ARRAY_LENGTH").data(); // TODO: update the ptree key when moved from ARRAY -> LIST
+    this->DELTA_LIST_LENGTH = constants.get_child("DELTA_LIST_LENGTH").data();
     this->DELTA_REMOVED = constants.get_child("DELTA_REMOVED").data();
 }
 
