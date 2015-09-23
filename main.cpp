@@ -17,6 +17,7 @@ int main(int argc, char* argv[])
         ("port,p", po::value<std::string>()->default_value("3000"), "the port to connect to on the server. Can be defined on the server arg via server:port")
         ("playerName,n", po::value<std::string>()->default_value(""), "the name you want to use as your AI\'s player name. This over-rides the name you set in your code")
         ("password,w", po::value<std::string>()->default_value(""), "the password required for authentication on official servers")
+        ("gameSettings", po::value<std::string>()->default_value(""), "Any settings for the game server to force. Must be url parms formatted (key=value&otherKey=otherValue)")
         ("session,r", po::value<std::string>()->default_value("*"), "the requested game session you want to play on the server")
         ("printIO", "(debugging) print IO through the TCP socket to the terminal");
 
@@ -44,6 +45,7 @@ int main(int argc, char* argv[])
     std::string port = vm["port"].as<std::string>();
     std::string playerName = vm["playerName"].as<std::string>();
     std::string password = vm["password"].as<std::string>();
+    std::string gameSettings = vm["gameSettings"].as<std::string>();
     std::string requestedSession = vm["session"].as<std::string>();
     bool printIO = (vm.count("printIO") > 0);
 
@@ -77,6 +79,7 @@ int main(int argc, char* argv[])
     playData.add_child("gameName", boost::property_tree::ptree(gameName));
     playData.add_child("playerName", boost::property_tree::ptree(playerName));
     playData.add_child("password", boost::property_tree::ptree(password));
+    playData.add_child("gameSettings", boost::property_tree::ptree(gameSettings));
     playData.add_child("requestedSession", boost::property_tree::ptree(requestedSession));
     playData.add_child("clientType", boost::property_tree::ptree("C++"));
     client->send("play", playData);

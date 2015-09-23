@@ -35,7 +35,7 @@ class Joueur::Client
 
         void sendRaw(const std::string& str);
         void waitForEvents();
-        
+
         void autoHandle(const std::string& eventName, boost::property_tree::ptree* data);
         void autoHandleDelta(boost::property_tree::ptree data);
         void autoHandleOrder(boost::property_tree::ptree data);
