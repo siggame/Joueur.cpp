@@ -17,7 +17,7 @@ namespace Joueur
         const static int REFLECTION_FAILED = 25; // impossible with c++?
         const static int UNKNOWN_EVENT_FROM_SERVER = 26;
         const static int SERVER_TIMEOUT = 27;
-        const static int INVALID_EVENT = 28;
+        const static int FATAL_EVENT = 28;
         const static int GAME_NOT_FOUND = 29;
         const static int MALFORMED_JSON = 30;
         const static int UNAUTHENTICATED = 31;
@@ -55,8 +55,8 @@ namespace Joueur
                 case Joueur::ErrorCode::SERVER_TIMEOUT:
                     name = "Server Timeout";
                     break;
-                case Joueur::ErrorCode::INVALID_EVENT:
-                    name = "Invalid Event";
+                case Joueur::ErrorCode::FATAL_EVENT:
+                    name = "Fatal Event";
                     break;
                 case Joueur::ErrorCode::GAME_NOT_FOUND:
                     name = "Game Not Found";

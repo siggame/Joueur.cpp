@@ -12,6 +12,7 @@ class Joueur::BaseAI
         virtual std::string getName();
         virtual void start();
         virtual void ended(bool won, std::string reason);
+        virtual void invalid(std::string message);
         virtual void gameUpdated();
 };
 

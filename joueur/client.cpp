@@ -247,9 +247,9 @@ void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tr
     {
         this->autoHandleInvalid(*data);
     }
-    else if (eventName == "unauthenticated")
+    else if (eventName == "fatal")
     {
-        this->autoHandleUnauthenticated();
+        this->autoHandleFatal(*data);
     }
 }
 
@@ -329,13 +329,25 @@ void Joueur::Client::autoHandleOver()
 
 void Joueur::Client::autoHandleInvalid(boost::property_tree::ptree data)
 {
-    std::stringstream ss;
-    ss << "Invalid event data: ";
-    boost::property_tree::write_json(ss, data);
-    this->handleError(std::exception("Invalid Event"), Joueur::ErrorCode::INVALID_EVENT, ss.str());
+    try
+    {
+        this->ai->invalid(data.get_child("message").data());
+    }
+    catch (std::exception& e)
+    {
+        this->handleError(e, Joueur::ErrorCode::AI_ERRORED, "AI errored when running invalid().");
+    }
+    catch (std::string& s)
+    {
+        this->handleError(std::exception(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI errored when running invalid().");
+    }
+    catch (...)
+    {
+        this->handleError(std::exception("AI Errored on Invalid"), Joueur::ErrorCode::AI_ERRORED, "AI errored when running invalid().");
+    }
 }
 
-void Joueur::Client::autoHandleUnauthenticated()
+void Joueur::Client::autoHandleFatal(boost::property_tree::ptree data)
 {
-    this->handleError(std::exception("Authentication Error"), Joueur::ErrorCode::UNAUTHENTICATED, "Could not log into server");
+    this->handleError(std::exception("Fatal Error"), Joueur::ErrorCode::FATAL_EVENT, data.get_child("message").data());
 }

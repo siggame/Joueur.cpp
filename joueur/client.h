@@ -41,7 +41,7 @@ class Joueur::Client
         void autoHandleOrder(boost::property_tree::ptree data);
         void autoHandleOver();
         void autoHandleInvalid(boost::property_tree::ptree data);
-        void autoHandleUnauthenticated();
+        void autoHandleFatal(boost::property_tree::ptree data);
 
     public:
         #pragma region Singleton Pattern

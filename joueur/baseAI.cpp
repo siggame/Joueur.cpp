@@ -1,4 +1,5 @@
 #include "baseAI.h"
+#include <iostream>
 
 std::string Joueur::BaseAI::getName()
 {
@@ -8,6 +9,12 @@ std::string Joueur::BaseAI::getName()
 void Joueur::BaseAI::start()
 {
     // empty, used as an interface function for competitiors
+}
+
+void Joueur::BaseAI::invalid(std::string message)
+{
+    std::cerr << "INVALID: " << message << std::endl;
+    // used as an interface function for competitiors
 }
 
 void Joueur::BaseAI::gameUpdated()
