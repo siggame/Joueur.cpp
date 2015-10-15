@@ -11,5 +11,5 @@ void Joueur::DeltaMergeable::deltaUpdate(boost::property_tree::ptree& delta)
 
 void Joueur::DeltaMergeable::deltaUpdateField(const std::string& fieldName, boost::property_tree::ptree& delta)
 {
-    throw new std::exception("Cannot call deltaUpdateField base directly");
+    throw new std::runtime_error("Cannot call deltaUpdateField base directly");
 }

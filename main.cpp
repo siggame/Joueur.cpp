@@ -108,11 +108,11 @@ int main(int argc, char* argv[])
     }
     catch (std::string& s)
     {
-        client->handleError(std::exception(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI erroed during inital game start.");
+        client->handleError(std::runtime_error(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI erroed during inital game start.");
     }
     catch (...)
     {
-        client->handleError(std::exception("Unknown exception thrown"), Joueur::ErrorCode::AI_ERRORED, "AI erroed during inital game start.");
+        client->handleError(std::runtime_error("Unknown exception thrown"), Joueur::ErrorCode::AI_ERRORED, "AI erroed during inital game start.");
     }
 
     //delete startData;

@@ -26,7 +26,7 @@ void Joueur::BaseGameManager::setupAI(const std::string& playerID)
 
 boost::property_tree::ptree* Joueur::BaseGameManager::orderAI(const std::string& order, boost::property_tree::ptree* args)
 {
-    throw new std::exception("Joueur::BaseGameManager::orderAI should not be called directly");
+    throw new std::runtime_error("Joueur::BaseGameManager::orderAI should not be called directly");
 }
 
 // Serialization \\
@@ -130,7 +130,7 @@ bool Joueur::BaseGameManager::hasGameObject(const std::string& id)
 
 Joueur::BaseGameObject* Joueur::BaseGameManager::createGameObject(const std::string& gameObjectName)
 {
-    throw new std::exception("Call to Joueur::BaseGameManager::createGameObject(str) is illegal!");
+    throw new std::runtime_error("Call to Joueur::BaseGameManager::createGameObject(str) is illegal!");
 }
 
 Joueur::BaseGameObject* Joueur::BaseGameManager::getGameObject(const std::string& id)

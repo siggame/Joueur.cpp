@@ -27,7 +27,7 @@ Joueur::BaseGameObject* ${game_name}::GameManager::createGameObject(const std::s
     }
 % endfor
 
-    throw new std::exception(("Game object '" + gameObjectName + "' not found to create new instance of").c_str());
+    throw new std::runtime_error(("Game object '" + gameObjectName + "' not found to create new instance of").c_str());
 }
 
 // @overrides
