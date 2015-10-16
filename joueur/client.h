@@ -62,7 +62,7 @@ class Joueur::Client
         void start();
         void play();
         void disconnect();
-        void handleError(std::exception& e, int errorCode, std::string errorMessage);
+        void handleError(std::exception e, int errorCode, std::string errorMessage);
         boost::property_tree::ptree* waitForEvent(const std::string& eventName);
         boost::property_tree::ptree* runOnServer(BaseGameObject caller, std::string functionName, boost::property_tree::ptree args);
 };

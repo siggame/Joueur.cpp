@@ -7,7 +7,7 @@
 #include "${lowercase_first(game_name)}.h"
 #include "game.h"
 % for game_obj_key in sort_dict_keys(game_objs):
-#include "${game_obj_key}.h"
+#include "${lowercase_first(game_obj_key)}.h"
 % endfor
 
 #include "../../joueur/baseAI.h"

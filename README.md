@@ -19,16 +19,24 @@ All inspiration taken from [MST's SIG-GAME framework](https://github.com/siggame
 
 ## How to Run
 
-```
-a.out GAME_NAME -s SERVER -p PORT -n PLAYER_NAME
-```
+You will need Boost v 1.58. Newer versions may work as well.
 
-Only `GAME_NAME` is required to run this client.
+### Windows
 
+For windows Boost has a simple way to [compile from source using bootstrap](http://www.boost.org/doc/libs/1_58_0/more/getting_started/windows.html). You'll need to do that. We've added a Visual Studio solution to use with VC++. Just add the directory you built Boost in the Project's linker configuration. You'll also need to set command line arguments like the other clients.
+
+### Linux
+
+Make sure you've installed boost. The libboost-all-dev package should be up to date. Then:
+
+```
+make
+client GAME_NAME -s SERVER -p PORT
+```
 
 ## Other notes
 
-C++ is the only client that can not do reflection (A language limitation). Most of that limitation is handled by the Creer templates, but when new games are added there is no way for the main function to know. Just register the game in `currentGame.h` as the others are registered. The Creer templates should handle the rest of the "reflection".
+C++ is the only client that can not do reflection (A language limitation). Most of that limitation is handled by the Creer templates, but when new games are added there is no way for the main function to know. Just register the game in `currentGame.h` as the others are registered. The Creer templates should handle the rest of the "reflection", but it is hackish.
 
 ### Missing features
 

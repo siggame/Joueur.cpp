@@ -99,7 +99,7 @@ void Joueur::Client::send(const std::string& eventName, boost::property_tree::pt
     this->sendRaw(ss.str());
 }
 
-void Joueur::Client::handleError(std::exception& e, int errorCode, std::string errorMessage)
+void Joueur::Client::handleError(std::exception e, int errorCode, std::string errorMessage)
 {
     this->disconnect();
     Joueur::ErrorCode::handleError(&e, errorCode, errorMessage);
@@ -291,11 +291,11 @@ void Joueur::Client::autoHandleOrder(boost::property_tree::ptree data)
     }
     catch (std::string& s)
     {
-        this->handleError(std::exception(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
+        this->handleError(std::runtime_error(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
     }
     catch (...)
     {
-        this->handleError(std::exception("Unknown exception thrown"), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
+        this->handleError(std::runtime_error("Unknown exception thrown"), Joueur::ErrorCode::AI_ERRORED, "AI errored on order '" + order + "'.");
     }
 
     boost::property_tree::ptree finishedData;
@@ -339,15 +339,15 @@ void Joueur::Client::autoHandleInvalid(boost::property_tree::ptree data)
     }
     catch (std::string& s)
     {
-        this->handleError(std::exception(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI errored when running invalid().");
+        this->handleError(std::runtime_error(s.c_str()), Joueur::ErrorCode::AI_ERRORED, "AI errored when running invalid().");
     }
     catch (...)
     {
-        this->handleError(std::exception("AI Errored on Invalid"), Joueur::ErrorCode::AI_ERRORED, "AI errored when running invalid().");
+        this->handleError(std::runtime_error("AI Errored on Invalid"), Joueur::ErrorCode::AI_ERRORED, "AI errored when running invalid().");
     }
 }
 
 void Joueur::Client::autoHandleFatal(boost::property_tree::ptree data)
 {
-    this->handleError(std::exception("Fatal Error"), Joueur::ErrorCode::FATAL_EVENT, data.get_child("message").data());
+    this->handleError(std::runtime_error("Fatal Error"), Joueur::ErrorCode::FATAL_EVENT, data.get_child("message").data());
 }
