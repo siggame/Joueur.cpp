@@ -4,6 +4,10 @@
 *.o
 *.obj
 
+# Client files
+client
+client.d
+
 # Precompiled Headers
 *.gch
 *.pch

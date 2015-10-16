@@ -99,7 +99,7 @@ void Joueur::Client::send(const std::string& eventName, boost::property_tree::pt
     this->sendRaw(ss.str());
 }
 
-void Joueur::Client::handleError(std::exception& e, int errorCode, std::string errorMessage)
+void Joueur::Client::handleError(std::exception e, int errorCode, std::string errorMessage)
 {
     this->disconnect();
     Joueur::ErrorCode::handleError(&e, errorCode, errorMessage);
