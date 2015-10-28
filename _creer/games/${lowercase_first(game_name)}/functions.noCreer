@@ -18,7 +18,7 @@ if not 'c++' in shared:
             else: # should be null and GameObjects
                 return "NULL"
         else:
-            cpp_value(type_obj, default)
+            return cpp_value(type_obj, default)
     shared['c++']['default'] = cpp_default
 
     def cpp_value(type_obj, default):
