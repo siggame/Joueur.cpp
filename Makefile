@@ -1,17 +1,26 @@
-CXXFLAGS= -Wall -std=c++11 -g
-CXXLIBS= -L /usr/lib/ -lboost_system -lboost_thread -lpthread -lboost_program_options
+# Set this to the location of your Boost libraries
+BOOST_ROOT= 
+# Set this to TRUE to use static Boost libraries
+Boost_USE_STATIC_LIBS= FALSE
+# Set this to any extra options you want to pass to cmake (Advanced)
+CMAKE_EXTRAS= 
 
-JOUEUR_FILES = $(shell find ./joueur -type f \( -iname \*.h -o -iname \*.cpp -o -iname \*.hpp \))
-GAMES_FILES = $(shell find ./games -type f \( -iname \*.h -o -iname \*.cpp -o -iname \*.hpp \))
+# Ignore stuff past here, don't edit it
 
-all:
-	make dependencies
-	make core
+all: dependencies core
 
-dependencies: ;
+dependencies:
+ifeq (,$(wildcard ./build/CMakeCache.txt))
+	@mkdir build || true
+ifeq ("$(BOOST_ROOT)","")
+	  @cd build && cmake .. -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBoost_USE_STATIC_LIBS=$(USE_STATIC_LIBS) $(CMAKE_EXTRAS)
+else
+	  @cd build && cmake .. -DCMAKE_BUILD_TYPE:STRING=RelWithDebInfo -DBoost_USE_STATIC_LIBS=$(USE_STATIC_LIBS) -DBOOST_ROOT:PATH=$(BOOST_ROOT) $(CMAKE_EXTRAS)
+endif
+endif
 
 core:
-	$(CXX) $(CXXFLAGS) main.cpp currentGame.h $(JOUEUR_FILES) $(GAMES_FILES) -o client $(CXXLIBS)
+	@cd build && $(MAKE)
 
 clean:
-	rm -f client
+	@rm -rf build
