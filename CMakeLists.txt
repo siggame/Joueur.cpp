@@ -26,6 +26,12 @@ file(GLOB FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_D
 set(FILES ${FILES}
           currentGame.h
           main.cpp)
+
+# Find PThreads if needed
+if(UNIX OR MINGW)
+    find_package(Threads)
+    set(LINK_LIBS ${CMAKE_THREAD_LIBS_INIT})
+endif(UNIX OR MINGW)
           
 # Add source files
 add_executable(client ${FILES})
@@ -41,7 +47,7 @@ else()
 endif()
 
 # Link libraries
-target_link_libraries(client ${Boost_LIBRARIES})
+target_link_libraries(client ${LINK_LIBS} ${Boost_LIBRARIES})
 
 # Need to link WinSockets and such on windows
 if(WIN32)
