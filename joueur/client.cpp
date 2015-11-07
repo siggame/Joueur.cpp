@@ -322,7 +322,6 @@ void Joueur::Client::autoHandleOver(boost::property_tree::ptree data)
 
     this->ai->ended(won, reason);
 
-    //auto message = data.get_child_optional("message");
     auto message = data.get_optional<std::string>("message");
     if (message)
     {
