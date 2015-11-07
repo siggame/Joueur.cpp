@@ -39,7 +39,7 @@ class Joueur::Client
         void autoHandle(const std::string& eventName, boost::property_tree::ptree* data);
         void autoHandleDelta(boost::property_tree::ptree data);
         void autoHandleOrder(boost::property_tree::ptree data);
-        void autoHandleOver();
+        void autoHandleOver(boost::property_tree::ptree data);
         void autoHandleInvalid(boost::property_tree::ptree data);
         void autoHandleFatal(boost::property_tree::ptree data);
 
