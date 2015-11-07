@@ -52,6 +52,7 @@ void Anarchy::AI::ended(bool won, std::string reason)
     // <<-- /Creer-Merge: ended -->>
 }
 
+#include <iostream>
 
 /// <summary>
 /// This is called every time the AI is asked to respond with a command during their turn
@@ -60,11 +61,66 @@ void Anarchy::AI::ended(bool won, std::string reason)
 bool Anarchy::AI::runTurn()
 {
     // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    // Put your game logic here for runTurn
+    // Get my first warehouse
+    auto warehouse = player->warehouses[0];
+    if(canBribe(warehouse))
+    {
+        //ignite the first enemy building
+        warehouse->ignite(player->otherPlayer->buildings[0]);
+    }
+    // Get my first fire department
+    auto fireDepartment = player->fireDepartments[0];
+    if(canBribe(fireDepartment))
+    {
+        //extinguish my first building
+        fireDepartment->extinguish(player->buildings[0]);
+    }
+    // Get my first police department
+    auto policeDepartment = player->policeDepartments[0];
+    if(canBribe(policeDepartment))
+    {
+        // Get the first enemy warehouse
+        auto toRaid = player->otherPlayer->warehouses[0];
+        // Make sure it is alive to be raided
+        if(toRaid->health > 0)
+        {
+            // Raid the first enemy warehouse
+            policeDepartment->raid(player->otherPlayer->warehouses[0]);
+        }
+    }
+    // Get my first weather station
+    auto weatherStation1 = player->weatherStations[0];
+    if(canBribe(weatherStation1))
+    {
+        // Make sure the intensity isn't at max
+        if(game->nextForecast->intensity < game->maxForecastIntensity)
+        {
+            !weatherStation1->intensify();
+        }
+        else
+        {
+            // Otherwise decrease the intensity
+            !weatherStation1->intensify(false);
+        }
+    }
+    // Get my second weather station
+    auto weatherStation2 = player->weatherStations[1];
+    if(canBribe(weatherStation2))
+    {
+        // Rotate counter-clockwise
+        weatherStation2->rotate();
+    }
     return true;
     // <<-- /Creer-Merge: runTurn -->>
 }
 
 // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // you can add additional methods here for your AI to call
+bool Anarchy::AI::canBribe(const Building* toTest) const
+{
+    //make sure it has health, hasn't been bribed, and you are the owner
+    return (toTest->health > 0 &&
+            !toTest->bribed &&
+            toTest->owner == player);
+}
 // <<-- /Creer-Merge: methods -->>

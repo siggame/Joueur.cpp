@@ -31,30 +31,30 @@ boost::property_tree::ptree* Joueur::BaseGameManager::orderAI(const std::string&
 
 // Serialization \\
 
-boost::property_tree::ptree* Joueur::BaseGameManager::serialize(bool boolean)
+boost::property_tree::ptree* Joueur::BaseGameManager::serialize_(bool boolean)
 {
     return new boost::property_tree::ptree(boolean ? "true" : "false");
 }
 
-boost::property_tree::ptree* Joueur::BaseGameManager::serialize(int number)
+boost::property_tree::ptree* Joueur::BaseGameManager::serialize_(int number)
 {
     return new boost::property_tree::ptree(std::to_string(number));
 }
 
-boost::property_tree::ptree* Joueur::BaseGameManager::serialize(float number)
+boost::property_tree::ptree* Joueur::BaseGameManager::serialize_(float number)
 {
     return new boost::property_tree::ptree(std::to_string(number));
 }
 
-boost::property_tree::ptree* Joueur::BaseGameManager::serialize(std::string str)
+boost::property_tree::ptree* Joueur::BaseGameManager::serialize_(const std::string& str)
 {
     return new boost::property_tree::ptree(str);
 }
 
-boost::property_tree::ptree* Joueur::BaseGameManager::serialize(BaseGameObject* gameObject)
+boost::property_tree::ptree* Joueur::BaseGameManager::serialize_(BaseGameObject& gameObject)
 {
     boost::property_tree::ptree* node = new boost::property_tree::ptree();
-    node->add_child("id", boost::property_tree::ptree(gameObject->id));
+    node->add_child("id", boost::property_tree::ptree(gameObject.id));
 
     return node;
 }

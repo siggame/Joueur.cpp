@@ -3,10 +3,6 @@
 
 // This file will need to be manually edited when a new game is created
 
-#include "games/checkers/game.h"
-#include "games/checkers/ai.h"
-#include "games/checkers/gameManager.h"
-
 #include "games/anarchy/game.h"
 #include "games/anarchy/ai.h"
 #include "games/anarchy/gameManager.h"
@@ -21,11 +17,7 @@ struct CurrentGame
 CurrentGame getCurrentGame(std::string gameName)
 {
     CurrentGame c;
-    if (gameName == "Checkers")
-    {
-        c.gameManager = new Checkers::GameManager();
-    }
-    else if (gameName == "Anarchy")
+    if (gameName == "Anarchy")
     {
         c.gameManager = new Anarchy::GameManager();
     }

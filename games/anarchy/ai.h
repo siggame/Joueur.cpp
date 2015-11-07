@@ -74,6 +74,12 @@ class Anarchy::AI : public Joueur::BaseAI
 
         // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
         // you can add additional methods here for your AI to call
+
+        // This is an example of a method added to the AI, you can
+        // add other functions too
+        // This returns true if a building can be bribed, false otherwise
+        bool canBribe(const Building* toTest) const;
+
         // <<-- /Creer-Merge: methods -->>
 };
 
