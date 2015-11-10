@@ -95,12 +95,12 @@ bool Anarchy::AI::runTurn()
         // Make sure the intensity isn't at max
         if(game->nextForecast->intensity < game->maxForecastIntensity)
         {
-            !weatherStation1->intensify();
+            weatherStation1->intensify();
         }
         else
         {
             // Otherwise decrease the intensity
-            !weatherStation1->intensify(false);
+            weatherStation1->intensify(true);
         }
     }
     // Get my second weather station
