@@ -65,30 +65,22 @@ bool Anarchy::AI::runTurn()
     auto warehouse = player->warehouses[0];
     if(canBribe(warehouse))
     {
-        //ignite the first enemy building that's not a headquarters
-        for(auto&& building : player->otherPlayer->buildings)
+        //ignite the first enemy building unless it's a headquarters
+        auto building = player->otherPlayer->buildings[0];
+        if(!building->isHeadquarters)
         {
-            if(!building->isHeadquarters)
-            {
-                warehouse->ignite(building);
-                break;
-            }
+            warehouse->ignite(building);
         }
     }
     // Get my first fire department
     auto fireDepartment = player->fireDepartments[0];
     if(canBribe(fireDepartment))
     {
-        //extinguish my first building that's not a headquarters
-        for(unsigned i = 0;
-            i < player->buildings.size();
-            ++i)
+        //extinguish the first building unless it's headquarters
+        auto toExtinguish = player->buildings[0];
+        if(!toExtinguish->isHeadquarters)
         {
-            if(!player->buildings[0]->isHeadquarters)
-            {
-                fireDepartment->extinguish(player->buildings[0]);
-                break;
-            }
+            fireDepartment->extinguish(toExtinguish);
         }
     }
     // Get my first police department
