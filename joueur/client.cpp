@@ -241,7 +241,7 @@ void Joueur::Client::autoHandle(const std::string& eventName, boost::property_tr
     }
     else if (eventName == "over")
     {
-        this->autoHandleOver();
+        this->autoHandleOver(*data);
     }
     else if (eventName == "invalid")
     {
@@ -309,7 +309,7 @@ void Joueur::Client::autoHandleOrder(boost::property_tree::ptree data)
     delete returnedData;
 }
 
-void Joueur::Client::autoHandleOver()
+void Joueur::Client::autoHandleOver(boost::property_tree::ptree data)
 {
     bool won = false;
     std::string reason = "";
@@ -322,8 +322,14 @@ void Joueur::Client::autoHandleOver()
 
     this->ai->ended(won, reason);
 
+    auto message = data.get_optional<std::string>("message");
+    if (message)
+    {
+        std::cout << message << std::endl;
+    }
+
     this->disconnect();
-    std::cout << "Game Over!";
+    std::cout << "Game Over!" << std::endl;
     exit(0);
 }
 
