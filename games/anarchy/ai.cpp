@@ -80,11 +80,13 @@ bool Anarchy::AI::runTurn()
     if(canBribe(fireDepartment))
     {
         //extinguish my first building that's not a headquarters
-        for(auto&& building : player->buildings)
+        for(unsigned i = 0;
+            i < player->buildings.size();
+            ++i)
         {
-            if(!building->isHeadquarters)
+            if(!player->buildings[0]->isHeadquarters)
             {
-                fireDepartment->extinguish(building);
+                fireDepartment->extinguish(player->buildings[0]);
                 break;
             }
         }
