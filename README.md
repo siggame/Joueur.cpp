@@ -1,6 +1,6 @@
 # Anarchy C++ Client
 
-This is the root of you AI. Stay out of the joueur/ folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/anarchy/`, with your very own AI living in `games/anarchy/ai.js` for you to make smarter.
+This is the root of you AI. Stay out of the joueur/ folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/anarchy/`, with your very own AI living in `games/anarchy/ai.cpp` for you to make smarter.
 
 ## How to Run
 
