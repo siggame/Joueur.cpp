@@ -10,7 +10,7 @@ This client has been tested and confirmed to work on the Campus rc##xcs213 Linux
 
 ```
 make
-.testRun MyOwnGameSession
+./testRun MyOwnGameSession
 ```
 
 If you are on your own machine, make sure you've installed boost. The libboost-all-dev package should be up to date. You'll also need cmake for make to work.
