@@ -115,7 +115,7 @@ bool Anarchy::AI::runTurn()
     auto weatherStation2 = player->weatherStations[1];
     if(canBribe(weatherStation2))
     {
-        // Rotate counter-clockwise
+        // Rotate clockwise
         weatherStation2->rotate();
     }
     return true;
