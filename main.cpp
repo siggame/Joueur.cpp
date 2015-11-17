@@ -67,7 +67,7 @@ int main(int argc, char* argv[])
 
     if (playerName.empty())
     {
-        playerName == ai->getName();
+        playerName = ai->getName();
 
         if (playerName.empty())
         {
