@@ -37,11 +37,41 @@ class Joueur::BaseGameManager
         void initGameObjects(boost::property_tree::ptree& ptree);
         boost::property_tree::ptree* runOnServer(Joueur::BaseGameObject& caller, const std::string& functionName, boost::property_tree::ptree& args);
 
-        boost::property_tree::ptree* serialize(bool boolean);
-        boost::property_tree::ptree* serialize(int number);
-        boost::property_tree::ptree* serialize(float number);
-        boost::property_tree::ptree* serialize(std::string str);
-        boost::property_tree::ptree* serialize(BaseGameObject* gameObject);
+        // Inner serializes - needed as BaseGameObject relies on baseGameManager
+        static boost::property_tree::ptree* serialize_(BaseGameObject& gameObject);
+        // Prevent conversion from pointer
+        static boost::property_tree::ptree* serialize_(bool boolean);
+        static boost::property_tree::ptree* serialize_(int number);
+        static boost::property_tree::ptree* serialize_(float number);
+        static boost::property_tree::ptree* serialize_(const std::string& str);
+
+        // Isn't pointer
+        template<bool, typename T>
+        struct serialize_functor
+        {
+            boost::property_tree::ptree* operator()(T& obj) const
+            {
+                return serialize_(obj);
+            }
+        };
+
+        // Is pointer
+        template<typename T>
+        struct serialize_functor<true, T>
+        {
+            boost::property_tree::ptree* operator()(T obj) const
+            {
+                // 1000% bad code
+                return serialize_(*reinterpret_cast<BaseGameObject*>(obj));
+            }
+        };
+
+        template<typename T>
+        boost::property_tree::ptree* serialize(T obj)
+        {
+            return serialize_functor<std::is_pointer<T>::value,
+                                     T>{}(obj);
+        }
 
         Joueur::BaseGameObject* getGameObject(const std::string& id);
         bool unserializeBool(boost::property_tree::ptree& ptree);
