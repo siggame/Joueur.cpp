@@ -7,6 +7,10 @@
 #include "games/checkers/ai.h"
 #include "games/checkers/gameManager.h"
 
+#include "games/chess/game.h"
+#include "games/chess/ai.h"
+#include "games/chess/gameManager.h"
+
 #include "games/anarchy/game.h"
 #include "games/anarchy/ai.h"
 #include "games/anarchy/gameManager.h"
@@ -24,6 +28,10 @@ CurrentGame getCurrentGame(std::string gameName)
     if (gameName == "Checkers")
     {
         c.gameManager = new Checkers::GameManager();
+    }
+    else if (gameName == "Chess")
+    {
+        c.gameManager = new Chess::GameManager();
     }
     else if (gameName == "Anarchy")
     {
