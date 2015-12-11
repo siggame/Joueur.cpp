@@ -3,6 +3,7 @@
 
 #include <iostream>
 #include "joueur.h"
+#include "ansiColorCoder.h"
 
 namespace Joueur
 {
@@ -69,11 +70,19 @@ namespace Joueur
                     break;
             }
 
-            std::cerr << "Exception: '" << name << "' " << errorMessage << "\n";
+            std::cerr << Joueur::ANSIColorCoder::RedText << "---\nError: " << name << "\n";
+
+            if(errorMessage.length() > 0) {
+                std::cerr << "---\n" << errorMessage << "\n";
+            }
+
             if (e != nullptr)
             {
-                std::cerr << e->what() << "\n";
+                std::cerr << "---\n" << *e->what() << "\n";
             }
+
+            std::cerr << "---" << Joueur::ANSIColorCoder::Reset << "\n";
+
             exit(errorCode);
         }
 

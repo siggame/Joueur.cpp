@@ -9,6 +9,7 @@
 #include "baseGame.h"
 #include "baseAI.h"
 #include "errorCode.h"
+#include "ansiColorCoder.h"
 
 #pragma region Singleton Pattern
 bool Joueur::Client::instanceFlag = false;
@@ -217,10 +218,7 @@ void Joueur::Client::waitForEvents()
                     return; // as we now have events to handle...
                 }
             }
-            else
-            {
-                std::cout << "read no chars from socket..." << std::endl;
-            }
+            // else read no chars from socket...
         }
         catch (std::exception& e)
         {
@@ -322,14 +320,15 @@ void Joueur::Client::autoHandleOver(boost::property_tree::ptree data)
 
     this->ai->ended(won, reason);
 
+    std::cout << Joueur::ANSIColorCoder::GreenText << "Game is over. " << (won ? "I won!" : "I Lost :(") << " because: " <<  reason << Joueur::ANSIColorCoder::Reset << std::endl;
+
     auto message = data.get_optional<std::string>("message");
     if (message)
     {
-        std::cout << message << std::endl;
+        std::cout << Joueur::ANSIColorCoder::CyanText << message << Joueur::ANSIColorCoder::Reset << std::endl;
     }
 
     this->disconnect();
-    std::cout << "Game Over!" << std::endl;
     exit(0);
 }
 

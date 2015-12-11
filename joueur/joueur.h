@@ -19,5 +19,3 @@ namespace Joueur
 }
 
 #endif
-
-

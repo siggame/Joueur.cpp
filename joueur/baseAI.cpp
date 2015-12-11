@@ -1,4 +1,5 @@
 #include "baseAI.h"
+#include "ansiColorCoder.h"
 #include <iostream>
 
 std::string Joueur::BaseAI::getName()
@@ -13,8 +14,8 @@ void Joueur::BaseAI::start()
 
 void Joueur::BaseAI::invalid(std::string message)
 {
-    std::cerr << "INVALID: " << message << std::endl;
     // used as an interface function for competitiors
+    std::cerr << Joueur::ANSIColorCoder::YellowText << "Invalid: " << message << Joueur::ANSIColorCoder::Reset << std::endl;
 }
 
 void Joueur::BaseAI::gameUpdated()

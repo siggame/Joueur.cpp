@@ -4,6 +4,7 @@
 #include "joueur/client.h"
 #include "joueur/baseGame.h"
 #include "joueur/baseGameManager.h"
+#include "joueur/ansiColorCoder.h"
 #include "currentGame.h"
 
 int main(int argc, char* argv[])
@@ -61,9 +62,9 @@ int main(int argc, char* argv[])
     Joueur::BaseAI* ai = c.ai;
     Joueur::BaseGameManager* gameManager = c.gameManager;
 
-    client->connectTo(game, ai, gameManager, server, port, printIO);
+    std::cout << Joueur::ANSIColorCoder::CyanText << "Connecting to: " << server << ":" << port << Joueur::ANSIColorCoder::Reset << std::endl;
 
-    std::cout << "connected to " << server << ":" << port << ".\n";
+    client->connectTo(game, ai, gameManager, server, port, printIO);
 
     if (playerName.empty())
     {
@@ -90,7 +91,7 @@ int main(int argc, char* argv[])
     gameManager->setConstants(lobbiedData->get_child("constants"));
     //delete lobbiedData;
 
-    std::cout << "In lobby for game '" << gameName << "' in session '" << gameSession << "'." << std::endl;
+    std::cout << Joueur::ANSIColorCoder::CyanText << "In lobby for game '" << gameName << "' in session '" << gameSession << "'." << Joueur::ANSIColorCoder::Reset << std::endl;
 
     boost::property_tree::ptree* startData = client->waitForEvent("start");
 
@@ -116,6 +117,8 @@ int main(int argc, char* argv[])
     }
 
     //delete startData;
+
+    std::cout << Joueur::ANSIColorCoder::GreenText << "Game is starting." << Joueur::ANSIColorCoder::Reset << std::endl;
 
     client->play();
 
