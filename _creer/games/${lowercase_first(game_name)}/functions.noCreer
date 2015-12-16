@@ -55,11 +55,11 @@ if not 'c++' in shared:
             return game_name + "::" + base_type + "*"
     shared['c++']['type'] = cpp_type
 
-    def cpp_skippage(obj_key, attr_key, skipPlayerCheck=False):
+    def cpp_skippable(obj_key, attr_key, **kwargs):
         if obj_key == "Game":
             if attr_key in ["gameObjects", "name"]:
                 return True
-        elif obj_key == "Player" and not shipPlayerCheck:
+        elif obj_key == "Player" and not "skip_player_check" in kwargs:
             if attr_key in ["lost", "reasonLost", "reasonWon", "won"]:
                 return True
         elif obj_key == "GameObject":
@@ -67,7 +67,7 @@ if not 'c++' in shared:
                 return True
 
         return False
-    shared['c++']['skippable'] = cpp_skippage
+    shared['c++']['skippable'] = cpp_skippable
 
     def cpp_unserialize_function(attr_parms, ptree_name, list_name = "nullptr"):
         type_name = attr_parms['type']['name']

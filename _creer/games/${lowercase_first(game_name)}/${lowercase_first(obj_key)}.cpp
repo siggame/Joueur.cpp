@@ -28,7 +28,7 @@ void ${game_name}::${obj_key}::deltaUpdateField(const std::string& fieldName, bo
 <% i = 0 %>
 % for attr_name in obj['attribute_names']:
 <% attr_parms = obj['attributes'][attr_name]
-if shared['c++']['skippable'](obj_key, attr_name, skipPlayerCheck=true):
+if shared['c++']['skippable'](obj_key, attr_name, skip_player_check=true):
     continue
 i += 1
 %>    ${"else " if i > 1 else ""}if (fieldName == "${attr_name}")
