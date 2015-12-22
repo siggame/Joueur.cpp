@@ -2,6 +2,9 @@
 #define CURRENTGAME_H
 
 // This file will need to be manually edited when a new game is created
+// TODO: find a way to do reflection. Giving the string gameName, we should be able to dynamically include the game files and return them as base objects
+
+// When cleaning this file for competitors remove all the references to the other games besides the game you are packaging this for
 
 #include "games/checkers/game.h"
 #include "games/checkers/ai.h"
