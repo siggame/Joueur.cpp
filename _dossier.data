@@ -1,7 +1,0 @@
-{
-    "requirements": [ "doxygen" ],
-    "command": [
-        "doxygen",
-        { "locate": "Doxyfile" }
-    ]
-}
