@@ -1,6 +1,8 @@
 #ifndef JOUEUR_ANARCHY_H
 #define JOUEUR_ANARCHY_H
 
+#include "../../gamesRegistry.h"
+
 namespace Anarchy
 {
     class Building;

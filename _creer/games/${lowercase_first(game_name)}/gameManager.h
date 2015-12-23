@@ -25,4 +25,6 @@ class ${game_name}::GameManager : public Joueur::BaseGameManager
         boost::property_tree::ptree* orderAI(const std::string& order, boost::property_tree::ptree* args);
 };
 
+#include "registry.h"
+
 #endif

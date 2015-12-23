@@ -5,7 +5,7 @@
 #include "joueur/baseGame.h"
 #include "joueur/baseGameManager.h"
 #include "joueur/ansiColorCoder.h"
-#include "currentGame.h"
+#include "gamesRegistry.h"
 
 int main(int argc, char* argv[])
 {
@@ -52,15 +52,34 @@ int main(int argc, char* argv[])
 
     Joueur::Client *client = Joueur::Client::getInstance();
 
-    CurrentGame c = getCurrentGame(gameName);
+    bool registered = false;
+    for (const auto p : function_registry::gamesRegistry_registry())
+    {
+        if(p.first == gameName)
+        {
+            registered = true;
+            break;
+        }
+    }
 
-    if (c.game == nullptr || c.ai == nullptr || c.gameManager == nullptr) {
+    if(!registered)
+    {
         Joueur::ErrorCode::handleError(Joueur::ErrorCode::GAME_NOT_FOUND, "Game '" + gameName + "' not found.");
     }
 
-    Joueur::BaseGame* game = c.game;
-    Joueur::BaseAI* ai = c.ai;
-    Joueur::BaseGameManager* gameManager = c.gameManager;
+    Joueur::BaseGameManager* gameManager = nullptr;
+
+    try
+    {
+        gameManager = function_registry::call_gamesRegistry(gameName);
+    }
+    catch (std::exception& e)
+    {
+        client->handleError(e, Joueur::ErrorCode::REFLECTION_FAILED, "Game '" + gameName + "' creating via game registry failed");
+    }
+
+    Joueur::BaseGame* game = gameManager->game;
+    Joueur::BaseAI* ai = gameManager->ai;
 
     std::cout << Joueur::ANSIColorCoder::CyanText << "Connecting to: " << server << ":" << port << Joueur::ANSIColorCoder::Reset << std::endl;
 

@@ -15,7 +15,7 @@ namespace Joueur
         const static int DISCONNECTED_UNEXPECTEDLY = 22;
         const static int CANNOT_READ_SOCKET = 23;
         const static int DELTA_MERGE_FAILURE = 24;
-        const static int REFLECTION_FAILED = 25; // impossible with c++?
+        const static int REFLECTION_FAILED = 25;
         const static int UNKNOWN_EVENT_FROM_SERVER = 26;
         const static int SERVER_TIMEOUT = 27;
         const static int FATAL_EVENT = 28;

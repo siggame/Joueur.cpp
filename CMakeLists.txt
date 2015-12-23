@@ -24,7 +24,7 @@ endif(NOT Boost_FOUND)
 file(GLOB FILES RELATIVE "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/games/*/*" "${CMAKE_CURRENT_SOURCE_DIR}/joueur/*")
 
 set(FILES ${FILES}
-          currentGame.h
+          gamesRegistry.h
           main.cpp)
 
 # Find PThreads if needed

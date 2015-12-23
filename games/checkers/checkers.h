@@ -1,6 +1,8 @@
 #ifndef JOUEUR_CHECKERS_H
 #define JOUEUR_CHECKERS_H
 
+#include "../../gamesRegistry.h"
+
 namespace Checkers
 {
     class Checker;

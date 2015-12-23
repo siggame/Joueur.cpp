@@ -1,6 +1,8 @@
 #ifndef JOUEUR_CHESS_H
 #define JOUEUR_CHESS_H
 
+#include "../../gamesRegistry.h"
+
 namespace Chess
 {
     class GameObject;
