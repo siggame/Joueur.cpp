@@ -40,9 +40,9 @@ void Chess::AI::ended(bool won, std::string reason)
 
 
 /// <summary>
-/// This is called every time the AI is asked to respond with a command during their turn
+/// This is called every time it is this AI.player's turn.
 /// </summary>
-/// <returns>represents if you want to end your turn. true means end the turn, false means to keep your turn going and re-call runTurn()</returns>
+/// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
 bool Chess::AI::runTurn()
 {
     // Here is where you'll want to code your AI.
@@ -113,7 +113,7 @@ bool Chess::AI::runTurn()
 
     // 2) print the opponent's last move to the console
     if (this->game->moves.size() > 0) {
-        std::cout << "Opponent's Last Move: '" << this->game->moves[this->game->moves.size() - 1] << "'" << std::endl;
+        std::cout << "Opponent's Last Move: '" << this->game->moves[this->game->moves.size() - 1]->san << "'" << std::endl;
     }
 
     // 3) print how much time remaining this AI has to calculate moves

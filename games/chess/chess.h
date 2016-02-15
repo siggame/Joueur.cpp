@@ -6,6 +6,7 @@
 namespace Chess
 {
     class GameObject;
+    class Move;
     class Piece;
     class Player;
 

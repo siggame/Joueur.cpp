@@ -6,6 +6,7 @@
 #include "chess.h"
 #include "game.h"
 #include "gameObject.h"
+#include "move.h"
 #include "piece.h"
 #include "player.h"
 
@@ -54,9 +55,9 @@ class Chess::AI : public Joueur::BaseAI
 
 
         /// <summary>
-        /// This is called every time the AI is asked to respond with a command during their turn
+        /// This is called every time it is this AI.player's turn.
         /// </summary>
-        /// <returns>represents if you want to end your turn. true means end the turn, false means to keep your turn going and re-call runTurn()</returns>
+        /// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
         bool runTurn();
 };
 
