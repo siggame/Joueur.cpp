@@ -1,0 +1,45 @@
+cmake_minimum_required(VERSION 2.6.0)
+project(netLink)
+
+set(OUTPUT_DIR out)
+set(SOURCE_DIR src)
+set(EXAMPLES_DIR ${SOURCE_DIR}/examples)
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${OUTPUT_DIR})
+
+include_directories(PUBLIC include)
+aux_source_directory(${SOURCE_DIR} SOURCES)
+#add_library(shared SHARED ${SOURCES})
+add_library(static STATIC ${SOURCES})
+#set_target_properties(shared PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+set_target_properties(static PROPERTIES OUTPUT_NAME ${PROJECT_NAME})
+#set_target_properties(shared PROPERTIES DEBUG_POSTFIX -d)
+set_target_properties(static PROPERTIES DEBUG_POSTFIX -d)
+
+if(WIN32)
+    #target_link_libraries(shared ws2_32)
+    set(ver ${CMAKE_SYSTEM_VERSION})
+    string(REPLACE "." "" ver ${ver})
+    string(REGEX REPLACE "([0-9])" "0\\1" ver ${ver})
+    add_definitions(-D_WIN32_WINNT=0x${ver})
+    add_definitions(-DWIN32)
+endif(WIN32)
+
+if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
+    add_definitions(-O3 -std=c++11)
+endif()
+
+if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+    add_definitions(-stdlib=libc++)
+endif()
+
+#Don't need the examples
+#add_executable(example_tcp ${EXAMPLES_DIR}/tcp.cpp)
+#add_executable(example_udp ${EXAMPLES_DIR}/udp.cpp)
+#target_link_libraries(example_tcp shared)
+#target_link_libraries(example_udp shared)
+
+#file(GLOB INCLUDE_HEADERS "include/*.h")
+#install(FILES ${INCLUDE_HEADERS} DESTINATION include/${CMAKE_PROJECT_NAME})
+#install(TARGETS shared DESTINATION lib)
