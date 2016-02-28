@@ -1,0 +1,52 @@
+<%
+
+def gen_cpp_base_type(type):
+    if type is None:
+        return 'void'
+    elif type['name'] in ['void', 'int', 'float']:
+        return type['name']
+    elif type['name'] == 'boolean':
+        return 'bool'
+    elif type['name'] == 'string':
+        return 'std::string'
+    elif type['name'] == 'null':
+        return 'void'
+    elif type['name'] not in ['list', 'dictionary']:
+        return underscore(type['name']).capitalize()
+    elif type['name'] == 'list':
+        return 'std::vector<' + gen_cpp_base_type(type['valueType']) + '>'
+    elif type['name'] == 'dictionary':
+        return 'std::unordered_map<' + gen_cpp_base_type(type['keyType']) + ', ' + gen_cpp_base_type(type['valueType']) + '>'
+    else:
+        raise Exception('UNKNOWN TYPE ENCOUNTERED -- FATAL ERROR')
+
+def make_arg(type_str):
+    if type_str in ['int', 'float', 'bool']:
+        return type_str
+    else:
+        return 'const ' + type_str + '&'
+
+def trans_default(defer):
+    if defer == True:
+        return 'true'
+    elif defer == False:
+        return 'false'
+    else:
+        return defer
+
+def make_args(params, default_values):
+    to_ret = ''
+    if 'arguments' in params:
+        for arg in params['arguments']:
+            if to_ret != '':
+                to_ret += ', '
+            to_ret += make_arg(gen_cpp_base_type(arg['type']))
+            to_ret += ' ' + underscore(arg['name'])
+            if arg['optional']:
+                to_ret += ' = ' + trans_default(arg['default'])
+    return to_ret
+
+shared['gen_base_type'] = gen_cpp_base_type
+shared['make_args'] = make_args
+
+%>

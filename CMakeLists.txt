@@ -26,8 +26,21 @@ project(${PROG_NAME})
 #build the libraries as well
 add_subdirectory(libraries)
 
+#find generated files
+file(GLOB FILES RELATIVE
+     "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/games/*/*")
+
 #add source files
-add_executable(${PROG_NAME} src/main.cpp)
+add_executable(${PROG_NAME} ${FILES}
+                            src/attr_wrapper.hpp
+                            src/base_ai.cpp
+                            src/base_ai.hpp
+                            src/base_game.hpp
+                            src/exceptions.hpp
+                            src/main.cpp
+                            src/register.cpp
+                            src/register.hpp
+                            src/sgr.hpp)
 
 #link to netlink (static)
 target_link_libraries(${PROG_NAME} static)

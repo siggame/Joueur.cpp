@@ -9,20 +9,20 @@
 #include <stdexcept>
 
 //wraps numeric and string attributes in template form
-namespace attrWrapper
+namespace attr_wrapper
 {
    //define some exceptions
-   struct NonObjectError : public std::runtime_error
+   struct Non_object_error : public std::runtime_error
    {
       using std::runtime_error::runtime_error;
    };
 
-   struct MemberNotFoundError : public std::runtime_error
+   struct Member_not_found_error : public std::runtime_error
    {
       using std::runtime_error::runtime_error;
    };
 
-   struct TypeError : public std::runtime_error
+   struct Type_error : public std::runtime_error
    {
       using std::runtime_error::runtime_error;
    };
@@ -35,7 +35,7 @@ namespace attrWrapper
       //make sure it is an object too
       if(!doc.IsObject())
       {
-         throw NonObjectError("Document is not object.");
+         throw Non_object_error("Document is not object.");
       }
       auto itr = doc.FindMember(name);
       if(itr == doc.MemberEnd())
@@ -43,26 +43,26 @@ namespace attrWrapper
          std::string error = "Member ";
          error += name;
          error += " not found";
-         throw MemberNotFoundError(error);
+         throw Member_not_found_error(error);
       }
       return itr;
    }
    //generate type error
    //not that a space is present to allow for for an
-   inline TypeError genTypeError(const std::string& name,
+   inline Type_error genTypeError(const std::string& name,
                                  const std::string& type)
    {
       std::string toReturn = name;
       toReturn += " is not a" + type;
-      return TypeError(toReturn);
+      return Type_error(toReturn);
    }
 
    //wrapper that throws errors and has templates and stuff
    template<typename T>
-   inline T getAttribute(const rapidjson::Document& doc, const char* name);
+   inline T get_attribute(const rapidjson::Document& doc, const char* name);
 
    template<>
-   inline int getAttribute<int>(const rapidjson::Document& doc,
+   inline int get_attribute<int>(const rapidjson::Document& doc,
                                 const char* name)
    {
       auto loc = checkExist(doc, name);
@@ -74,7 +74,7 @@ namespace attrWrapper
    }
 
    template<>
-   inline unsigned getAttribute<unsigned>(const rapidjson::Document& doc,
+   inline unsigned get_attribute<unsigned>(const rapidjson::Document& doc,
                                           const char* name)
    {
       auto loc = checkExist(doc, name);
@@ -86,7 +86,7 @@ namespace attrWrapper
    }
 
    template<>
-   inline double getAttribute<double>(const rapidjson::Document& doc,
+   inline double get_attribute<double>(const rapidjson::Document& doc,
                                       const char* name)
    {
       auto loc = checkExist(doc, name);
@@ -98,8 +98,8 @@ namespace attrWrapper
    }
 
    template<>
-   inline const char* getAttribute<const char*>(const rapidjson::Document& doc,
-                                                const char* name)
+   inline const char* get_attribute<const char*>(const rapidjson::Document& doc,
+                                                 const char* name)
    {
       auto loc = checkExist(doc, name);
       if(!loc->value.IsString())
@@ -110,8 +110,8 @@ namespace attrWrapper
    }
 
    template<>
-   inline std::string getAttribute<std::string>(const rapidjson::Document& doc,
-                                                const char* name)
+   inline std::string get_attribute<std::string>(const rapidjson::Document& doc,
+                                                 const char* name)
    {
       auto loc = checkExist(doc, name);
       if(!loc->value.IsString())
@@ -123,8 +123,8 @@ namespace attrWrapper
    }
 
    template<>
-   inline bool getAttribute<bool>(const rapidjson::Document& doc,
-                                  const char* name)
+   inline bool get_attribute<bool>(const rapidjson::Document& doc,
+                                   const char* name)
    {
       auto loc = checkExist(doc, name);
       if(!loc->value.IsBool())
