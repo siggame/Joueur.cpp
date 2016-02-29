@@ -1,20 +1,20 @@
-#include "netLink.h"
+//Don't edit this file
+//See readme.md for details on what to edit
+
 #include "tclap/CmdLine.h"
 #include "attr_wrapper.hpp"
 #include "register.hpp"
 #include "sgr.hpp"
+#include "connection.hpp"
 
 #include <exception>
 #include <iostream>
 
 int main(int argc, const char* argv[])
 {
+   using namespace cpp_client;
    try
    {
-      //need to do this for Windows
-      #ifdef WIN32
-         netLink::init();
-      #endif // WIN32
       TCLAP::CmdLine cmd("Runs the C++ client.  Game name must be provided.");
       TCLAP::ValueArg<std::string> string_args[] =
       {
@@ -112,6 +112,10 @@ int main(int argc, const char* argv[])
          cmd.add(int_args[i]);
       }
       cmd.parse(argc, argv);
+      //retrieve the game
+      auto& game = cpp_client::Game_registry::get_game(game_arg.getValue());
+      Connection conn(print_io.getValue());
+      conn.connect(string_args[server].getValue().c_str(), int_args[port].getValue());
    }
    catch(const std::exception& e)
    {
@@ -121,6 +125,6 @@ int main(int argc, const char* argv[])
    catch(...)
    {
       std::cerr << sgr::text_red << "An unknown error occured." << sgr::reset << std::endl;
-      return 2;
+      return 3;
    }
 }

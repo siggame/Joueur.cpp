@@ -14,7 +14,7 @@ ${merge("// ", "includes", "// You can add additional #includes here")}
 namespace cpp_client
 {
 
-namespace ${underscore(game_name).upper()}
+namespace ${underscore(game_name)}
 {
 
 /// <summary>

@@ -36,6 +36,8 @@ add_executable(${PROG_NAME} ${FILES}
                             src/base_ai.cpp
                             src/base_ai.hpp
                             src/base_game.hpp
+                            src/connection.cpp
+                            src/connection.hpp
                             src/exceptions.hpp
                             src/main.cpp
                             src/register.cpp

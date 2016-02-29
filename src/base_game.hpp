@@ -12,7 +12,7 @@ class Base_game
 {
 public:
    //generate the AI to be used for the game
-   virtual std::unique_ptr<Base_ai> create_ai() const;
+   virtual std::unique_ptr<Base_ai> create_ai() const = 0;
    virtual ~Base_game() = default;
 };
 
