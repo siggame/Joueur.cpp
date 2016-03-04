@@ -32,7 +32,7 @@ public:
       ;
    }
 
-   //enable moving - diable copying
+   //enable moving and disable copying
    Any(Any&& rhs) = default;
    Any& operator=(Any&& rhs) = default;
    Any(const Any&) = delete;
@@ -80,6 +80,10 @@ private:
       virtual const std::type_info& type() const noexcept override { return typeid(T); }
       virtual void* get() noexcept override { return static_cast<void*>(&obj_); }
       holder2(const T& obj) : obj_(obj){}
+      holder2(const holder2& other) = default;
+      holder2(holder2&& other) = default;
+      holder2& operator=(const holder2& other) = default;
+      holder2& operator=(holder2&& other) = default;
       T obj_;
    };
 

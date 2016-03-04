@@ -88,7 +88,7 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
    ~${obj_key_name}_();
 
 protected:
-   ${obj_key_name}_(std::initializer_list<std::pair<std::string, Any>> init = {});
+   ${obj_key_name}_(std::initializer_list<std::pair<std::string, Any&&>> init);
 };
 
 } // ${lowercase_first(game_name)}
