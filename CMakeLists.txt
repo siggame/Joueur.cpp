@@ -24,7 +24,7 @@ set(PROG_NAME "cpp-client")
 project(${PROG_NAME})
 
 #build the libraries as well
-add_subdirectory(libraries)
+add_subdirectory(joueur/libraries)
 
 #find generated files
 file(GLOB FILES RELATIVE
@@ -32,25 +32,28 @@ file(GLOB FILES RELATIVE
 
 #add source files
 add_executable(${PROG_NAME} ${FILES}
-                            src/attr_wrapper.hpp
-                            src/base_ai.cpp
-                            src/base_ai.hpp
-                            src/base_game.hpp
-                            src/connection.cpp
-                            src/connection.hpp
-                            src/exceptions.hpp
-                            src/main.cpp
-                            src/register.cpp
-                            src/register.hpp
-                            src/sgr.hpp)
+                            joueur/src/any.hpp
+                            joueur/src/attr_wrapper.hpp
+                            joueur/src/base_ai.cpp
+                            joueur/src/base_ai.hpp
+                            joueur/src/base_game.hpp
+                            joueur/src/base_game.cpp
+                            joueur/src/base_object.hpp
+                            joueur/src/connection.cpp
+                            joueur/src/connection.hpp
+                            joueur/src/exceptions.hpp
+                            joueur/src/main.cpp
+                            joueur/src/register.cpp
+                            joueur/src/register.hpp
+                            joueur/src/sgr.hpp)
 
 #link to netlink (static)
 target_link_libraries(${PROG_NAME} static)
 
 #include library files
-include_directories(${PROG_NAME} "libraries/netLink/include/"
-                                 "libraries/tclap/include/"
-                                 "libraries/rapidjson/include/")
+include_directories(${PROG_NAME} "joueur/libraries/netLink/include/"
+                                 "joueur/libraries/tclap/include/"
+                                 "joueur/libraries/rapidjson/include/")
 
 #stole this from netlink
 if(WIN32)

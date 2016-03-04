@@ -39,7 +39,7 @@ public:
       }
    }
 
-   void send_message(const std::string& msg)
+   void send(const std::string& msg)
    {
       try
       {
@@ -51,7 +51,7 @@ public:
       }
    }
 
-   std::string recieve_message()
+   std::string recieve()
    {
       std::array<char, 2048> read_buffer;
       std::string to_return;
@@ -114,7 +114,7 @@ private:
          break;
 
       case Exception::ERROR_INIT:
-         throw Communication_error("Error during initalization.");
+         throw Communication_error("Error during initialization.");
          break;
 
       case Exception::BAD_PROTOCOL:
@@ -135,24 +135,24 @@ private:
    std::string buffer_;
 };
 
-std::string Connection::recieve_message()
+std::string Connection::recieve()
 {
-   auto msg = conn_->recieve_message();
+   auto msg = conn_->recieve();
    if(print_communication_)
    {
-      std::cout << sgr::text_green << "FROM SERVER --> " << msg << sgr::reset << '\n';
+      std::cout << sgr::text_magenta << "FROM SERVER --> " << msg << sgr::reset << '\n';
    }
    return msg;
 }
 
-void Connection::send_message(const std::string& msg)
+void Connection::send(const std::string& msg)
 {
    if(print_communication_)
    {
-      std::cout << sgr::text_green << "TO SERVER <-- " << msg << sgr::reset << '\n';
+      std::cout << sgr::text_magenta << "TO SERVER <-- " << msg << sgr::reset << '\n';
    }
-   conn_->send_message(msg);
-   conn_->send_message("\x04");
+   conn_->send(msg);
+   conn_->send("\x04");
 }
 
 void Connection::connect(const char* host, unsigned port)

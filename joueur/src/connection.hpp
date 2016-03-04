@@ -13,7 +13,7 @@ class Connection_internal;
 class Connection
 {
 public:
-   Connection(bool print_communication);
+   Connection(bool print_communication = false);
    ~Connection();
 
    //disable copying
@@ -31,11 +31,17 @@ public:
    //send a message to the connected host
    //the required termination byte will also be sent
    //throws a Communication_error if it fails
-   void send_message(const std::string& msg);
+   void send(const std::string& msg);
 
    //recieve a message from the connected host
    //throws a Communication_error if it fails
-   std::string recieve_message();
+   std::string recieve();
+
+   //changes if communication should be printed or not
+   void set_print_communication(bool should_print) noexcept
+   {
+      print_communication_ = should_print;
+   }
 
 private:
    std::unique_ptr<Connection_internal> conn_;

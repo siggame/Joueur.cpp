@@ -6,6 +6,7 @@
 #include "register.hpp"
 #include "sgr.hpp"
 #include "connection.hpp"
+#include "base_game.hpp"
 
 #include <exception>
 #include <iostream>
@@ -113,9 +114,15 @@ int main(int argc, const char* argv[])
       }
       cmd.parse(argc, argv);
       //retrieve the game
-      auto& game = cpp_client::Game_registry::get_game(game_arg.getValue());
-      Connection conn(print_io.getValue());
-      conn.connect(string_args[server].getValue().c_str(), int_args[port].getValue());
+      auto& game = Game_registry::get_game(game_arg.getValue());
+      //set up some stuff for the game
+      game.set_print_communication(print_io.getValue());
+      game.connect(string_args[server].getValue().c_str(), int_args[port].getValue());
+      game.set_player_index(int_args[player_index].getValue());
+      game.set_password(string_args[password].getValue());
+      game.set_session(string_args[session].getValue());
+      game.set_name(string_args[player_name].getValue());
+      game.go();
    }
    catch(const std::exception& e)
    {
@@ -125,6 +132,6 @@ int main(int argc, const char* argv[])
    catch(...)
    {
       std::cerr << sgr::text_red << "An unknown error occured." << sgr::reset << std::endl;
-      return 3;
+      return 2;
    }
 }

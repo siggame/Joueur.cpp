@@ -3,7 +3,7 @@
 
 // ${header}
 
-#include "../../src/base_game.hpp"
+#include "../../joueur/src/base_game.hpp"
 #include "ai.hpp"
 
 namespace cpp_client
@@ -14,7 +14,9 @@ namespace ${underscore(game_name)}
 
 class ${underscore(game_name).capitalize()} : public Base_game
 {
-
+public:
+   virtual std::string get_game_name() const noexcept override { return "${underscore(game_name).capitalize()}"; }
+   virtual std::unique_ptr<Base_ai> generate_ai() override;
 };
 
 } // ${underscore(game_name)}

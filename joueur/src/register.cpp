@@ -14,7 +14,7 @@ std::unordered_map<std::string,
 Game_registry::Game_registry(const std::string& name,
                              std::unique_ptr<Base_game> game)
 {
-   name_map[name] = std::move(game);
+   name_map.emplace(name, std::move(game));
 }
 
 Base_game& Game_registry::get_game(const std::string& name)

@@ -15,7 +15,7 @@ public:
    virtual void invalid(const std::string& message);
    virtual void game_updated() = 0;
 
-   virtual ~Base_ai() = default;
+   virtual ~Base_ai();
 };
 
 } // cpp_client

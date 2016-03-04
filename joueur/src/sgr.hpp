@@ -75,6 +75,7 @@ enum class sgr
 inline std::ostream& operator<<(std::ostream& out, sgr code)
 {
    out << "\x1b[" << static_cast<int>(code) << "m";
+   return out;
 }
 
 #undef SGR_RARE
