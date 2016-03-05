@@ -54,30 +54,30 @@ bool Chess::AI::runTurn()
     //    4) makes a random (and probably invalid) move.
 
     // 1) print the board to the console
-    for (int file = 9; file >= -1; file--)
+    for (int rank = 9; rank >= -1; rank--)
     {
         std::string str = "";
-        if (file == 9 || file == 0) // then the top or bottom of the board
+        if (rank == 9 || rank == 0) // then the top or bottom of the board
         {
             str = "   +------------------------+";
         }
-        else if (file == -1) // then show the ranks
+        else if (rank == -1) // then show the ranks
         {
             str = "     a  b  c  d  e  f  g  h";
         }
         else // board
         {
             str += " ";
-            str += std::to_string(file);
+            str += std::to_string(rank);
             str += " |";
-            // fill in all the ranks with pieces at the current rank
-            for (int rankOffset = 0; rankOffset < 8; rankOffset++)
+            // fill in all the files with pieces at the current rank
+            for (int fileOffset = 0; fileOffset < 8; fileOffset++)
             {
-                std::string rank(1, (char)(((int)"a"[0]) + rankOffset)); // start at a, with with rank offset increasing the char;
+                std::string file(1, (char)(((int)"a"[0]) + fileOffset)); // start at a, with with rank offset increasing the char;
                 Chess::Piece* currentPiece = nullptr;
                 for (auto piece : this->game->pieces)
                 {
-                    if (piece->rank == rank && piece->file == file) // then we found the piece at (rank, file)
+                    if (piece->file == file && piece->rank == rank) // then we found the piece at (file, rank)
                     {
                         currentPiece = piece;
                         break;
