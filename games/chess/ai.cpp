@@ -73,7 +73,7 @@ bool Chess::AI::runTurn()
             // fill in all the files with pieces at the current rank
             for (int fileOffset = 0; fileOffset < 8; fileOffset++)
             {
-                std::string file(1, (char)(((int)"a"[0]) + fileOffset)); // start at a, with with rank offset increasing the char;
+                std::string file(1, (char)(((int)"a"[0]) + fileOffset)); // start at a, with with file offset increasing the char;
                 Chess::Piece* currentPiece = nullptr;
                 for (auto piece : this->game->pieces)
                 {
