@@ -39,12 +39,9 @@ void Joueur::Client::play()
     this->waitForEvent("");
 }
 
-void Joueur::Client::connectTo(Joueur::BaseGame* game, BaseAI* ai, Joueur::BaseGameManager* gameManager, const std::string server, const std::string port, bool printIO)
+void Joueur::Client::connect(const std::string server, const std::string port, bool printIO)
 {
     this->printIO = printIO;
-    this->ai = ai;
-    this->game = game;
-    this->gameManager = gameManager;
 
     try
     {
@@ -64,11 +61,18 @@ void Joueur::Client::connectTo(Joueur::BaseGame* game, BaseAI* ai, Joueur::BaseG
     }
 }
 
+void Joueur::Client::setup(Joueur::BaseGame* game, BaseAI* ai, Joueur::BaseGameManager* gameManager)
+{
+    this->ai = ai;
+    this->game = game;
+    this->gameManager = gameManager;
+}
+
 void Joueur::Client::sendRaw(const std::string& str)
 {
     if (this->printIO)
     {
-        std::cout << "TO SERVER <--" << str << "\n";
+        std::cout << Joueur::ANSIColorCoder::MagentaText << "TO SERVER <--" << str << Joueur::ANSIColorCoder::Reset <<"\n";
     }
     boost::asio::write(*(this->socket), boost::asio::buffer(str, str.length()));
 }
@@ -161,7 +165,7 @@ void Joueur::Client::waitForEvents()
 
                 if (this->printIO)
                 {
-                    std::cout << "FROM SERVER --> " << responseString << std::endl;
+                    std::cout << Joueur::ANSIColorCoder::MagentaText << "FROM SERVER --> " << responseString << Joueur::ANSIColorCoder::Reset << std::endl;
                 }
 
                 std::string total = this->receivedBuffer + responseString;
