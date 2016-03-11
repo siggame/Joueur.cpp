@@ -33,7 +33,15 @@ only_files = [f for f in os.listdir(game_path) if os.path.isfile(os.path.join(ga
 for name in only_files:
     shutil.copyfile(os.path.join(game_path, name), os.path.join(temp_path, name))
 
-shutil.copyfile(os.path.join("..", "README.md"), os.path.join(temp_path, "README.md"))
+with open("../README.md", "r") as f:
+    readme = f.read()
+
+readme = readme.replace("GAME_NAME", game_name).replace("game_name", lower_game_name)
+
+with open(os.path.join(temp_path, "README.md"), "w+") as f:
+    f.write(readme)
+
+#shutil.copyfile(os.path.join("..", "README.md"), os.path.join(temp_path, "README.md"))
 
 subprocess.call(["doxygen"], shell=True, cwd=temp_path)
 
