@@ -3,6 +3,7 @@
 
 #include "connection.hpp"
 #include "base_object.hpp"
+#include "delta_mergable.hpp"
 
 #include <memory>
 #include <string>
@@ -14,9 +15,17 @@ namespace cpp_client
 
 class Base_ai;
 
-class Base_game
+class Base_game : public Delta_mergable
 {
 public:
+   Base_game() :
+      Delta_mergable({})
+   {
+      ;
+   }
+
+   using Delta_mergable::Delta_mergable;
+
    //generate the AI to be used for the game
    virtual ~Base_game();
 
@@ -63,12 +72,26 @@ public:
       game_settings_ = std::move(settings);
    }
 
+   //this makes some assumptions that should always be true, so it should be fine
+   virtual std::unordered_map<std::string, std::shared_ptr<Base_object>>& get_objects() = 0;
+
+   const std::string& len_string() const noexcept { return len_string_; }
+   const std::string& remove_string() const noexcept { return remove_string_; }
+
+   //create an object through a name
+   virtual std::shared_ptr<Base_object> generate_object(const std::string& type) = 0;
+
 protected:
    //return the name of the game
    virtual std::string get_game_name() const = 0;
 
    //return an ai to play the game
    virtual std::unique_ptr<Base_ai> generate_ai() = 0;
+
+   //string constants
+   //TODO: Actually load these
+   std::string len_string_{"&LEN"};
+   std::string remove_string_{"&RM"};
 
 private:
    Connection conn_;
@@ -81,9 +104,6 @@ private:
 
    //the AI object
    std::unique_ptr<Base_ai> ai_;
-
-   //game objects
-   std::unordered_map<std::string, Any> game_objects_;
 };
 
 } // cpp_client

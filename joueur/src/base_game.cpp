@@ -1,6 +1,8 @@
 #include "base_game.hpp"
 #include "base_ai.hpp"
 
+#include "delta.hpp"
+
 namespace cpp_client
 {
 
@@ -38,7 +40,6 @@ void Base_game::go()
    to_send += R"("playerName":")";
    if(name_ == "")
    {
-      //just make a temporary ai to get the name
       to_send += ai_->get_name();
    }
    else
@@ -49,6 +50,9 @@ void Base_game::go()
    conn_.send(to_send);
    auto resp = conn_.recieve();
    auto resp2 = conn_.recieve();
+   rapidjson::Document doc;
+   doc.Parse(resp2.c_str());
+   apply_delta(doc, *this);
 }
 
 } // cpp_client

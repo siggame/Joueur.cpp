@@ -7,6 +7,7 @@
 #include "sgr.hpp"
 #include "connection.hpp"
 #include "base_game.hpp"
+#include "base_ai.hpp"
 
 #include <exception>
 #include <iostream>

@@ -19,15 +19,8 @@ public:
    }
 
    template<typename T>
-   Any(const T& other) noexcept :
-      data_(new holder2<T>(other))
-   {
-      ;
-   }
-
-   template<typename T>
    Any(T&& other) noexcept :
-      data_(new holder2<T>(std::move(other)))
+      data_(new holder2<T>(std::forward<T>(other)))
    {
       ;
    }
@@ -68,6 +61,9 @@ public:
 private:
    struct holder
    {
+      holder(const holder& other) = default;
+      holder(holder&& other) = default;
+      holder() = default;
       virtual ~holder() noexcept = default;
       virtual const std::type_info& type() const noexcept = 0;
       virtual void* get() noexcept = 0;
@@ -79,7 +75,11 @@ private:
       virtual ~holder2() noexcept override = default;
       virtual const std::type_info& type() const noexcept override { return typeid(T); }
       virtual void* get() noexcept override { return static_cast<void*>(&obj_); }
-      holder2(const T& obj) : obj_(obj){}
+
+      //universal reference easier - also this is private so nothing else should use this
+      template<typename U>
+      holder2(U&& obj) : obj_(std::forward<U>(obj)){}
+
       holder2(const holder2& other) = default;
       holder2(holder2&& other) = default;
       holder2& operator=(const holder2& other) = default;

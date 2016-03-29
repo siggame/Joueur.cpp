@@ -2,6 +2,7 @@
 
 #include "exceptions.hpp"
 #include "base_game.hpp"
+#include "base_ai.hpp"
 
 namespace cpp_client
 {

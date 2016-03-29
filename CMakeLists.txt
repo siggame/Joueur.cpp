@@ -41,6 +41,8 @@ add_executable(${PROG_NAME} ${FILES}
                             joueur/src/base_object.hpp
                             joueur/src/connection.cpp
                             joueur/src/connection.hpp
+                            joueur/src/delta.cpp
+                            joueur/src/delta.hpp
                             joueur/src/exceptions.hpp
                             joueur/src/main.cpp
                             joueur/src/register.cpp
@@ -71,6 +73,6 @@ if(EXPLICIT_VERSION)
    set_property(TARGET ${PROG_NAME} PROPERTY CXX_STANDARD_REQUIRED ON)
 else()
    if(UNIX OR MINGW)
-      set_target_properties(${PROG_NAME} PROPERTIES COMPILE_FLAGS "-std=c++11")
+      set_target_properties(${PROG_NAME} PROPERTIES COMPILE_OPTIONS "-std=c++11")
    endif()
 endif()

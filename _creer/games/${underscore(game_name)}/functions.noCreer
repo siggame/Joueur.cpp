@@ -3,8 +3,10 @@
 def gen_cpp_base_type(type):
     if type is None:
         return 'void'
-    elif type['name'] in ['void', 'int', 'float']:
+    elif type['name'] in ['void', 'int']:
         return type['name']
+    elif type['name'] == 'float':
+        return 'double'
     elif type['name'] == 'boolean':
         return 'bool'
     elif type['name'] == 'string':
@@ -21,10 +23,7 @@ def gen_cpp_base_type(type):
         raise Exception('UNKNOWN TYPE ENCOUNTERED -- FATAL ERROR')
 
 def gen_cpp_base_type2(type):
-    if type['name'] in ['int', 'float', 'string', 'boolean', 'list', 'dictionary']:
-        return 'const ' + gen_cpp_base_type(type) + '&'
-    else:
-        return gen_cpp_base_type(type)
+    return 'const ' + gen_cpp_base_type(type) + '&'
 
 def make_arg(type_str):
     if type_str in ['int', 'float', 'bool']:

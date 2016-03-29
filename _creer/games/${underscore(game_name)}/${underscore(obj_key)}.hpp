@@ -27,7 +27,7 @@
 mod = False
 if obj_key == "Game":
    mod = True
-   parent_classes = [ 'Base_game', 'Base_object' ]
+   parent_classes = [ 'Base_game' ]
 elif obj_key == "GameObject":
    mod = True
    parent_classes = [ 'Base_object' ]
@@ -58,7 +58,11 @@ public:
    /// <summary>
    /// ${attr_params['description']}
    /// </summary>
+% if attr_name != 'gameObjects':
    ${shared['gen_base_type2'](attr_params['type'])} ${underscore(attr_name)};
+% else:
+   std::unordered_map<std::string, std::shared_ptr<Base_object>> game_objects;
+% endif
 % endfor
 
 ${merge("   // ", "member variables", "   // You can add additional member variables here. None of them will be tracked or updated by the server.")}
@@ -87,8 +91,12 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
 
    ~${obj_key_name}_();
 
-protected:
    ${obj_key_name}_(std::initializer_list<std::pair<std::string, Any&&>> init);
+   ${obj_key_name}_() : ${obj_key_name}_({}){}
+   virtual void resize(const std::string& name, std::size_t size) override;
+   virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) override;
+   virtual void remove_key(const std::string& name, Any& key) override;
+   virtual void add_key_value(const std::string& name, Any& key, Any& value) override;
 };
 
 } // ${lowercase_first(game_name)}

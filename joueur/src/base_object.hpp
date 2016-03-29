@@ -6,26 +6,29 @@
 #include <unordered_map>
 #include <initializer_list>
 #include <utility>
+#include <iostream>
+#include <typeindex>
 
 #include "any.hpp"
+#include "sgr.hpp"
+#include "delta_mergable.hpp"
 
 namespace cpp_client
 {
 
-class Base_object
+class Base_object : public Delta_mergable
 {
 public:
+   using Delta_mergable::Delta_mergable;
    virtual ~Base_object() = default;
-   Base_object(std::initializer_list<std::pair<std::string, Any&&>> init)
-   {
-      for(auto&& obj : init)
-      {
-         variables_.emplace(std::make_pair(std::move(obj.first), std::move(obj.second)));
-      }
-   }
+   Base_object() : Delta_mergable({}){}
 
-protected:
-   std::unordered_map<std::string, Any> variables_;
+   //Don't really like doing this, but I can't think of a better way
+   virtual void resize(const std::string& name, std::size_t size) override {}
+   virtual void change_vec_values(const std::string& name,
+                                  std::vector<std::pair<std::size_t, Any>>& values) override {}
+   virtual void remove_key(const std::string& name, Any& key) override {}
+   virtual void add_key_value(const std::string& name, Any& key, Any& value) override {}
 };
 
 } // cpp_client

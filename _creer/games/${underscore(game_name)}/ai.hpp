@@ -6,7 +6,7 @@
 #include "${underscore(game_name)}.hpp"
 #include "game.hpp"
 % for game_obj_key in sort_dict_keys(game_objs):
-#include "${underscore(game_obj_key).capitalize()}.hpp"
+#include "${underscore(game_obj_key)}.hpp"
 % endfor
 
 #include "../../joueur/src/base_ai.hpp"

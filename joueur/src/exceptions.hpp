@@ -16,6 +16,26 @@ class Communication_error : public std::runtime_error
    using std::runtime_error::runtime_error;
 };
 
+class Unknown_type : public std::runtime_error
+{
+   using std::runtime_error::runtime_error;
+};
+
+class Parse_error : public std::runtime_error
+{
+   using std::runtime_error::runtime_error;
+};
+
+class Bad_response : public std::runtime_error
+{
+   using std::runtime_error::runtime_error;
+};
+
+class Bad_manipulation : public std::runtime_error
+{
+   using std::runtime_error::runtime_error;
+};
+
 } // cpp_client
 
 

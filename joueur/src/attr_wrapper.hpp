@@ -29,8 +29,8 @@ namespace attr_wrapper
 
    //returns the location of the name, or throws an error if not present
    inline
-   rapidjson::Value::ConstMemberIterator checkExist(const rapidjson::Document& doc,
-                                                    const char* name)
+   rapidjson::Value::ConstMemberIterator get_loc(const rapidjson::Value& doc,
+                                                 const char* name)
    {
       //make sure it is an object too
       if(!doc.IsObject())
@@ -50,7 +50,7 @@ namespace attr_wrapper
    //generate type error
    //not that a space is present to allow for for an
    inline Type_error genTypeError(const std::string& name,
-                                 const std::string& type)
+                                  const std::string& type)
    {
       std::string toReturn = name;
       toReturn += " is not a" + type;
@@ -59,13 +59,13 @@ namespace attr_wrapper
 
    //wrapper that throws errors and has templates and stuff
    template<typename T>
-   inline T get_attribute(const rapidjson::Document& doc, const char* name);
+   inline T get_attribute(const rapidjson::Value& doc, const char* name);
 
    template<>
-   inline int get_attribute<int>(const rapidjson::Document& doc,
-                                const char* name)
+   inline int get_attribute<int>(const rapidjson::Value& doc,
+                                 const char* name)
    {
-      auto loc = checkExist(doc, name);
+      auto loc = get_loc(doc, name);
       if(!loc->value.IsInt())
       {
          throw genTypeError(name, "n integer.");
@@ -74,10 +74,10 @@ namespace attr_wrapper
    }
 
    template<>
-   inline unsigned get_attribute<unsigned>(const rapidjson::Document& doc,
-                                          const char* name)
+   inline unsigned get_attribute<unsigned>(const rapidjson::Value& doc,
+                                           const char* name)
    {
-      auto loc = checkExist(doc, name);
+      auto loc = get_loc(doc, name);
       if(!loc->value.IsUint())
       {
          throw genTypeError(name, "n unsigned integer.");
@@ -86,10 +86,10 @@ namespace attr_wrapper
    }
 
    template<>
-   inline double get_attribute<double>(const rapidjson::Document& doc,
-                                      const char* name)
+   inline double get_attribute<double>(const rapidjson::Value& doc,
+                                       const char* name)
    {
-      auto loc = checkExist(doc, name);
+      auto loc = get_loc(doc, name);
       if(!loc->value.IsDouble())
       {
          throw genTypeError(name, " double");
@@ -98,10 +98,10 @@ namespace attr_wrapper
    }
 
    template<>
-   inline const char* get_attribute<const char*>(const rapidjson::Document& doc,
+   inline const char* get_attribute<const char*>(const rapidjson::Value& doc,
                                                  const char* name)
    {
-      auto loc = checkExist(doc, name);
+      auto loc = get_loc(doc, name);
       if(!loc->value.IsString())
       {
          throw genTypeError(name, " string");
@@ -110,10 +110,10 @@ namespace attr_wrapper
    }
 
    template<>
-   inline std::string get_attribute<std::string>(const rapidjson::Document& doc,
+   inline std::string get_attribute<std::string>(const rapidjson::Value& doc,
                                                  const char* name)
    {
-      auto loc = checkExist(doc, name);
+      auto loc = get_loc(doc, name);
       if(!loc->value.IsString())
       {
          throw genTypeError(name, " string");
@@ -123,10 +123,10 @@ namespace attr_wrapper
    }
 
    template<>
-   inline bool get_attribute<bool>(const rapidjson::Document& doc,
+   inline bool get_attribute<bool>(const rapidjson::Value& doc,
                                    const char* name)
    {
-      auto loc = checkExist(doc, name);
+      auto loc = get_loc(doc, name);
       if(!loc->value.IsBool())
       {
          throw genTypeError(name, " boolean");
