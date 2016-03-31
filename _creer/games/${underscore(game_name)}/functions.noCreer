@@ -54,5 +54,11 @@ def make_args(params, default_values):
 shared['gen_base_type'] = gen_cpp_base_type
 shared['make_args'] = make_args
 shared['gen_base_type2'] = gen_cpp_base_type2
+shared['defaults'] = {}
+# These are the C++ types, maaaaan
+shared['defaults']['bool'] = " true"
+shared['defaults']['void'] = ""
+shared['defaults']['int'] = " 0"
+shared['defaults']['double'] = " 0"
 
 %>

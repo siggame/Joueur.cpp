@@ -36,6 +36,11 @@ class Bad_manipulation : public std::runtime_error
    using std::runtime_error::runtime_error;
 };
 
+class Server_error : public std::runtime_error
+{
+   using std::runtime_error::runtime_error;
+};
+
 } // cpp_client
 
 

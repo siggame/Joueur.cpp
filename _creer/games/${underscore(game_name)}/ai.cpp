@@ -4,6 +4,7 @@
 #include "ai.hpp"
 
 ${merge("// ", "includes", "// You can add #includes here for your AI.")}
+<%include file="functions.noCreer" />
 
 namespace cpp_client
 {
@@ -42,10 +43,38 @@ ${merge("   // ", "game-updated", "   // If a function you call triggers an upda
 /// </summary>
 /// <param name="won">true if you won, false otherwise</param>
 /// <param name="reason">An explanation for why you either won or lost</param>
-void AI::end(bool won, const std::string& reason)
+void AI::ended(bool won, const std::string& reason)
 {
 ${merge("   //", "ended", "   // You can do any cleanup of your AI here.  The program is finished once this closes")}
 }
+
+% for function_name in ai['function_names']:
+<%
+function_params = ai['functions'][function_name]
+if function_params['returns']['type']:
+   return_type = shared['gen_base_type'](function_params['returns']['type'])
+else:
+   return_type = 'void'
+args = shared['make_args'](function_params, True)
+%>/// <summary>
+/// ${function_params['description']}
+/// </summary>
+% for arg_params in function_params['arguments']:
+/// <param name="${underscore(arg_params['name'])}">${arg_params['description']}</param>
+% endfor
+% if function_params['returns']:
+/// <returns>${function_params['returns']['description']}</returns>
+% endif
+${return_type} AI::${underscore(function_name)}(${args})
+{
+${merge("   // ", function_name, "   // Put your game logic here for {} here".format(function_name))}
+% if return_type in shared['defaults']:
+   return${shared['defaults'][return_type]};
+% else:
+   return ${return_type}{};
+% endif
+}
+% endfor
 
 } // ${underscore(game_name)}
 

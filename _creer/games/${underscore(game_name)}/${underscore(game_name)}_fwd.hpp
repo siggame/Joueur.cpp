@@ -18,6 +18,9 @@ class ${obj_name}_;
 using ${obj_name} = std::shared_ptr<${obj_name}_>;
 % endfor
 
+class Game_;
+using Game = Game_*;
+
 }
 
 }

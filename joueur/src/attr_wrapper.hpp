@@ -178,6 +178,28 @@ namespace attr_wrapper
    {
       return doc.GetString();
    }
+
+   //extra helpers
+   template<typename T>
+   inline std::string json_val(const T& val)
+   {
+      return std::to_string(val);
+   }
+
+   inline std::string json_val(bool b)
+   {
+      return (b ? "true" : "false");
+   }
+
+   inline std::string json_val(const std::string& str)
+   {
+      return "\"" + str + "\"";
+   }
+
+   inline std::string json_val(const char* str)
+   {
+      return "\"" + std::string(str) + "\"";
+   }
 }
 
 #endif // ATTRWRAPPER_HPP

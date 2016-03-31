@@ -10,6 +10,7 @@
 % endfor
 
 #include "../../joueur/src/base_ai.hpp"
+#include "../../joueur/src/attr_wrapper.hpp"
 
 ${merge("// ", "includes", "// You can add additional #includes here")}
 
@@ -24,6 +25,15 @@ namespace ${underscore(game_name)}
 /// </summary>
 class AI : public Base_ai
 {
+   /// <summary>
+   /// This is a reference to the Game object itself, it contains all the information about the current game
+   /// </summary>
+   Game game;
+
+   /// <summary>
+   /// This is a pointer to your AI's player. This AI class is not a player, but it should command this Player.
+   /// </summary>
+   Player player;
 
 ${merge("   //", "class variables", "   // You can add additional class variables here.")}
 
@@ -44,7 +54,7 @@ ${merge("   //", "class variables", "   // You can add additional class variable
    /// </summary>
    /// <param name="won">true if you won, false otherwise</param>
    /// <param name="reason">An explanation for why you either won or lost</param>
-   virtual void end(bool won, const std::string& reason) override;
+   virtual void ended(bool won, const std::string& reason) override;
 
    /// <summary>
    /// This is automatically called the game (or anything in it) updates
@@ -68,10 +78,63 @@ args = shared['make_args'](function_params, True)
 % if function_params['returns']:
    /// <returns>${function_params['returns']['description']}</returns>
 % endif
-   ${return_type} ${function_name}(${args});
+   ${return_type} ${underscore(function_name)}(${args});
 % endfor
 
 ${merge("   // ", "methods", "   // You can add additional methods here.")}
+
+
+
+
+
+/////////////////////////////////////////////////////
+// Implementation detail!!
+// Do not edit anything past here!!
+/////////////////////////////////////////////////////
+
+<% ifstr = 'if' %>
+virtual std::string invoke_by_name(const std::string& name,
+                                   const std::unordered_map<std::string, Any>& args) override
+{
+   % for function_name in ai['function_names']:
+   <% function_params = ai['functions'][function_name] %>
+   ${ifstr}(name == "${function_name}")
+   {
+   % if function_params['returns']['type']:
+      auto ret = ${underscore(function_name)}(
+        <% comma = ',' %>
+         % for arg_params in function_params['arguments']:
+         <% if arg_params == function_params['arguments'][-1]:
+               comma = '' %>
+         args.at("${arg_params['name']}").as<${shared['gen_base_type'](arg_params['type'])}>()${comma}
+         % endfor
+      );
+      return attr_wrapper::json_val(ret);
+   % else:
+      ${underscore(function_name)}(
+         <% comma = ',' %>
+         % for arg_params in function_params['arguments']:
+         <% if arg_params == function_params['arguments'][-1]:
+               comma = '' %>
+         args.at("${arg_params['name']}").as<${shared['gen_base_type'](arg_params['type'])}>()${comma}
+         % endfor
+      );
+      return;
+   % endif
+   } <% ifstr = 'else if' %>
+   % endfor;
+   throw Bad_response("AI told to run unknown action " + name);
+}
+
+virtual void set_game(Base_game* ptr) override
+{
+   game = static_cast<Game>(ptr);
+}
+
+virtual void set_player(std::shared_ptr<Base_object> obj) override
+{
+   player = std::move(std::static_pointer_cast<Player_>(obj));
+}
 
 };
 

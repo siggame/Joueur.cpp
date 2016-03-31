@@ -89,9 +89,8 @@ protected:
    virtual std::unique_ptr<Base_ai> generate_ai() = 0;
 
    //string constants
-   //TODO: Actually load these
-   std::string len_string_{"&LEN"};
-   std::string remove_string_{"&RM"};
+   std::string len_string_;
+   std::string remove_string_;
 
 private:
    Connection conn_;
@@ -104,6 +103,11 @@ private:
 
    //the AI object
    std::unique_ptr<Base_ai> ai_;
+
+   //handles the different responses the server can throw out
+   //If a certain action is expected it can be given here
+   //returns false if the game is over; true otherwise
+   bool handle_response(const std::string& expected = "");
 };
 
 } // cpp_client

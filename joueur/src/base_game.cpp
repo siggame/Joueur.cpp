@@ -2,6 +2,7 @@
 #include "base_ai.hpp"
 
 #include "delta.hpp"
+#include "attr_wrapper.hpp"
 
 namespace cpp_client
 {
@@ -11,6 +12,13 @@ Base_game::~Base_game() = default;
 void Base_game::go()
 {
    ai_ = generate_ai();
+   //grab the name first
+   std::string alias = R"({"event": "alias", "data": ")" + get_game_name() + "\"}";
+   conn_.send(alias);
+   auto resp = conn_.recieve();
+   rapidjson::Document doc;
+   doc.Parse(resp.c_str());
+   std::string game_name = attr_wrapper::get_attribute<std::string>(doc, "data");
    //start with the same thing each time
    std::string to_send = R"({"event": "play", "data": {"clientType": "c++", "playerIndex": )";
    //now fill in the details
@@ -46,13 +54,98 @@ void Base_game::go()
    {
       to_send += name_;
    }
-   to_send += R"(","gameName":")" + get_game_name() + R"("}})";
+   to_send += R"(","gameName":")" + game_name + R"("}})";
    conn_.send(to_send);
+   //Expecting the "lobbied" message
+   handle_response("lobbied");
+   //Next the delta message will be received
+   handle_response("delta");
+   //Start should be next
+   handle_response("start");
+   //now just do normal handling of events
+   while(handle_response())
+   {
+      //Intentionally empty
+   }
+   /*
    auto resp = conn_.recieve();
    auto resp2 = conn_.recieve();
    rapidjson::Document doc;
    doc.Parse(resp2.c_str());
    apply_delta(doc, *this);
+   conn_.recieve();
+   conn_.send("{\"event\":\"ready\"}");
+   conn_.recieve();
+   */
+}
+
+bool Base_game::handle_response(const std::string& expected)
+{
+   //first get the response
+   const auto resp = conn_.recieve();
+   //now parse it
+   rapidjson::Document doc;
+   doc.Parse(resp.c_str());
+   const auto event = attr_wrapper::get_attribute<std::string>(doc, "event");
+   //check if it matches the expected (if needed)
+   if(expected != "" && event != expected)
+   {
+      throw Bad_response("Expected " + expected + " event; got " + event);
+   }
+   //now just handle the different possible events
+   if(event == "lobbied")
+   {
+      const auto& data = attr_wrapper::get_loc(doc, "data")->value;
+      const auto& constants = attr_wrapper::get_loc(data, "constants")->value;
+      //extract game constants
+      len_string_ = attr_wrapper::get_attribute<std::string>(constants, "DELTA_LIST_LENGTH");
+      remove_string_ = attr_wrapper::get_attribute<std::string>(constants, "DELTA_REMOVED");
+      //output the session information
+      std::cout << sgr::text_cyan << "In lobby for game '"
+                << attr_wrapper::get_attribute<std::string>(data, "gameName")
+                << "' in session '"
+                << attr_wrapper::get_attribute<std::string>(data, "gameSession") << "'."
+                << sgr::reset << std::endl;
+   }
+   else if(event == "delta")
+   {
+      apply_delta(doc, *this);
+   }
+   else if(event == "start")
+   {
+      //set the AI's fields properly
+      const auto& data = attr_wrapper::get_loc(doc, "data")->value;
+      const auto id = attr_wrapper::get_attribute<std::string>(data, "playerID");
+      ai_->set_game(this);
+      ai_->set_player(get_objects()[id]);
+      std::cout << sgr::text_green << "Game is starting." << sgr::reset << '\n';
+      ai_->start();
+   }
+   else if(event == "over")
+   {
+      return false;
+   }
+   else if(event == "fatal")
+   {
+      return false;
+   }
+   else if(event == "order")
+   {
+      const auto& data = attr_wrapper::get_loc(doc, "data")->value;
+      const auto name = attr_wrapper::get_attribute<std::string>(data, "name");
+      const auto index = attr_wrapper::get_attribute<unsigned>(data, "index");
+      //loop through all parameters and make a map out of them
+      const auto& args = attr_wrapper::get_loc(data, "args");
+      std::unordered_map<std::string, Any> params;
+      //TODO: arguments for orders (apparently they are positional)
+      //send finished event with data:
+      //{"orderIndex":from_above, "returned":result}
+      const std::string order_done =
+         R"({"event":"finished","data":{"orderIndex":)" + std::to_string(index)
+         + R"(,"returned":)" + ai_->invoke_by_name(name, params) + "}}";
+      conn_.send(order_done);
+   }
+   return true;
 }
 
 } // cpp_client

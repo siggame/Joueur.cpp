@@ -5,6 +5,7 @@
 
 #include <array>
 #include <iostream>
+#include <chrono>
 
 namespace cpp_client
 {
@@ -140,23 +141,33 @@ std::string Connection::recieve()
    auto msg = conn_->recieve();
    if(print_communication_)
    {
-      std::cout << sgr::text_magenta << "FROM SERVER --> " << msg << sgr::reset << '\n';
+      std::cout << sgr::text_magenta << "FROM SERVER <-- " << msg << sgr::reset << '\n';
    }
    return msg;
 }
 
 void Connection::send(const std::string& msg)
 {
+   using namespace std::chrono;
+   const auto time = duration_cast<milliseconds>(system_clock::now().time_since_epoch()).count();
    if(print_communication_)
    {
-      std::cout << sgr::text_magenta << "TO SERVER <-- " << msg << sgr::reset << '\n';
+      std::cout << sgr::text_magenta
+                << "TO SERVER --> "
+                << msg.substr(0, msg.size() - 1)
+                << ", \"sentTime\": "
+                << time << "}"
+                << sgr::reset
+                << '\n';
    }
-   conn_->send(msg);
-   conn_->send("\x04");
+   //cut out the last } and append the time sent
+   conn_->send(msg.substr(0, msg.size() - 1));
+   conn_->send(R"(, "sentTime": )" + std::to_string(time) + "}\x04");
 }
 
 void Connection::connect(const char* host, unsigned port)
 {
+   std::cout << sgr::text_cyan << "Connecting to: " << host << ":" << port << '\n';
    conn_->connect(host, port);
 }
 

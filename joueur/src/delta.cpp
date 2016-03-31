@@ -15,6 +15,7 @@
 #include <string>
 #include <algorithm>
 #include <iterator>
+#include <tuple>
 
 namespace cpp_client
 {
@@ -22,13 +23,20 @@ namespace cpp_client
 namespace
 {
 
-//returns a map of created object references
+using vec_ref_t = std::vector<std::tuple<Base_object*,
+                                         std::string,
+                                         std::vector<std::pair<std::size_t, Any>>>>;
+
+//returns the name of an object if the last thing added was an object reference
+//returns an empty string otherwise
 template<typename T>
-inline std::vector<std::pair<Delta_mergable*, std::string>>
+inline std::string
    handle_itr(Base_game& context,
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
-              T* owner);
+              T* owner,
+              std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>>& refs,
+              vec_ref_t& vec_refs);
 
 }
 
@@ -40,70 +48,119 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
    {
       throw Bad_response("Delta's data field is not an object.");
    }
-   std::vector<std::pair<Delta_mergable*, std::string>> refs;
+   std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>> refs;
+   vec_ref_t vec_refs;
    for(auto data_iter = data.MemberBegin(); data_iter != data.MemberEnd(); ++data_iter)
    {
-      auto to_add = handle_itr(apply_to, apply_to, data_iter, &apply_to);
-      //move to the back of the refs
-      refs.reserve(to_add.size() + refs.size());
-      std::move(std::make_move_iterator(to_add.begin()),
-                std::make_move_iterator(to_add.end()),
-                std::back_inserter(refs));
+      auto to_add = handle_itr(apply_to, apply_to, data_iter, &apply_to, refs, vec_refs);
    }
    //now do the references
    for(auto&& ref : refs)
    {
-      ref.first->variables_[ref.second] = apply_to.get_objects()[ref.second];
+      auto& obj = std::get<0>(ref);
+      const auto& refer = std::get<1>(ref);
+      *obj = std::shared_ptr<Base_object>{apply_to.get_objects()[refer]};
+   }
+   for(auto&& vec_ref : vec_refs)
+   {
+      auto& obj = std::get<0>(vec_ref);
+      auto& name = std::get<1>(vec_ref);
+      auto& changes = std::get<2>(vec_ref);
+      //need to change the strings to pointers
+      for(auto&& change : changes)
+      {
+         auto id = std::move(change.second.as<std::string>());
+         change.second = std::shared_ptr<Base_object>{apply_to.get_objects()[id]};
+      }
+      obj->change_vec_values(name, changes);
+
    }
 }
 
-namespace
+inline void morph_any(Any& to_morph, const rapidjson::Value& val)
 {
-
-inline Any make_any(const rapidjson::Value& val)
-{
-   Any to_add;
+   const bool no_type = (to_morph.type() == typeid(void));
    //otherwise just create the Any from it via this stupid if-else block
    if(val.IsBool())
    {
-      to_add = Any{val.GetBool()};
+      if(!no_type && to_morph.type() != typeid(bool))
+      {
+         throw Bad_manipulation("Boolean assigned to non-Boolean.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{val.GetBool()};
+      }
+      else
+      {
+         to_morph.as<bool>() = val.GetBool();
+      }
    }
    else if(val.IsInt())
    {
-      to_add = Any{val.GetInt()};
+      if(!no_type && to_morph.type() != typeid(int))
+      {
+         throw Bad_manipulation("Integer assigned to non-Integer.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{val.GetInt()};
+      }
+      else
+      {
+         to_morph.as<int>() = val.GetInt();
+      }
    }
    else if(val.IsString())
    {
-      to_add = Any{std::string{val.GetString()}};
+      if(!no_type && to_morph.type() != typeid(std::string))
+      {
+         throw Bad_manipulation("String assigned to non-string.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{std::string{val.GetString()}};
+      }
+      else
+      {
+         to_morph.as<std::string>() = std::string(val.GetString());
+      }
    }
    else if(val.IsNumber())
    {
-      to_add = Any{static_cast<double>(val.GetDouble())};
+      if(!no_type && to_morph.type() != typeid(double))
+      {
+         throw Bad_manipulation("Double assigned to non-double.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{static_cast<double>(val.GetDouble())};
+      }
+      else
+      {
+         to_morph.as<double>() = static_cast<double>(val.GetDouble());
+      }
    }
    else
    {
       //some kind of weird gross type that's icky
       throw Bad_response("Unknown JSON type received in a delta.");
    }
-   return to_add;
 }
 
+
+namespace
+{
+
 template<typename T>
-inline std::vector<std::pair<Delta_mergable*, std::string>>
+inline std::string
    handle_itr(Base_game& context,
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
-              T* owner)
+              T* owner,
+              std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>>& refs,
+              vec_ref_t& vec_refs)
 {
-   std::vector<std::pair<Delta_mergable*, std::string>> to_return;
-   //why isn't this part of the standard library?
-   const auto append_vec = [&to_return](decltype(to_return)& to_append)
-      {
-         to_return.reserve(to_return.size() + to_append.size());
-         std::move(std::make_move_iterator(to_append.begin()),
-                   std::make_move_iterator(to_append.end()),
-                   std::back_inserter(to_return));
-      };
    const auto& val = itr->value;
    const auto name = std::string(itr->name.GetString());
    auto& objects = context.get_objects();
@@ -122,6 +179,7 @@ inline std::vector<std::pair<Delta_mergable*, std::string>>
          //resize the vector
          apply_to.resize(name, size);
          std::vector<std::pair<std::size_t, Any>> to_edit;
+         std::vector<std::pair<std::size_t, Any>> temp_refs;
          for(auto data_iter = val.MemberBegin(); data_iter != val.MemberEnd(); ++data_iter)
          {
             //skip the length iterator
@@ -134,21 +192,38 @@ inline std::vector<std::pair<Delta_mergable*, std::string>>
             {
                //make a base object and then edit it
                auto ptr = std::make_shared<Base_object>();
-               auto vec = handle_itr(context,
+               auto str = handle_itr(context,
                                      *ptr,
                                      data_iter,
-                                     &apply_to);
-               to_edit.emplace_back(atoi(data_iter->name.GetString()),
-                                    std::move(ptr));
-               append_vec(vec);
+                                     &apply_to,
+                                     refs,
+                                     vec_refs);
+               const auto num = atoi(data_iter->name.GetString());
+               if(!str.empty())
+               {
+                  temp_refs.emplace_back(num, std::move(str));
+               }
+               else
+               {
+                  to_edit.emplace_back(num, std::move(ptr));
+               }
             }
             else
             {
+               Any to_add;
+               morph_any(to_add, data_iter->value);
                to_edit.emplace_back(atoi(data_iter->name.GetString()),
-                                    make_any(data_iter->value));
+                                    std::move(to_add));
             }
          }
          apply_to.change_vec_values(name, to_edit);
+         //put vector object references in there too (if non-empty)
+         if(!temp_refs.empty())
+         {
+            vec_refs.emplace_back(static_cast<Base_object*>(&apply_to),
+                                  name,
+                                  std::move(temp_refs));
+         }
       }
       else if(type_itr != val.MemberEnd())
       {
@@ -157,28 +232,40 @@ inline std::vector<std::pair<Delta_mergable*, std::string>>
          objects[name] = context.generate_object(attr_wrapper::as<std::string>(type_itr->value));
          for(auto data_iter = val.MemberBegin(); data_iter != val.MemberEnd(); ++data_iter)
          {
-            auto vec = handle_itr(context,
-                                  *objects[name],
-                                  data_iter,
-                                  &apply_to);
+            handle_itr(context,
+                       *objects[name],
+                       data_iter,
+                       &apply_to,
+                       refs,
+                       vec_refs);
          }
       }
       else if(id_itr != val.MemberEnd())
       {
          //object reference...
-         to_return.push_back(std::make_pair(&apply_to,
-                                            attr_wrapper::as<std::string>(id_itr->value)));
+         auto woop = attr_wrapper::as<std::string>(id_itr->value);
+         return attr_wrapper::as<std::string>(id_itr->value);
       }
       else
       {
          //map...
          for(auto data_iter = val.MemberBegin(); data_iter != val.MemberEnd(); ++data_iter)
          {
-            auto vec = handle_itr(context,
-                                  *apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
-                                  data_iter,
-                                  &apply_to);
-            append_vec(vec);
+            const auto target = data_iter->name.GetString();
+            if(data_iter->value.IsObject())
+            {
+               auto str = handle_itr(context,
+                                     *apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
+                                     data_iter,
+                                     &apply_to,
+                                     refs,
+                                     vec_refs);
+               if(!str.empty())
+               {
+                  refs.emplace_back(&apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
+                                    std::move(str));
+               }
+            }
          }
       }
    }
@@ -189,15 +276,14 @@ inline std::vector<std::pair<Delta_mergable*, std::string>>
          //need to do this a little differently so that it doesn't change type
          auto& change = apply_to.variables_[name].as<std::shared_ptr<Base_object>>();
          change.reset();
-         return to_return;
+         return "";
       }
       else if(val.IsString() && val.GetString() == context.remove_string())
       {
          //remove this thing
          owner->erase(name);
-         return to_return;
+         return "";
       }
-      Any to_add = make_any(val);
       //do some checking (ignore name because of game weirdness)
       if(!apply_to.variables_.count(name) && name != "name")
       {
@@ -206,21 +292,14 @@ inline std::vector<std::pair<Delta_mergable*, std::string>>
                    << "\n"
                    ;
       }
-      else if(apply_to.variables_[name].type() != to_add.type() && name != "name")
-      {
-         std::cout << sgr::text_yellow
-                   << "Warning: Variable " << name << " has changed types." << sgr::reset
-                   << "\n"
-                   ;
-      }
-      apply_to.variables_[name] = std::move(to_add);
+      morph_any(apply_to.variables_[name], val);
    }
    else
    {
       //array - some kind of error
-      throw Bad_response("Received a JSON vector in a delta.");
+      throw Bad_response("Received a JSON array in a delta.");
    }
-   return to_return;
+   return "";
 }
 
 }
