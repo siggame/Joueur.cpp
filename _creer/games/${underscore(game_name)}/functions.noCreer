@@ -28,7 +28,7 @@ def make_string_arg(params):
     if typer['name'] in ['float', 'boolean', 'int']:
         return "std::to_string({})".format(underscore(name))
     elif typer['name'] in ['string']:
-        return underscore(name)
+        return 'std::string("\\\"") + ' + underscore(name) + ' + "\\\""'
     elif typer['name'] in ['list', 'dictionary']:
         raise Exception('List and dictionary arguments are not supported.')
     else:
