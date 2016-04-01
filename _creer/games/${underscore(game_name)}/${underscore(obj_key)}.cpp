@@ -42,7 +42,7 @@ if function_params['returns']:
 else:
   return_type = 'void'
 name = underscore(function_name)
-args = shared['make_args'](function_params, True)
+args = shared['make_args'](function_params, False)
 %>
 ${return_type} ${obj_key_name}_::${name}(${args})
 {

@@ -26,9 +26,9 @@ def make_string_arg(params):
     typer = params['type']
     name = params['name']
     if typer['name'] in ['float', 'boolean', 'int']:
-        return "std::to_string({})".format(name)
+        return "std::to_string({})".format(underscore(name))
     elif typer['name'] in ['string']:
-        return name
+        return underscore(name)
     elif typer['name'] in ['list', 'dictionary']:
         raise Exception('List and dictionary arguments are not supported.')
     else:
@@ -66,7 +66,7 @@ def make_args(params, default_values):
                 to_ret += ', '
             to_ret += make_arg(gen_cpp_base_type(arg['type']))
             to_ret += ' ' + underscore(arg['name'])
-            if arg['optional']:
+            if arg['optional'] and default_values:
                 to_ret += ' = ' + trans_default(arg['default'])
     return to_ret
 
