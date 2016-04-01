@@ -19,10 +19,7 @@ class Base_game : public Delta_mergable
 {
 public:
    Base_game() :
-      Delta_mergable({})
-   {
-      ;
-   }
+      Delta_mergable({}) {}
 
    using Delta_mergable::Delta_mergable;
 
@@ -72,6 +69,11 @@ public:
       game_settings_ = std::move(settings);
    }
 
+   void send(const std::string& to_send)
+   {
+      conn_.send(to_send);
+   }
+
    //this makes some assumptions that should always be true, so it should be fine
    virtual std::unordered_map<std::string, std::shared_ptr<Base_object>>& get_objects() = 0;
 
@@ -80,6 +82,12 @@ public:
 
    //create an object through a name
    virtual std::shared_ptr<Base_object> generate_object(const std::string& type) = 0;
+
+   //handles the different responses the server can throw out
+   //If a certain action is expected it can be given here
+   //the Any returned converts to false if the game is over; converts to true if the game
+   //is still continuing
+   Any handle_response(const std::string& expected = "");
 
 protected:
    //return the name of the game
@@ -103,11 +111,6 @@ private:
 
    //the AI object
    std::unique_ptr<Base_ai> ai_;
-
-   //handles the different responses the server can throw out
-   //If a certain action is expected it can be given here
-   //returns false if the game is over; true otherwise
-   bool handle_response(const std::string& expected = "");
 };
 
 } // cpp_client

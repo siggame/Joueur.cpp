@@ -27,6 +27,7 @@ public:
    virtual ~Base_ai();
    virtual void set_game(Base_game* ptr) = 0;
    virtual void set_player(std::shared_ptr<Base_object> obj) = 0;
+   virtual void print_win_loss_info() = 0;
 };
 
 } // cpp_client

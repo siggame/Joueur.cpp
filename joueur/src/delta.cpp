@@ -20,6 +20,77 @@
 namespace cpp_client
 {
 
+void morph_any(Any& to_morph, const rapidjson::Value& val)
+{
+   const bool no_type = (to_morph.type() == typeid(void));
+   //otherwise just create the Any from it via this stupid if-else block
+   if(val.IsBool())
+   {
+      if(!no_type && to_morph.type() != typeid(bool))
+      {
+         throw Bad_manipulation("Boolean assigned to non-Boolean.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{val.GetBool()};
+      }
+      else
+      {
+         to_morph.as<bool>() = val.GetBool();
+      }
+   }
+   else if(val.IsInt())
+   {
+      if(!no_type && to_morph.type() != typeid(int))
+      {
+         throw Bad_manipulation("Integer assigned to non-Integer.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{val.GetInt()};
+      }
+      else
+      {
+         to_morph.as<int>() = val.GetInt();
+      }
+   }
+   else if(val.IsString())
+   {
+      if(!no_type && to_morph.type() != typeid(std::string))
+      {
+         throw Bad_manipulation("String assigned to non-string.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{std::string{val.GetString()}};
+      }
+      else
+      {
+         to_morph.as<std::string>() = std::string{val.GetString()};
+      }
+   }
+   else if(val.IsNumber())
+   {
+      if(!no_type && to_morph.type() != typeid(double))
+      {
+         throw Bad_manipulation("Double assigned to non-double.");
+      }
+      if(no_type)
+      {
+         to_morph = Any{static_cast<double>(val.GetDouble())};
+      }
+      else
+      {
+         to_morph.as<double>() = static_cast<double>(val.GetDouble());
+      }
+   }
+   else
+   {
+      //some kind of weird gross type that's icky
+      throw Bad_response("Unknown JSON type received in a delta.");
+   }
+}
+
 namespace
 {
 
@@ -76,78 +147,6 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
 
    }
 }
-
-inline void morph_any(Any& to_morph, const rapidjson::Value& val)
-{
-   const bool no_type = (to_morph.type() == typeid(void));
-   //otherwise just create the Any from it via this stupid if-else block
-   if(val.IsBool())
-   {
-      if(!no_type && to_morph.type() != typeid(bool))
-      {
-         throw Bad_manipulation("Boolean assigned to non-Boolean.");
-      }
-      if(no_type)
-      {
-         to_morph = Any{val.GetBool()};
-      }
-      else
-      {
-         to_morph.as<bool>() = val.GetBool();
-      }
-   }
-   else if(val.IsInt())
-   {
-      if(!no_type && to_morph.type() != typeid(int))
-      {
-         throw Bad_manipulation("Integer assigned to non-Integer.");
-      }
-      if(no_type)
-      {
-         to_morph = Any{val.GetInt()};
-      }
-      else
-      {
-         to_morph.as<int>() = val.GetInt();
-      }
-   }
-   else if(val.IsString())
-   {
-      if(!no_type && to_morph.type() != typeid(std::string))
-      {
-         throw Bad_manipulation("String assigned to non-string.");
-      }
-      if(no_type)
-      {
-         to_morph = Any{std::string{val.GetString()}};
-      }
-      else
-      {
-         to_morph.as<std::string>() = std::string(val.GetString());
-      }
-   }
-   else if(val.IsNumber())
-   {
-      if(!no_type && to_morph.type() != typeid(double))
-      {
-         throw Bad_manipulation("Double assigned to non-double.");
-      }
-      if(no_type)
-      {
-         to_morph = Any{static_cast<double>(val.GetDouble())};
-      }
-      else
-      {
-         to_morph.as<double>() = static_cast<double>(val.GetDouble());
-      }
-   }
-   else
-   {
-      //some kind of weird gross type that's icky
-      throw Bad_response("Unknown JSON type received in a delta.");
-   }
-}
-
 
 namespace
 {
@@ -251,20 +250,62 @@ inline std::string
          //map...
          for(auto data_iter = val.MemberBegin(); data_iter != val.MemberEnd(); ++data_iter)
          {
-            const auto target = data_iter->name.GetString();
+            const auto target = std::string{data_iter->name.GetString()};
             if(data_iter->value.IsObject())
             {
-               auto str = handle_itr(context,
-                                     *apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
-                                     data_iter,
-                                     &apply_to,
-                                     refs,
-                                     vec_refs);
-               if(!str.empty())
+               //need to tell if the object is a map - deal with it
+               if(!apply_to.is_map(name))
                {
-                  refs.emplace_back(&apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
-                                    std::move(str));
+                  auto str = handle_itr(context,
+                                        *apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
+                                        data_iter,
+                                        &apply_to,
+                                        refs,
+                                        vec_refs);
+                  if(!str.empty())
+                  {
+                     refs.emplace_back(&apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
+                                       std::move(str));
+                  }
                }
+               else
+               {
+                  //need to handle object references
+                  Any key{std::string{target}};
+                  Any value{};
+                  value = apply_to.add_key_value(name, key, value);
+                  if(value.type() == typeid(std::shared_ptr<Base_object>))
+                  {
+                     //make an object if needed
+                     if(!value.as<std::shared_ptr<Base_object>>())
+                     {
+                        value = std::make_shared<Base_object>();
+                     }
+                     auto str = handle_itr(context,
+                                           *value.as<std::shared_ptr<Base_object>>(),
+                                           data_iter,
+                                           &apply_to,
+                                           refs,
+                                           vec_refs);
+                     Any dummy;
+                     auto val = apply_to.add_key_value(name, key, dummy);
+                     if(!str.empty())
+                     {
+                        refs.emplace_back(&val.as<std::shared_ptr<Base_object>>(), std::move(str));
+                     }
+                  }
+                  else
+                  {
+                     //otherwise just morph it
+                     morph_any(value, data_iter->value);
+                     apply_to.add_key_value(name, key, value);
+                  }
+               }
+            }
+            else
+            {
+               //Figure this out: it's getting like void variables and junk
+               morph_any(apply_to.variables_[target], data_iter->value);
             }
          }
       }

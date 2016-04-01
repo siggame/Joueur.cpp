@@ -3,6 +3,7 @@
 
 #include "delta.hpp"
 #include "attr_wrapper.hpp"
+#include "rapidjson/document.h"
 
 namespace cpp_client
 {
@@ -67,19 +68,9 @@ void Base_game::go()
    {
       //Intentionally empty
    }
-   /*
-   auto resp = conn_.recieve();
-   auto resp2 = conn_.recieve();
-   rapidjson::Document doc;
-   doc.Parse(resp2.c_str());
-   apply_delta(doc, *this);
-   conn_.recieve();
-   conn_.send("{\"event\":\"ready\"}");
-   conn_.recieve();
-   */
 }
 
-bool Base_game::handle_response(const std::string& expected)
+Any Base_game::handle_response(const std::string& expected)
 {
    //first get the response
    const auto resp = conn_.recieve();
@@ -123,11 +114,27 @@ bool Base_game::handle_response(const std::string& expected)
    }
    else if(event == "over")
    {
-      return false;
+      ai_->print_win_loss_info();
+      //output URL info
+      const auto& data = attr_wrapper::get_loc(doc, "data")->value;
+      const auto url = attr_wrapper::get_attribute<std::string>(data, "gamelogURL");
+      std::cout << sgr::text_cyan
+                << "---\n"
+                << "Your gamelog is viewable at:\n"
+                << url
+                << "\n---\n"
+                << sgr::reset
+                ;
+      //exit!
+      exit(0);
    }
    else if(event == "fatal")
    {
-      return false;
+      const auto data = attr_wrapper::get_loc(doc, "data");
+      std::cout << sgr::text_red << "Fatal: "
+                << attr_wrapper::get_attribute<std::string>(data->value, "message") << '\n'
+                << sgr::reset;
+      return {};
    }
    else if(event == "order")
    {
@@ -145,7 +152,20 @@ bool Base_game::handle_response(const std::string& expected)
          + R"(,"returned":)" + ai_->invoke_by_name(name, params) + "}}";
       conn_.send(order_done);
    }
-   return true;
+   else if(event == "ran")
+   {
+      return Any{rapidjson::Value(std::move(doc))};
+   }
+   else if(event == "invalid")
+   {
+      //just print out an error message
+      const auto data = attr_wrapper::get_loc(doc, "data");
+      std::cout << sgr::text_yellow << "Invalid: "
+                << attr_wrapper::get_attribute<std::string>(data->value, "message") << '\n'
+                << sgr::reset;
+   }
+   //just some dummy value to indicate that this isn't done yet
+   return Any{true};
 }
 
 } // cpp_client

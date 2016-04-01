@@ -136,6 +136,23 @@ virtual void set_player(std::shared_ptr<Base_object> obj) override
    player = std::move(std::static_pointer_cast<Player_>(obj));
 }
 
+virtual void print_win_loss_info() override
+{
+   if(player->lost)
+   {
+      ended(false, player->reason_lost);
+      std::cout << sgr::text_green
+                << "Game is over. I lost :( because: " << player->reason_lost << '\n';
+   }
+   else
+   {
+      ended(true, player->reason_won);
+      std::cout << sgr::text_green
+                << "Game is over. I won! because: " << player->reason_won << '\n';
+   }
+   std::cout << sgr::reset;
+}
+
 };
 
 } // ${underscore(game_name).upper()}

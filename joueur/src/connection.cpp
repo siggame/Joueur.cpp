@@ -167,7 +167,7 @@ void Connection::send(const std::string& msg)
 
 void Connection::connect(const char* host, unsigned port)
 {
-   std::cout << sgr::text_cyan << "Connecting to: " << host << ":" << port << '\n';
+   std::cout << sgr::text_cyan << "Connecting to: " << host << ":" << port << '\n' << sgr::reset;
    conn_->connect(host, port);
 }
 

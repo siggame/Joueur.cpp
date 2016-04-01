@@ -6,9 +6,11 @@
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/any.hpp"
 #include "../../joueur/src/exceptions.hpp"
+#include "../../joueur/src/delta.hpp"
 % for game_obj_key in sort_dict_keys(game_objs):
 #include "${underscore(game_obj_key)}.hpp"
 % endfor
+#include "${underscore(game_name)}.hpp"
 
 #include <type_traits>
 
@@ -17,7 +19,71 @@ namespace cpp_client
 
 namespace ${underscore(game_name)}
 {
-//Do not edit anything below here!
+
+
+
+
+
+
+
+
+
+
+/////////////////////////////////////////
+// Implementation details below
+// Do not edit anything below here!
+/////////////////////////////////////////
+
+% for function_name in obj['function_names']:
+<% function_params = obj['functions'][function_name] %>
+<%
+if function_params['returns']:
+  return_type = shared['gen_base_type'](function_params['returns']['type'])
+else:
+  return_type = 'void'
+name = underscore(function_name)
+args = shared['make_args'](function_params, True)
+%>
+${return_type} ${obj_key_name}_::${name}(${args})
+{
+   std::string order = R"({"event": "run", "data": {"functionName": "${name}", "caller": {"id": ")";
+   order += id + R"("}, "args": {)";
+   <% comma = '' %>
+   % for arg_params in function_params['arguments']:
+   order += "${comma}\"${arg_params['name']}\":" + ${shared['make_string_arg'](arg_params)};
+   <% comma = ',' %>
+   % endfor
+   order += "}}}";
+   ${underscore(game_name).capitalize()}::instance()->send(order);
+   //Go until not a delta
+   Any info;
+   //until a not bool is seen (i.e., the delta has been processed)
+   do
+   {
+      info = ${underscore(game_name).capitalize()}::instance()->handle_response();
+   } while(info.type() == typeid(bool));
+   % if return_type == 'void':
+   return;
+   % elif shared['is_ref'](return_type):
+   //reference - just pull the id
+   auto& val = info.as<rapidjson::Value>().FindMember("data")->value;
+   if(val.IsNull())
+   {
+      return nullptr;
+   }
+   else
+   {
+      return std::dynamic_pointer_cast<${return_type}_>(${underscore(game_name).capitalize()}::instance()->get_objects()[val["id"].GetString()]);
+   }
+   % else:
+   auto& val = info.as<rapidjson::Value>().FindMember("data")->value;
+   Any to_return;
+   morph_any(to_return, val);
+   return to_return.as<${return_type}>();
+   % endif
+}
+% endfor
+
 <%
 parent_classes = []
 for par in obj['parentClasses']:
@@ -36,7 +102,6 @@ if i == -1:
    initcomma = ''
 if i == 0:
    comma = ''%>
-//Constructor - Do not edit this!
 ${obj_key_name}_::${obj_key_name}_(std::initializer_list<std::pair<std::string, Any&&>> init) :
 % for par in parent_classes:
    ${underscore(par).capitalize()}{
@@ -139,7 +204,7 @@ void ${obj_key_name}_::remove_key(const std::string& name, Any& key)
    throw Bad_manipulation(name + " in ${obj_key_name} treated as a map, but it is not a map.");
 }
 
-void ${obj_key_name}_::add_key_value(const std::string& name, Any& key, Any& value)
+Any ${obj_key_name}_::add_key_value(const std::string& name, Any& key, Any& value)
 { <% if_str = 'if' %>
 % for attr_name in obj['attribute_names']:
 % if obj['attributes'][attr_name]['type'] and obj['attributes'][attr_name]['type']['name'] == 'dictionary':
@@ -147,8 +212,16 @@ void ${obj_key_name}_::add_key_value(const std::string& name, Any& key, Any& val
    {
       auto& map = variables_["${attr_name}"].as<std::decay<decltype(${underscore(attr_name)})>::type>();
       using type = std::decay<decltype(map)>::type;
-      map.emplace(std::make_pair(std::move(key.as<type::key_type>()), std::move(value.as<type::mapped_type>())));
-      return;
+      auto real_key = key.as<type::key_type>();
+      if(value)
+      {
+         map[real_key] = std::move(value.as<type::mapped_type>());
+      }
+      % if obj['attributes'][attr_name]['type']['valueType'] in ['boolean', 'float', 'int', 'string']:
+      return Any{map[real_key]};
+      % else:
+      return Any{std::static_pointer_cast<Base_object>(map[real_key])};
+      % endif
    } <% if_str = 'else if' %>
 % endif
 % endfor
@@ -156,13 +229,25 @@ void ${obj_key_name}_::add_key_value(const std::string& name, Any& key, Any& val
 % for parent in parent_classes:
    try
    {
-      ${underscore(par).capitalize()}::add_key_value(name, key, value);
-      return;
+      return ${underscore(par).capitalize()}::add_key_value(name, key, value);
    }
    catch(...){}
 % endfor
 % endif
    throw Bad_manipulation(name + " in ${obj_key_name} treated as a map, but it is not a map.");
+}
+
+bool ${obj_key_name}_::is_map(const std::string& name)
+{
+   % for attr_name in obj['attribute_names']:
+   % if obj['attributes'][attr_name]['type'] and obj['attributes'][attr_name]['type']['name'] == 'dictionary':
+   if(name == "${attr_name}")
+   {
+      return true;
+   }
+   % endif
+   % endfor
+   return false;
 }
 
 } // ${underscore(game_name)}

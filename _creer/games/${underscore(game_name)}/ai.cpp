@@ -67,7 +67,7 @@ args = shared['make_args'](function_params, True)
 % endif
 ${return_type} AI::${underscore(function_name)}(${args})
 {
-${merge("   // ", function_name, "   // Put your game logic here for {} here".format(function_name))}
+${merge("   // ", function_name, "   // Put your game logic here for {} here".format(underscore(function_name)))}
 % if return_type in shared['defaults']:
    return${shared['defaults'][return_type]};
 % else:

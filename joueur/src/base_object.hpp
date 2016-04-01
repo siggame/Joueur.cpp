@@ -28,7 +28,8 @@ public:
    virtual void change_vec_values(const std::string& name,
                                   std::vector<std::pair<std::size_t, Any>>& values) override {}
    virtual void remove_key(const std::string& name, Any& key) override {}
-   virtual void add_key_value(const std::string& name, Any& key, Any& value) override {}
+   virtual Any add_key_value(const std::string& name, Any& key, Any& value) override {}
+   virtual bool is_map(const std::string& name) override {}
 };
 
 } // cpp_client

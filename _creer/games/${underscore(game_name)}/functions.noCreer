@@ -22,6 +22,21 @@ def gen_cpp_base_type(type):
     else:
         raise Exception('UNKNOWN TYPE ENCOUNTERED -- FATAL ERROR')
 
+def make_string_arg(params):
+    typer = params['type']
+    name = params['name']
+    if typer['name'] in ['float', 'boolean', 'int']:
+        return "std::to_string({})".format(name)
+    elif typer['name'] in ['string']:
+        return name
+    elif typer['name'] in ['list', 'dictionary']:
+        raise Exception('List and dictionary arguments are not supported.')
+    else:
+        return '{"id":" + id + "}"'
+
+def is_ref(type):
+    return type not in ['double', 'bool', 'int', 'void']
+
 def gen_cpp_base_type2(type):
     return 'const ' + gen_cpp_base_type(type) + '&'
 
@@ -60,5 +75,7 @@ shared['defaults']['bool'] = " true"
 shared['defaults']['void'] = ""
 shared['defaults']['int'] = " 0"
 shared['defaults']['double'] = " 0"
+shared['make_string_arg'] = make_string_arg
+shared['is_ref'] = is_ref
 
 %>

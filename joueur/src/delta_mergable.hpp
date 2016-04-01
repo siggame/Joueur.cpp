@@ -39,7 +39,8 @@ public:
    virtual void resize(const std::string& name, std::size_t size) = 0;
    virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) = 0;
    virtual void remove_key(const std::string& name, Any& key) = 0;
-   virtual void add_key_value(const std::string& name, Any& key, Any& value) = 0;
+   virtual Any add_key_value(const std::string& name, Any& key, Any& value) = 0;
+   virtual bool is_map(const std::string& name) = 0;
 };
 
 }
