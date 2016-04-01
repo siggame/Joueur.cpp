@@ -45,7 +45,7 @@ ${merge("   // ", "game-updated", "   // If a function you call triggers an upda
 /// <param name="reason">An explanation for why you either won or lost</param>
 void AI::ended(bool won, const std::string& reason)
 {
-${merge("   //", "ended", "   // You can do any cleanup of your AI here.  The program is finished once this closes")}
+${merge("   //", "ended", "   // You can do any cleanup of your AI here.  The program ends when this function returns.")}
 }
 
 % for function_name in ai['function_names']:
@@ -75,6 +75,8 @@ ${merge("   // ", function_name, "   // Put your game logic here for {} here".fo
 % endif
 }
 % endfor
+
+${merge("//", "methods", "// You can add additional methods here for your AI to call")}
 
 } // ${underscore(game_name)}
 
