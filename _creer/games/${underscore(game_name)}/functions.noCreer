@@ -51,8 +51,12 @@ def trans_default(defer):
         return 'true'
     elif defer == False:
         return 'false'
-    else:
+    try:
+        int(defer)
+        float(defer)
         return defer
+    except Exception:
+        return '"' + defer + '"'
 
 def make_args(params, default_values):
     to_ret = ''
