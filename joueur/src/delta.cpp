@@ -130,7 +130,7 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
    {
       auto& obj = std::get<0>(ref);
       const auto& refer = std::get<1>(ref);
-      *obj = std::shared_ptr<Base_object>{apply_to.get_objects()[refer]};
+      *obj = std::static_pointer_cast<Base_object>(apply_to.get_objects()[refer]);
    }
    for(auto&& vec_ref : vec_refs)
    {
@@ -141,10 +141,9 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
       for(auto&& change : changes)
       {
          auto id = std::move(change.second.as<std::string>());
-         change.second = std::shared_ptr<Base_object>{apply_to.get_objects()[id]};
+         change.second = std::static_pointer_cast<Base_object>(apply_to.get_objects()[id]);
       }
       obj->change_vec_values(name, changes);
-
    }
 }
 
@@ -231,12 +230,18 @@ inline std::string
          objects[name] = context.generate_object(attr_wrapper::as<std::string>(type_itr->value));
          for(auto data_iter = val.MemberBegin(); data_iter != val.MemberEnd(); ++data_iter)
          {
-            handle_itr(context,
-                       *objects[name],
-                       data_iter,
-                       &apply_to,
-                       refs,
-                       vec_refs);
+            auto str = handle_itr(context,
+                                  *objects[name],
+                                  data_iter,
+                                  &apply_to,
+                                  refs,
+                                  vec_refs);
+            if(!str.empty())
+            {
+               auto target = std::string{data_iter->name.GetString()};
+               refs.emplace_back(&objects[name]->variables_[target].as<std::shared_ptr<Base_object>>(),
+                                 str);
+            }
          }
       }
       else if(id_itr != val.MemberEnd())
