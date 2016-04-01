@@ -73,7 +73,8 @@ ${return_type} ${obj_key_name}_::${name}(${args})
    }
    else
    {
-      return std::dynamic_pointer_cast<${return_type}_>(${underscore(game_name).capitalize()}::instance()->get_objects()[val["id"].GetString()]);
+      auto target = attr_wrapper::get_attribute<std::string>(val, "id");
+      return std::dynamic_pointer_cast<${return_type}_>(${underscore(game_name).capitalize()}::instance()->get_objects()[target]);
    }
    % else:
    auto& val = info.as<rapidjson::Value>().FindMember("data")->value;
