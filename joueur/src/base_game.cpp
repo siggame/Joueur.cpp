@@ -72,10 +72,14 @@ void Base_game::go()
 
 Any Base_game::handle_response(const std::string& expected)
 {
+   //static for when returning rapidjson values
+   static std::string resp;
+   static std::unique_ptr<rapidjson::Document> doc_raw;
+   doc_raw.reset(new rapidjson::Document);
    //first get the response
-   const auto resp = conn_.recieve();
+   resp = conn_.recieve();
    //now parse it
-   rapidjson::Document doc;
+   auto& doc = *doc_raw;
    doc.Parse(resp.c_str());
    const auto event = attr_wrapper::get_attribute<std::string>(doc, "event");
    //check if it matches the expected (if needed)
@@ -154,7 +158,7 @@ Any Base_game::handle_response(const std::string& expected)
    }
    else if(event == "ran")
    {
-      return Any{rapidjson::Value(std::move(doc))};
+      return Any{static_cast<rapidjson::Document*>(&doc)};
    }
    else if(event == "invalid")
    {

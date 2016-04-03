@@ -39,7 +39,7 @@ void morph_any(Any& to_morph, const rapidjson::Value& val)
          to_morph.as<bool>() = val.GetBool();
       }
    }
-   else if(val.IsInt())
+   else if(val.IsInt() && to_morph.type() != typeid(double))
    {
       if(!no_type && to_morph.type() != typeid(int))
       {
@@ -100,14 +100,14 @@ using vec_ref_t = std::vector<std::tuple<Base_object*,
 
 //returns the name of an object if the last thing added was an object reference
 //returns an empty string otherwise
-template<typename T>
 inline std::string
    handle_itr(Base_game& context,
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
-              T* owner,
+              Delta_mergable* owner,
               std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>>& refs,
-              vec_ref_t& vec_refs);
+              vec_ref_t& vec_refs,
+              const std::string& owner_name);
 
 }
 
@@ -123,7 +123,7 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
    vec_ref_t vec_refs;
    for(auto data_iter = data.MemberBegin(); data_iter != data.MemberEnd(); ++data_iter)
    {
-      auto to_add = handle_itr(apply_to, apply_to, data_iter, &apply_to, refs, vec_refs);
+      auto to_add = handle_itr(apply_to, apply_to, data_iter, &apply_to, refs, vec_refs, "");
    }
    //now do the references
    for(auto&& ref : refs)
@@ -150,14 +150,14 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
 namespace
 {
 
-template<typename T>
 inline std::string
    handle_itr(Base_game& context,
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
-              T* owner,
+              Delta_mergable* owner,
               std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>>& refs,
-              vec_ref_t& vec_refs)
+              vec_ref_t& vec_refs,
+              const std::string& owner_name)
 {
    const auto& val = itr->value;
    const auto name = std::string(itr->name.GetString());
@@ -195,7 +195,8 @@ inline std::string
                                      data_iter,
                                      &apply_to,
                                      refs,
-                                     vec_refs);
+                                     vec_refs,
+                                     name);
                const auto num = atoi(data_iter->name.GetString());
                if(!str.empty())
                {
@@ -210,8 +211,17 @@ inline std::string
             {
                Any to_add;
                morph_any(to_add, data_iter->value);
-               to_edit.emplace_back(atoi(data_iter->name.GetString()),
-                                    std::move(to_add));
+               bool add = true;
+               //if it's the remove state remove ignore it
+               if(to_add.type() == typeid(std::string))
+               {
+                  add = (to_add.as<std::string>() != context.remove_string());
+               }
+               if(add)
+               {
+                  to_edit.emplace_back(atoi(data_iter->name.GetString()),
+                                       std::move(to_add));
+               }
             }
          }
          apply_to.change_vec_values(name, to_edit);
@@ -235,7 +245,8 @@ inline std::string
                                   data_iter,
                                   &apply_to,
                                   refs,
-                                  vec_refs);
+                                  vec_refs,
+                                  name);
             if(!str.empty())
             {
                auto target = std::string{data_iter->name.GetString()};
@@ -261,15 +272,20 @@ inline std::string
                //need to tell if the object is a map - deal with it
                if(!apply_to.is_map(name))
                {
+                  auto owner2 = static_cast<Base_object*>(owner);
+                  Any dummy;
+                  Any key = std::string{name};
+                  auto self = owner2->add_key_value(owner_name, key, dummy);
                   auto str = handle_itr(context,
-                                        *apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
+                                        *self.as<std::shared_ptr<Base_object>>(),
                                         data_iter,
-                                        &apply_to,
+                                        owner2,
                                         refs,
-                                        vec_refs);
+                                        vec_refs,
+                                        owner_name);
                   if(!str.empty())
                   {
-                     refs.emplace_back(&apply_to.variables_[name].as<std::shared_ptr<Base_object>>(),
+                     refs.emplace_back(&self.as<std::shared_ptr<Base_object>>(),
                                        std::move(str));
                   }
                }
@@ -291,7 +307,8 @@ inline std::string
                                            data_iter,
                                            &apply_to,
                                            refs,
-                                           vec_refs);
+                                           vec_refs,
+                                           name);
                      Any dummy;
                      auto val = apply_to.add_key_value(name, key, dummy);
                      if(!str.empty())

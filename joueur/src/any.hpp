@@ -47,7 +47,7 @@ public:
 
    //base types
    template<typename T>
-   typename std::enable_if<std::is_fundamental<T>::value, T&>::type as()
+   typename std::enable_if<std::is_fundamental<T>::value || std::is_pointer<T>::value, T&>::type as()
    {
       if(typeid(T) != data_->type())
       {
@@ -58,7 +58,7 @@ public:
 
    //classes
    template<typename T>
-   typename std::enable_if<std::is_compound<T>::value, T&>::type as()
+   typename std::enable_if<std::is_compound<T>::value && !std::is_pointer<T>::value, T&>::type as()
    {
       return dynamic_cast<T&>(*static_cast<T*>(data_->get()));
    }
