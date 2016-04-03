@@ -1,6 +1,6 @@
 if(CMAKE_MAJOR_VERSION LESS 3)
    cmake_minimum_required(VERSION 2.6.0 FATAL_ERROR)
-   setEXPLICIT_VERSION FALSE)
+   set(EXPLICIT_VERSION FALSE)
 elseif()
    cmake_minimum_required(VERSION 3.1.0 FATAL_ERROR)
    set(EXPLICIT_VERSION TRUE)
@@ -25,13 +25,6 @@ project(${PROG_NAME})
 
 #build the libraries as well
 add_subdirectory(joueur/libraries)
-
-set(BOOST_INCLUDEDIR /usr/include)
-find_package(Boost COMPONENTS regex date_time system coroutine thread context REQUIRED)
-include_directories(${Boost_INCLUDE_DIR})
-if(NOT Boost_FOUND)
-    message(FATAL_ERROR "Boost was not found!")
-endif(NOT Boost_FOUND)
 
 #find generated files
 file(GLOB FILES RELATIVE
@@ -62,8 +55,7 @@ target_link_libraries(${PROG_NAME} static)
 #include library files
 include_directories(${PROG_NAME} "joueur/libraries/netLink/include/"
                                  "joueur/libraries/tclap/include/"
-                                 "joueur/libraries/rapidjson/include/"
-                                 "coroutine/include")
+                                 "joueur/libraries/rapidjson/include/")
 
 #stole this from netlink
 if(WIN32)
@@ -73,12 +65,7 @@ if(WIN32)
    string(REGEX REPLACE "([0-9])" "0\\1" ver ${ver})
    add_definitions(-D_WIN32_WINNT=0x${ver})
    add_definitions(-DWIN32)
-elseif(UNIX OR MINGW)
-   find_package(Threads)
-   set(LINK_LIBS ${CMAKE_THREAD_LIBS_INIT})
-endif()
-
-target_link_libraries(${PROG_NAME} ${Boost_LIBRARIES} ${LINK_LIBS})
+endif(WIN32)
 
 #set C++11
 if(EXPLICIT_VERSION)
@@ -89,6 +76,3 @@ else()
       set_target_properties(${PROG_NAME} PROPERTIES COMPILE_OPTIONS "-std=c++11")
    endif()
 endif()
-
-#bloop
-add_definitions(-DCHESSER_NO_14)
