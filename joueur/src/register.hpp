@@ -69,7 +69,14 @@ private:
    static std::unordered_map<std::string,
                              std::unique_ptr<Base_game>,
                              Hasher,
-                             Comper> name_map;
+                             Comper>& name_map()
+   {
+      static std::unordered_map<std::string,
+                                std::unique_ptr<Base_game>,
+                                Hasher,
+                                Comper> data;
+      return data;
+   }
 };
 
 
