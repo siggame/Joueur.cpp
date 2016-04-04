@@ -121,7 +121,7 @@ Any Base_game::handle_response(const std::string& expected)
       ai_->print_win_loss_info();
       //output URL info
       const auto& data = attr_wrapper::get_loc(doc, "data")->value;
-      const auto url = attr_wrapper::get_loc(doc, "visualizerURL");
+      const auto url = data.FindMember(doc, "visualizerURL");
       if(url != data.MemberEnd())
       {
          const auto url2 = attr_wrapper::as<std::string>(url->value);
