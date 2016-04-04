@@ -18,11 +18,10 @@ int main(int argc, const char* argv[])
    using namespace cpp_client;
    //set signal so it doesn't crash when interrupted
    //this really isn't good... but whatever
-   signal(SIGINT,
-          [](int)
-          {
-             std::_Exit(0);
-          });
+   const auto exiter = [](int){ std::_Exit(0); };
+   signal(SIGINT, exiter);
+   signal(SIGTERM, exiter);
+   signal(SIGABRT, exiter);
    try
    {
       TCLAP::CmdLine cmd("Runs the C++ client.  Game name must be provided.");
