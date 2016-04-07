@@ -33,6 +33,9 @@ only_files = [f for f in os.listdir(game_path) if os.path.isfile(os.path.join(ga
 for name in only_files:
     shutil.copyfile(os.path.join(game_path, name), os.path.join(temp_path, name))
 
+for extra in ["baseGameObject.cpp", "baseGameObject.h"]:
+    shutil.copyfile(os.path.join("..", "joueur", extra), os.path.join(temp_path, extra))
+
 with open("../README.md", "r") as f:
     readme = f.read()
 
