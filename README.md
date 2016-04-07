@@ -1,4 +1,4 @@
-# GAME_NAME C++ Client
+# Spiders C++ Client
 
 This is the root of you AI. Stay out of the joueur/ folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.h` and `games/game_name/ai.cpp` files for you to make smarter.
 
@@ -13,7 +13,7 @@ Also make sure **NOT** to try to compile this in your Missouri S&T S-Drive. This
     make
     ./testRun MyOwnGameSession
 
-If you are on your own machine, make sure you've installed boost. The `libboost-all-dev` package should be up to date. You'll also need the `cmake` package for make to work.
+If you are on your own machine, make sure you've installed boost. The `libboost-all-dev` package should be up to date. You'll also need the `cmake` package for make to work. Finally, you will need `build-essential` to be able to compile.
 
 ### Windows
 

@@ -4,6 +4,6 @@ if [ -z "$1" ]
   then
     echo "No argument(s) supplied. Please specify game session you want to join or make."
   else
-    ./run GAME_NAME -s r99acm.device.mst.edu -r "$@"
+    ./run Spiders -s r99acm.device.mst.edu -r "$@"
 fi
 
