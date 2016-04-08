@@ -51,97 +51,144 @@ bool Spiders::AI::runTurn() {
   // get a random spider to try to do things with
   Spider* spider = randomElement(player->spiders);
 
-  // if that spider is a Spitter
-  if (spider->gameObjectName == "Spitter") {
-    // this is how you cast pointers in C++
-    Spitter* spitter = dynamic_cast<Spitter*>(spider);
-    Nest* enemysNest = player->otherPlayer->broodMother->nest;
+  if (spider->gameObjectName == "BroodMother") {
+    BroodMother* broodMother = dynamic_cast<BroodMother*>(spider);
+    if (rand() % 2 == 1) {  // flip a coin
 
-    // loop through to check to make sure there is not already a Web to the
-    // enemy's nest. note that C++11 constructs are available, but not required.
-    Web* existingWeb = nullptr;
-    for (auto& web : enemysNest->webs) {
-      if (web->nestA == spitter->nest && web->nestB == spitter->nest) {
-        existingWeb = web;
-        break;
-      }
-    }
-
-    if (existingWeb != nullptr)  // we can't spit to that nest, so move to it
-      spitter->move(existingWeb);
-    else
-      spitter->spit(enemysNest);
-
-  } else if (spider->gameObjectName == "Cutter") {
-    // this is how you use auto
-    auto cutter = dynamic_cast<Cutter*>(spider);
-    if (cutter->nest->webs.size() > 0) {  // cut one of them
-      Web* targetWeb = randomElement(cutter->nest->webs);
-      cutter->cut(targetWeb);
-    } else if (cutter->nest->spiders.size() > 1) {
-      // get a random other spider to see if we can attack
-      Spider* otherSpider = randomElement(cutter->nest->spiders);
-
-      // Spiderling::attack(Spiderling*) needs a Spiderling*. We have a Spider*.
-      // We can use dynamic_cast to attempt to cast our Spider* to a
-      // Spiderling*. It might not be a Spiderling though, because it might be
-      // the "friendly" BroodMother. If you ask dynamic_cast to cast something,
-      // and it can't (because the broodmother isn't a Spiderling, for example),
-      // then it will return nullptr.
-      Spiderling* targetSpider = dynamic_cast<Spiderling*>(otherSpider);
-      if (otherSpider != nullptr) {  // must not be broodmother!
-        if (otherSpider->owner != cutter->owner) {
-          cutter->attack(targetSpider);
+      // Task: Eat a Spiderling
+      if (broodMother->nest->spiders.size() > 1) {  // there is another spider
+        // get a random other spider to see if it's not us
+        Spider* otherSpider = randomElement(spider->nest->spiders);
+        if (otherSpider != broodMother) {
+          // We need a Spiderling* to feed to BroodMother::consume()
+          // This is how you cast pointers in C++
+          // If otherSpider can not be cast to a Spiderling* then
+          // dynamic_cast will return nullptr. Always check.
+          Spiderling* food = dynamic_cast<Spiderling*>(otherSpider);
+          if (food != nullptr) {
+            cout << broodMother->gameObjectName << " #" << broodMother->id
+                 << " consuming " << food->gameObjectName << " #" << food->id
+                 << endl;
+            broodMother->consume(food);
+          }
         }
       }
-    }
-  } else if (spider->gameObjectName == "Weaver") {
-    auto weaver = dynamic_cast<Weaver*>(spider);
-    if (weaver->nest->webs.size() > 0) {  // weave a web
-      // 50% of the time do a strengthening weave,
-      // the other 50% of the time weaken
-      Web* targetWeb = randomElement(weaver->nest->webs);
+    } else {  // try to spawn a Spiderling
 
-      if (rand() % 2 == 1) {
-        weaver->strengthen(targetWeb);
+      // Task: Spawn a Spiderling
+      if (broodMother->eggs > 0) {
+        // c++11 constructs are available. Two are demostrated here.
+
+        // This is the syntax for initializer lists.
+        // (Which is different from initialization lists. That's constructors.)
+        std::vector<std::string> spiderlingTypes{"Cutter", "Weaver", "Spitter"};
+
+        // If the compiler can determine that only a sinle type can be
+        // returned, then you can declare a variable to be of type "auto",
+        // which means "look, compiler, we both know what it has to be, so
+        // just make it that type. It's important to understand that "auto"
+        // is not a real type. It's just instructing the compiler to put its
+        // autism to good use for once and make the variable be of the type that
+        // it has to be.
+        auto randomSpiderlingType = randomElement(spiderlingTypes);
+        cout << broodMother->gameObjectName << " #" << broodMother->id
+             << " spawning " << randomSpiderlingType << endl;
+
+        broodMother->spawn(randomElement(spiderlingTypes));
+      }
+    }
+  } else {  // it is a spiderling
+    auto spiderling = dynamic_cast<Spiderling*>(spider);
+    // note that we could have also done the dynamic_cast at the top and checked
+    // for nullptr to see if we had a Spiderling or a not-a-Spiderling, which,
+    // in this case, HAS to be the BroodMother.
+
+    if (spiderling->busy == "false") {  // not busy
+      int choice = rand() % 3;
+
+      if (choice == 0) {
+        // Task: try to move somewhere
+        if (spiderling->nest->webs.size() > 0) {
+          auto web = randomElement(spiderling->nest->webs);
+          cout << "Spiderling " << spiderling->gameObjectName << " #"
+               << spiderling->id << " moving onto " << web->gameObjectName
+               << " #" << web->id << endl;
+          spiderling->move(web);
+        }
+      } else if (choice == 1) {
+        // Task: try to attack something
+        if (spiderling->nest->spiders.size() > 1) {  // there is a target
+          Spider* otherSpider = randomElement(spiderling->nest->spiders);
+          if (otherSpider->owner != spiderling->owner) {  // enemy!
+            auto target = dynamic_cast<Spiderling*>(otherSpider);
+            // So let's think about this. Do we need a nullptr check? The other
+            // spider can't possibly be the hostile BroodMother because this
+            // spiderling would already be dead. It can't possibly be the
+            // friendly BroodMother because the owners match. Therefore it MUST
+            // be a Spiderling. No need for nullptr check.
+            cout << spiderling->gameObjectName << " #" << spiderling->id
+                 << " attacking " << target->gameObjectName << " #"
+                 << target->id << endl;
+            spiderling->attack(target);
+          }
+        }
       } else {
-        weaver->weaken(targetWeb);
-      }
-    } else if (weaver->nest->spiders.size() > 1) {  // try to attack one of them
+        // Task: do a type-specific action
 
-      // pick a random other spider
-      Spider* otherSpider = randomElement(spider->nest->spiders);
-      Spiderling* targetSpider = dynamic_cast<Spiderling*>(otherSpider);
-      if (targetSpider != nullptr) {  // must not be broodmother!
-        if (targetSpider->owner != weaver->owner) {
-          weaver->attack(targetSpider);
+        if (spider->gameObjectName == "Spitter") {
+          // Task: spit a web to the enemy's home nest
+
+          auto spitter = dynamic_cast<Spitter*>(spider);
+          Nest* enemysNest = player->otherPlayer->broodMother->nest;
+
+          // let's demonstrate a c++11 style foreach loop
+          Web* existingWeb = nullptr;
+          for (auto& web : enemysNest->webs) {
+            if (web->nestA == spitter->nest && web->nestB == spitter->nest) {
+              existingWeb = web;
+              break;
+            }
+          }
+
+          if (existingWeb == nullptr) {
+            cout << spitter->gameObjectName << " #" << spitter->id
+                 << " spitting at " << enemysNest->gameObjectName << " #"
+                 << enemysNest->id << endl;
+            spitter->spit(enemysNest);
+          }
+        } else if (spider->gameObjectName == "Cutter") {
+          auto cutter = dynamic_cast<Cutter*>(spider);
+          if (cutter->nest->webs.size() > 0) {  // cut one of them
+            Web* targetWeb = randomElement(cutter->nest->webs);
+            cout << cutter->gameObjectName << " #" << cutter->id
+                 << " spitting at " << targetWeb->gameObjectName << " #"
+                 << targetWeb->id << endl;
+            cutter->cut(targetWeb);
+          } else if (spider->gameObjectName == "Weaver") {
+            auto weaver = dynamic_cast<Weaver*>(spider);
+            if (weaver->nest->webs.size() > 0) {  // weave a web
+              // 50% of the time do a strengthening weave,
+              // the other 50% of the time weaken
+              Web* targetWeb = randomElement(weaver->nest->webs);
+
+              if (rand() % 2 == 1) {
+                cout << weaver->gameObjectName << " #" << weaver->id
+                     << " strengthening " << targetWeb->gameObjectName << " #"
+                     << targetWeb->id << endl;
+                weaver->strengthen(targetWeb);
+              } else {
+                cout << weaver->gameObjectName << " #" << weaver->id
+                     << " weakening " << targetWeb->gameObjectName << " #"
+                     << targetWeb->id << endl;
+                weaver->weaken(targetWeb);
+              }
+            }
+          }
         }
       }
-    }
-  } else if (spider->gameObjectName == "BroodMother") {
-    auto broodMother = dynamic_cast<BroodMother*>(spider);
-
-    // try to consume a Spiderling
-    if (broodMother->nest->spiders.size() > 1) {  // there is another spider
-
-      // pick a random other spider
-      Spider* otherSpider = randomElement(spider->nest->spiders);
-      Spiderling* spiderling = dynamic_cast<Spiderling*>(otherSpider);
-
-      // as above, use the nullptr return to ensure we really have a Spiderling
-      if (spiderling != nullptr) {  // must not be broodMother (myself)!
-        broodMother->consume(spiderling);
-      }
-    }
-
-    // try to spawn a Spiderling
-    if (broodMother->eggs > 0) {
-      // this is the syntax for initializer lists
-      // (which is different from initialization lists. that's constructors)
-      std::vector<std::string> spiderlingTypes{"Cutter", "Weaver", "Spitter"};
-      broodMother->spawn(randomElement(spiderlingTypes));
     }
   }
+
   return true;
 }
 
