@@ -1,5 +1,5 @@
 // ${header}
-// This is where you build your AI for the Checkers game.
+// This is where you build your AI for the ${game_name} game.
 <%include file="functions.noCreer" />
 #ifndef JOUEUR_${game_name.upper()}_AI_H
 #define JOUEUR_${game_name.upper()}_AI_H
