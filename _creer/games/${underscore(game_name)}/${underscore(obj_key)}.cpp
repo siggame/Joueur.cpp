@@ -50,7 +50,7 @@ ${return_type} ${obj_key_name}_::${name}(${args})
    order += id + R"("}, "args": {)";
    <% comma = '' %>
    % for arg_params in function_params['arguments']:
-   order += "${comma}\"${arg_params['name']}\":" + ${shared['make_string_arg'](arg_params)};
+   order += std::string("${comma}\"${arg_params['name']}\":") + ${shared['make_string_arg'](arg_params)};
    <% comma = ',' %>
    % endfor
    order += "}}}";
