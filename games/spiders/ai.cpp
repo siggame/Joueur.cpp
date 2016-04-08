@@ -103,7 +103,7 @@ bool Spiders::AI::runTurn() {
     // for nullptr to see if we had a Spiderling or a not-a-Spiderling, which,
     // in this case, HAS to be the BroodMother.
 
-    if (spiderling->busy == "false") {  // not busy
+    if (spiderling->busy == "") {  // not busy
       int choice = rand() % 3;
 
       if (choice == 0) {
