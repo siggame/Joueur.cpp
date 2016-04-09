@@ -94,7 +94,7 @@ bool Spiders::AI::runTurn() {
         cout << broodMother->gameObjectName << " #" << broodMother->id
              << " spawning " << randomSpiderlingType << endl;
 
-        broodMother->spawn(randomElement(spiderlingTypes));
+        broodMother->spawn(randomSpiderlingType);
       }
     }
   } else {  // it is a spiderling
@@ -103,7 +103,7 @@ bool Spiders::AI::runTurn() {
     // for nullptr to see if we had a Spiderling or a not-a-Spiderling, which,
     // in this case, HAS to be the BroodMother.
 
-    if (spiderling->busy == "") {  // not busy
+    if (spiderling->busy == "false") {  // not busy
       int choice = rand() % 3;
 
       if (choice == 0) {
@@ -144,7 +144,7 @@ bool Spiders::AI::runTurn() {
           // let's demonstrate a c++11 style foreach loop
           Web* existingWeb = nullptr;
           for (auto& web : enemysNest->webs) {
-            if (web->nestA == spitter->nest && web->nestB == spitter->nest) {
+            if (web->nestA == spitter->nest || web->nestB == spitter->nest) {
               existingWeb = web;
               break;
             }
