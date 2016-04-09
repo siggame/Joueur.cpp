@@ -14,7 +14,23 @@ else:
     else:
         parent_classes.append("Joueur::BaseGameObject")
 
-%>
+arg_classes_needed = []
+
+if obj_key != "Game":
+    for function_name in obj['function_names']:
+        function_parms = obj['functions'][function_name]
+        if 'arguments' in function_parms:
+            for arg_parms in function_parms['arguments']:
+                t = arg_parms['type']['name']
+                print("t", t)
+                if t != obj_key and arg_parms['type']['is_game_object']:
+                    arg_classes_needed.append(t) %>
+% if len(arg_classes_needed) > 0:
+% for arg_class_needed in arg_classes_needed:
+#include "${lowercase_first(arg_class_needed)}.h"
+% endfor
+
+% endif
 ${merge("// ", "includes", "// you can add additional #includes(s) here.")}
 
 
@@ -49,7 +65,7 @@ return_type = function_parms['returns'] and shared['c++']['type'](function_parms
     boost::property_tree::ptree args;
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
-    args.put_child("${arg_parms['name']}", *this->gameManager->serialize(${arg_parms['name']}));
+    args.put_child("${arg_parms['name']}", *this->gameManager->serialize(${"static_cast<BaseGameObject*>" if arg_parms['type']['is_game_object'] else ""}(${arg_parms['name']})));
 % endfor
 % endif
 
