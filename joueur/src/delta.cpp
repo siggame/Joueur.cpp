@@ -84,6 +84,11 @@ void morph_any(Any& to_morph, const rapidjson::Value& val)
          to_morph.as<double>() = static_cast<double>(val.GetDouble());
       }
    }
+   else if(val.IsNull())
+   {
+      auto& change = to_morph.as<std::shared_ptr<Base_object>>();
+      change.reset();
+   }
    else
    {
       //some kind of weird gross type that's icky
