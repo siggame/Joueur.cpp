@@ -163,31 +163,30 @@ bool Spiders::AI::runTurn() {
             cout << cutter->gameObjectName << " #" << cutter->id << " cutting "
                  << targetWeb->gameObjectName << " #" << targetWeb->id << endl;
             cutter->cut(targetWeb);
-          } else if (spider->gameObjectName == "Weaver") {
-            auto weaver = dynamic_cast<Weaver*>(spider);
-            if (weaver->nest->webs.size() > 0) {  // weave a web
-              // 50% of the time do a strengthening weave,
-              // the other 50% of the time weaken
-              Web* targetWeb = randomElement(weaver->nest->webs);
+          }
+        } else if (spider->gameObjectName == "Weaver") {
+          auto weaver = dynamic_cast<Weaver*>(spider);
+          if (weaver->nest->webs.size() > 0) {  // weave a web
+            // 50% of the time do a strengthening weave,
+            // the other 50% of the time weaken
+            Web* targetWeb = randomElement(weaver->nest->webs);
 
-              if (rand() % 2 == 1) {
-                cout << weaver->gameObjectName << " #" << weaver->id
-                     << " strengthening " << targetWeb->gameObjectName << " #"
-                     << targetWeb->id << endl;
-                weaver->strengthen(targetWeb);
-              } else {
-                cout << weaver->gameObjectName << " #" << weaver->id
-                     << " weakening " << targetWeb->gameObjectName << " #"
-                     << targetWeb->id << endl;
-                weaver->weaken(targetWeb);
-              }
+            if (rand() % 2 == 1) {
+              cout << weaver->gameObjectName << " #" << weaver->id
+                   << " strengthening " << targetWeb->gameObjectName << " #"
+                   << targetWeb->id << endl;
+              weaver->strengthen(targetWeb);
+            } else {
+              cout << weaver->gameObjectName << " #" << weaver->id
+                   << " weakening " << targetWeb->gameObjectName << " #"
+                   << targetWeb->id << endl;
+              weaver->weaken(targetWeb);
             }
           }
         }
       }
     }
   }
-
   return true;
 }
 
