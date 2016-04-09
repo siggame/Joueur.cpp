@@ -160,9 +160,8 @@ bool Spiders::AI::runTurn() {
           auto cutter = dynamic_cast<Cutter*>(spider);
           if (cutter->nest->webs.size() > 0) {  // cut one of them
             Web* targetWeb = randomElement(cutter->nest->webs);
-            cout << cutter->gameObjectName << " #" << cutter->id
-                 << " spitting at " << targetWeb->gameObjectName << " #"
-                 << targetWeb->id << endl;
+            cout << cutter->gameObjectName << " #" << cutter->id << " cutting "
+                 << targetWeb->gameObjectName << " #" << targetWeb->id << endl;
             cutter->cut(targetWeb);
           } else if (spider->gameObjectName == "Weaver") {
             auto weaver = dynamic_cast<Weaver*>(spider);
