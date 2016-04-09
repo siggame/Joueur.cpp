@@ -47,7 +47,7 @@ args = shared['make_args'](function_params, False)
 ${return_type} ${obj_key_name}_::${name}(${args})
 {
    std::string order = R"({"event": "run", "data": {"functionName": "${name}", "caller": {"id": ")";
-   order += id + R"("}, "args": {)";
+   order += this->id + R"("}, "args": {)";
    <% comma = '' %>
    % for arg_params in function_params['arguments']:
    order += std::string("${comma}\"${arg_params['name']}\":") + ${shared['make_string_arg'](arg_params)};
