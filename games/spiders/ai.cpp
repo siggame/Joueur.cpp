@@ -94,7 +94,7 @@ bool Spiders::AI::runTurn() {
         cout << broodMother->gameObjectName << " #" << broodMother->id
              << " spawning " << randomSpiderlingType << endl;
 
-        broodMother->spawn(randomElement(spiderlingTypes));
+        broodMother->spawn(randomSpiderlingType);
       }
     }
   } else {  // it is a spiderling
