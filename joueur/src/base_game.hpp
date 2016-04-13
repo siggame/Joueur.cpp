@@ -2,7 +2,6 @@
 #define BASE_GAME_HPP
 
 #include "connection.hpp"
-#include "base_object.hpp"
 #include "delta_mergable.hpp"
 
 #include <memory>
@@ -14,6 +13,7 @@ namespace cpp_client
 {
 
 class Base_ai;
+class Base_object;
 
 class Base_game : public Delta_mergable
 {

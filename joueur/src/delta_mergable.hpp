@@ -5,6 +5,8 @@
 #include "exceptions.hpp"
 
 #include <string>
+#include <unordered_map>
+#include <vector>
 
 namespace cpp_client
 {

@@ -4,6 +4,7 @@
 #include "delta.hpp"
 #include "attr_wrapper.hpp"
 #include "rapidjson/document.h"
+#include "base_object.hpp"
 
 namespace cpp_client
 {

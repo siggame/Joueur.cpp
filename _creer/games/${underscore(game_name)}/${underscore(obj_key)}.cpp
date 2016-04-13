@@ -251,6 +251,10 @@ bool ${obj_key_name}_::is_map(const std::string& name)
    return false;
 }
 
+% if obj_key_name == 'Game_object':
+   Base_game* ${obj_key_name}_::get_game() { return ${underscore(game_name).capitalize()}::instance(); }
+% endif
+
 } // ${underscore(game_name)}
 
 } // cpp_client

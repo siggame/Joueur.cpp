@@ -94,6 +94,10 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
    virtual void remove_key(const std::string& name, Any& key) override;
    virtual Any add_key_value(const std::string& name, Any& key, Any& value) override;
    virtual bool is_map(const std::string& name) override;
+
+% if obj_key_name == 'Game_object':
+   virtual Base_game* get_game() override;
+% endif
 };
 
 } // ${lowercase_first(game_name)}
