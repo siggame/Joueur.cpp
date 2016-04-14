@@ -5,6 +5,7 @@
 #include "attr_wrapper.hpp"
 #include "rapidjson/document.h"
 #include "base_object.hpp"
+#include "any.hpp"
 
 namespace cpp_client
 {
@@ -65,13 +66,13 @@ void Base_game::go()
    //Start should be next
    handle_response("start");
    //now just do normal handling of events
-   while(handle_response())
+   while(*handle_response())
    {
       //Intentionally empty
    }
 }
 
-Any Base_game::handle_response(const std::string& expected)
+std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
 {
    //static for when returning rapidjson values
    static std::string resp;
@@ -139,7 +140,7 @@ Any Base_game::handle_response(const std::string& expected)
       std::cout << sgr::text_red << "Fatal: "
                 << attr_wrapper::get_attribute<std::string>(data->value, "message") << '\n'
                 << sgr::reset;
-      return {};
+      return std::unique_ptr<Any>(new Any{});
    }
    else if(event == "order")
    {
@@ -151,7 +152,6 @@ Any Base_game::handle_response(const std::string& expected)
       std::unordered_map<std::string, Any> params;
       //TODO: arguments for orders (apparently they are positional)
       //send finished event with data:
-      //{"orderIndex":from_above, "returned":result}
       const std::string order_done =
          R"({"event":"finished","data":{"orderIndex":)" + std::to_string(index)
          + R"(,"returned":)" + ai_->invoke_by_name(name, params) + "}}";
@@ -159,7 +159,7 @@ Any Base_game::handle_response(const std::string& expected)
    }
    else if(event == "ran")
    {
-      return Any{static_cast<rapidjson::Document*>(&doc)};
+      return std::unique_ptr<Any>(new Any{static_cast<rapidjson::Document*>(&doc)});
    }
    else if(event == "invalid")
    {
@@ -170,7 +170,7 @@ Any Base_game::handle_response(const std::string& expected)
                 << sgr::reset;
    }
    //just some dummy value to indicate that this isn't done yet
-   return Any{true};
+   return std::unique_ptr<Any>(new Any{true});
 }
 
 } // cpp_client

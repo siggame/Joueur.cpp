@@ -205,7 +205,7 @@ void ${obj_key_name}_::remove_key(const std::string& name, Any& key)
    throw Bad_manipulation(name + " in ${obj_key_name} treated as a map, but it is not a map.");
 }
 
-Any ${obj_key_name}_::add_key_value(const std::string& name, Any& key, Any& value)
+std::unique_ptr<Any> ${obj_key_name}_::add_key_value(const std::string& name, Any& key, Any& value)
 { <% if_str = 'if' %>
 % for attr_name in obj['attribute_names']:
 % if obj['attributes'][attr_name]['type'] and obj['attributes'][attr_name]['type']['name'] == 'dictionary':
@@ -219,9 +219,10 @@ Any ${obj_key_name}_::add_key_value(const std::string& name, Any& key, Any& valu
          map[real_key] = std::move(value.as<type::mapped_type>());
       }
       % if obj['attributes'][attr_name]['type']['valueType'] in ['boolean', 'float', 'int', 'string']:
-      return Any{map[real_key]};
+      return std::unique_ptr<Any>(new Any{map[real_key]});
       % else:
-      return Any{std::static_pointer_cast<Base_object>(map[real_key])};
+      auto val = std::static_pointer_cast<Base_object>(map[real_key]);
+      return std::unique_ptr<Any>(new Any{std::shared_ptr<Base_object>{val}});
       % endif
    } <% if_str = 'else if' %>
 % endif

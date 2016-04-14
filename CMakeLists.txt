@@ -38,11 +38,14 @@ add_executable(${PROG_NAME} ${FILES}
                             joueur/src/base_ai.hpp
                             joueur/src/base_game.hpp
                             joueur/src/base_game.cpp
+                            joueur/src/base_object.cpp
                             joueur/src/base_object.hpp
                             joueur/src/connection.cpp
                             joueur/src/connection.hpp
                             joueur/src/delta.cpp
                             joueur/src/delta.hpp
+                            joueur/src/delta_mergable.cpp
+                            joueur/src/delta_mergable.hpp
                             joueur/src/exceptions.hpp
                             joueur/src/main.cpp
                             joueur/src/register.cpp

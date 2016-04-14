@@ -86,8 +86,7 @@ void morph_any(Any& to_morph, const rapidjson::Value& val)
    }
    else if(val.IsNull())
    {
-      auto& change = to_morph.as<std::shared_ptr<Base_object>>();
-      change.reset();
+      to_morph.reset();
    }
    else
    {
@@ -110,7 +109,7 @@ inline std::string
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
               Delta_mergable* owner,
-              std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>>& refs,
+              std::vector<std::tuple<Any*, std::string>>& refs,
               vec_ref_t& vec_refs,
               const std::string& owner_name);
 
@@ -124,7 +123,7 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
    {
       throw Bad_response("Delta's data field is not an object.");
    }
-   std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>> refs;
+   std::vector<std::tuple<Any*, std::string>> refs;
    vec_ref_t vec_refs;
    for(auto data_iter = data.MemberBegin(); data_iter != data.MemberEnd(); ++data_iter)
    {
@@ -135,7 +134,7 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
    {
       auto& obj = std::get<0>(ref);
       const auto& refer = std::get<1>(ref);
-      *obj = std::static_pointer_cast<Base_object>(apply_to.get_objects()[refer]);
+      obj->reset(std::static_pointer_cast<Base_object>(apply_to.get_objects()[refer]));
    }
    for(auto&& vec_ref : vec_refs)
    {
@@ -160,7 +159,7 @@ inline std::string
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
               Delta_mergable* owner,
-              std::vector<std::tuple<std::shared_ptr<Base_object>*, std::string>>& refs,
+              std::vector<std::tuple<Any*, std::string>>& refs,
               vec_ref_t& vec_refs,
               const std::string& owner_name)
 {
@@ -255,7 +254,7 @@ inline std::string
             if(!str.empty())
             {
                auto target = std::string{data_iter->name.GetString()};
-               refs.emplace_back(&objects[name]->variables_[target].as<std::shared_ptr<Base_object>>(),
+               refs.emplace_back(&objects[name]->variables_[target],
                                  str);
             }
          }
@@ -274,15 +273,31 @@ inline std::string
             const auto target = std::string{data_iter->name.GetString()};
             if(data_iter->value.IsObject())
             {
-               //need to tell if the object is a map - deal with it
-               if(!apply_to.is_map(name))
+               //see if it is a new object
+               const auto name_iter = data_iter->value.FindMember("gameObjectName");
+               if(name_iter != data_iter->value.MemberEnd())
+               {
+                  auto str = handle_itr(context,
+                                        apply_to,
+                                        data_iter,
+                                        owner,
+                                        refs,
+                                        vec_refs,
+                                        owner_name);
+                  if(!str.empty())
+                  {
+                     refs.emplace_back(&owner->variables_[name],
+                                       std::move(str));
+                  }
+               }
+               else if(!apply_to.is_map(name))
                {
                   auto owner2 = static_cast<Base_object*>(owner);
                   Any dummy;
                   Any key = std::string{name};
-                  auto self = owner2->add_key_value(owner_name, key, dummy);
+                  auto self = owner2->add_key_value(owner_name, key, dummy)->get();
                   auto str = handle_itr(context,
-                                        *self.as<std::shared_ptr<Base_object>>(),
+                                        *self,
                                         data_iter,
                                         owner2,
                                         refs,
@@ -290,7 +305,7 @@ inline std::string
                                         owner_name);
                   if(!str.empty())
                   {
-                     refs.emplace_back(&self.as<std::shared_ptr<Base_object>>(),
+                     refs.emplace_back(&owner2->variables_[name],
                                        std::move(str));
                   }
                }
@@ -298,40 +313,40 @@ inline std::string
                {
                   //need to handle object references
                   Any key{std::string{target}};
-                  Any value{};
-                  value = apply_to.add_key_value(name, key, value);
-                  if(value.type() == typeid(std::shared_ptr<Base_object>))
+                  Any dummy{};
+                  auto value = apply_to.add_key_value(name, key, dummy);
+                  if(value->type() == typeid(std::shared_ptr<Base_object>))
                   {
                      //make an object if needed
-                     if(!value.as<std::shared_ptr<Base_object>>())
+                     if(!value->get())
                      {
-                        value = std::make_shared<Base_object>();
+                        value->reset(std::make_shared<Base_object>());
                      }
+                     auto self = value->get();
                      auto str = handle_itr(context,
-                                           *value.as<std::shared_ptr<Base_object>>(),
+                                           *self,
                                            data_iter,
                                            &apply_to,
                                            refs,
                                            vec_refs,
                                            name);
-                     Any dummy;
-                     auto val = apply_to.add_key_value(name, key, dummy);
+                     apply_to.add_key_value(name, key, dummy);
                      if(!str.empty())
                      {
-                        refs.emplace_back(&val.as<std::shared_ptr<Base_object>>(), std::move(str));
+                        refs.emplace_back(&apply_to.variables_[name],
+                                          std::move(str));
                      }
                   }
                   else
                   {
                      //otherwise just morph it
-                     morph_any(value, data_iter->value);
-                     apply_to.add_key_value(name, key, value);
+                     morph_any(*value, data_iter->value);
+                     apply_to.add_key_value(name, key, *value);
                   }
                }
             }
             else
             {
-               //Figure this out: it's getting like void variables and junk
                morph_any(apply_to.variables_[target], data_iter->value);
             }
          }
@@ -341,9 +356,7 @@ inline std::string
    {
       if(val.IsNull())
       {
-         //need to do this a little differently so that it doesn't change type
-         auto& change = apply_to.variables_[name].as<std::shared_ptr<Base_object>>();
-         change.reset();
+         apply_to.variables_[name].reset();
          return "";
       }
       else if(val.IsString() && val.GetString() == context.remove_string())

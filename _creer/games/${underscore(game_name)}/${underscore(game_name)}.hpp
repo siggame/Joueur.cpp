@@ -5,6 +5,7 @@
 
 #include "../../joueur/src/base_game.hpp"
 #include "ai.hpp"
+#include "../../joueur/src/any.hpp"
 
 // This feels bad, but it should work
 #include "game.hpp"

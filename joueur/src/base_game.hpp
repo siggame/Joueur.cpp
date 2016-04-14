@@ -14,6 +14,7 @@ namespace cpp_client
 
 class Base_ai;
 class Base_object;
+class Any;
 
 class Base_game : public Delta_mergable
 {
@@ -23,7 +24,6 @@ public:
 
    using Delta_mergable::Delta_mergable;
 
-   //generate the AI to be used for the game
    virtual ~Base_game();
 
    //sets if communication should be printed
@@ -87,7 +87,7 @@ public:
    //If a certain action is expected it can be given here
    //the Any returned converts to false if the game is over; converts to true if the game
    //is still continuing
-   Any handle_response(const std::string& expected = "");
+   std::unique_ptr<Any> handle_response(const std::string& expected = "");
 
 protected:
    //return the name of the game
