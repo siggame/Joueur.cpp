@@ -56,17 +56,17 @@ ${return_type} ${obj_key_name}_::${name}(${args})
    order += "}}}";
    ${underscore(game_name).capitalize()}::instance()->send(order);
    //Go until not a delta
-   Any info;
+   std::unique_ptr<Any> info;
    //until a not bool is seen (i.e., the delta has been processed)
    do
    {
-      info = ${underscore(game_name).capitalize()}::instance()->handle_response();
-   } while(info.type() == typeid(bool));
+      info = std::move(${underscore(game_name).capitalize()}::instance()->handle_response());
+   } while(info->type() == typeid(bool));
    % if return_type == 'void':
    return;
    % elif shared['is_ref'](return_type):
    //reference - just pull the id
-   auto& val = info.as<rapidjson::Document*>()->FindMember("data")->value;
+   auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
    if(val.IsNull())
    {
       return nullptr;
@@ -77,7 +77,7 @@ ${return_type} ${obj_key_name}_::${name}(${args})
       return std::dynamic_pointer_cast<${return_type}_>(${underscore(game_name).capitalize()}::instance()->get_objects()[target]);
    }
    % else:
-   auto& val = info.as<rapidjson::Document*>()->FindMember("data")->value;
+   auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
    Any to_return;
    morph_any(to_return, val);
    return to_return.as<${return_type}>();
