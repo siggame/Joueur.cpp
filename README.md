@@ -1,6 +1,6 @@
 # Spiders C++ Client
 
-This is the root of you AI. Stay out of the joueur/ folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.h` and `games/game_name/ai.cpp` files for you to make smarter.
+This is the root of you AI. Stay out of the joueur/ folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/spiders/`, with your very own AI living in `games/spiders/ai.h` and `games/spiders/ai.cpp` files for you to make smarter.
 
 ## How to Run
 
