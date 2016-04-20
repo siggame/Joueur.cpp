@@ -41,7 +41,7 @@ boost::property_tree::ptree* Joueur::BaseGameManager::serialize(int number)
     return new boost::property_tree::ptree(std::to_string(number));
 }
 
-boost::property_tree::ptree* Joueur::BaseGameManager::serialize(float number)
+boost::property_tree::ptree* Joueur::BaseGameManager::serialize(double number)
 {
     return new boost::property_tree::ptree(std::to_string(number));
 }
@@ -165,9 +165,9 @@ int Joueur::BaseGameManager::unserializeInt(boost::property_tree::ptree& ptree)
     return stoi(ptree.data());
 }
 
-float Joueur::BaseGameManager::unserializeFloat(boost::property_tree::ptree& ptree)
+double Joueur::BaseGameManager::unserializeDouble(boost::property_tree::ptree& ptree)
 {
-    return stof(ptree.data());
+    return stod(ptree.data());
 }
 
 std::string Joueur::BaseGameManager::unserializeString(boost::property_tree::ptree& ptree)
@@ -225,16 +225,16 @@ std::vector<int>& Joueur::BaseGameManager::unserializeVector(boost::property_tre
     return *list;
 }
 
-std::vector<float>& Joueur::BaseGameManager::unserializeVector(boost::property_tree::ptree& delta, std::vector<float>* list)
+std::vector<double>& Joueur::BaseGameManager::unserializeVector(boost::property_tree::ptree& delta, std::vector<double>* list)
 {
-    list = this->resizeVectorFromDelta<float>(list, delta);
+    list = this->resizeVectorFromDelta<double>(list, delta);
 
     for (auto kv : delta)
     {
         unsigned int index = stoi(kv.first);
         if (index < list->size())
         {
-            (*list)[index] = this->unserializeFloat(kv.second);
+            (*list)[index] = this->unserializeDouble(kv.second);
         }
     }
 
