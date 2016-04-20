@@ -11,8 +11,10 @@ if not 'c++' in shared:
                 return "new std::vector<" + cpp_type(type_obj['valueType']) + ">()"
             elif base_type == "dictionary":
                 return 'new std::map<' + cpp_type(type_obj['keyType']) + ", " + cpp_type(type_obj['valueType']) + ">()"
-            elif base_type == "int" or base_type == "float":
+            elif base_type == "int":
                 return '0'
+            elif base_type == "float":
+                return "0.0d"
             elif base_type == "boolean":
                 return 'false'
             else: # should be null and GameObjects
@@ -28,7 +30,7 @@ if not 'c++' in shared:
         elif base_type == "boolean":
             return str(default).lower()
         elif base_type == "float":
-            return str(default) + "f"
+            return str(default) + "d"
         elif base_type == "int":
             return str(default)
         elif base_type == "dictionary" or base_type == "list":
@@ -49,7 +51,9 @@ if not 'c++' in shared:
             return "std::string"
         elif base_type == "null":
             return "void"
-        elif base_type == "int" or base_type == "float":
+        elif base_type == "float":
+            return "double"
+        elif base_type == "int":
             return base_type
         else: # it's a game object, so include it's namespace
             return game_name + "::" + base_type + "*"
@@ -84,7 +88,10 @@ if not 'c++' in shared:
         if type_name == "dictionary":
             raise Exception("C++ client does not support custom dictionaries, someone should figure that out")
 
-        if type_name in ['bool', 'int', 'float', 'string']:
+        if type_name == "float":
+            return 'unserializeDouble(' + ptree_name + ')'
+
+        if type_name in ['bool', 'int', 'string']:
             return 'unserialize' + upcase_first(type_name) + '(' + ptree_name + ')'
         else: # it should be a game object
             return 'unserializeGameObject(' + ptree_name + ')'
