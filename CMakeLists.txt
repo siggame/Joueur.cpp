@@ -26,11 +26,12 @@ project(${PROG_NAME})
 #build the libraries as well
 add_subdirectory(joueur/libraries)
 
-#find generated files
-file(GLOB FILES RELATIVE
-     "${CMAKE_CURRENT_SOURCE_DIR}" "${CMAKE_CURRENT_SOURCE_DIR}/games/*/*")
+#set files before adding subdirectories
+set(FILES "")
 
-#add source files
+#find generated files
+add_subdirectory(games)
+
 add_executable(${PROG_NAME} ${FILES}
                             joueur/src/any.hpp
                             joueur/src/attr_wrapper.hpp
