@@ -10,6 +10,8 @@
 // This feels bad, but it should work
 #include "game.hpp"
 
+/// \cond FALSE
+
 namespace cpp_client
 {
 
@@ -52,5 +54,7 @@ public:
 } // ${underscore(game_name)}
 
 } // cpp_client
+
+/// \endcond
 
 #endif // GAMES_${underscore(game_name).upper()}_HPP

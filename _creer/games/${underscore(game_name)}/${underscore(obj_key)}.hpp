@@ -87,6 +87,7 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
 
    ~${obj_key_name}_();
 
+   /// \cond FALSE
    ${obj_key_name}_(std::initializer_list<std::pair<std::string, Any&&>> init);
    ${obj_key_name}_() : ${obj_key_name}_({}){}
    virtual void resize(const std::string& name, std::size_t size) override;
@@ -98,6 +99,7 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
 % if obj_key_name == 'Game_object':
    virtual Base_game* get_game() override;
 % endif
+   /// \endcond
 };
 
 } // ${lowercase_first(game_name)}
