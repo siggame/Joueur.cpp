@@ -25,6 +25,7 @@ namespace ${underscore(game_name)}
 /// </summary>
 class AI : public Base_ai
 {
+public:
    /// <summary>
    /// This is a reference to the Game object itself, it contains all the information about the current game
    /// </summary>
@@ -92,6 +93,8 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
 // Do not edit anything past here!!
 /////////////////////////////////////////////////////
 
+/// \cond FALSE
+
 <% ifstr = 'if' %>
 virtual std::string invoke_by_name(const std::string& name,
                                    const std::unordered_map<std::string, Any>& args) override
@@ -152,6 +155,8 @@ virtual void print_win_loss_info() override
    }
    std::cout << sgr::reset;
 }
+
+/// \endcond
 
 };
 
