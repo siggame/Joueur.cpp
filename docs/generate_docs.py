@@ -4,6 +4,12 @@ import subprocess
 import argparse
 import shutil
 from datetime import date
+import sys
+
+def run(*args, **kwargs):
+    error_code = subprocess.call(*args, **kwargs)
+    if error_code != 0: # an error happened
+        sys.exit(error_code)
 
 parser = argparse.ArgumentParser(description='Runs the c++ client doc generation script.')
 parser.add_argument('game', action='store', help='the name of the game you want to document. Must exist in ../games/')
@@ -46,7 +52,7 @@ with open(os.path.join(temp_path, "README.md"), "w+") as f:
 
 #shutil.copyfile(os.path.join("..", "README.md"), os.path.join(temp_path, "README.md"))
 
-subprocess.call(["doxygen"], shell=True, cwd=temp_path)
+run(["doxygen"], shell=True, cwd=temp_path)
 
 output_path = "./output"
 if os.path.isdir(output_path):
