@@ -1,4 +1,4 @@
-// This is where you build your AI for the Checkers game.
+// This is where you build your AI for the Chess game.
 
 #include "ai.h"
 

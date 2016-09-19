@@ -5,6 +5,9 @@
 #include "joueur.h"
 #include "deltaMergeable.h"
 
+/// <summary>
+/// The base class all GameObjects inherit from, regardless of game.
+/// </summary>
 class Joueur::BaseGameObject : public Joueur::DeltaMergeable
 {
     public:

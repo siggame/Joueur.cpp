@@ -1,4 +1,5 @@
-// This is where you build your AI for the Checkers game.
+// This is where you build your AI for the Chess game.
+
 
 #ifndef JOUEUR_CHESS_AI_H
 #define JOUEUR_CHESS_AI_H

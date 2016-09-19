@@ -55,7 +55,8 @@ class Joueur::Client
 
         Joueur::BaseGameManager* gameManager;
 
-        void connectTo(Joueur::BaseGame* game, Joueur::BaseAI* ai, Joueur::BaseGameManager* gameManager, const std::string server, const std::string port, bool printIO);
+        void connect(const std::string server, const std::string port, bool printIO);
+        void setup(Joueur::BaseGame* game, Joueur::BaseAI* ai, Joueur::BaseGameManager* gameManager);
         void send(const std::string& eventName);
         void send(const std::string& eventName, boost::property_tree::ptree& data);
         void send(const std::string& eventName, boost::property_tree::ptree* data);

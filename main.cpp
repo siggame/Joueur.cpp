@@ -45,7 +45,7 @@ int main(int argc, char* argv[])
         return 1;
     }
 
-    std::string gameName = vm["game"].as<std::string>();
+    std::string gameAlias = vm["game"].as<std::string>();
     std::string server = vm["server"].as<std::string>();
     std::string port = vm["port"].as<std::string>();
     std::string playerName = vm["name"].as<std::string>();
@@ -55,7 +55,12 @@ int main(int argc, char* argv[])
     std::string requestedSession = vm["session"].as<std::string>();
     bool printIO = (vm.count("printIO") > 0);
 
-    Joueur::Client *client = Joueur::Client::getInstance();
+    Joueur::Client* client = Joueur::Client::getInstance();
+
+    client->connect(server, port, printIO);
+    boost::property_tree::ptree aliasData(gameAlias);
+    client->send("alias", aliasData);
+    std::string gameName = client->waitForEvent("named")->data();
 
     bool registered = false;
     for (const auto p : function_registry::gamesRegistry_registry())
@@ -88,7 +93,7 @@ int main(int argc, char* argv[])
 
     std::cout << Joueur::ANSIColorCoder::CyanText << "Connecting to: " << server << ":" << port << Joueur::ANSIColorCoder::Reset << std::endl;
 
-    client->connectTo(game, ai, gameManager, server, port, printIO);
+    client->setup(game, ai, gameManager);
 
     if (playerName.empty())
     {
