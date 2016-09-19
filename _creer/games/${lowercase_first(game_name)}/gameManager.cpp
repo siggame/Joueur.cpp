@@ -1,5 +1,5 @@
-// ${header}
 // $This is a class that manages the ${game_name} Game and it's GameObjects. Competitors should never have to care about this class's existance.
+<%include file="functions.noCreer" />
 <% game_obj_keys = sort_dict_keys(game_objs) %>
 #include "gameManager.h"
 #include "ai.h"
@@ -55,7 +55,7 @@ arg_i = -1
         ${"auto returned = " if returns else ""}this->${lowercase_first(game_name)}AI->runTurn(
 % if len(function_parms['arguments']) > 0:
 % for arg_parms in function_parms['arguments']:
-<% arg_i += 1 %>            ${shared["c++"]["unserialize_function"](arg_parms, "ptree[" + arg_i + "]")}${"" if arg_i+1 == len(function_parms['arguments']) else ","}
+<% arg_i += 1 %>            ${shared["c++"]["unserialize_function"](arg_parms, "ptrees[" + str(arg_i) + "]")}${"" if arg_i+1 == len(function_parms['arguments']) else ","}
 % endfor
 % endif
         );

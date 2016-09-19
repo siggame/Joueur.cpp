@@ -1,4 +1,3 @@
-// ${header}
 // This is a class that manages the ${game_name} Game and it's GameObjects. Competitors should never have to care about this class's existance.
 <%include file="functions.noCreer" />
 #ifndef JOUEUR_${game_name.upper()}_GAMEMANAGER_H

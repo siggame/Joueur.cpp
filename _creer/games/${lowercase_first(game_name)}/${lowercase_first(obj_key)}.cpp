@@ -1,4 +1,3 @@
-// ${header}
 // ${obj['description']}
 <%include file="functions.noCreer" />
 #include "${lowercase_first(obj_key)}.h"

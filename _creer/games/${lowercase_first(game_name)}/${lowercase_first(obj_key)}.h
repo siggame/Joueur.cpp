@@ -1,4 +1,3 @@
-// ${header}
 // ${obj['description']}
 
 #ifndef JOUEUR_${game_name.upper()}_${obj_key.upper()}_H
