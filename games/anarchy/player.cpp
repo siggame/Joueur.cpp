@@ -61,7 +61,7 @@ void Anarchy::Player::deltaUpdateField(const std::string& fieldName, boost::prop
     }
     else if (fieldName == "timeRemaining")
     {
-        this->timeRemaining = this->gameManager->unserializeFloat(delta);
+        this->timeRemaining = this->gameManager->unserializeDouble(delta);
     }
     else if (fieldName == "warehouses")
     {
