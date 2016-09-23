@@ -1,0 +1,92 @@
+// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+
+#ifndef JOUEUR_SALOON_GAME_H
+#define JOUEUR_SALOON_GAME_H
+
+#include "saloon.h"
+#include "../../joueur/baseGame.h"
+
+// <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+// you can add addtional #includes(s) here.
+// <<-- /Creer-Merge: includes -->>
+
+/// <summary>
+/// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+/// </summary>
+class Saloon::Game : public Joueur::BaseGame
+{
+    friend Saloon::GameManager;
+
+    protected:
+        virtual void deltaUpdateField(const std::string& fieldName, boost::property_tree::ptree& delta);
+        Game() { this->name = "Saloon"; };
+        ~Game() {};
+
+    public:
+        /// <summary>
+        /// All the beer Bottles currently flying across the saloon in the game.
+        /// </summary>
+        std::vector<Saloon::Bottle*> bottles;
+
+        /// <summary>
+        /// Every Cowboy in the game.
+        /// </summary>
+        std::vector<Saloon::Cowboy*> cowboys;
+
+        /// <summary>
+        /// The player whose turn it is currently. That player can send commands. Other players cannot.
+        /// </summary>
+        Saloon::Player* currentPlayer;
+
+        /// <summary>
+        /// The current turn number, starting at 0 for the first player's turn.
+        /// </summary>
+        int currentTurn;
+
+        /// <summary>
+        /// Every furnishing in the game.
+        /// </summary>
+        std::vector<Saloon::Furnishing*> furnishings;
+
+        /// <summary>
+        /// All the jobs that Cowboys can be assigned within the saloon.
+        /// </summary>
+        std::vector<std::string> jobs;
+
+        /// <summary>
+        /// The maximum number of Cowboys a Player can bring into the saloon.
+        /// </summary>
+        int maxCowboys;
+
+        /// <summary>
+        /// The maximum number of turns before the game will automatically end.
+        /// </summary>
+        int maxTurns;
+
+        /// <summary>
+        /// List of all the players in the game.
+        /// </summary>
+        std::vector<Saloon::Player*> players;
+
+        /// <summary>
+        /// When a player's rowdyness reaches or exceeds this number their Cowboys take a collective siesta.
+        /// </summary>
+        int rowdynessToSiesta;
+
+        /// <summary>
+        /// A unique identifier for the game instance that is being played.
+        /// </summary>
+        std::string session;
+
+
+        // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+        // you can add addtional fields(s) here. None of them will be tracked or updated by the server.
+        // <<-- /Creer-Merge: fields -->>
+
+
+        // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+        // you can add addtional method(s) here.
+        // <<-- /Creer-Merge: methods -->>
+};
+
+#endif
