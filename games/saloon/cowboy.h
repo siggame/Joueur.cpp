@@ -29,7 +29,7 @@ class Saloon::Cowboy : public Saloon::GameObject
         int canMove;
 
         /// <summary>
-        /// The direction this Cowboy is moving, can be 'North', 'East', 'South', 'West'.
+        /// The direction this Cowboy is moving while drunk. Will be 'North', 'East', 'South', or 'West' when drunk; or '' (empty string) when not drunk.
         /// </summary>
         std::string drunkDirection;
 
@@ -87,7 +87,7 @@ class Saloon::Cowboy : public Saloon::GameObject
         /// Does their job's action on a Tile.
         /// </summary>
         /// <param name="tile">The Tile you want this Cowboy to act on.</param>
-        /// <param name="drunkDirection">The direction the bottle will cause drunk cowboys to be in, can be 'North', 'East', 'South', 'West'.</param>
+        /// <param name="drunkDirection">The direction the bottle will cause drunk cowboys to be in, can be 'North', 'East', 'South', or 'West'.</param>
         /// <returns>True if the act worked, false otherwise.</returns>
         bool act(Saloon::Tile* tile, std::string drunkDirection = "");
 

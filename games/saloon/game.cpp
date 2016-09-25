@@ -38,6 +38,14 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     {
         this->jobs = this->gameManager->unserializeVector(delta, &this->jobs);
     }
+    else if (fieldName == "mapHeight")
+    {
+        this->mapHeight = this->gameManager->unserializeInt(delta);
+    }
+    else if (fieldName == "mapWidth")
+    {
+        this->mapWidth = this->gameManager->unserializeInt(delta);
+    }
     else if (fieldName == "maxCowboys")
     {
         this->maxCowboys = this->gameManager->unserializeInt(delta);
@@ -57,6 +65,10 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     else if (fieldName == "session")
     {
         this->session = this->gameManager->unserializeString(delta);
+    }
+    else if (fieldName == "tiles")
+    {
+        this->tiles = this->gameManager->unserializeVectorOfGameObjects<Saloon::Tile*>(delta, &this->tiles);
     }
 }
 

@@ -54,6 +54,16 @@ class Saloon::Game : public Joueur::BaseGame
         std::vector<std::string> jobs;
 
         /// <summary>
+        /// The number of Tiles in the map along the y (vertical) axis.
+        /// </summary>
+        int mapHeight;
+
+        /// <summary>
+        /// The number of Tiles in the map along the x (horizontal) axis.
+        /// </summary>
+        int mapWidth;
+
+        /// <summary>
         /// The maximum number of Cowboys a Player can bring into the saloon.
         /// </summary>
         int maxCowboys;
@@ -77,6 +87,11 @@ class Saloon::Game : public Joueur::BaseGame
         /// A unique identifier for the game instance that is being played.
         /// </summary>
         std::string session;
+
+        /// <summary>
+        /// All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
+        /// </summary>
+        std::vector<Saloon::Tile*> tiles;
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
