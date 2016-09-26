@@ -7,10 +7,13 @@ foreach(child ${children})
    endif()
 endforeach()
 
+set(LOCAL_FILES "")
+
 foreach(dir ${dirlist})
    add_subdirectory(${dir})
+   list(APPEND LOCAL_FILES ${FILES})
 endforeach()
 
 set(FILES
-    ${FILES}
+    ${LOCAL_FILES}
     PARENT_SCOPE)

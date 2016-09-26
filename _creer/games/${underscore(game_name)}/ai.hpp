@@ -65,7 +65,7 @@ ${merge("   //", "class variables", "   // You can add additional class variable
 % for function_name in ai['function_names']:
 <%
 function_params = ai['functions'][function_name]
-if function_params['returns']['type']:
+if function_params['returns'] and 'type' in function_params['returns']:
    return_type = shared['gen_base_type'](function_params['returns']['type'])
 else:
    return_type = 'void'
@@ -103,7 +103,7 @@ virtual std::string invoke_by_name(const std::string& name,
    <% function_params = ai['functions'][function_name] %>
    ${ifstr}(name == "${function_name}")
    {
-   % if function_params['returns']['type']:
+   % if function_params['returns'] and 'type' in function_params['returns']:
       auto ret = ${underscore(function_name)}(
         <% comma = ',' %>
          % for arg_params in function_params['arguments']:
@@ -122,7 +122,7 @@ virtual std::string invoke_by_name(const std::string& name,
          args.at("${arg_params['name']}").as<${shared['gen_base_type'](arg_params['type'])}>()${comma}
          % endfor
       );
-      return;
+      return "";
    % endif
    } <% ifstr = 'else if' %>
    % endfor;

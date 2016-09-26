@@ -51,7 +51,7 @@ ${merge("   //", "ended", "   // You can do any cleanup of your AI here.  The pr
 % for function_name in ai['function_names']:
 <%
 function_params = ai['functions'][function_name]
-if function_params['returns']['type']:
+if function_params['returns'] and 'type' in function_params['returns']:
    return_type = shared['gen_base_type'](function_params['returns']['type'])
 else:
    return_type = 'void'

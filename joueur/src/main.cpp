@@ -134,12 +134,12 @@ int main(int argc, const char* argv[])
    }
    catch(const std::exception& e)
    {
-      std::cerr << sgr::text_red << "An error occured:\n" << e.what() << sgr::reset << std::endl;
+      std::cerr << sgr::text_red << "An error occurred:\n" << e.what() << sgr::reset << std::endl;
       return 1;
    }
    catch(...)
    {
-      std::cerr << sgr::text_red << "An unknown error occured." << sgr::reset << std::endl;
+      std::cerr << sgr::text_red << "An unknown error occurred." << sgr::reset << std::endl;
       return 2;
    }
 }
