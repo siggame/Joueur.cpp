@@ -34,6 +34,11 @@ class Chess::Game : public Joueur::BaseGame
         int currentTurn;
 
         /// <summary>
+        /// Forsyth–Edwards Notation, a notation that describes the game board.
+        /// </summary>
+        std::string fen;
+
+        /// <summary>
         /// The maximum number of turns before the game will automatically end.
         /// </summary>
         int maxTurns;

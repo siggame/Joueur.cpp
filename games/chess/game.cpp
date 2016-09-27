@@ -22,6 +22,10 @@ void Chess::Game::deltaUpdateField(const std::string& fieldName, boost::property
     {
         this->currentTurn = this->gameManager->unserializeInt(delta);
     }
+    else if (fieldName == "fen")
+    {
+        this->fen = this->gameManager->unserializeString(delta);
+    }
     else if (fieldName == "maxTurns")
     {
         this->maxTurns = this->gameManager->unserializeInt(delta);
