@@ -1,6 +1,6 @@
 # GAME_NAME C++ Client
 
-This is the root of you AI. Stay out of the joueur/ folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.h` and `games/game_name/ai.cpp` files for you to make smarter.
+This is the root of you AI. Stay out of the `joueur/` folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.h` and `games/game_name/ai.cpp` files for you to make smarter.
 
 ## How to Run
 
@@ -17,9 +17,9 @@ If you are on your own machine, make sure you've installed boost. The `libboost-
 
 ### Windows
 
-Be aware that getting this C++ client to build on Windows, while possible, can be a headache.
+For Windows, Boost has a simple way to [compile from source using bootstrap](http://www.boost.org/doc/libs/1_58_0/more/getting_started/windows.html). You'll need to do that. This client does work with VC++, you can create a solution at the root or ask a dev for the sln file. Just add the directory you built Boost in the Project's linker configuration. You'll also need to use the following command line arguments:
 
-For Windows, Boost has a simple way to [compile from source using bootstrap](http://www.boost.org/doc/libs/1_58_0/more/getting_started/windows.html). You'll need to do that. This client does work with VC++, you can create a solution at the root or ask a dev for the sln file. Just add the directory you built Boost in the Project's linker configuration. You'll also need to set command line arguments like the other clients.
+`Chess -s r99acm.device.mst.edu`
 
 ## Other notes
 
