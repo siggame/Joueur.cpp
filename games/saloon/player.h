@@ -70,15 +70,11 @@ class Saloon::Player : public Saloon::GameObject, public Joueur::BasePlayer
         // <<-- /Creer-Merge: fields -->>
 
         /// <summary>
-        /// The Cowboy that was previously a 'Young Gun', and has now been promoted to a different job if successful, null otherwise.
-        /// </summary>
-        void returns();
-
-        /// <summary>
         /// Sends in the Young Gun to the nearest Tile into the Saloon, and promotes them to a new job.
         /// </summary>
         /// <param name="job">The job you want the Young Gun being brought in to be called in to do, changing their job to it.</param>
-        void sendIn(std::string job);
+        /// <returns>The Cowboy that was previously a 'Young Gun', and has now been promoted to a different job if successful, null otherwise.</returns>
+        Saloon::Cowboy* sendIn(std::string job);
 
 
         // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

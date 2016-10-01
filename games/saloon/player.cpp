@@ -66,19 +66,13 @@ void Saloon::Player::deltaUpdateField(const std::string& fieldName, boost::prope
 
 
 
-void Saloon::Player::returns()
-{
-    boost::property_tree::ptree args;
-
-    auto returned = this->gameManager->runOnServer(*this, "returns", args);
-}
-
-void Saloon::Player::sendIn(std::string job)
+Saloon::Cowboy* Saloon::Player::sendIn(std::string job)
 {
     boost::property_tree::ptree args;
     args.put_child("job", *this->gameManager->serialize((job)));
 
     auto returned = this->gameManager->runOnServer(*this, "sendIn", args);
+    return (Saloon::Cowboy*)this->gameManager->unserializeGameObject(*returned);
 }
 
 
