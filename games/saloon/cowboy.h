@@ -64,11 +64,6 @@ class Saloon::Cowboy : public Saloon::GameObject
         Saloon::Player* owner;
 
         /// <summary>
-        /// How many turns this unit has remaining for their siesta. 0 means they are awake, and can act.
-        /// </summary>
-        int siesta;
-
-        /// <summary>
         /// The Tile that this Cowboy is located on.
         /// </summary>
         Saloon::Tile* tile;
@@ -77,6 +72,11 @@ class Saloon::Cowboy : public Saloon::GameObject
         /// How many times this unit has been drunk before taking their siesta and reseting this to 0.
         /// </summary>
         int tolerance;
+
+        /// <summary>
+        /// How many turns this unit has remaining before it is no longer busy and can `act()` or `play()` again.
+        /// </summary>
+        int turnsBusy;
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

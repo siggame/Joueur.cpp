@@ -14,7 +14,11 @@ void Saloon::Bottle::deltaUpdateField(const std::string& fieldName, boost::prope
 {
     Saloon::GameObject::deltaUpdateField(fieldName, delta);
 
-    if (fieldName == "drunkDirection")
+    if (fieldName == "direction")
+    {
+        this->direction = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+    }
+    else if (fieldName == "drunkDirection")
     {
         this->drunkDirection = this->gameManager->unserializeString(delta);
     }
@@ -22,13 +26,9 @@ void Saloon::Bottle::deltaUpdateField(const std::string& fieldName, boost::prope
     {
         this->isDestroyed = this->gameManager->unserializeBool(delta);
     }
-    else if (fieldName == "location")
+    else if (fieldName == "tile")
     {
-        this->location = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
-    }
-    else if (fieldName == "nextLocation")
-    {
-        this->nextLocation = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+        this->tile = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
     }
 }
 

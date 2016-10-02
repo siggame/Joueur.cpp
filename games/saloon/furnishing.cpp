@@ -18,6 +18,10 @@ void Saloon::Furnishing::deltaUpdateField(const std::string& fieldName, boost::p
     {
         this->health = this->gameManager->unserializeInt(delta);
     }
+    else if (fieldName == "isDestroyed")
+    {
+        this->isDestroyed = this->gameManager->unserializeBool(delta);
+    }
     else if (fieldName == "isPiano")
     {
         this->isPiano = this->gameManager->unserializeBool(delta);

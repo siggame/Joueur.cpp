@@ -60,9 +60,19 @@ class Saloon::Player : public Saloon::GameObject, public Joueur::BasePlayer
         int score;
 
         /// <summary>
+        /// 0 when not having a team siesta. When greater than 0 represents how many turns left for the team siesta to complete.
+        /// </summary>
+        int siesta;
+
+        /// <summary>
         /// The amount of time (in ns) remaining for this AI to send commands.
         /// </summary>
         double timeRemaining;
+
+        /// <summary>
+        /// The only 'Yong Gun' Cowboy this player owns, or null if they called in their young gun during their turn.
+        /// </summary>
+        Saloon::Cowboy* youngGun;
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

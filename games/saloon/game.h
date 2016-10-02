@@ -89,6 +89,11 @@ class Saloon::Game : public Joueur::BaseGame
         std::string session;
 
         /// <summary>
+        /// How long siestas are for a player's team.
+        /// </summary>
+        int siestaLength;
+
+        /// <summary>
         /// All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
         /// </summary>
         std::vector<Saloon::Tile*> tiles;

@@ -66,6 +66,10 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     {
         this->session = this->gameManager->unserializeString(delta);
     }
+    else if (fieldName == "siestaLength")
+    {
+        this->siestaLength = this->gameManager->unserializeInt(delta);
+    }
     else if (fieldName == "tiles")
     {
         this->tiles = this->gameManager->unserializeVectorOfGameObjects<Saloon::Tile*>(delta, &this->tiles);

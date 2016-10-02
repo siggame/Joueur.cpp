@@ -50,10 +50,6 @@ void Saloon::Cowboy::deltaUpdateField(const std::string& fieldName, boost::prope
     {
         this->owner = (Saloon::Player*)this->gameManager->unserializeGameObject(delta);
     }
-    else if (fieldName == "siesta")
-    {
-        this->siesta = this->gameManager->unserializeInt(delta);
-    }
     else if (fieldName == "tile")
     {
         this->tile = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
@@ -61,6 +57,10 @@ void Saloon::Cowboy::deltaUpdateField(const std::string& fieldName, boost::prope
     else if (fieldName == "tolerance")
     {
         this->tolerance = this->gameManager->unserializeInt(delta);
+    }
+    else if (fieldName == "turnsBusy")
+    {
+        this->turnsBusy = this->gameManager->unserializeInt(delta);
     }
 }
 

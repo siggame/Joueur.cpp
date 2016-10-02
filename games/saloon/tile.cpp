@@ -14,9 +14,9 @@ void Saloon::Tile::deltaUpdateField(const std::string& fieldName, boost::propert
 {
     Saloon::GameObject::deltaUpdateField(fieldName, delta);
 
-    if (fieldName == "bottles")
+    if (fieldName == "bottle")
     {
-        this->bottles = this->gameManager->unserializeVectorOfGameObjects<Saloon::Bottle*>(delta, &this->bottles);
+        this->bottle = (Saloon::Bottle*)this->gameManager->unserializeGameObject(delta);
     }
     else if (fieldName == "cowboy")
     {
@@ -34,21 +34,21 @@ void Saloon::Tile::deltaUpdateField(const std::string& fieldName, boost::propert
     {
         this->isWall = this->gameManager->unserializeBool(delta);
     }
-    else if (fieldName == "tileAbove")
+    else if (fieldName == "tileEast")
     {
-        this->tileAbove = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+        this->tileEast = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
     }
-    else if (fieldName == "tileBelow")
+    else if (fieldName == "tileNorth")
     {
-        this->tileBelow = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+        this->tileNorth = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
     }
-    else if (fieldName == "tileLeft")
+    else if (fieldName == "tileSouth")
     {
-        this->tileLeft = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+        this->tileSouth = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
     }
-    else if (fieldName == "tileRight")
+    else if (fieldName == "tileWest")
     {
-        this->tileRight = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+        this->tileWest = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
     }
     else if (fieldName == "x")
     {

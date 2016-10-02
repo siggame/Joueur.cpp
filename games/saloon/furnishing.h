@@ -29,6 +29,11 @@ class Saloon::Furnishing : public Saloon::GameObject
         int health;
 
         /// <summary>
+        /// If this Furnishing has been destroyed, and has been removed from the game.
+        /// </summary>
+        bool isDestroyed;
+
+        /// <summary>
         /// True if this Furnishing is a piano and can be played, False otherwise.
         /// </summary>
         bool isPiano;

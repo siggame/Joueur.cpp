@@ -24,9 +24,9 @@ class Saloon::Tile : public Saloon::GameObject
 
     public:
         /// <summary>
-        /// All the beer Bottles currently flying over this Tile.
+        /// The beer Bottle currently flying over this Tile.
         /// </summary>
-        std::vector<Saloon::Bottle*> bottles;
+        Saloon::Bottle* bottle;
 
         /// <summary>
         /// The Cowboy that is on this Tile, or null if empty.
@@ -49,24 +49,24 @@ class Saloon::Tile : public Saloon::GameObject
         bool isWall;
 
         /// <summary>
-        /// The Tile above this one (x, y-1). Null if out of bounds of the map.
+        /// The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
         /// </summary>
-        Saloon::Tile* tileAbove;
+        Saloon::Tile* tileEast;
 
         /// <summary>
-        /// The Tile below this one (x, y+1). Null if out of bounds of the map.
+        /// The Tile to the 'North' of this one (x, y-1). Null if out of bounds of the map.
         /// </summary>
-        Saloon::Tile* tileBelow;
+        Saloon::Tile* tileNorth;
 
         /// <summary>
-        /// The Tile to the left of this one (x-1, y). Null if out of bounds of the map.
+        /// The Tile to the 'South' of this one (x, y+1). Null if out of bounds of the map.
         /// </summary>
-        Saloon::Tile* tileLeft;
+        Saloon::Tile* tileSouth;
 
         /// <summary>
-        /// The Tile to the right of this one (x+1, y). Null if out of bounds of the map.
+        /// The Tile to the 'West' of this one (x-1, y). Null if out of bounds of the map.
         /// </summary>
-        Saloon::Tile* tileRight;
+        Saloon::Tile* tileWest;
 
         /// <summary>
         /// The x (horizontal) position of this Tile.
