@@ -26,7 +26,7 @@ class Saloon::Cowboy : public Saloon::GameObject
         /// <summary>
         /// If the Cowboy can be moved this turn via its owner.
         /// </summary>
-        int canMove;
+        bool canMove;
 
         /// <summary>
         /// The direction this Cowboy is moving while drunk. Will be 'North', 'East', 'South', or 'West' when drunk; or '' (empty string) when not drunk.

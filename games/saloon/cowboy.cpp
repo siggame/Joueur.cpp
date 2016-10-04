@@ -20,7 +20,7 @@ void Saloon::Cowboy::deltaUpdateField(const std::string& fieldName, boost::prope
 
     if (fieldName == "canMove")
     {
-        this->canMove = this->gameManager->unserializeInt(delta);
+        this->canMove = this->gameManager->unserializeBool(delta);
     }
     else if (fieldName == "drunkDirection")
     {
