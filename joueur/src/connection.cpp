@@ -6,6 +6,7 @@
 #include <array>
 #include <iostream>
 #include <chrono>
+#include <thread>
 
 namespace cpp_client
 {
