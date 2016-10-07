@@ -123,9 +123,19 @@ int main(int argc, const char* argv[])
       cmd.parse(argc, argv);
       //retrieve the game
       auto& game = Game_registry::get_game(game_arg.getValue());
+      //check for port nonsense
+      auto server_str = string_args[server].getValue();
+      auto port_num = int_args[port].getValue();
+      //if there is a ':' in the server override the port number
+      const auto colon_loc = server_str.find(':');
+      if(colon_loc != server_str.npos)
+      {
+         port_num = std::stoi(server_str.substr(colon_loc + 1));
+         server_str = server_str.substr(0, colon_loc);
+      }
       //set up some stuff for the game
       game.set_print_communication(print_io.getValue());
-      game.connect(string_args[server].getValue().c_str(), int_args[port].getValue());
+      game.connect(server_str.c_str(), port_num);
       game.set_player_index(int_args[player_index].getValue());
       game.set_password(string_args[password].getValue());
       game.set_session(string_args[session].getValue());

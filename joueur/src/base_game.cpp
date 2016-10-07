@@ -18,10 +18,7 @@ void Base_game::go()
    //grab the name first
    std::string alias = R"({"event": "alias", "data": ")" + get_game_name() + "\"}";
    conn_.send(alias);
-   auto resp = conn_.recieve();
-   rapidjson::Document doc;
-   doc.Parse(resp.c_str());
-   std::string game_name = attr_wrapper::get_attribute<std::string>(doc, "data");
+   const auto game_name = handle_response("named")->as<std::string>();
    //start with the same thing each time
    std::string to_send = R"({"event": "play", "data": {"clientType": "c++", "playerIndex": )";
    //now fill in the details
@@ -85,7 +82,7 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
    doc.Parse(resp.c_str());
    const auto event = attr_wrapper::get_attribute<std::string>(doc, "event");
    //check if it matches the expected (if needed)
-   if(expected != "" && event != expected)
+   if(event != "fatal" && expected != "" && event != expected)
    {
       throw Bad_response("Expected " + expected + " event; got " + event);
    }
@@ -141,7 +138,7 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
       std::cout << sgr::text_red << "Fatal: "
                 << attr_wrapper::get_attribute<std::string>(data->value, "message") << '\n'
                 << sgr::reset;
-      return std::unique_ptr<Any>(new Any{});
+      exit(1);
    }
    else if(event == "order")
    {
@@ -169,6 +166,11 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
       std::cout << sgr::text_yellow << "Invalid: "
                 << attr_wrapper::get_attribute<std::string>(data->value, "message") << '\n'
                 << sgr::reset;
+   }
+   else if(event == "named")
+   {
+      const auto data = attr_wrapper::get_attribute<std::string>(doc, "data");
+      return std::unique_ptr<Any>(new Any{std::string{data}});
    }
    //just some dummy value to indicate that this isn't done yet
    return std::unique_ptr<Any>(new Any{true});
