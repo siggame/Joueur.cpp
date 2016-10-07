@@ -129,6 +129,7 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
          std::cout << sgr::text_cyan
                    << attr_wrapper::as<std::string>(mes->value)
                    << sgr::reset
+                   << '\n'
                    ;
       }
       //exit!

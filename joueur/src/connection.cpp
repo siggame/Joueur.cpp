@@ -67,6 +67,8 @@ public:
             const auto recieved = sock_.receive(read_buffer.data(), read_buffer.size());
             to_return.append(read_buffer.data(), recieved);
             split_point = to_return.find('\x04');
+            // don't use 100% CPU [setting blocking mode didn't work properly]
+            std::this_thread::sleep_for(std::chrono::microseconds(100));
          }
          //now split by the 0x04
          buffer_ = to_return.substr(split_point + 1);
