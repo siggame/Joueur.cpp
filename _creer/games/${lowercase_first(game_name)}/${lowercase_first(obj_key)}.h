@@ -1,5 +1,5 @@
 <%include file="functions.noCreer" />// ${shared['c++']['format_description'](obj['description'])}
-
+// DO NOT MODIFY THIS FILE
 #ifndef JOUEUR_${game_name.upper()}_${obj_key.upper()}_H
 #define JOUEUR_${game_name.upper()}_${obj_key.upper()}_H
 

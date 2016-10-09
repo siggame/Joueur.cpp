@@ -1,3 +1,6 @@
+// ${game_name} Header
+// DO NOT MODIFY THIS FILE
+
 #ifndef JOUEUR_${game_name.upper()}_H
 #define JOUEUR_${game_name.upper()}_H
 

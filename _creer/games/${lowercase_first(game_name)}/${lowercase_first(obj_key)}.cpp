@@ -1,4 +1,5 @@
 <%include file="functions.noCreer" />// ${shared['c++']['format_description'](obj['description'])}
+// DO NOT MODIFY THIS FILE
 #include "${lowercase_first(obj_key)}.h"
 #include "gameManager.h"
 <%
