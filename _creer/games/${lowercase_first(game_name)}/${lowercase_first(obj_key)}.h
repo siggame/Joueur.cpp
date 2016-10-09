@@ -1,8 +1,12 @@
-// ${obj['description']}
+<%include file="functions.noCreer" />// ${shared['c++']['format_description'](obj['description'])}
+
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
 
 #ifndef JOUEUR_${game_name.upper()}_${obj_key.upper()}_H
 #define JOUEUR_${game_name.upper()}_${obj_key.upper()}_H
-<%include file="functions.noCreer" />
+
 #include "${lowercase_first(game_name)}.h"<% parent_classes = obj['parentClasses'] %>
 % if len(parent_classes) > 0:
 % for parent_class in parent_classes:
@@ -26,7 +30,7 @@ else:
 ${merge("// ", "includes", "// you can add addtional #includes(s) here.")}
 
 /// <summary>
-/// ${obj['description']}
+/// ${shared['c++']['format_description'](obj['description'])}
 /// </summary>
 class ${game_name}::${obj_key} : public ${parent_namespace}::${(", public " + parent_namespace + "::").join(parent_classes)}${", public Joueur::BasePlayer" if obj_key == "Player" else ""}
 {
@@ -43,7 +47,7 @@ class ${game_name}::${obj_key} : public ${parent_namespace}::${(", public " + pa
 if shared['c++']['skippable'](obj_key, attr_name):
     continue
 %>        /// <summary>
-        /// ${attr_parms['description']}
+        /// ${shared['c++']['format_description'](attr_parms['description'])}
         /// </summary>
         ${shared['c++']['type'](attr_parms['type'])} ${attr_name};
 
@@ -55,16 +59,16 @@ ${merge("        // ", "fields", "        // you can add addtional fields(s) her
 <% function_parms = obj['functions'][function_name]
 return_type = None
 %>        /// <summary>
-        /// ${function_parms['description']}
+        /// ${shared['c++']['format_description'](function_parms['description'])}
         /// </summary>
 % if 'arguments' in function_parms:
 % for arg_parms in function_parms['arguments']:
-        /// <param name="${arg_parms['name']}">${arg_parms['description']}</param>
+        /// <param name="${arg_parms['name']}">${shared['c++']['format_description'](arg_parms['description'])}</param>
 % endfor
 % endif
 % if function_parms['returns']:
 <% return_type = shared['c++']['type'](function_parms['returns']['type'])
-%>        /// <returns>${function_parms['returns']['description']}</returns>
+%>        /// <returns>${shared['c++']['format_description'](function_parms['returns']['description'])}</returns>
 % endif
         ${return_type or 'void'} ${function_name}(${shared['c++']['inline_args'](function_parms, optional=True)});
 

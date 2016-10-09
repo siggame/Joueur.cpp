@@ -1,5 +1,9 @@
-// ${obj['description']}
-<%include file="functions.noCreer" />
+<%include file="functions.noCreer" />// ${shared['c++']['format_description'](obj['description'])}
+
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #include "${lowercase_first(obj_key)}.h"
 #include "gameManager.h"
 <%
@@ -21,7 +25,6 @@ if obj_key != "Game":
         if 'arguments' in function_parms:
             for arg_parms in function_parms['arguments']:
                 t = arg_parms['type']['name']
-                print("t", t)
                 if t != obj_key and arg_parms['type']['is_game_object']:
                     arg_classes_needed.append(t) %>
 % if len(arg_classes_needed) > 0:

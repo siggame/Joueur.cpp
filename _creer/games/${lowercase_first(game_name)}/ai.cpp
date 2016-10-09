@@ -47,13 +47,13 @@ ${merge("    // ", "ended", '    // You can do any cleanup of you AI here, or do
 function_parms = ai['functions'][function_name]
 return_type = function_parms['returns'] and shared['c++']['type'](function_parms['returns']['type'])
 %>/// <summary>
-/// ${function_parms['description']}
+/// ${shared['c++']['format_description'](function_parms['description'])}
 /// </summary>
 % for arg_parms in function_parms['arguments']:
-/// <param name="${arg_parms['name']}">${arg_parms['description']}</param>
+/// <param name="${arg_parms['name']}">${shared['c++']['format_description'](arg_parms['description'])}</param>
 % endfor
 % if function_parms['returns'] != None:
-/// <returns>${function_parms['returns']['description']}</returns>
+/// <returns>${shared['c++']['format_description'](function_parms['returns']['description'])}</returns>
 % endif
 ${return_type or 'void'} ${game_name}::AI::${function_name}(${shared['c++']['inline_args'](function_parms)})
 {

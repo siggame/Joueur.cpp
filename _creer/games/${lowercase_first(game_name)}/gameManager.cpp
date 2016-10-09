@@ -1,4 +1,5 @@
 // $This is a class that manages the ${game_name} Game and it's GameObjects. Competitors should never have to care about this class's existance.
+// DO NOT MODIFY THIS FILE
 <%include file="functions.noCreer" />
 <% game_obj_keys = sort_dict_keys(game_objs) %>
 #include "gameManager.h"

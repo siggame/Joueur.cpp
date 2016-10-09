@@ -24,3 +24,5 @@ For Windows, Boost has a simple way to [compile from source using bootstrap](htt
 ## Other notes
 
 The initial `make` step may take upwards of 2 minutes. You should see a percent progress updating on your screen, but it will be slow. Subsequent `make`s should be only a few seconds if you don't `make clean`.
+
+The only file you should ever modify to create your AI are the `ai.cpp` and `ai.h` files. All the other files are needed for the game to work. In addition, you should never be creating your own instances of the Game's classes, nor should you ever try to modify their variables. Instead, treat the Game and its members as a read only structure that represents the game state on the game server. You interact with it by calling the game functions.
