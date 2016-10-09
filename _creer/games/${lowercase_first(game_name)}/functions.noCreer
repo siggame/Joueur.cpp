@@ -114,4 +114,14 @@ if not 'c++' in shared:
     def cpp_cast_type(parms):
         return "" if (not parms or is_primitive_type(parms['type'])) else ("(" + cpp_type(parms['type']) + ")")
     shared['c++']['cast_type'] = cpp_cast_type
+
+    def cpp_format_description(description):
+        return description \
+            .replace("null", "nullptr") \
+            .replace("Null", "nullptr") \
+            .replace("list", "vector") \
+            .replace("List", "Vector") \
+            .replace("dictionary", "map") \
+            .replace("Dictionary", "Map")
+    shared['c++']['format_description'] = cpp_format_description
 %>
