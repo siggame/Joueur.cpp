@@ -1,5 +1,9 @@
 // A Tile in the game that makes up the 2D map grid.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #include "tile.h"
 #include "gameManager.h"
 
@@ -30,9 +34,9 @@ void Saloon::Tile::deltaUpdateField(const std::string& fieldName, boost::propert
     {
         this->hasHazard = this->gameManager->unserializeBool(delta);
     }
-    else if (fieldName == "isWall")
+    else if (fieldName == "isBalcony")
     {
-        this->isWall = this->gameManager->unserializeBool(delta);
+        this->isBalcony = this->gameManager->unserializeBool(delta);
     }
     else if (fieldName == "tileEast")
     {
@@ -57,6 +61,10 @@ void Saloon::Tile::deltaUpdateField(const std::string& fieldName, boost::propert
     else if (fieldName == "y")
     {
         this->y = this->gameManager->unserializeInt(delta);
+    }
+    else if (fieldName == "youngGun")
+    {
+        this->youngGun = (Saloon::YoungGun*)this->gameManager->unserializeGameObject(delta);
     }
 }
 

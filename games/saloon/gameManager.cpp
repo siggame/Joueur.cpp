@@ -1,4 +1,5 @@
 // $This is a class that manages the Saloon Game and it's GameObjects. Competitors should never have to care about this class's existance.
+// DO NOT MODIFY THIS FILE
 
 
 #include "gameManager.h"
@@ -10,6 +11,7 @@
 #include "gameObject.h"
 #include "player.h"
 #include "tile.h"
+#include "youngGun.h"
 
 Saloon::GameManager::GameManager() :
     Joueur::BaseGameManager()
@@ -46,6 +48,10 @@ Joueur::BaseGameObject* Saloon::GameManager::createGameObject(const std::string&
     else if (gameObjectName == "Tile")
     {
         return new Saloon::Tile();
+    }
+    else if (gameObjectName == "YoungGun")
+    {
+        return new Saloon::YoungGun();
     }
 
     throw new std::runtime_error(("Game object '" + gameObjectName + "' not found to create new instance of").c_str());

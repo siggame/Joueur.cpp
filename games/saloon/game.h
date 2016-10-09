@@ -1,5 +1,9 @@
 // Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_SALOON_GAME_H
 #define JOUEUR_SALOON_GAME_H
 
@@ -49,7 +53,7 @@ class Saloon::Game : public Joueur::BaseGame
         std::vector<Saloon::Furnishing*> furnishings;
 
         /// <summary>
-        /// All the jobs that Cowboys can be assigned within the saloon.
+        /// All the jobs that Cowboys can be called in with.
         /// </summary>
         std::vector<std::string> jobs;
 
@@ -64,9 +68,9 @@ class Saloon::Game : public Joueur::BaseGame
         int mapWidth;
 
         /// <summary>
-        /// The maximum number of Cowboys a Player can bring into the saloon.
+        /// The maximum number of Cowboys a Player can bring into the saloon of each specific job.
         /// </summary>
-        int maxCowboys;
+        int maxCowboysPerJob;
 
         /// <summary>
         /// The maximum number of turns before the game will automatically end.
@@ -74,7 +78,7 @@ class Saloon::Game : public Joueur::BaseGame
         int maxTurns;
 
         /// <summary>
-        /// List of all the players in the game.
+        /// Vector of all the players in the game.
         /// </summary>
         std::vector<Saloon::Player*> players;
 

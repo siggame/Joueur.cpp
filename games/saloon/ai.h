@@ -11,6 +11,7 @@
 #include "gameObject.h"
 #include "player.h"
 #include "tile.h"
+#include "youngGun.h"
 
 #include "../../joueur/baseAI.h"
 

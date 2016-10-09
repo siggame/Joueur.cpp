@@ -1,5 +1,9 @@
 // A player in this game. Every AI controls one player.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #include "player.h"
 #include "gameManager.h"
 
@@ -68,20 +72,11 @@ void Saloon::Player::deltaUpdateField(const std::string& fieldName, boost::prope
     }
     else if (fieldName == "youngGun")
     {
-        this->youngGun = (Saloon::Cowboy*)this->gameManager->unserializeGameObject(delta);
+        this->youngGun = (Saloon::YoungGun*)this->gameManager->unserializeGameObject(delta);
     }
 }
 
 
-
-Saloon::Cowboy* Saloon::Player::sendIn(std::string job)
-{
-    boost::property_tree::ptree args;
-    args.put_child("job", *this->gameManager->serialize((job)));
-
-    auto returned = this->gameManager->runOnServer(*this, "sendIn", args);
-    return (Saloon::Cowboy*)this->gameManager->unserializeGameObject(*returned);
-}
 
 
 // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

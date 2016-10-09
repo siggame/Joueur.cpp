@@ -1,5 +1,9 @@
 // Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #include "game.h"
 #include "gameManager.h"
 
@@ -46,9 +50,9 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     {
         this->mapWidth = this->gameManager->unserializeInt(delta);
     }
-    else if (fieldName == "maxCowboys")
+    else if (fieldName == "maxCowboysPerJob")
     {
-        this->maxCowboys = this->gameManager->unserializeInt(delta);
+        this->maxCowboysPerJob = this->gameManager->unserializeInt(delta);
     }
     else if (fieldName == "maxTurns")
     {

@@ -1,5 +1,9 @@
 // A bottle thrown by a bartender at a Tile.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_SALOON_BOTTLE_H
 #define JOUEUR_SALOON_BOTTLE_H
 

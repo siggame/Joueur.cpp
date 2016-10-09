@@ -1,3 +1,5 @@
+// This allows us to do a pre-compiler assisted version of Relflection
+// DO NOT MODIFY THIS FILE
 #ifndef JOUEUR_SALOON_REGISTERY_H
 #define JOUEUR_SALOON_REGISTERY_H
 

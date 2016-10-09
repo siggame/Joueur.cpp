@@ -1,5 +1,5 @@
 // This is a class that manages the Saloon Game and it's GameObjects. Competitors should never have to care about this class's existance.
-
+// DO NOT MODIFY THIS FILE
 #ifndef JOUEUR_SALOON_GAMEMANAGER_H
 #define JOUEUR_SALOON_GAMEMANAGER_H
 

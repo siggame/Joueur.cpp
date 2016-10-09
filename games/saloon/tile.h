@@ -1,5 +1,9 @@
 // A Tile in the game that makes up the 2D map grid.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_SALOON_TILE_H
 #define JOUEUR_SALOON_TILE_H
 
@@ -29,12 +33,12 @@ class Saloon::Tile : public Saloon::GameObject
         Saloon::Bottle* bottle;
 
         /// <summary>
-        /// The Cowboy that is on this Tile, or null if empty.
+        /// The Cowboy that is on this Tile, nullptr otherwise.
         /// </summary>
         Saloon::Cowboy* cowboy;
 
         /// <summary>
-        /// The furnishing that is on this Tile, or null if empty.
+        /// The furnishing that is on this Tile, nullptr otherwise.
         /// </summary>
         Saloon::Furnishing* furnishing;
 
@@ -44,27 +48,27 @@ class Saloon::Tile : public Saloon::GameObject
         bool hasHazard;
 
         /// <summary>
-        /// If this Tile is a wall of the Saloon, and can never be pathed through.
+        /// If this Tile is a balcony of the Saloon that YoungGuns walk around on, and can never be pathed through by Cowboys.
         /// </summary>
-        bool isWall;
+        bool isBalcony;
 
         /// <summary>
-        /// The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
+        /// The Tile to the 'East' of this one (x+1, y). nullptr if out of bounds of the map.
         /// </summary>
         Saloon::Tile* tileEast;
 
         /// <summary>
-        /// The Tile to the 'North' of this one (x, y-1). Null if out of bounds of the map.
+        /// The Tile to the 'North' of this one (x, y-1). nullptr if out of bounds of the map.
         /// </summary>
         Saloon::Tile* tileNorth;
 
         /// <summary>
-        /// The Tile to the 'South' of this one (x, y+1). Null if out of bounds of the map.
+        /// The Tile to the 'South' of this one (x, y+1). nullptr if out of bounds of the map.
         /// </summary>
         Saloon::Tile* tileSouth;
 
         /// <summary>
-        /// The Tile to the 'West' of this one (x-1, y). Null if out of bounds of the map.
+        /// The Tile to the 'West' of this one (x-1, y). nullptr if out of bounds of the map.
         /// </summary>
         Saloon::Tile* tileWest;
 
@@ -77,6 +81,11 @@ class Saloon::Tile : public Saloon::GameObject
         /// The y (vertical) position of this Tile.
         /// </summary>
         int y;
+
+        /// <summary>
+        /// The YoungGun on this tile, nullptr otherwise.
+        /// </summary>
+        Saloon::YoungGun* youngGun;
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
