@@ -1,5 +1,9 @@
 <%include file="functions.noCreer" />// ${shared['c++']['format_description'](obj['description'])}
+
 // DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #include "${lowercase_first(obj_key)}.h"
 #include "gameManager.h"
 <%
