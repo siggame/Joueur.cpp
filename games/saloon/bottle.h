@@ -30,7 +30,7 @@ class Saloon::Bottle : public Saloon::GameObject
         /// <summary>
         /// The Direction this Bottle is flying and will move to between turns, can be 'North', 'East', 'South', or 'West'.
         /// </summary>
-        Saloon::Tile* direction;
+        std::string direction;
 
         /// <summary>
         /// The direction any Cowboys hit by this will move, can be 'North', 'East', 'South', or 'West'.

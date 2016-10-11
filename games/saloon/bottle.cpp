@@ -20,7 +20,7 @@ void Saloon::Bottle::deltaUpdateField(const std::string& fieldName, boost::prope
 
     if (fieldName == "direction")
     {
-        this->direction = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+        this->direction = this->gameManager->unserializeString(delta);
     }
     else if (fieldName == "drunkDirection")
     {
