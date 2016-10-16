@@ -29,6 +29,9 @@ add_subdirectory(joueur/libraries)
 #set files before adding subdirectories
 set(FILES "")
 
+#for generated file dependencies
+add_custom_target(dependencies ALL)
+
 #find generated files
 add_subdirectory(games)
 
@@ -52,6 +55,8 @@ add_executable(${PROG_NAME} ${FILES}
                             joueur/src/register.cpp
                             joueur/src/register.hpp
                             joueur/src/sgr.hpp)
+
+add_dependencies(${PROG_NAME} dependencies)
 
 #link to netlink (static)
 target_link_libraries(${PROG_NAME} static)

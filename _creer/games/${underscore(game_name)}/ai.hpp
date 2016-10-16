@@ -3,7 +3,7 @@
 
 <%include file="functions.noCreer" />
 
-#include "${underscore(game_name)}.hpp"
+#include "impl/${underscore(game_name)}.hpp"
 #include "game.hpp"
 % for game_obj_key in sort_dict_keys(game_objs):
 #include "${underscore(game_obj_key)}.hpp"

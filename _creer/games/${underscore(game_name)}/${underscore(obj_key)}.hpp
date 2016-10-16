@@ -37,7 +37,7 @@ else:
 % if mod:
 #include "../../joueur/src/${underscore(parent_classes[0])}.hpp"
 % endif
-#include "${underscore(game_name)}_fwd.hpp"
+#include "impl/${underscore(game_name)}_fwd.hpp"
 
 ${merge("// ", "includes", "// you can add additional #includes here")}
 
