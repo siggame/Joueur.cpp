@@ -1,4 +1,4 @@
-// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -15,7 +15,7 @@
 // <<-- /Creer-Merge: includes -->>
 
 /// <summary>
-/// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+/// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
 /// </summary>
 class Saloon::Game : public Joueur::BaseGame
 {
@@ -31,6 +31,11 @@ class Saloon::Game : public Joueur::BaseGame
         /// All the beer Bottles currently flying across the saloon in the game.
         /// </summary>
         std::vector<Saloon::Bottle*> bottles;
+
+        /// <summary>
+        /// How much damage is applied to neighboring things bit by the Sharpshooter between turns.
+        /// </summary>
+        int brawlerDamage;
 
         /// <summary>
         /// Every Cowboy in the game.
@@ -91,6 +96,11 @@ class Saloon::Game : public Joueur::BaseGame
         /// A unique identifier for the game instance that is being played.
         /// </summary>
         std::string session;
+
+        /// <summary>
+        /// How much damage is applied to things hit by Sharpshooters when they act.
+        /// </summary>
+        int sharpshooterDamage;
 
         /// <summary>
         /// How long siestas are for a player's team.

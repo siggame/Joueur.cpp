@@ -43,6 +43,11 @@ class Saloon::Furnishing : public Saloon::GameObject
         bool isPiano;
 
         /// <summary>
+        /// If this is a piano and a Cowboy is playing it this turn.
+        /// </summary>
+        bool isPlaying;
+
+        /// <summary>
         /// The Tile that this Furnishing is located on.
         /// </summary>
         Saloon::Tile* tile;

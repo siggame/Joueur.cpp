@@ -1,4 +1,4 @@
-// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Coyboys.
+// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -21,6 +21,10 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     if (fieldName == "bottles")
     {
         this->bottles = this->gameManager->unserializeVectorOfGameObjects<Saloon::Bottle*>(delta, &this->bottles);
+    }
+    else if (fieldName == "brawlerDamage")
+    {
+        this->brawlerDamage = this->gameManager->unserializeInt(delta);
     }
     else if (fieldName == "cowboys")
     {
@@ -69,6 +73,10 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     else if (fieldName == "session")
     {
         this->session = this->gameManager->unserializeString(delta);
+    }
+    else if (fieldName == "sharpshooterDamage")
+    {
+        this->sharpshooterDamage = this->gameManager->unserializeInt(delta);
     }
     else if (fieldName == "siestaLength")
     {

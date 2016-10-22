@@ -30,6 +30,10 @@ void Saloon::Furnishing::deltaUpdateField(const std::string& fieldName, boost::p
     {
         this->isPiano = this->gameManager->unserializeBool(delta);
     }
+    else if (fieldName == "isPlaying")
+    {
+        this->isPlaying = this->gameManager->unserializeBool(delta);
+    }
     else if (fieldName == "tile")
     {
         this->tile = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);

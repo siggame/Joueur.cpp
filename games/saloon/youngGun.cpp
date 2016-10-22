@@ -18,7 +18,11 @@ void Saloon::YoungGun::deltaUpdateField(const std::string& fieldName, boost::pro
 {
     Saloon::GameObject::deltaUpdateField(fieldName, delta);
 
-    if (fieldName == "canCallIn")
+    if (fieldName == "callInTile")
+    {
+        this->callInTile = (Saloon::Tile*)this->gameManager->unserializeGameObject(delta);
+    }
+    else if (fieldName == "canCallIn")
     {
         this->canCallIn = this->gameManager->unserializeBool(delta);
     }
