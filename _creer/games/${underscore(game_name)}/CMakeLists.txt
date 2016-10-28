@@ -28,6 +28,7 @@ add_dependencies(dependencies ${game_name}_additional)
 set(FILES
     ${"${CMAKE_CURRENT_SOURCE_DIR}"}/ai.cpp
     ${"${CMAKE_CURRENT_SOURCE_DIR}"}/ai.hpp
+    ${"${CMAKE_CURRENT_SOURCE_DIR}"}/impl/ai_impl.cpp
     ${"${CMAKE_CURRENT_SOURCE_DIR}"}/impl/${underscore(game_name)}.cpp
     ${"${CMAKE_CURRENT_SOURCE_DIR}"}/impl/${underscore(game_name)}.hpp
     ${"${CMAKE_CURRENT_SOURCE_DIR}"}/impl/${underscore(game_name)}_fwd.hpp

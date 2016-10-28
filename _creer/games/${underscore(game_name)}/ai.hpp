@@ -84,79 +84,19 @@ args = shared['make_args'](function_params, True)
 
 ${merge("   // ", "methods", "   // You can add additional methods here.")}
 
-
-
-
-
-/////////////////////////////////////////////////////
-// Implementation detail!!
-// Do not edit anything past here!!
-/////////////////////////////////////////////////////
-
-/// \cond FALSE
-
-<% ifstr = 'if' %>
-virtual std::string invoke_by_name(const std::string& name,
-                                   const std::unordered_map<std::string, Any>& args) override
-{
-   % for function_name in ai['function_names']:
-   <% function_params = ai['functions'][function_name] %>
-   ${ifstr}(name == "${function_name}")
-   {
-   % if function_params['returns'] and 'type' in function_params['returns']:
-      auto ret = ${underscore(function_name)}(
-        <% comma = ',' %>
-         % for arg_params in function_params['arguments']:
-         <% if arg_params == function_params['arguments'][-1]:
-               comma = '' %>
-         args.at("${arg_params['name']}").as<${shared['gen_base_type'](arg_params['type'])}>()${comma}
-         % endfor
-      );
-      return attr_wrapper::json_val(ret);
-   % else:
-      ${underscore(function_name)}(
-         <% comma = ',' %>
-         % for arg_params in function_params['arguments']:
-         <% if arg_params == function_params['arguments'][-1]:
-               comma = '' %>
-         args.at("${arg_params['name']}").as<${shared['gen_base_type'](arg_params['type'])}>()${comma}
-         % endfor
-      );
-      return "";
-   % endif
-   } <% ifstr = 'else if' %>
-   % endfor;
-   throw Bad_response("AI told to run unknown action " + name);
-}
-
-virtual void set_game(Base_game* ptr) override
-{
-   game = static_cast<Game>(ptr);
-}
-
-virtual void set_player(std::shared_ptr<Base_object> obj) override
-{
-   player = std::move(std::static_pointer_cast<Player_>(obj));
-}
-
-virtual void print_win_loss_info() override
-{
-   if(player->lost)
-   {
-      ended(false, player->reason_lost);
-      std::cout << sgr::text_green
-                << "Game is over. I lost :( because: " << player->reason_lost << '\n';
-   }
-   else
-   {
-      ended(true, player->reason_won);
-      std::cout << sgr::text_green
-                << "Game is over. I won! because: " << player->reason_won << '\n';
-   }
-   std::cout << sgr::reset;
-}
-
-/// \endcond
+   // ####################
+   // Don't edit these!
+   // ####################
+   /// \cond FALSE
+   virtual std::string invoke_by_name(const std::string& name,
+                                      const std::unordered_map<std::string, Any>& args) override;
+   virtual void set_game(Base_game* ptr) override;
+   virtual void set_player(std::shared_ptr<Base_object> obj) override;
+   virtual void print_win_loss_info() override;
+   /// \endcond
+   // ####################
+   // Don't edit these!
+   // ####################
 
 };
 
