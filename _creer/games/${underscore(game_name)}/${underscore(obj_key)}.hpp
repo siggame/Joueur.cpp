@@ -87,6 +87,9 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
 
    ~${obj_key_name}_();
 
+   // ####################
+   // Don't edit these!
+   // ####################
    /// \cond FALSE
    ${obj_key_name}_(std::initializer_list<std::pair<std::string, Any&&>> init);
    ${obj_key_name}_() : ${obj_key_name}_({}){}
@@ -95,11 +98,13 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
    virtual void remove_key(const std::string& name, Any& key) override;
    virtual std::unique_ptr<Any> add_key_value(const std::string& name, Any& key, Any& value) override;
    virtual bool is_map(const std::string& name) override;
-
 % if obj_key_name == 'Game_object':
    virtual Base_game* get_game() override;
 % endif
    /// \endcond
+   // ####################
+   // Don't edit these!
+   // ####################
 };
 
 } // ${lowercase_first(game_name)}
