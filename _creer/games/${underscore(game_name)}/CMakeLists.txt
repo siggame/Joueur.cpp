@@ -5,7 +5,7 @@ ${"##########################"}
 
 file(READ ${"${CMAKE_CURRENT_SOURCE_DIR}"}/additional_files.txt extras)
 
-add_custom_target(${"game_name"}_additional ALL ${'''
+add_custom_target(${game_name}_additional ALL ${'''
    COMMAND cmake -E touch ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/additional_files.txt)
 
