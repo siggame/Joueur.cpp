@@ -23,7 +23,7 @@ foreach(file IN ITEMS ${extras})
 endforeach(file)
 '''}
 
-add_dependencies(dependencies ${"game_name"}_additional)
+add_dependencies(dependencies ${game_name}_additional)
 
 set(FILES
     ${"${CMAKE_CURRENT_SOURCE_DIR}"}/ai.cpp
