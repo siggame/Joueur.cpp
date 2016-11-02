@@ -9,7 +9,7 @@ ifeq (,$(wildcard ./build/CMakeCache.txt))
 endif
 
 core:
-	@cd build && $(MAKE)
+	@cmake --build build/
 
 clean:
 	@rm -rf build
