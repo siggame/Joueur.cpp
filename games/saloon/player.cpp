@@ -50,9 +50,9 @@ void Saloon::Player::deltaUpdateField(const std::string& fieldName, boost::prope
     {
         this->reasonWon = this->gameManager->unserializeString(delta);
     }
-    else if (fieldName == "rowdyness")
+    else if (fieldName == "rowdiness")
     {
-        this->rowdyness = this->gameManager->unserializeInt(delta);
+        this->rowdiness = this->gameManager->unserializeInt(delta);
     }
     else if (fieldName == "score")
     {

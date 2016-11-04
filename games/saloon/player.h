@@ -56,7 +56,7 @@ class Saloon::Player : public Saloon::GameObject, public Joueur::BasePlayer
         /// <summary>
         /// How rowdy their team is. When it gets too high their team takes a collective siesta.
         /// </summary>
-        int rowdyness;
+        int rowdiness;
 
         /// <summary>
         /// How many times their team has played a piano.

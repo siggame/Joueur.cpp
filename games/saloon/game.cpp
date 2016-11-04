@@ -18,7 +18,11 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
 {
     Joueur::BaseGame::deltaUpdateField(fieldName, delta);
 
-    if (fieldName == "bottles")
+    if (fieldName == "bartenderCooldown")
+    {
+        this->bartenderCooldown = this->gameManager->unserializeInt(delta);
+    }
+    else if (fieldName == "bottles")
     {
         this->bottles = this->gameManager->unserializeVectorOfGameObjects<Saloon::Bottle*>(delta, &this->bottles);
     }
@@ -66,9 +70,9 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     {
         this->players = this->gameManager->unserializeVectorOfGameObjects<Saloon::Player*>(delta, &this->players);
     }
-    else if (fieldName == "rowdynessToSiesta")
+    else if (fieldName == "rowdinessToSiesta")
     {
-        this->rowdynessToSiesta = this->gameManager->unserializeInt(delta);
+        this->rowdinessToSiesta = this->gameManager->unserializeInt(delta);
     }
     else if (fieldName == "session")
     {
@@ -85,6 +89,10 @@ void Saloon::Game::deltaUpdateField(const std::string& fieldName, boost::propert
     else if (fieldName == "tiles")
     {
         this->tiles = this->gameManager->unserializeVectorOfGameObjects<Saloon::Tile*>(delta, &this->tiles);
+    }
+    else if (fieldName == "turnsDrunk")
+    {
+        this->turnsDrunk = this->gameManager->unserializeInt(delta);
     }
 }
 
