@@ -52,7 +52,7 @@ public:
    virtual void remove_key(const std::string& name, Any& key) override {}
    virtual std::unique_ptr<Any>
       add_key_value(const std::string& name, Any& key, Any& value) override;
-   virtual bool is_map(const std::string& name) override {}
+   virtual bool is_map(const std::string& name) override { return false; }
    virtual Base_game* get_game() { return nullptr; }
 
 private:
