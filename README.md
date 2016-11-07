@@ -45,6 +45,10 @@ Notes: You may have to set the `cc` environmental variable to the C++ compiler o
 
 ## Other notes
 
+The docs may reference classes with a trailing underscore e.g. `Game_object_` instead of `Game_object`. For your code usage assume the trailing underscore versions do not exist. They are wrappers.
+
+Always use the `->` operator to access member variables and function of each class instead of the dot operator `.`.
+
 The initial `make` step may take upwards of 2 minutes. You should see a percent progress updating on your screen, but it will be slow. Subsequent `make`s should be only a few seconds if you don't `make clean`.
 
 The only file you should ever modify to create your AI are the `ai.cpp` and `ai.hpp` files. All the other files are needed for the game to work. In addition, you should never be creating your own instances of the Game's classes, nor should you ever try to modify their variables. Instead, treat the Game and its members as a read only structure that represents the game state on the game server. You interact with it by calling the game functions.
