@@ -1,7 +1,9 @@
-// ${header}
+// ${obj_key}
 // ${obj['description']}
-<% obj_key_name = underscore(obj_key).capitalize() %>
-<%include file="functions.noCreer" />
+
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.<% obj_key_name = underscore(obj_key).capitalize() %><%include file="functions.noCreer" />
 #include "${underscore(obj_key)}.hpp"
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/any.hpp"

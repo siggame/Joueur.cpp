@@ -5,21 +5,21 @@ ${"##########################"}
 
 file(READ ${"${CMAKE_CURRENT_SOURCE_DIR}"}/additional_files.txt extras)
 
-add_custom_target(${game_name}_additional ALL ${'''
-   COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
-   DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/additional_files.txt)
+add_custom_target(${game_name}_additional ALL${'''
+    COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
+    DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/additional_files.txt)
 
 string(REPLACE "\\n" ";" extras ${extras})
 
 foreach(file IN ITEMS ${extras})
-   string(SUBSTRING ${file} 0 1 check)
-   if(NOT ${check} STREQUAL "#")
-      if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-         message(FATAL_ERROR "Could not find additional file \\\"${file}\\\"!")
-      endif(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
-      list(APPEND to_add ${file})
-      message(STATUS ${file})
-   endif(NOT ${check} STREQUAL "#")
+    string(SUBSTRING ${file} 0 1 check)
+    if(NOT ${check} STREQUAL "#")
+        if(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+            message(FATAL_ERROR "Could not find additional file \\\"${file}\\\"!")
+        endif(NOT EXISTS ${CMAKE_CURRENT_SOURCE_DIR}/${file})
+        list(APPEND to_add ${file})
+        message(STATUS ${file})
+    endif(NOT ${check} STREQUAL "#")
 endforeach(file)
 '''}
 
