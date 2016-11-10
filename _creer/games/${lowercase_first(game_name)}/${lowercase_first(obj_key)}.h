@@ -27,7 +27,7 @@ else:
 %>#include "../../joueur/${lowercase_first(parent_classes[0])}.h"
 % endif
 
-${merge("// ", "includes", "// you can add addtional #includes(s) here.")}
+${merge("// ", "includes", "// you can add additional #includes(s) here.", optional=True)}
 
 /// <summary>
 /// ${shared['c++']['format_description'](obj['description'])}
@@ -53,7 +53,7 @@ if shared['c++']['skippable'](obj_key, attr_name):
 
 % endfor
 
-${merge("        // ", "fields", "        // you can add addtional fields(s) here. None of them will be tracked or updated by the server.")}
+${merge("        // ", "fields", "        // you can add additional fields(s) here. None of them will be tracked or updated by the server.", optional=True)}
 
 % for function_name in obj['function_names']:
 <% function_parms = obj['functions'][function_name]
@@ -74,7 +74,7 @@ return_type = None
 
 % endfor
 
-${merge("        // ", "methods", "        // you can add addtional method(s) here.")}
+${merge("        // ", "methods", "        // you can add additional method(s) here.", optional=True)}
 };
 
 #endif

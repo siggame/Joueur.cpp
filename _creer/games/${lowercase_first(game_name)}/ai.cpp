@@ -2,7 +2,7 @@
 <%include file="functions.noCreer" />
 #include "ai.h"
 
-${merge("// ", "includes", '// you can add additional #includes here for your AI.')}
+${merge("// ", "includes", '// you can add additional #includes here for your AI.', optional=True)}
 
 
 
@@ -65,4 +65,4 @@ ${merge("    // ", function_name,
 }
 % endfor
 
-${merge("// ", "methods", '// you can add additional methods here for your AI to call')}
+${merge("// ", "methods", '// you can add additional methods here for your AI to call', optional=True)}

@@ -1,4 +1,4 @@
-// This allows us to do a pre-compiler assisted version of Relflection
+// This allows us to do a pre-compiler assisted version of Reflection
 // DO NOT MODIFY THIS FILE
 #ifndef JOUEUR_${game_name.upper()}_REGISTERY_H
 #define JOUEUR_${game_name.upper()}_REGISTERY_H
