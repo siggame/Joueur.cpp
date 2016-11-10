@@ -11,7 +11,7 @@
 
 #include "../../joueur/baseAI.h"
 
-${merge("// ", "includes", '// you can add additional #includes here for your AI.')}
+${merge("// ", "includes", '// you can add additional #includes here for your AI.', optional=True)}
 
 /// <summary>
 /// This the header file for where you build your AI for the ${game_name} game.
@@ -29,7 +29,7 @@ class ${game_name}::AI : public Joueur::BaseAI
         /// </summary>
         ${game_name}::Player* player;
 
-${merge("        // ", "fields", '        // you can add additional fields here for your AI to use')}
+${merge("        // ", "fields", '        // you can add additional fields here for your AI to use', optional=True)}
 
 
         /// <summary>
@@ -72,7 +72,7 @@ return_type = function_parms['returns'] and shared['c++']['type'](function_parms
         ${return_type or 'void'} ${function_name}(${shared['c++']['inline_args'](function_parms)});
 % endfor
 
-${merge("        // ", "methods", '        // you can add additional methods here for your AI to call')}
+${merge("        // ", "methods", '        // you can add additional methods here for your AI to call', optional=True)}
 };
 
 #endif

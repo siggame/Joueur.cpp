@@ -33,7 +33,7 @@ if obj_key != "Game":
 % endfor
 
 % endif
-${merge("// ", "includes", "// you can add additional #includes(s) here.")}
+${merge("// ", "includes", "// you can add additional #includes(s) here.", optional=True)}
 
 
 
@@ -79,4 +79,4 @@ return_type = function_parms['returns'] and shared['c++']['type'](function_parms
 
 % endfor
 
-${merge("// ", "methods", "// if you forward declaired additional methods to the " + obj_key + " then you can code them here.")}
+${merge("// ", "methods", "// if you forward declared additional methods to the " + obj_key + " then you can code them here.", optional=True)}
