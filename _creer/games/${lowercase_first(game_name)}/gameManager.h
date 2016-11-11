@@ -1,4 +1,4 @@
-// This is a class that manages the ${game_name} Game and it's GameObjects. Competitors should never have to care about this class's existance.
+// This is a class that manages the ${game_name} Game and its GameObjects. Competitors should never have to care about this class's existance.
 // DO NOT MODIFY THIS FILE<%include file="functions.noCreer" />
 #ifndef JOUEUR_${game_name.upper()}_GAMEMANAGER_H
 #define JOUEUR_${game_name.upper()}_GAMEMANAGER_H
