@@ -29,11 +29,11 @@ The only file you should ever modify to create your AI are the `ai.cpp` and `ai.
 
 ### Notice for CS 1570 Students
 
-We use pointers extensively throughout this C++ client. If you are not familiar with pointers here's the quick and dirty on what you need to know. Normally you'd use the `.` (dot) operator to access member variables,
+We use pointers extensively throughout this C++ client. If you are not familiar with pointers here's the quick and dirty on what you need to know. Normally you'd use the `.` (dot) operator to access member variables:
 
     point.x = 0;
 
-However with pointers, use the `->` (arrow) operator instead.
+However with pointers, use the `->` (arrow) operator instead:
 
     point->x = 0;
 
