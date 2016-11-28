@@ -8,6 +8,7 @@
 #include <string>
 #include <unordered_map>
 #include <string>
+#include "rapidjson/document.h"
 
 namespace cpp_client
 {
@@ -25,6 +26,11 @@ public:
    using Delta_mergable::Delta_mergable;
 
    virtual ~Base_game();
+
+   //Fetches an alias from the specified server
+   static std::string get_alias(const char* name,
+                                const char* server,
+                                int port);
 
    //sets if communication should be printed
    void set_print_communication(bool should_print) noexcept
@@ -108,6 +114,9 @@ private:
    std::string session_;
    std::string name_;
    std::string game_settings_;
+
+   std::string resp_;
+   std::unique_ptr<rapidjson::Document> doc_raw_;
 
    //the AI object
    std::unique_ptr<Base_ai> ai_;

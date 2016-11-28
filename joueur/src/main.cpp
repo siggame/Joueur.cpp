@@ -121,8 +121,6 @@ int main(int argc, const char* argv[])
          cmd.add(int_args[i]);
       }
       cmd.parse(argc, argv);
-      //retrieve the game
-      auto& game = Game_registry::get_game(game_arg.getValue());
       //check for port nonsense
       auto server_str = string_args[server].getValue();
       auto port_num = int_args[port].getValue();
@@ -133,6 +131,11 @@ int main(int argc, const char* argv[])
          port_num = std::stoi(server_str.substr(colon_loc + 1));
          server_str = server_str.substr(0, colon_loc);
       }
+      //retrieve the game (use server aliases)
+      const auto game_name = Base_game::get_alias(game_arg.getValue().c_str(),
+                                                  server_str.c_str(),
+                                                  port_num);
+      auto& game = Game_registry::get_game(game_name);
       //set up some stuff for the game
       game.set_print_communication(print_io.getValue());
       game.connect(server_str.c_str(), port_num);
