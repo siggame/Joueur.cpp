@@ -14,7 +14,7 @@ Base_game::~Base_game() = default;
 std::string Base_game::get_alias(const char* name, const char* server, int port)
 {
    Connection conn;
-   conn.connect(server, port);
+   conn.connect(server, port, false);
    std::string alias = R"({"event": "alias", "data": ")" + std::string(name) + "\"}";
    conn.send(alias);
    const auto resp = conn.recieve();

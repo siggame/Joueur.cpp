@@ -26,7 +26,7 @@ public:
 
    //connect to a specified host/port over TCP
    //throws a Communication_error if it fails
-   void connect(const char* host, unsigned port);
+   void connect(const char* host, unsigned port, bool print = true);
 
    //send a message to the connected host
    //the required termination byte will also be sent
