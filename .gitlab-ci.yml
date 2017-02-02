@@ -1,0 +1,19 @@
+image: alpine:latest
+
+before_script:
+  - apk --no-cache add alpine-sdk cmake make boost boost-dev gcc
+
+stages:
+  - build
+
+Build:
+  stage: build
+  script:
+    - make
+  only:
+    - master
+  tags:
+    - mmai
+  artifacts:
+    paths:
+      - ./
