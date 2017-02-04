@@ -1,5 +1,9 @@
 // The traditional 8x8 chess board with pieces.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_CHESS_GAME_H
 #define JOUEUR_CHESS_GAME_H
 
@@ -7,7 +11,7 @@
 #include "../../joueur/baseGame.h"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-// you can add addtional #includes(s) here.
+// you can add additional #includes(s) here.
 // <<-- /Creer-Merge: includes -->>
 
 /// <summary>
@@ -44,7 +48,7 @@ class Chess::Game : public Joueur::BaseGame
         int maxTurns;
 
         /// <summary>
-        ///  The list of Moves that have occured, in order.
+        /// The vector of Moves that have occurred, in order.
         /// </summary>
         std::vector<Chess::Move*> moves;
 
@@ -54,7 +58,7 @@ class Chess::Game : public Joueur::BaseGame
         std::vector<Chess::Piece*> pieces;
 
         /// <summary>
-        /// List of all the players in the game.
+        /// Vector of all the players in the game.
         /// </summary>
         std::vector<Chess::Player*> players;
 
@@ -70,12 +74,12 @@ class Chess::Game : public Joueur::BaseGame
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional fields(s) here. None of them will be tracked or updated by the server.
+        // you can add additional fields(s) here. None of them will be tracked or updated by the server.
         // <<-- /Creer-Merge: fields -->>
 
 
         // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional method(s) here.
+        // you can add additional method(s) here.
         // <<-- /Creer-Merge: methods -->>
 };
 

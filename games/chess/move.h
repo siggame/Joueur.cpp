@@ -1,5 +1,9 @@
 // Contains all details about a Piece's move in the game.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_CHESS_MOVE_H
 #define JOUEUR_CHESS_MOVE_H
 
@@ -7,7 +11,7 @@
 #include "gameObject.h"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-// you can add addtional #includes(s) here.
+// you can add additional #includes(s) here.
 // <<-- /Creer-Merge: includes -->>
 
 /// <summary>
@@ -24,7 +28,7 @@ class Chess::Move : public Chess::GameObject
 
     public:
         /// <summary>
-        /// The Piece captured by this Move, null if no capture.
+        /// The Piece captured by this Move, nullptr if no capture.
         /// </summary>
         Chess::Piece* captured;
 
@@ -44,7 +48,7 @@ class Chess::Move : public Chess::GameObject
         Chess::Piece* piece;
 
         /// <summary>
-        /// The Piece type this Move's Piece was promoted to from a Pawn, empty string if no promotion occured.
+        /// The Piece type this Move's Piece was promoted to from a Pawn, empty string if no promotion occurred.
         /// </summary>
         std::string promotion;
 
@@ -65,12 +69,12 @@ class Chess::Move : public Chess::GameObject
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional fields(s) here. None of them will be tracked or updated by the server.
+        // you can add additional fields(s) here. None of them will be tracked or updated by the server.
         // <<-- /Creer-Merge: fields -->>
 
 
         // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional method(s) here.
+        // you can add additional method(s) here.
         // <<-- /Creer-Merge: methods -->>
 };
 

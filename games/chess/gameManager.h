@@ -1,5 +1,5 @@
-// This is a class that manages the Chess Game and it's GameObjects. Competitors should never have to care about this class's existance.
-
+// This is a class that manages the Chess Game and its GameObjects. Competitors should never have to care about this class's existance.
+// DO NOT MODIFY THIS FILE
 #ifndef JOUEUR_CHESS_GAMEMANAGER_H
 #define JOUEUR_CHESS_GAMEMANAGER_H
 

@@ -1,5 +1,9 @@
 // A chess piece.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #include "piece.h"
 #include "gameManager.h"
 
@@ -55,5 +59,5 @@ Chess::Move* Chess::Piece::move(std::string file, int rank, std::string promotio
 
 
 // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-// if you forward declaired additional methods to the Piece then you can code them here.
+// if you forward declared additional methods to the Piece then you can code them here.
 // <<-- /Creer-Merge: methods -->>

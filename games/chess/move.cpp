@@ -1,5 +1,9 @@
 // Contains all details about a Piece's move in the game.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #include "move.h"
 #include "gameManager.h"
 
@@ -52,5 +56,5 @@ void Chess::Move::deltaUpdateField(const std::string& fieldName, boost::property
 
 
 // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-// if you forward declaired additional methods to the Move then you can code them here.
+// if you forward declared additional methods to the Move then you can code them here.
 // <<-- /Creer-Merge: methods -->>

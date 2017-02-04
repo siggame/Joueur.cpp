@@ -1,5 +1,9 @@
 // A chess piece.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_CHESS_PIECE_H
 #define JOUEUR_CHESS_PIECE_H
 
@@ -7,7 +11,7 @@
 #include "gameObject.h"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-// you can add addtional #includes(s) here.
+// you can add additional #includes(s) here.
 // <<-- /Creer-Merge: includes -->>
 
 /// <summary>
@@ -55,7 +59,7 @@ class Chess::Piece : public Chess::GameObject
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional fields(s) here. None of them will be tracked or updated by the server.
+        // you can add additional fields(s) here. None of them will be tracked or updated by the server.
         // <<-- /Creer-Merge: fields -->>
 
         /// <summary>
@@ -64,12 +68,12 @@ class Chess::Piece : public Chess::GameObject
         /// <param name="file">The file coordinate to move to. Must be [a-h].</param>
         /// <param name="rank">The rank coordinate to move to. Must be [1-8].</param>
         /// <param name="promotionType">If this is a Pawn moving to the end of the board then this parameter is what to promote it to. When used must be 'Queen', 'Knight', 'Rook', or 'Bishop'.</param>
-        /// <returns>The Move you did if successful, otherwise null if invalid. In addition if your move was invalid you will lose.</returns>
+        /// <returns>The Move you did if successful, otherwise nullptr if invalid. In addition if your move was invalid you will lose.</returns>
         Chess::Move* move(std::string file, int rank, std::string promotionType = "");
 
 
         // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional method(s) here.
+        // you can add additional method(s) here.
         // <<-- /Creer-Merge: methods -->>
 };
 

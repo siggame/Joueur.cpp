@@ -1,3 +1,9 @@
+// Chess Header
+
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_CHESS_H
 #define JOUEUR_CHESS_H
 

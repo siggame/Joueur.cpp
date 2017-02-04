@@ -1,3 +1,5 @@
+// This allows us to do a pre-compiler assisted version of Reflection
+// DO NOT MODIFY THIS FILE
 #ifndef JOUEUR_CHESS_REGISTERY_H
 #define JOUEUR_CHESS_REGISTERY_H
 

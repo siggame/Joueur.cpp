@@ -72,5 +72,5 @@ void Saloon::Tile::deltaUpdateField(const std::string& fieldName, boost::propert
 
 
 // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-// if you forward declaired additional methods to the Tile then you can code them here.
+// if you forward declared additional methods to the Tile then you can code them here.
 // <<-- /Creer-Merge: methods -->>

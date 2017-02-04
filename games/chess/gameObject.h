@@ -1,5 +1,9 @@
 // An object in the game. The most basic class that all game classes should inherit from automatically.
 
+// DO NOT MODIFY THIS FILE
+// Never try to directly create an instance of this class, or modify its member variables.
+// Instead, you should only be reading its variables and calling its functions.
+
 #ifndef JOUEUR_CHESS_GAMEOBJECT_H
 #define JOUEUR_CHESS_GAMEOBJECT_H
 
@@ -7,7 +11,7 @@
 #include "../../joueur/baseGameObject.h"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-// you can add addtional #includes(s) here.
+// you can add additional #includes(s) here.
 // <<-- /Creer-Merge: includes -->>
 
 /// <summary>
@@ -30,7 +34,7 @@ class Chess::GameObject : public Joueur::BaseGameObject
 
 
         // <<-- Creer-Merge: fields -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional fields(s) here. None of them will be tracked or updated by the server.
+        // you can add additional fields(s) here. None of them will be tracked or updated by the server.
         // <<-- /Creer-Merge: fields -->>
 
         /// <summary>
@@ -41,7 +45,7 @@ class Chess::GameObject : public Joueur::BaseGameObject
 
 
         // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-        // you can add addtional method(s) here.
+        // you can add additional method(s) here.
         // <<-- /Creer-Merge: methods -->>
 };
 
