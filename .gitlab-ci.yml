@@ -1,7 +1,7 @@
 image: alpine:latest
 
 before_script:
-  - apk --no-cache add alpine-sdk cmake make boost boost-dev gcc
+  - apk --no-cache add cmake make boost boost-dev gcc g++
 
 stages:
   - build
