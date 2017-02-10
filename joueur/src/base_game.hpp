@@ -90,6 +90,8 @@ public:
    //create an object through a name
    virtual std::shared_ptr<Base_object> generate_object(const std::string& type) = 0;
 
+   void set_ai_parameters(const std::string& params);
+
    //handles the different responses the server can throw out
    //If a certain action is expected it can be given here
    //the Any returned converts to false if the game is over; converts to true if the game

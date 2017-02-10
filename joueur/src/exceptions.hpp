@@ -41,6 +41,11 @@ class Server_error : public std::runtime_error
    using std::runtime_error::runtime_error;
 };
 
+class Input_error : public std::runtime_error
+{
+   using std::runtime_error::runtime_error;
+};
+
 class Unknown_error : public std::runtime_error
 {
    using std::runtime_error::runtime_error;

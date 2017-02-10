@@ -16,12 +16,6 @@
 int main(int argc, const char* argv[])
 {
    using namespace cpp_client;
-   //set signal so it doesn't crash when interrupted
-   //this really isn't good... but whatever
-   const auto exiter = [](int){ std::_Exit(0); };
-   signal(SIGINT, exiter);
-   signal(SIGTERM, exiter);
-   signal(SIGABRT, exiter);
    try
    {
       TCLAP::CmdLine cmd("Runs the C++ client.  Game name must be provided.");
@@ -68,6 +62,14 @@ int main(int argc, const char* argv[])
             false,
             "*",
             "string"
+         },
+         {
+            "",
+            "aiSettings",
+            "Any settings for the AI.  Delimit pairs by an ampersand (key=value&otherKey=otherValue)",
+            false,
+            "",
+            "string"
          }
       };
       //enum for accessing string options
@@ -77,7 +79,8 @@ int main(int argc, const char* argv[])
          player_name,
          password,
          settings,
-         session
+         session,
+         ai_settings
       };
       TCLAP::ValueArg<int> int_args[] =
       {
@@ -143,6 +146,7 @@ int main(int argc, const char* argv[])
       game.set_password(string_args[password].getValue());
       game.set_session(string_args[session].getValue());
       game.set_name(string_args[player_name].getValue());
+      game.set_ai_parameters(string_args[ai_settings].getValue());
       game.go();
    }
    catch(const std::exception& e)
