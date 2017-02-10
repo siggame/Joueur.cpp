@@ -151,8 +151,12 @@ void ${obj_key_name}_::change_vec_values(const std::string& name, std::vector<st
       using type = std::decay<decltype(${underscore(attr_name)})>::type;
       auto& vec = variables_["${attr_name}"].as<type>();
       for(auto&& val : values)
-      {
+      { <% game = "get_game()->" if obj_key_name != "Game" else "" %>
+         % if 'valueType' in obj['attributes'][attr_name]['type'] and obj['attributes'][attr_name]['type']['valueType']['is_game_object']:
+         vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(${game}get_objects()[val.second.as<std::string>()]);
+         % else:
          vec[val.first] = std::move(val.second.as<type::value_type>());
+         % endif
       }
       return;
    } <% if_str = 'else if' %>
@@ -242,6 +246,20 @@ bool ${obj_key_name}_::is_map(const std::string& name)
    % endif
    % endfor
    return false;
+}
+
+void ${obj_key_name}_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
+{
+   % for attr_name in obj['attribute_names']:
+   % if obj['attributes'][attr_name]['type'] and obj['attributes'][attr_name]['type']['is_game_object']:
+   if(member == "${attr_name}")
+   { <% name = underscore(obj['attributes'][attr_name]['type']['name']).capitalize() %>
+      to_change->as<${name}>() = std::static_pointer_cast<${name}_>(ref);
+      return;
+   }
+   % endif
+   % endfor
+   throw Bad_manipulation(member + " in ${obj_key_name} treated as a reference, but it is not a reference.");
 }
 
 % if obj_key_name == 'Game_object':

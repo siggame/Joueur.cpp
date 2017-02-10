@@ -98,6 +98,7 @@ ${merge("   // ", "methods", "   // You can add additional methods here.")}
    virtual void remove_key(const std::string& name, Any& key) override;
    virtual std::unique_ptr<Any> add_key_value(const std::string& name, Any& key, Any& value) override;
    virtual bool is_map(const std::string& name) override;
+   virtual void rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref) override;
 % if obj_key_name == 'Game_object':
    virtual Base_game* get_game() override;
 % endif

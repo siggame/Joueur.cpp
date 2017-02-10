@@ -14,6 +14,7 @@ namespace cpp_client
 //kind of stupid, but this needs to be done
 class Any;
 struct Delta_mergable_delay_variables;
+class Base_object;
 
 class Delta_mergable
 {
@@ -40,6 +41,7 @@ public:
    virtual void remove_key(const std::string& name, Any& key) = 0;
    virtual std::unique_ptr<Any> add_key_value(const std::string& name, Any& key, Any& value) = 0;
    virtual bool is_map(const std::string& name) = 0;
+   virtual void rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref) = 0;
 };
 
 }
