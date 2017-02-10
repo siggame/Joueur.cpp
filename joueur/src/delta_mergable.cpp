@@ -2,6 +2,7 @@
 
 #include "any.hpp"
 #include "base_ai.hpp"
+#include "base_object.hpp"
 
 namespace cpp_client
 {

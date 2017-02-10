@@ -16,12 +16,6 @@
 int main(int argc, const char* argv[])
 {
    using namespace cpp_client;
-   //set signal so it doesn't crash when interrupted
-   //this really isn't good... but whatever
-   const auto exiter = [](int){ std::_Exit(0); };
-   signal(SIGINT, exiter);
-   signal(SIGTERM, exiter);
-   signal(SIGABRT, exiter);
    try
    {
       TCLAP::CmdLine cmd("Runs the C++ client.  Game name must be provided.");
@@ -68,6 +62,14 @@ int main(int argc, const char* argv[])
             false,
             "*",
             "string"
+         },
+         {
+            "",
+            "aiSettings",
+            "Any settings for the AI.  Delimit pairs by an ampersand (key=value&otherKey=otherValue)",
+            false,
+            "",
+            "string"
          }
       };
       //enum for accessing string options
@@ -77,7 +79,8 @@ int main(int argc, const char* argv[])
          player_name,
          password,
          settings,
-         session
+         session,
+         ai_settings
       };
       TCLAP::ValueArg<int> int_args[] =
       {
@@ -121,8 +124,6 @@ int main(int argc, const char* argv[])
          cmd.add(int_args[i]);
       }
       cmd.parse(argc, argv);
-      //retrieve the game
-      auto& game = Game_registry::get_game(game_arg.getValue());
       //check for port nonsense
       auto server_str = string_args[server].getValue();
       auto port_num = int_args[port].getValue();
@@ -133,6 +134,11 @@ int main(int argc, const char* argv[])
          port_num = std::stoi(server_str.substr(colon_loc + 1));
          server_str = server_str.substr(0, colon_loc);
       }
+      //retrieve the game (use server aliases)
+      const auto game_name = Base_game::get_alias(game_arg.getValue().c_str(),
+                                                  server_str.c_str(),
+                                                  port_num);
+      auto& game = Game_registry::get_game(game_name);
       //set up some stuff for the game
       game.set_print_communication(print_io.getValue());
       game.connect(server_str.c_str(), port_num);
@@ -140,6 +146,7 @@ int main(int argc, const char* argv[])
       game.set_password(string_args[password].getValue());
       game.set_session(string_args[session].getValue());
       game.set_name(string_args[player_name].getValue());
+      game.set_ai_parameters(string_args[ai_settings].getValue());
       game.go();
    }
    catch(const std::exception& e)

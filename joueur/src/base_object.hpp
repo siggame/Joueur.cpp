@@ -46,6 +46,7 @@ public:
    }
 
    //Don't really like doing this, but I can't think of a better way
+   // \ifcond FALSE
    virtual void resize(const std::string& name, std::size_t size) override {}
    virtual void change_vec_values(const std::string& name,
                                   std::vector<std::pair<std::size_t, Any>>& values) override {}
@@ -54,6 +55,8 @@ public:
       add_key_value(const std::string& name, Any& key, Any& value) override;
    virtual bool is_map(const std::string& name) override { return false; }
    virtual Base_game* get_game() { return nullptr; }
+   virtual void rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref) {}
+   // \endcond
 
 private:
 

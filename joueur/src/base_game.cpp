@@ -3,7 +3,6 @@
 
 #include "delta.hpp"
 #include "attr_wrapper.hpp"
-#include "rapidjson/document.h"
 #include "base_object.hpp"
 #include "any.hpp"
 
@@ -12,10 +11,28 @@ namespace cpp_client
 
 Base_game::~Base_game() = default;
 
+std::string Base_game::get_alias(const char* name, const char* server, int port)
+{
+   Connection conn;
+   conn.connect(server, port, false);
+   std::string alias = R"({"event": "alias", "data": ")" + std::string(name) + "\"}";
+   conn.send(alias);
+   const auto resp = conn.recieve();
+   rapidjson::Document doc;
+   doc.Parse(resp.c_str());
+   if(attr_wrapper::get_attribute<std::string>(doc, "event") == "fatal")
+   {
+      std::cout << sgr::text_red << "Fatal: "
+                << attr_wrapper::get_attribute<std::string>(doc["data"], "message") << '\n'
+                << sgr::reset;
+      exit(1);
+   }
+   return attr_wrapper::get_attribute<std::string>(doc, "data");
+}
+
 void Base_game::go()
 {
-   ai_ = generate_ai();
-   //grab the name first
+   //grab the name first (do this again to ensure proper server-side name)
    std::string alias = R"({"event": "alias", "data": ")" + get_game_name() + "\"}";
    conn_.send(alias);
    const auto game_name = handle_response("named")->as<std::string>();
@@ -71,15 +88,12 @@ void Base_game::go()
 
 std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
 {
-   //static for when returning rapidjson values
-   static std::string resp;
-   static std::unique_ptr<rapidjson::Document> doc_raw;
-   doc_raw.reset(new rapidjson::Document);
+   doc_raw_.reset(new rapidjson::Document);
    //first get the response
-   resp = conn_.recieve();
+   resp_ = conn_.recieve();
    //now parse it
-   auto& doc = *doc_raw;
-   doc.Parse(resp.c_str());
+   auto& doc = *doc_raw_;
+   doc.Parse(resp_.c_str());
    const auto event = attr_wrapper::get_attribute<std::string>(doc, "event");
    //check if it matches the expected (if needed)
    if(event != "fatal" && expected != "" && event != expected)
@@ -123,8 +137,16 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
       const auto mes = data.FindMember("message");
       if(mes != data.MemberEnd())
       {
+         std::string final_message = attr_wrapper::as<std::string>(mes->value);
+         const auto replace_loc = final_message.find("__HOSTNAME__");
+         if(replace_loc != std::string::npos)
+         {
+            final_message.replace(replace_loc,
+                                  std::strlen("__HOSTNAME__"),
+                                  hostname_);
+         }
          std::cout << sgr::text_cyan
-                   << attr_wrapper::as<std::string>(mes->value)
+                   << final_message
                    << sgr::reset
                    << '\n'
                    ;
@@ -174,6 +196,43 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
    }
    //just some dummy value to indicate that this isn't done yet
    return std::unique_ptr<Any>(new Any{true});
+}
+
+void Base_game::set_ai_parameters(const std::string& params)
+{
+   ai_ = generate_ai();
+   // this simplifies code a lot
+   if(params.empty())
+   {
+      return;
+   }
+   // error on leading ampersands
+   if(params[0] == '&')
+   {
+      throw Input_error("Can not begin AI settings string with &, string was:\n" +
+                        params);
+   }
+   auto split = 0;
+   while(true)
+   {
+      const auto new_split = params.find('&', split + 1);
+      const auto to_parse = params.substr(split, new_split - split);
+      const auto eq_loc = to_parse.find('=');
+      if(eq_loc == params.npos)
+      {
+         throw Input_error("Could not parse the AI settings string:\n" +
+                           params + "\n"
+                           "In particular, could not find '=' in \"" + to_parse + "\"");
+      }
+      const auto key = to_parse.substr(0, eq_loc);
+      const auto value = to_parse.substr(eq_loc + 1, std::string::npos);
+      ai_->passed_params_[key] = value;
+      if(new_split == std::string::npos)
+      {
+         break;
+      }
+      split = new_split + 1;
+   }
 }
 
 } // cpp_client

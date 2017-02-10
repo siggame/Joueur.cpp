@@ -168,9 +168,12 @@ void Connection::send(const std::string& msg)
    conn_->send(R"(, "sentTime": )" + std::to_string(time) + "}\x04");
 }
 
-void Connection::connect(const char* host, unsigned port)
+void Connection::connect(const char* host, unsigned port, bool print)
 {
-   std::cout << sgr::text_cyan << "Connecting to: " << host << ":" << port << '\n' << sgr::reset;
+   if(print)
+   {
+      std::cout << sgr::text_cyan << "Connecting to: " << host << ":" << port << '\n' << sgr::reset;
+   }
    conn_->connect(host, port);
 }
 

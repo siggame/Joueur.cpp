@@ -109,7 +109,7 @@ inline std::string
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
               Delta_mergable* owner,
-              std::vector<std::tuple<Any*, std::string>>& refs,
+              std::vector<std::tuple<Delta_mergable*, Any*, std::string, std::string>>& refs,
               vec_ref_t& vec_refs,
               const std::string& owner_name);
 
@@ -123,7 +123,7 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
    {
       throw Bad_response("Delta's data field is not an object.");
    }
-   std::vector<std::tuple<Any*, std::string>> refs;
+   std::vector<std::tuple<Delta_mergable*, Any*, std::string, std::string>> refs;
    vec_ref_t vec_refs;
    for(auto data_iter = data.MemberBegin(); data_iter != data.MemberEnd(); ++data_iter)
    {
@@ -133,20 +133,16 @@ void apply_delta(rapidjson::Value& delta, Base_game& apply_to)
    for(auto&& ref : refs)
    {
       auto& obj = std::get<0>(ref);
-      const auto& refer = std::get<1>(ref);
-      obj->reset(std::static_pointer_cast<Base_object>(apply_to.get_objects()[refer]));
+      auto& to_update = std::get<1>(ref);
+      const auto& name = std::get<2>(ref);
+      const auto& refer = std::get<3>(ref);
+      obj->rebind_by_name(to_update, name, apply_to.get_objects()[refer]);
    }
    for(auto&& vec_ref : vec_refs)
    {
       auto& obj = std::get<0>(vec_ref);
       auto& name = std::get<1>(vec_ref);
       auto& changes = std::get<2>(vec_ref);
-      //need to change the strings to pointers
-      for(auto&& change : changes)
-      {
-         auto id = std::move(change.second.as<std::string>());
-         change.second = std::static_pointer_cast<Base_object>(apply_to.get_objects()[id]);
-      }
       obj->change_vec_values(name, changes);
    }
 }
@@ -159,7 +155,7 @@ inline std::string
               Delta_mergable& apply_to,
               const rapidjson::Value::ConstMemberIterator& itr,
               Delta_mergable* owner,
-              std::vector<std::tuple<Any*, std::string>>& refs,
+              std::vector<std::tuple<Delta_mergable*, Any*, std::string, std::string>>& refs,
               vec_ref_t& vec_refs,
               const std::string& owner_name)
 {
@@ -254,7 +250,9 @@ inline std::string
             if(!str.empty())
             {
                auto target = std::string{data_iter->name.GetString()};
-               refs.emplace_back(&objects[name]->variables_[target],
+               refs.emplace_back(objects[name].get(),
+                                 &objects[name]->variables_[target],
+                                 target,
                                  str);
             }
          }
@@ -262,7 +260,6 @@ inline std::string
       else if(id_itr != val.MemberEnd())
       {
          //object reference...
-         auto woop = attr_wrapper::as<std::string>(id_itr->value);
          return attr_wrapper::as<std::string>(id_itr->value);
       }
       else
@@ -286,7 +283,9 @@ inline std::string
                                         owner_name);
                   if(!str.empty())
                   {
-                     refs.emplace_back(&owner->variables_[name],
+                     refs.emplace_back(owner,
+                                       &owner->variables_[name],
+                                       target,
                                        std::move(str));
                   }
                }
@@ -305,8 +304,13 @@ inline std::string
                                         owner_name);
                   if(!str.empty())
                   {
-                     refs.emplace_back(&owner2->variables_[name],
-                                       std::move(str));
+                     // str is the id of the object to bind to
+                     // target is the field name
+                     // name is the id of the object to manipulate
+                     refs.emplace_back(context.get_objects()[name].get(),
+                                       &context.get_objects()[name]->variables_[target],
+                                       target,
+                                       str);
                   }
                }
                else
@@ -333,7 +337,9 @@ inline std::string
                      apply_to.add_key_value(name, key, dummy);
                      if(!str.empty())
                      {
-                        refs.emplace_back(&apply_to.variables_[name],
+                        refs.emplace_back(owner,
+                                          &apply_to.variables_[name],
+                                          target,
                                           std::move(str));
                      }
                   }

@@ -8,6 +8,7 @@
 #include <string>
 #include <unordered_map>
 #include <string>
+#include "rapidjson/document.h"
 
 namespace cpp_client
 {
@@ -26,6 +27,11 @@ public:
 
    virtual ~Base_game();
 
+   //Fetches an alias from the specified server
+   static std::string get_alias(const char* name,
+                                const char* server,
+                                int port);
+
    //sets if communication should be printed
    void set_print_communication(bool should_print) noexcept
    {
@@ -36,6 +42,7 @@ public:
    //will throw if an error occurs
    void connect(const char* server_url, unsigned port_num)
    {
+      hostname_ = server_url;
       conn_.connect(server_url, port_num);
    }
 
@@ -83,6 +90,8 @@ public:
    //create an object through a name
    virtual std::shared_ptr<Base_object> generate_object(const std::string& type) = 0;
 
+   void set_ai_parameters(const std::string& params);
+
    //handles the different responses the server can throw out
    //If a certain action is expected it can be given here
    //the Any returned converts to false if the game is over; converts to true if the game
@@ -108,6 +117,10 @@ private:
    std::string session_;
    std::string name_;
    std::string game_settings_;
+   std::string hostname_;
+
+   std::string resp_;
+   std::unique_ptr<rapidjson::Document> doc_raw_;
 
    //the AI object
    std::unique_ptr<Base_ai> ai_;
