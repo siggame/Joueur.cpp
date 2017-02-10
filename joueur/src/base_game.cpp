@@ -138,8 +138,16 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
       const auto mes = data.FindMember("message");
       if(mes != data.MemberEnd())
       {
+         std::string final_message = attr_wrapper::as<std::string>(mes->value);
+         const auto replace_loc = final_message.find("__HOSTNAME__");
+         if(replace_loc != std::string::npos)
+         {
+            final_message.replace(replace_loc,
+                                  std::strlen("__HOSTNAME__"),
+                                  hostname_);
+         }
          std::cout << sgr::text_cyan
-                   << attr_wrapper::as<std::string>(mes->value)
+                   << final_message
                    << sgr::reset
                    << '\n'
                    ;

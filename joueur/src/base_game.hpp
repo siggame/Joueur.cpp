@@ -42,6 +42,7 @@ public:
    //will throw if an error occurs
    void connect(const char* server_url, unsigned port_num)
    {
+      hostname_ = server_url;
       conn_.connect(server_url, port_num);
    }
 
@@ -114,6 +115,7 @@ private:
    std::string session_;
    std::string name_;
    std::string game_settings_;
+   std::string hostname_;
 
    std::string resp_;
    std::unique_ptr<rapidjson::Document> doc_raw_;
