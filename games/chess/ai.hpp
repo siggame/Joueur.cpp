@@ -67,6 +67,14 @@ public:
     /// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
     bool run_turn();
 
+    /// <summary>
+    ///  Prints the current board using pretty ASCII art
+    /// </summary>
+    /// <remarks>
+    /// Note: you can delete this function if you wish
+    /// </remarks>
+    void print_current_board();
+
     // You can add additional methods here.
 
 
