@@ -43,6 +43,29 @@ MinGW the other solution on Windows if you do not wish to use Visual Studio or V
 
 Notes: You may have to set the `cc` environmental variable to the C++ compiler of your choice (gcc.exe probably)
 
+
+## Vagrant
+
+Install Vagrant and Virtualbox in order to use the Vagrant configuration we provide which satisfies all build dependencies inside of a virtual machine. This will allow for development with your favorite IDE or editor on your host machine while being able to run the client inside the virtual machine. Vagrant will automatically sync the changes you make into the virtual machine that it creates. In order to use vagrant after installing the aforementioned requirements simply run from the root of this client:
+
+vagrant up
+and after the build has completed you can ssh into the virtual environment by running:
+
+vagrant ssh
+From there you will be in a Linux environment that has all the dependencies you'll need to build and run this client.
+
+When the competition is over, or the virtual environment becomes corrupted in some way, simply execute vagrant destroy to delete the virtual machine and its contents.
+
+For a more in depth guide on using vagrant, take a look at their guide
+
+Windows
+
+Using Vagrant with Windows can be a bit of a pain. Here are some tips:
+
+Use an OpenSSH compatible ssh client. We recommend Git Bash to serve double duty as your git client and ssh client
+Launch the terminal of your choice (like Git Bash) as an Administrator to ensure the symbolic links can be created when spinning up your Vagrant virtual machine
+
+
 ## Other notes
 
 Always use the `->` operator to access member variables and functions of each class instead of the dot operator `.`.
