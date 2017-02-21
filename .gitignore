@@ -251,3 +251,6 @@ _Pvt_Extensions
 
 # generated docs
 docs/output
+
+#vagrant
+.vagrant/*
