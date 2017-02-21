@@ -16,14 +16,6 @@ class Base_object;
 class Base_ai
 {
 public:
-   virtual std::string get_name() const = 0;
-   virtual void start() = 0;
-   virtual void ended(bool won, const std::string& reason) = 0;
-   virtual void invalid(const std::string& message);
-   virtual void game_updated() = 0;
-   virtual std::string invoke_by_name(const std::string& name,
-                                      const std::unordered_map<std::string, Any>& args) = 0;
-
    /// <summary>
    /// Gets an AI setting passed to the program via the '--aiSettings' flag.
    /// Returns the empty string if the key was not set
@@ -33,10 +25,19 @@ public:
    const std::string& get_setting(const char* key) const noexcept;
    const std::string& get_setting(const std::string& key) const noexcept;
 
+   /// \cond FALSE
+   virtual std::string get_name() const = 0;
+   virtual void start() = 0;
+   virtual void ended(bool won, const std::string& reason) = 0;
+   virtual void invalid(const std::string& message);
+   virtual void game_updated() = 0;
+   virtual std::string invoke_by_name(const std::string& name,
+                                      const std::unordered_map<std::string, Any>& args) = 0;
    virtual ~Base_ai();
    virtual void set_game(Base_game* ptr) = 0;
    virtual void set_player(std::shared_ptr<Base_object> obj) = 0;
    virtual void print_win_loss_info() = 0;
+   /// \endcond
 
 private:
    std::unordered_map<std::string, std::string> passed_params_;
