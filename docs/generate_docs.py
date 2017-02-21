@@ -54,8 +54,9 @@ for name in only_files:
                     line = " ".join(split) + "\n"
                 temp_file.write(line)
 
-#for extra in ["baseGameObject.cpp", "baseGameObject.h"]:
-#    shutil.copyfile(os.path.join("..", "joueur", extra), os.path.join(temp_path, extra))
+for extra in ["base_object.cpp", "base_object.hpp",
+              "base_ai.cpp", "base_ai.hpp"]:
+    shutil.copyfile(os.path.join("..", "joueur/src/", extra), os.path.join(temp_path, extra))
 
 with open("../README.md", "r") as f:
     readme = f.read()
@@ -65,7 +66,7 @@ readme = readme.replace("GAME_NAME", game_name).replace("game_name", lower_game_
 with open(os.path.join(temp_path, "README.md"), "w+") as f:
     f.write(readme)
 
-#shutil.copyfile(os.path.join("..", "README.md"), os.path.join(temp_path, "README.md"))
+shutil.copyfile("footer.html", os.path.join(temp_path, "footer.html"))
 
 run(["doxygen"], shell=True, cwd=temp_path)
 
