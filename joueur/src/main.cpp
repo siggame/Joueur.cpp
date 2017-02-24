@@ -150,11 +150,11 @@ int main(int argc, const char* argv[])
       game.go();
    }
    // yuck a macro - best option here though...
-   #define CATCHER(x)                                                \
-      catch(const x& e)                                              \
-      {                                                              \
+   #define CATCHER(x)                                                 \
+      catch(const x& e)                                               \
+      {                                                               \
          std::cerr << sgr::text_red << "[" #x "] An error occured:\n" \
-                   << e.what() << sgr::reset << std::endl;           \
+                   << e.what() << sgr::reset << std::endl;            \
       }
    CATCHER(Game_not_found)
    CATCHER(Communication_error)
