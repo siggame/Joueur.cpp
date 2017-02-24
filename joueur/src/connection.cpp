@@ -118,7 +118,7 @@ private:
          break;
 
       case Exception::ERROR_INIT:
-         throw Communication_error("Error during initialization.");
+         throw Communication_error("Error during initialization - could not connect to server.");
          break;
 
       case Exception::BAD_PROTOCOL:
