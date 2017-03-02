@@ -26,7 +26,7 @@ namespace saloon
 
 Cowboy Young_gun_::call_in(const std::string& job)
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "call_in", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "callIn", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
     order += std::string("\"job\":") + std::string("\"") + job + "\"";
