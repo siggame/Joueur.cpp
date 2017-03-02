@@ -146,6 +146,7 @@ int main(int argc, const char* argv[])
       game.set_password(string_args[password].getValue());
       game.set_session(string_args[session].getValue());
       game.set_name(string_args[player_name].getValue());
+      game.set_settings(string_args[settings].getValue());
       game.set_ai_parameters(string_args[ai_settings].getValue());
       game.go();
    }
