@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -78,6 +80,7 @@ public:
     /// <param name="rank"> The rank coordinate to move to. Must be [1-8]. </param>
     /// <param name="promotion_type"> If this is a Pawn moving to the end of the board then this parameter is what to promote it to. When used must be 'Queen', 'Knight', 'Rook', or 'Bishop'. </param>
     Move move(const std::string& file, int rank, const std::string& promotion_type = "");
+
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

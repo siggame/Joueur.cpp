@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -72,6 +74,7 @@ public:
     /// <param name="x"> The x coordinate to move to. </param>
     /// <param name="y"> The y coordinate to move to. </param>
     Checker move(int x, int y);
+
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

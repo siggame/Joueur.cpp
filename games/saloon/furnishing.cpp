@@ -27,6 +27,7 @@ namespace cpp_client
 namespace saloon
 {
 
+
 } // saloon
 
 } // cpp_client

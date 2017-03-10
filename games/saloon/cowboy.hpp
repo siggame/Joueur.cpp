@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -114,6 +116,7 @@ public:
     /// </summary>
     /// <param name="piano"> The Furnishing that is a piano you want to play. </param>
     bool play(const Furnishing& piano);
+
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

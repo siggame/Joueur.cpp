@@ -73,6 +73,86 @@ ${merge("    // ", function_name, "    // Put your game logic here for {} here".
 % endif
 }
 % endfor
+% if 'TiledGame' in game['serverParentClasses']: #// then we need to add some client side utility functions
+
+/// A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
+/// <param name="start">the starting Tile</param>
+/// <param name="goal">the goal Tile</param>
+/// <return>A List of Tiles representing the path, the the first element being a valid adjacent Tile to the start, and the last element being the goal. Or an empty list if no path found.</return>
+std::vector<Tile> AI::find_path(const Tile& start, const Tile& goal)
+{
+    // no need to make a path to here...
+    if(start == goal)
+    {
+        return {};
+    }
+
+    // the tiles that will have their neighbors searched for 'goal'
+    std::queue<Tile> fringe;
+
+    // How we got to each tile that went into the fringe.
+    std::unordered_map<Tile,Tile> came_from;
+
+    // Enqueue start as the first tile to have its neighbors searched.
+    fringe.push(start);
+
+    // keep exploring neighbors of neighbors... until there are no more.
+    while(fringe.size() > 0)
+    {
+        // the tile we are currently exploring.
+        Tile inspect = fringe.front();
+        fringe.pop();
+
+        // Note, we are using the `auto` keyword here
+        //   The compiler can discern that this is a `std::vector<Tile>` based on the return type of `getNeighbors()`
+        auto neighbors = inspect->get_neighbors();
+
+        // cycle through the tile's neighbors.
+        for(int i = 0; i < neighbors.size(); i++)
+        {
+            Tile neighbor = neighbors[i];
+
+            // If we found the goal we've found the path!
+            if(neighbor == goal)
+            {
+                // Follow the path backward starting at the goal and return it.
+                std::deque<Tile> path;
+                path.push_front(goal);
+
+                // Starting at the tile we are currently at, insert them retracing our steps till we get to the starting tile
+                for(Tile step = inspect; step != start; step = came_from[step])
+                {
+                    path.push_front(step);
+                }
+
+                // we want to return a vector as that's what we use for all containers in C++
+                // (and they don't have push_front like we need)
+                // So construct the vector-ized path here
+                std::vector<Tile> vector_path;
+                for(auto& tile : path)
+                {
+                    vector_path.push_back(tile);
+                }
+                return vector_path;
+            }
+
+            // if the tile exists, has not been explored or added to the fringe yet, and it is pathable
+            if(neighbor && came_from.count(neighbor) == 0 && neighbor->is_pathable())
+            {
+                // add it to the tiles to be explored and add where it came from.
+                fringe.push(neighbor);
+                came_from[neighbor] = inspect;
+            }
+
+        } // for each neighbor
+
+    } // while fringe not empty
+
+    // if you're here, that means that there was not a path to get to where you want to go.
+    //   in that case, we'll just return an empty path.
+    return {};
+}
+% endif
 
 ${merge("//", "methods", "// You can add additional methods here for your AI to call")}
 
