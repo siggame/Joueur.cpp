@@ -22,6 +22,7 @@ namespace cpp_client
 namespace ${underscore(game_name)}
 {
 
+% if 'Tile' in game_objs:
 % if 'TiledGame' in game['serverParentClasses']: #// then we need to add some client side utility functions
 % if obj_key == 'Game':
 /// <summary>
@@ -91,6 +92,7 @@ bool Tile_::has_neighbor(const Tile& tile)
 {
     return (tile && (tile_north == tile || tile_east == tile || tile_south == tile || tile_west == tile));
 }
+% endif
 % endif
 % endif
 

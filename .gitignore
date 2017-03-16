@@ -254,3 +254,6 @@ docs/output
 
 #vagrant
 .vagrant/*
+
+# vscode
+.vscode

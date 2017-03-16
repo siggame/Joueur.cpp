@@ -85,6 +85,7 @@ args = shared['make_args'](function_params, True)
 
 % if game['serverParentClasses']: #// then we need to add some client side utility functions
 % if obj_key == 'Game':
+% if 'Tile' in game_objs:
     /// <summary>
     /// Gets the Tile at a specified (x, y) position
     /// </summary>
@@ -92,6 +93,7 @@ args = shared['make_args'](function_params, True)
     /// <param name="y">integer between 0 and the mapHeight</param>
     /// <returns>the Tile at (x, y) or null if out of bounds
     Tile get_tile_at(const int x, const int y);
+% endif
 % elif obj_key == 'Tile':
     /// <summary>
     /// The list of all valid directions Tiles can be in

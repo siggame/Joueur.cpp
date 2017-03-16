@@ -140,11 +140,22 @@ std::unique_ptr<Any> Brood_mother_::add_key_value(const std::string& name, Any& 
 
 bool Brood_mother_::is_map(const std::string& name)
 {
+    try
+    {
+        return Spider_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
 void Brood_mother_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   try
+   {
+      Spider_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Brood_mother treated as a reference, but it is not a reference.");
 }
 

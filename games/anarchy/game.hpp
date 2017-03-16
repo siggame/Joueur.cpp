@@ -118,13 +118,6 @@ public:
     // <<-- /Creer-Merge: member variables -->>
 
 
-    /// <summary>
-    /// Gets the Tile at a specified (x, y) position
-    /// </summary>
-    /// <param name="x">integer between 0 and the mapWidth</param>
-    /// <param name="y">integer between 0 and the mapHeight</param>
-    /// <returns>the Tile at (x, y) or null if out of bounds
-    Tile get_tile_at(const int x, const int y);
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

@@ -113,6 +113,11 @@ std::unique_ptr<Any> Web_::add_key_value(const std::string& name, Any& key, Any&
 
 bool Web_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -128,6 +133,12 @@ void Web_::rebind_by_name(Any* to_change, const std::string& member, std::shared
       to_change->as<Nest>() = std::static_pointer_cast<Nest_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Web treated as a reference, but it is not a reference.");
 }
 

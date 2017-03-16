@@ -79,7 +79,7 @@ public:
     const std::vector<Piece>& pieces;
 
     /// <summary>
-    /// The direction your Pieces must go along the rank axis until they reach the other side.
+    /// The direction your Pieces must go along the rank axis until they reach the other side. Will be +1 if the Player is 'White', or -1 if the Player is 'Black'.
     /// </summary>
     const int& rank_direction;
 
