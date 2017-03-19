@@ -26,6 +26,7 @@ namespace cpp_client
 namespace stumped
 {
 
+
 } // stumped
 
 } // cpp_client

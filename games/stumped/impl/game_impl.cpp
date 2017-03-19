@@ -33,6 +33,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"freeBeaversCount", Any{std::decay<decltype(free_beavers_count)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
         {"jobs", Any{std::decay<decltype(jobs)>::type{}}},
+        {"lodgeCostConstant", Any{std::decay<decltype(lodge_cost_constant)>::type{}}},
         {"lodgesCompleteToWin", Any{std::decay<decltype(lodges_complete_to_win)>::type{}}},
         {"mapHeight", Any{std::decay<decltype(map_height)>::type{}}},
         {"mapWidth", Any{std::decay<decltype(map_width)>::type{}}},
@@ -40,6 +41,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"spawner", Any{std::decay<decltype(spawner)>::type{}}},
+        {"spawnerHarvestConstant", Any{std::decay<decltype(spawner_harvest_constant)>::type{}}},
         {"spawnerTypes", Any{std::decay<decltype(spawner_types)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
     },
@@ -50,6 +52,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     free_beavers_count(variables_["freeBeaversCount"].as<std::decay<decltype(free_beavers_count)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
     jobs(variables_["jobs"].as<std::decay<decltype(jobs)>::type>()),
+    lodge_cost_constant(variables_["lodgeCostConstant"].as<std::decay<decltype(lodge_cost_constant)>::type>()),
     lodges_complete_to_win(variables_["lodgesCompleteToWin"].as<std::decay<decltype(lodges_complete_to_win)>::type>()),
     map_height(variables_["mapHeight"].as<std::decay<decltype(map_height)>::type>()),
     map_width(variables_["mapWidth"].as<std::decay<decltype(map_width)>::type>()),
@@ -57,6 +60,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     spawner(variables_["spawner"].as<std::decay<decltype(spawner)>::type>()),
+    spawner_harvest_constant(variables_["spawnerHarvestConstant"].as<std::decay<decltype(spawner_harvest_constant)>::type>()),
     spawner_types(variables_["spawnerTypes"].as<std::decay<decltype(spawner_types)>::type>()),
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>())
 {

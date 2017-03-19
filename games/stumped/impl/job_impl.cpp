@@ -23,12 +23,12 @@ namespace cpp_client
 namespace stumped
 {
 
-Beaver Job_::recruit(const Tile& lodge)
+Beaver Job_::recruit(const Tile& tile)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "recruit", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"lodge\":") + "{\"id\":" + lodge->id + "}";
+    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
 
     order += "}}}";
     Stumped::instance()->send(order);
@@ -60,7 +60,7 @@ Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"chopping", Any{std::decay<decltype(chopping)>::type{}}},
         {"cost", Any{std::decay<decltype(cost)>::type{}}},
         {"damage", Any{std::decay<decltype(damage)>::type{}}},
-        {"distracts", Any{std::decay<decltype(distracts)>::type{}}},
+        {"distractionPower", Any{std::decay<decltype(distraction_power)>::type{}}},
         {"fishing", Any{std::decay<decltype(fishing)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
@@ -71,7 +71,7 @@ Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     chopping(variables_["chopping"].as<std::decay<decltype(chopping)>::type>()),
     cost(variables_["cost"].as<std::decay<decltype(cost)>::type>()),
     damage(variables_["damage"].as<std::decay<decltype(damage)>::type>()),
-    distracts(variables_["distracts"].as<std::decay<decltype(distracts)>::type>()),
+    distraction_power(variables_["distractionPower"].as<std::decay<decltype(distraction_power)>::type>()),
     fishing(variables_["fishing"].as<std::decay<decltype(fishing)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
@@ -130,11 +130,22 @@ std::unique_ptr<Any> Job_::add_key_value(const std::string& name, Any& key, Any&
 
 bool Job_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
 void Job_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Job treated as a reference, but it is not a reference.");
 }
 

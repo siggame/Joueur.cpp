@@ -23,12 +23,12 @@ namespace cpp_client
 namespace stumped
 {
 
-bool Beaver_::attack(const Tile& tile)
+bool Beaver_::attack(const Beaver& beaver)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "attack", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"beaver\":") + "{\"id\":" + beaver->id + "}";
 
     order += "}}}";
     Stumped::instance()->send(order);
@@ -47,7 +47,7 @@ bool Beaver_::attack(const Tile& tile)
 
 bool Beaver_::build_lodge()
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "build_lodge", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "buildLodge", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
     order += "}}}";
@@ -65,12 +65,14 @@ bool Beaver_::build_lodge()
     return to_return.as<bool>();
 }
 
-bool Beaver_::drop(const std::string& resource, int amount)
+bool Beaver_::drop(const Tile& tile, const std::string& resource, int amount)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "drop", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"resource\":") + std::string("\"") + resource + "\"";
+    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+
+    order += std::string(",\"resource\":") + std::string("\"") + resource + "\"";
 
     order += std::string(",\"amount\":") + std::to_string(amount);
 
@@ -89,12 +91,12 @@ bool Beaver_::drop(const std::string& resource, int amount)
     return to_return.as<bool>();
 }
 
-bool Beaver_::harvest(const Tile& tile)
+bool Beaver_::harvest(const Spawner& spawner)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "harvest", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"spawner\":") + "{\"id\":" + spawner->id + "}";
 
     order += "}}}";
     Stumped::instance()->send(order);
@@ -133,12 +135,14 @@ bool Beaver_::move(const Tile& tile)
     return to_return.as<bool>();
 }
 
-bool Beaver_::pickup(const std::string& resource, int amount)
+bool Beaver_::pickup(const Tile& tile, const std::string& resource, int amount)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "pickup", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"resource\":") + std::string("\"") + resource + "\"";
+    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+
+    order += std::string(",\"resource\":") + std::string("\"") + resource + "\"";
 
     order += std::string(",\"amount\":") + std::to_string(amount);
 
@@ -162,23 +166,25 @@ Beaver_::Beaver_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"actions", Any{std::decay<decltype(actions)>::type{}}},
         {"branches", Any{std::decay<decltype(branches)>::type{}}},
-        {"distracted", Any{std::decay<decltype(distracted)>::type{}}},
         {"fish", Any{std::decay<decltype(fish)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"job", Any{std::decay<decltype(job)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
+        {"recruited", Any{std::decay<decltype(recruited)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
+        {"turnsDistracted", Any{std::decay<decltype(turns_distracted)>::type{}}},
     },
     actions(variables_["actions"].as<std::decay<decltype(actions)>::type>()),
     branches(variables_["branches"].as<std::decay<decltype(branches)>::type>()),
-    distracted(variables_["distracted"].as<std::decay<decltype(distracted)>::type>()),
     fish(variables_["fish"].as<std::decay<decltype(fish)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     job(variables_["job"].as<std::decay<decltype(job)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
-    tile(variables_["tile"].as<std::decay<decltype(tile)>::type>())
+    recruited(variables_["recruited"].as<std::decay<decltype(recruited)>::type>()),
+    tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
+    turns_distracted(variables_["turnsDistracted"].as<std::decay<decltype(turns_distracted)>::type>())
 {
     for(auto&& obj : init)
     {
@@ -233,6 +239,11 @@ std::unique_ptr<Any> Beaver_::add_key_value(const std::string& name, Any& key, A
 
 bool Beaver_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -253,6 +264,12 @@ void Beaver_::rebind_by_name(Any* to_change, const std::string& member, std::sha
       to_change->as<Tile>() = std::static_pointer_cast<Tile_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Beaver treated as a reference, but it is not a reference.");
 }
 

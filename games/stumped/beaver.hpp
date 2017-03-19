@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -47,11 +49,6 @@ public:
     const int& branches;
 
     /// <summary>
-    /// Number of turns this beaver is distracted for (0 means not distracted).
-    /// </summary>
-    const int& distracted;
-
-    /// <summary>
     /// The number of fish this beaver is holding.
     /// </summary>
     const int& fish;
@@ -77,9 +74,19 @@ public:
     const Player& owner;
 
     /// <summary>
+    /// True if the Beaver has finished being recruited and can do things, False otherwise.
+    /// </summary>
+    const bool& recruited;
+
+    /// <summary>
     /// The tile this beaver is on.
     /// </summary>
     const Tile& tile;
+
+    /// <summary>
+    /// Number of turns this beaver is distracted for (0 means not distracted).
+    /// </summary>
+    const int& turns_distracted;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
@@ -89,8 +96,8 @@ public:
     /// <summary>
     /// attacks another adjacent beaver.
     /// </summary>
-    /// <param name="tile"> The tile of the beaver you want to attack. </param>
-    bool attack(const Tile& tile);
+    /// <param name="beaver"> The beaver to attack. Must be on an adjacent tile. </param>
+    bool attack(const Beaver& beaver);
 
     /// <summary>
     /// builds a lodge on the _beavers current tile.
@@ -100,28 +107,31 @@ public:
     /// <summary>
     /// drops some of the given resource on the beaver's tile. _fish dropped in water disappear instantly, and fish dropped on land die one per tile per turn.
     /// </summary>
+    /// <param name="tile"> The Tile to drop branches/fish on. Must be the same Tile that the Beaver is on, or an adjacent one. </param>
     /// <param name="resource"> The type of resource to drop ('branch' or 'fish'). </param>
-    /// <param name="amount"> The amount of the resource to drop, numbers <= 0 will drop all of that type. </param>
-    bool drop(const std::string& resource, int amount = false);
+    /// <param name="amount"> The amount of the resource to drop, numbers <= 0 will drop all the resource type. </param>
+    bool drop(const Tile& tile, const std::string& resource, int amount = false);
 
     /// <summary>
     /// harvests the branches or fish from a _spawner on an adjacent tile.
     /// </summary>
-    /// <param name="tile"> The tile you want to harvest. </param>
-    bool harvest(const Tile& tile);
+    /// <param name="spawner"> The Spawner you want to harvest. Must be on an adjacent tile. </param>
+    bool harvest(const Spawner& spawner);
 
     /// <summary>
     /// moves this beaver from its current tile to an adjacent tile.
     /// </summary>
-    /// <param name="tile"> The tile this beaver should move to. Costs 2 moves normally, 3 if moving upstream, and 1 if moving downstream. </param>
+    /// <param name="tile"> The tile this beaver should move to. </param>
     bool move(const Tile& tile);
 
     /// <summary>
     /// picks up some branches or fish on the beaver's tile.
     /// </summary>
+    /// <param name="tile"> The Tile to pickup branches/fish from. Must be the same Tile that the Beaver is on, or an adjacent one. </param>
     /// <param name="resource"> The type of resource to pickup ('branch' or 'fish'). </param>
-    /// <param name="amount"> The amount of the resource to drop, numbers <= 0 will pickup all of that type. </param>
-    bool pickup(const std::string& resource, int amount = false);
+    /// <param name="amount"> The amount of the resource to drop, numbers <= 0 will pickup all of the resource type. </param>
+    bool pickup(const Tile& tile, const std::string& resource, int amount = false);
+
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

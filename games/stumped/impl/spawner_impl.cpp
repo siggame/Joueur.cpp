@@ -26,10 +26,12 @@ namespace stumped
 
 Spawner_::Spawner_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
+        {"hasBeenHarvested", Any{std::decay<decltype(has_been_harvested)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
         {"type", Any{std::decay<decltype(type)>::type{}}},
     },
+    has_been_harvested(variables_["hasBeenHarvested"].as<std::decay<decltype(has_been_harvested)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
     type(variables_["type"].as<std::decay<decltype(type)>::type>())
@@ -87,6 +89,11 @@ std::unique_ptr<Any> Spawner_::add_key_value(const std::string& name, Any& key, 
 
 bool Spawner_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -97,6 +104,12 @@ void Spawner_::rebind_by_name(Any* to_change, const std::string& member, std::sh
       to_change->as<Tile>() = std::static_pointer_cast<Tile_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Spawner treated as a reference, but it is not a reference.");
 }
 

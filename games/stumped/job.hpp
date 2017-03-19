@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -64,7 +66,7 @@ public:
     /// <summary>
     /// How many turns a beaver attacked by this job is distracted by.
     /// </summary>
-    const int& distracts;
+    const int& distraction_power;
 
     /// <summary>
     /// Scalar for how many fish this job harvests at once.
@@ -94,8 +96,9 @@ public:
     /// <summary>
     /// recruits a _beaver of this _job to a lodge
     /// </summary>
-    /// <param name="lodge"> The Tile that is a lodge owned by you that you wish to spawn the Beaver of this Job on. </param>
-    Beaver recruit(const Tile& lodge);
+    /// <param name="tile"> The Tile that is a lodge owned by you that you wish to spawn the Beaver of this Job on. </param>
+    Beaver recruit(const Tile& tile);
+
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
