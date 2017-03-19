@@ -259,8 +259,16 @@ inline std::string
       }
       else if(id_itr != val.MemberEnd())
       {
-         //object reference...
-         return attr_wrapper::as<std::string>(id_itr->value);
+         const auto ref = attr_wrapper::as<std::string>(id_itr->value);
+         if(owner_name.empty())
+         {
+            //object reference...
+            refs.emplace_back(&apply_to,
+                              &apply_to.variables_[name],
+                              name,
+                              ref);
+         }
+         return ref;
       }
       else
       {

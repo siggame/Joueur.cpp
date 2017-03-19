@@ -109,6 +109,11 @@ std::unique_ptr<Any> Spitter_::add_key_value(const std::string& name, Any& key, 
 
 bool Spitter_::is_map(const std::string& name)
 {
+    try
+    {
+        return Spiderling_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -119,6 +124,12 @@ void Spitter_::rebind_by_name(Any* to_change, const std::string& member, std::sh
       to_change->as<Nest>() = std::static_pointer_cast<Nest_>(ref);
       return;
    }
+   try
+   {
+      Spiderling_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Spitter treated as a reference, but it is not a reference.");
 }
 

@@ -22,7 +22,7 @@ namespace checkers
 
 bool Checker_::is_mine()
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "is_mine", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "isMine", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
     order += "}}}";

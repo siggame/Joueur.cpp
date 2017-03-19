@@ -29,7 +29,7 @@ args = shared['make_args'](function_params, False)
 %>
 ${return_type} ${obj_key_name}_::${name}(${args})
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "${name}", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "${function_name}", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 <% comma = '' %>
 % for arg_params in function_params['arguments']:
@@ -236,6 +236,15 @@ bool ${obj_key_name}_::is_map(const std::string& name)
     }
 % endif
 % endfor
+% if call_parents:
+% for parent in parent_classes:
+    try
+    {
+        return ${underscore(par).capitalize()}::is_map(name);
+    }
+    catch(...){}
+% endfor
+% endif
     return false;
 }
 
@@ -250,6 +259,16 @@ void ${obj_key_name}_::rebind_by_name(Any* to_change, const std::string& member,
    }
    % endif
    % endfor
+   % if call_parents:
+   % for parent in parent_classes:
+   try
+   {
+      ${underscore(par).capitalize()}::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
+   % endfor
+   % endif
    throw Bad_manipulation(member + " in ${obj_key_name} treated as a reference, but it is not a reference.");
 }
 

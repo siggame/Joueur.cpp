@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -140,6 +142,14 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
+
+    /// <summary>
+    /// Gets the Tile at a specified (x, y) position
+    /// </summary>
+    /// <param name="x">integer between 0 and the mapWidth</param>
+    /// <param name="y">integer between 0 and the mapHeight</param>
+    /// <returns>the Tile at (x, y) or null if out of bounds
+    Tile get_tile_at(const int x, const int y);
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

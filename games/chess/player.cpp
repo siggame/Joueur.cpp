@@ -24,6 +24,7 @@ namespace cpp_client
 namespace chess
 {
 
+
 } // chess
 
 } // cpp_client

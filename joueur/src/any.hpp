@@ -7,9 +7,44 @@
 #include <typeinfo>
 #include <memory>
 #include <type_traits>
+#include <iostream>
+#include <string>
 
 namespace cpp_client
 {
+
+namespace detail
+{
+   template<typename T>
+   using as_void = void;
+
+   template<typename T, typename = void>
+   struct can_stream : std::false_type {};
+
+   template<typename T>
+   struct can_stream<T, as_void<decltype(std::declval<std::ostream>() << std::declval<T>())>>
+      : std::true_type {};
+
+   // non-printable
+   template<bool, typename T>
+   struct printer
+   {
+      void operator()(std::ostream& out, const T&) const noexcept
+      {
+         out << "[Non-printable type]";
+      }
+   };
+
+   // printable
+   template<typename T>
+   struct printer<true, T>
+   {
+      void operator()(std::ostream& out, const T& obj) const noexcept
+      {
+         out << obj;
+      }
+   };
+}
 
 //Holder of any types
 class Any
@@ -99,6 +134,19 @@ public:
       return nullptr;
    }
 
+   friend std::ostream& operator<<(std::ostream& out, const Any& a)
+   {
+      if(a.data_)
+      {
+         a.data_->print(out);
+      }
+      else
+      {
+         out << "[empty]";
+      }
+      return out;
+   }
+
 private:
    struct holder
    {
@@ -111,6 +159,7 @@ private:
       virtual const void* get() const noexcept = 0;
       virtual void reset(std::shared_ptr<Base_object>&& obj){}
       virtual std::shared_ptr<Base_object> get_ptr(){ return nullptr; }
+      virtual void print(std::ostream&) const noexcept = 0;
    };
 
    //non-smart pointer version
@@ -149,6 +198,8 @@ private:
    template<typename T>
    struct holder2 : public holder
    {
+      T obj_;
+
       virtual void reset(std::shared_ptr<Base_object>&& obj) override
       {
          overload_things<T>{}.reset(obj_, std::move(obj));
@@ -164,13 +215,16 @@ private:
       virtual void* get() noexcept override { return static_cast<void*>(&obj_); }
       virtual const void* get() const noexcept override { return static_cast<const void*>(&obj_); }
 
+      virtual void print(std::ostream& out) const noexcept override
+      {
+         detail::printer<detail::can_stream<T>::value, T>{}(out, obj_);
+      }
+
       template<typename U>
       holder2(U&& obj) : obj_(std::forward<U>(obj)) {}
 
       template<typename U>
       holder2(holder2<U>&& other) : obj_(std::forward<U>(other.obj_)) {}
-
-      T obj_;
    };
 
    std::unique_ptr<holder> data_;

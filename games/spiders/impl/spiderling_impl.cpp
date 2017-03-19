@@ -139,6 +139,11 @@ std::unique_ptr<Any> Spiderling_::add_key_value(const std::string& name, Any& ke
 
 bool Spiderling_::is_map(const std::string& name)
 {
+    try
+    {
+        return Spider_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -154,6 +159,12 @@ void Spiderling_::rebind_by_name(Any* to_change, const std::string& member, std:
       to_change->as<Nest>() = std::static_pointer_cast<Nest_>(ref);
       return;
    }
+   try
+   {
+      Spider_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Spiderling treated as a reference, but it is not a reference.");
 }
 

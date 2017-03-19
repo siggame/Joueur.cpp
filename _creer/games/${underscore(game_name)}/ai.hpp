@@ -80,6 +80,14 @@ args = shared['make_args'](function_params, True)
 % endfor
 
 ${merge("    // ", "methods", "    // You can add additional methods here.")}
+% if 'TiledGame' in game['serverParentClasses']: #// then we need to add some client side utility functions
+
+/// A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
+/// <param name="start">the starting Tile</param>
+/// <param name="goal">the goal Tile</param>
+/// <return>A List of Tiles representing the path, the the first element being a valid adjacent Tile to the start, and the last element being the goal. Or an empty list if no path found.</return>
+std::vector<Tile> find_path(const Tile& start, const Tile& goal);
+% endif
 
 
 

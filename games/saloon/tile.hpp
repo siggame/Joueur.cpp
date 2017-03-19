@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -100,6 +102,30 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
+
+    /// <summary>
+    /// The list of all valid directions Tiles can be in
+    /// </summary>
+    static const std::vector<std::string> directions;
+
+    /// <summary>
+    /// Gets the neighbors of this Tile
+    /// </summary>
+    /// <returns>The neighboring (adjacent) Tiles to this tile</returns>
+    std::vector<Tile> get_neighbors();
+
+    /// <summary>
+    /// Checks if a Tile is pathable to units
+    /// </summary>
+    /// <return>true if pathable, false otherwise</return>
+    bool is_pathable();
+
+    /// <summary>
+    /// Checks if this Tile has a specific neighboring Tile
+    /// </summary>
+    /// <param name="tile">Tile to check against</param>
+    /// <return>if the tile is a neighbor of this Tile, false otherwise</return>
+    bool has_neighbor(const Tile& tile);
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

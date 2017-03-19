@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -31,8 +33,6 @@ if obj_key == "Game":
 elif obj_key == "GameObject":
     mod = True
     parent_classes = [ 'Base_object' ]
-else:
-    game = False
 %>
 % if mod:
 #include "../../joueur/src/${underscore(parent_classes[0])}.hpp"
@@ -83,6 +83,44 @@ args = shared['make_args'](function_params, True)
 % endif
 % endfor
 
+% if game['serverParentClasses']: #// then we need to add some client side utility functions
+% if obj_key == 'Game':
+% if 'Tile' in game_objs:
+    /// <summary>
+    /// Gets the Tile at a specified (x, y) position
+    /// </summary>
+    /// <param name="x">integer between 0 and the mapWidth</param>
+    /// <param name="y">integer between 0 and the mapHeight</param>
+    /// <returns>the Tile at (x, y) or null if out of bounds
+    Tile get_tile_at(const int x, const int y);
+% endif
+% elif obj_key == 'Tile':
+    /// <summary>
+    /// The list of all valid directions Tiles can be in
+    /// </summary>
+    static const std::vector<std::string> directions;
+
+    /// <summary>
+    /// Gets the neighbors of this Tile
+    /// </summary>
+    /// <returns>The neighboring (adjacent) Tiles to this tile</returns>
+    std::vector<Tile> get_neighbors();
+
+    /// <summary>
+    /// Checks if a Tile is pathable to units
+    /// </summary>
+    /// <return>true if pathable, false otherwise</return>
+    bool is_pathable();
+
+    /// <summary>
+    /// Checks if this Tile has a specific neighboring Tile
+    /// </summary>
+    /// <param name="tile">Tile to check against</param>
+    /// <return>if the tile is a neighbor of this Tile, false otherwise</return>
+    bool has_neighbor(const Tile& tile);
+% endif
+
+% endif
 ${merge("   // ", "methods", "   // You can add additional methods here.")}
 
    ~${obj_key_name}_();

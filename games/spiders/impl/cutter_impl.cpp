@@ -109,6 +109,11 @@ std::unique_ptr<Any> Cutter_::add_key_value(const std::string& name, Any& key, A
 
 bool Cutter_::is_map(const std::string& name)
 {
+    try
+    {
+        return Spiderling_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -119,6 +124,12 @@ void Cutter_::rebind_by_name(Any* to_change, const std::string& member, std::sha
       to_change->as<Web>() = std::static_pointer_cast<Web_>(ref);
       return;
    }
+   try
+   {
+      Spiderling_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Cutter treated as a reference, but it is not a reference.");
 }
 
