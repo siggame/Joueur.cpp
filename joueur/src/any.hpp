@@ -22,7 +22,7 @@ namespace detail
    struct can_stream : std::false_type {};
 
    template<typename T>
-   struct can_stream<T, as_void<decltype(std::declval<std::ostream>() << std::declval<T>())>>
+   struct can_stream<T, as_void<decltype(std::declval<std::ostream&>() << std::declval<T&>())>>
       : std::true_type {};
 
    // non-printable
