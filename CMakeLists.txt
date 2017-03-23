@@ -76,6 +76,17 @@ if(WIN32)
    add_definitions(-DWIN32)
 endif(WIN32)
 
+# Warnings
+if("${CMAKE_CXX_COMPILER_ID}" MATCHES "GNU" OR
+   "${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
+   set_target_properties(${PROG_NAME} PROPERTIES COMPILE_OPTIONS
+                         "-Wall" "-Wextra" "-pedantic")
+elseif("$CMAKE_CXX_COMPILER_ID}" MATCHES "MSVC")
+   set_target_properties(${PROG_NAME} PROPERTIES COMPILE_OPTIONS
+                         "/W4")
+endif()
+
+
 #set C++11
 if(EXPLICIT_VERSION)
    set_property(TARGET ${PROG_NAME} PROPERTY CXX_STANDARD 11)
