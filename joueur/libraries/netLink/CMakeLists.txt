@@ -30,9 +30,10 @@ if(NOT "${CMAKE_CXX_COMPILER_ID}" STREQUAL "MSVC")
     add_definitions(-O3 -std=c++11)
 endif()
 
-if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
-    add_definitions(-stdlib=libc++)
-endif()
+# This makes it hard to work with Clang on Linux
+#if("${CMAKE_CXX_COMPILER_ID}" STREQUAL "Clang")
+#    add_definitions(-stdlib=libc++)
+#endif()
 
 #Don't need the examples
 #add_executable(example_tcp ${EXAMPLES_DIR}/tcp.cpp)
