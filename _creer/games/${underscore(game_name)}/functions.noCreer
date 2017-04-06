@@ -47,16 +47,16 @@ def make_arg(type_str):
         return 'const ' + type_str + '&'
 
 def trans_default(defer):
-    if defer == True:
-        return 'true'
-    elif defer == False:
-        return 'false'
-    try:
-        int(defer)
-        float(defer)
-        return defer
-    except Exception:
+    if isinstance(defer, bool):
+        if defer == True:
+            return 'true'
+        elif defer == False:
+            return 'false'
+    elif isinstance(defer, int) or isinstance(defer, float):
+        return str(defer)
+    elif isinstance(defer, basestring):
         return '"' + defer + '"'
+    raise Exception("UNKNOWN DEFAULT ARGUMENT TYPE -- FATAL ERROR")
 
 def make_args(params, default_values):
     to_ret = ''
