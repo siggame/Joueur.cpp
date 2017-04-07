@@ -15,6 +15,12 @@
 
 #include "Socket.h"
 
+// supress a potential warning from Clang
+#ifdef __clang__
+    #pragma clang diagnostic push
+    #pragma clang diagnostic ignored "-Wswitch"
+#endif // __clang__
+
 namespace netLink {
 
 #ifdef WIN32
@@ -612,3 +618,8 @@ void Socket::disconnect() {
 }
 
 };
+
+// re-enable warnings
+#ifdef __clang__
+   #pragma clang diagnostic pop
+#endif // __clang__
