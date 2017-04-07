@@ -109,7 +109,7 @@ public:
     const std::vector<Spawner>& spawner;
 
     /// <summary>
-    /// Constant number used to calculate how many breanches/food Beavers harvest from Spawners.
+    /// Constant number used to calculate how many branches/food Beavers harvest from Spawners.
     /// </summary>
     const double& spawner_harvest_constant;
 
