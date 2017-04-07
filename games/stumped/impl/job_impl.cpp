@@ -61,9 +61,9 @@ Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"cost", Any{std::decay<decltype(cost)>::type{}}},
         {"damage", Any{std::decay<decltype(damage)>::type{}}},
         {"distractionPower", Any{std::decay<decltype(distraction_power)>::type{}}},
-        {"fishing", Any{std::decay<decltype(fishing)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
+        {"munching", Any{std::decay<decltype(munching)>::type{}}},
         {"title", Any{std::decay<decltype(title)>::type{}}},
     },
     actions(variables_["actions"].as<std::decay<decltype(actions)>::type>()),
@@ -72,9 +72,9 @@ Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     cost(variables_["cost"].as<std::decay<decltype(cost)>::type>()),
     damage(variables_["damage"].as<std::decay<decltype(damage)>::type>()),
     distraction_power(variables_["distractionPower"].as<std::decay<decltype(distraction_power)>::type>()),
-    fishing(variables_["fishing"].as<std::decay<decltype(fishing)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
+    munching(variables_["munching"].as<std::decay<decltype(munching)>::type>()),
     title(variables_["title"].as<std::decay<decltype(title)>::type>())
 {
     for(auto&& obj : init)

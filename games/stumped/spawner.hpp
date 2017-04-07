@@ -2,7 +2,7 @@
 #define GAMES_STUMPED_SPAWNER_H
 
 // Spawner
-// A resource spawner that generates branches or fish.
+// A resource spawner that generates branches or food.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -32,7 +32,7 @@ namespace stumped
 {
 
 /// <summary>
-/// A resource spawner that generates branches or fish.
+/// A resource spawner that generates branches or food.
 /// </summary>
 class Spawner_ : public Game_object_
 {
@@ -44,17 +44,17 @@ public:
     const bool& has_been_harvested;
 
     /// <summary>
-    /// How much health this spawner has, which is used to calculate how much of its resource can be harvested.
+    /// How much health this Spawner has, which is used to calculate how much of its resource can be harvested.
     /// </summary>
     const int& health;
 
     /// <summary>
-    /// The tile this Spawner is on.
+    /// The Tile this Spawner is on.
     /// </summary>
     const Tile& tile;
 
     /// <summary>
-    /// What type of resource this is ('Fish' or 'Branch').
+    /// What type of resource this is ('food' or 'branches').
     /// </summary>
     const std::string& type;
 

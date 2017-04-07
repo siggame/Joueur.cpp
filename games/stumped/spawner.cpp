@@ -1,5 +1,5 @@
 // Spawner
-// A resource spawner that generates branches or fish.
+// A resource spawner that generates branches or food.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.

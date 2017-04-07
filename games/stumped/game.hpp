@@ -44,11 +44,6 @@ public:
     const std::vector<Beaver>& beavers;
 
     /// <summary>
-    /// How many branches a lodge must have to be considered complete.
-    /// </summary>
-    const int& branches_to_complete_lodge;
-
-    /// <summary>
     /// The player whose turn it is currently. That player can send commands. Other players cannot.
     /// </summary>
     const Player& current_player;
@@ -59,7 +54,7 @@ public:
     const int& current_turn;
 
     /// <summary>
-    /// When a Player has less Beavers than this number, recruiting other Beavers is free.
+    /// When a Player has less Beavers than this number, then recruiting other Beavers is free.
     /// </summary>
     const int& free_beavers_count;
 
@@ -79,9 +74,9 @@ public:
     const double& lodge_cost_constant;
 
     /// <summary>
-    /// How many lodges must be complete at once to win the game.
+    /// How many lodges must be owned by a Player at once to win the game.
     /// </summary>
-    const int& lodges_complete_to_win;
+    const int& lodges_to_win;
 
     /// <summary>
     /// The number of Tiles in the map along the y (vertical) axis.
@@ -114,12 +109,12 @@ public:
     const std::vector<Spawner>& spawner;
 
     /// <summary>
-    /// Constant number used to calculate how many breanches/fish Beavers harvest from spawners.
+    /// Constant number used to calculate how many breanches/food Beavers harvest from Spawners.
     /// </summary>
     const double& spawner_harvest_constant;
 
     /// <summary>
-    /// All the types of spawners in the game.
+    /// All the types of Spawners in the game.
     /// </summary>
     const std::vector<std::string>& spawner_types;
 

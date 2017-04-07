@@ -44,7 +44,7 @@ public:
     const std::vector<Beaver>& beavers;
 
     /// <summary>
-    /// How many branches are required to build a lodge for this player.
+    /// How many branches are required to build a lodge for this Player.
     /// </summary>
     const int& branches_to_build_lodge;
 
@@ -54,7 +54,7 @@ public:
     const std::string& client_type;
 
     /// <summary>
-    /// A list of tiles that contain lodges owned by this player.
+    /// A list of Tiles that contain lodges owned by this player.
     /// </summary>
     const std::vector<Tile>& lodges;
 

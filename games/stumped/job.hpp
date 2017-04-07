@@ -39,52 +39,52 @@ class Job_ : public Game_object_
 public:
 
     /// <summary>
-    /// The number of actions this job can make per turn.
+    /// The number of actions this Job can make per turn.
     /// </summary>
     const int& actions;
 
     /// <summary>
-    /// How many resources a beaver with this job can hold at once.
+    /// How many combined resources a beaver with this Job can hold at once.
     /// </summary>
     const int& carry_limit;
 
     /// <summary>
-    /// Scalar for how many branches this job harvests at once.
+    /// Scalar for how many branches this Job harvests at once.
     /// </summary>
     const int& chopping;
 
     /// <summary>
-    /// How many fish this Job costs to recruit.
+    /// How much food this Job costs to recruit.
     /// </summary>
     const int& cost;
 
     /// <summary>
-    /// The amount of damage this job does per attack.
+    /// The amount of damage this Job does per attack.
     /// </summary>
     const int& damage;
 
     /// <summary>
-    /// How many turns a beaver attacked by this job is distracted by.
+    /// How many turns a beaver attacked by this Job is distracted by.
     /// </summary>
     const int& distraction_power;
 
     /// <summary>
-    /// Scalar for how many fish this job harvests at once.
-    /// </summary>
-    const int& fishing;
-
-    /// <summary>
-    /// The amount of starting health this job has.
+    /// The amount of starting health this Job has.
     /// </summary>
     const int& health;
 
     /// <summary>
-    /// The number of moves this job can make per turn.
+    /// The number of moves this Job can make per turn.
     /// </summary>
     const int& moves;
 
     /// <summary>
-    /// The job title ('builder', 'fisher', etc).
+    /// Scalar for how much food this Job harvests at once.
+    /// </summary>
+    const int& munching;
+
+    /// <summary>
+    /// The Job title.
     /// </summary>
     const std::string& title;
 

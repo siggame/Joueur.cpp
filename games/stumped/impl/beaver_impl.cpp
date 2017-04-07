@@ -166,7 +166,7 @@ Beaver_::Beaver_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"actions", Any{std::decay<decltype(actions)>::type{}}},
         {"branches", Any{std::decay<decltype(branches)>::type{}}},
-        {"fish", Any{std::decay<decltype(fish)>::type{}}},
+        {"food", Any{std::decay<decltype(food)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"job", Any{std::decay<decltype(job)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
@@ -177,7 +177,7 @@ Beaver_::Beaver_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     },
     actions(variables_["actions"].as<std::decay<decltype(actions)>::type>()),
     branches(variables_["branches"].as<std::decay<decltype(branches)>::type>()),
-    fish(variables_["fish"].as<std::decay<decltype(fish)>::type>()),
+    food(variables_["food"].as<std::decay<decltype(food)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     job(variables_["job"].as<std::decay<decltype(job)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
