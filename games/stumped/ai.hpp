@@ -43,8 +43,10 @@ public:
 
     // You can add additional class variables here.
 
+    // This is a better random number generator than rand() you probably learned
     std::mt19937 gen;
 
+    // used for ShellAI, feel free to remove if you gut that code
     std::vector<std::string> actions = {"buildLodge", "attack", "pickup", "drop", "harvest"};
 
     /// <summary>
