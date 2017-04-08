@@ -28,6 +28,8 @@ std::string AI::get_name() const
 void AI::start()
 {
     // This is a good place to initialize any variables
+    std::random_device rd;
+    gen = std::mt19937(rd());
 }
 
 /// <summary>
@@ -55,6 +57,167 @@ void AI::ended(bool won, const std::string& reason)
 bool AI::run_turn()
 {
     // Put your game logic here for run_turn here
+    
+    std::cout << "My turn " << game->current_turn << std::endl;
+
+    const auto beaver = player->beavers.front();
+
+    if(beaver && beaver->turns_distracted == 0 && beaver->health > 0) 
+    {
+        if(beaver->moves > 3)
+        {
+            Tile target = nullptr;
+            for(const auto& tile : game->tiles)
+            {
+                if(tile->spawner && tile->spawner->health > 1) 
+                {
+                    target = tile;
+                    break;
+                }
+            }
+            
+            const auto path = find_path(beaver->tile, target);
+            
+            if(path.size() > 1) 
+            {
+                std::cout << "Moving beaver #" << beaver->id << " towards tile #" 
+                          << target->id << std::endl;
+                beaver->move(path.front());
+            }
+        }
+
+        if(beaver->actions > 0)
+        {
+            std::shuffle(actions.begin(), actions.end(), gen);
+            const auto action = actions.front();
+            const auto load = beaver->branches + beaver->food;
+
+            switch(action.front()) 
+            {
+            case 'b':
+            {
+                if((beaver->branches + beaver->tile->branches) >= player->branches_to_build_lodge
+                   && beaver->tile->lodge_owner)
+                {
+                    std::cout << "Beaver #" << beaver->id << " building lodge" << std::endl;
+                    beaver->build_lodge();
+                }
+                break;
+            }
+            case 'a':
+            {
+                auto neighbors = beaver->tile->get_neighbors();
+                std::shuffle(neighbors.begin(), neighbors.end(), gen);
+                for(const auto& neighbor : neighbors)
+                {
+                    if(neighbor->beaver)
+                    {
+                        std::cout << "Beaver #" << beaver << " attacking beaver #" 
+                                  << neighbor->beaver->id << std::endl;
+                        beaver->attack(neighbor->beaver);
+                        break;
+                    }
+                }
+                break;
+            }
+            case 'p':
+            {
+                auto pickup_tiles = beaver->tile->get_neighbors();
+                pickup_tiles.push_back(beaver->tile);
+                std::shuffle(pickup_tiles.begin(), pickup_tiles.end(), gen);
+                if(load < beaver->job->carry_limit)
+                {
+                    for(const auto& tile : pickup_tiles)
+                    {
+                        if (tile->branches > 0)
+                        {
+                            std::cout << "Beaver #" << beaver << " picking up branches" << std::endl;
+                            beaver->pickup(tile, "branches", 1);
+                            break;
+                        }
+                        // try to pickup food
+                        else if (tile->food > 0)
+                        {
+                            std::cout << "Beaver #" << beaver << " picking up food" << std::endl;
+                            beaver->pickup(tile, "food", 1);
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+            case 'd':
+            {
+                auto drop_tiles = beaver->tile->get_neighbors();
+                drop_tiles.push_back(beaver->tile);
+                std::shuffle(drop_tiles.begin(), drop_tiles.end(), gen);
+                Tile tile_to_drop_on = nullptr;
+                for(const auto& tile : drop_tiles)
+                {
+                    if(!tile->spawner)
+                    {
+                        tile_to_drop_on = tile;
+                        break;
+                    }
+                }
+                if(tile_to_drop_on)
+                {
+                    if(beaver->branches > 0)
+                    {
+                        std::cout << "Beaver #"  << beaver->id << " dropping 1 branch" << std::endl;
+                        beaver->drop(tile_to_drop_on, "branches", 1);
+                    }
+                    else if(beaver->food > 0)
+                    {
+                        std::cout << "Beaver #"  << beaver->id << " dropping 1 food" << std::endl;
+                        beaver->drop(tile_to_drop_on, "food", 1);
+                    }
+                }
+                break;
+            }
+            case 'h':
+            {
+                if(load < beaver->job->carry_limit) 
+                {
+                    auto neighbors = beaver->tile->get_neighbors();
+                    std::shuffle(neighbors.begin(), neighbors.end(), gen);
+                    for(const auto& neighbor : neighbors)
+                    {
+                        if(neighbor->spawner)
+                        {
+                            std::cout << "Beaver #"  << beaver->id << " harvesting spawner #" 
+                                      << neighbor->spawner->id << std::endl;
+                            beaver->harvest(neighbor->spawner);
+                            break;
+                        }
+                    }
+                }
+                break;
+            }
+            }
+        }
+    }
+    
+    const auto lodge = random_element(player->lodges);
+
+    if(lodge && !lodge->beaver)
+    {
+        auto alive_beavers = std::accumulate(player->beavers.begin(), player->beavers.end(), 0,
+                                             [](int acc, Beaver b)
+                                             {
+                                                 return b->health > 0 ? acc + 1 : acc;
+                                             });
+
+        const auto job = random_element(game->jobs);
+
+        if(alive_beavers < game->free_beavers_count || lodge->food >= job->cost)
+        {
+            std::cout << "Recruiting " << job->title << " to lodge #" << lodge->id << std::endl;
+            job->recruit(lodge);
+        }
+    }
+
+    std::cout << "Done with our turn" << std::endl;
     return true;
 }
 
@@ -65,7 +228,7 @@ bool AI::run_turn()
 std::vector<Tile> AI::find_path(const Tile& start, const Tile& goal)
 {
     // no need to make a path to here...
-    if(start == goal)
+    if(start == goal || start == nullptr || goal == nullptr)
     {
         return {};
     }
@@ -134,6 +297,12 @@ std::vector<Tile> AI::find_path(const Tile& start, const Tile& goal)
     // if you're here, that means that there was not a path to get to where you want to go.
     //   in that case, we'll just return an empty path.
     return {};
+}
+
+template<class Item>
+Item AI::random_element(std::vector<Item> container)
+{
+    return container.at(gen() % container.size());
 }
 
 // You can add additional methods here for your AI to call

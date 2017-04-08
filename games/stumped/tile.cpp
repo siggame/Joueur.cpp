@@ -65,7 +65,7 @@ std::vector<Tile> Tile_::get_neighbors()
 /// <return>true if pathable, false otherwise</return>
 bool Tile_::is_pathable()
 {
-    return false; // DEVELOPER ADD LOGIC HERE
+    return !(beaver || spawner || lodge_owner);
 }
 
 /// <summary>
