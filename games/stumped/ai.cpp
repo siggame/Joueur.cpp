@@ -79,7 +79,7 @@ bool AI::run_turn()
         // then let's try to do stuff with it
 
         // 2. Try to move the beaver
-        if(beaver->moves > 3)
+        if(beaver->moves > 2)
         {
             // then it has enough moves to move in any direction, so let's move it
 
@@ -170,14 +170,14 @@ bool AI::run_turn()
                         // try to pickup branches
                         if (tile->branches > 0)
                         {
-                            std::cout << "Beaver #" << beaver << " picking up branches" << std::endl;
+                            std::cout << "Beaver #" << beaver->id << " picking up branches" << std::endl;
                             beaver->pickup(tile, "branches", 1);
                             break;
                         }
                         // try to pickup food
                         else if (tile->food > 0)
                         {
-                            std::cout << "Beaver #" << beaver << " picking up food" << std::endl;
+                            std::cout << "Beaver #" << beaver->id << " picking up food" << std::endl;
                             beaver->pickup(tile, "food", 1);
                             break;
                         }
