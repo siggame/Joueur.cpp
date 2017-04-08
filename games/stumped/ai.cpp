@@ -60,25 +60,27 @@ bool AI::run_turn()
     
     std::cout << "My turn " << game->current_turn << std::endl;
 
-    const auto beaver = player->beavers.front();
+    std::cout << "beaver count " << player->beavers.size() << std::endl;
 
-    if(beaver && beaver->turns_distracted == 0 && beaver->health > 0) 
+    const auto beaver = random_element(player->beavers);
+
+    if(beaver && beaver->turns_distracted == 0 && beaver->health > 0)
     {
         if(beaver->moves > 3)
         {
             Tile target = nullptr;
             for(const auto& tile : game->tiles)
             {
-                if(tile->spawner && tile->spawner->health > 1) 
+                if(tile->spawner && tile->spawner->health > 1)
                 {
                     target = tile;
                     break;
                 }
             }
-            
+
             const auto path = find_path(beaver->tile, target);
-            
-            if(path.size() > 1) 
+
+            if(path.size() > 1)
             {
                 std::cout << "Moving beaver #" << beaver->id << " towards tile #" 
                           << target->id << std::endl;
@@ -112,7 +114,7 @@ bool AI::run_turn()
                 {
                     if(neighbor->beaver)
                     {
-                        std::cout << "Beaver #" << beaver << " attacking beaver #" 
+                        std::cout << "Beaver #" << beaver->id << " attacking beaver #" 
                                   << neighbor->beaver->id << std::endl;
                         beaver->attack(neighbor->beaver);
                         break;
@@ -185,7 +187,7 @@ bool AI::run_turn()
                     {
                         if(neighbor->spawner)
                         {
-                            std::cout << "Beaver #"  << beaver->id << " harvesting spawner #" 
+                            std::cout << "Beaver #"  << beaver->id << " harvesting spawner #"
                                       << neighbor->spawner->id << std::endl;
                             beaver->harvest(neighbor->spawner);
                             break;
@@ -302,6 +304,7 @@ std::vector<Tile> AI::find_path(const Tile& start, const Tile& goal)
 template<class Item>
 Item AI::random_element(std::vector<Item> container)
 {
+    if(container.size() == 0) return nullptr;
     return container.at(gen() % container.size());
 }
 
