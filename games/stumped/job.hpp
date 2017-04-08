@@ -21,9 +21,7 @@
 
 #include "impl/stumped_fwd.hpp"
 
-// <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // you can add additional #includes here
-// <<-- /Creer-Merge: includes -->>
 
 namespace cpp_client
 {
@@ -88,9 +86,7 @@ public:
     /// </summary>
     const std::string& title;
 
-    // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
-    // <<-- /Creer-Merge: member variables -->>
 
 
     /// <summary>
@@ -100,9 +96,7 @@ public:
     Beaver recruit(const Tile& tile);
 
 
-   // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
-   // <<-- /Creer-Merge: methods -->>
 
    ~Job_();
 
