@@ -47,19 +47,22 @@ public:
       hints.ai_protocol = IPPROTO_IP;
       const auto port_str = std::to_string(port);
       // now try to connect
-      for(auto i = 0u; i < num_tries; ++i)
+      for(auto i = 0; i < num_tries; ++i)
       {
          const auto resaddr = getaddrinfo(host, port_str.c_str(), &hints, &result);
          // free the memory allocated if going out of scope
          Free_addr dummy{result};
          using ce = Communication_error;
-         switch(resaddr)
+         if(resaddr != 0)
          {
-         case WSATRY_AGAIN:          continue;
-         case WSANO_RECOVERY:        throw ce("Could not resolve host name - Unrecoverable error.");
-         case WSA_NOT_ENOUGH_MEMORY: throw ce("Could not resolve host name - Out of memory.");
-         case WSAHOST_NOT_FOUND:     throw ce("Could not resolve host name - Host not found.");
-         default:                    throw ce("Could not resolve host name - Unknown error.");
+            switch(resaddr)
+            {
+            case WSATRY_AGAIN:          continue;
+            case WSANO_RECOVERY:        throw ce("Could not resolve host name - Unrecoverable error.");
+            case WSA_NOT_ENOUGH_MEMORY: throw ce("Could not resolve host name - Out of memory.");
+            case WSAHOST_NOT_FOUND:     throw ce("Could not resolve host name - Host not found.");
+            default:                    throw ce("Could not resolve host name - Unknown error.");
+            }
          }
          // now create the socket by trying to connect to all possible addresses
          for(auto ptr = result; ptr; ptr = ptr->ai_next)
@@ -90,12 +93,12 @@ public:
       static const auto max_size = [this](){
          unsigned size;
          auto size_val = static_cast<int>(sizeof(size));
-         getsockopt(sock_, 
-                    SOL_SOCKET, 
-                    SO_MAX_MSG_SIZE, 
-                    reinterpret_cast<char*>(&size), 
+         getsockopt(sock_,
+                    SOL_SOCKET,
+                    SO_MAX_MSG_SIZE,
+                    reinterpret_cast<char*>(&size),
                     &size_val);
-         return size;
+         return static_cast<decltype(msg.size())>(size);
       }();
       // error checking
       const auto check_err = [](int err) {
@@ -105,7 +108,7 @@ public:
          }
       };
       const char* loc = msg.c_str();
-      unsigned left = msg.size();
+      auto left = msg.size();
       // send the message in max_size chunks
       while(left > 0)
       {
@@ -145,7 +148,7 @@ public:
    {
       if(sock_ != INVALID_SOCKET)
       {
-         closesocket(sock_);  
+         closesocket(sock_);
       }
       WSACleanup();
    }
