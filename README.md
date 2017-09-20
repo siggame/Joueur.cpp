@@ -1,6 +1,6 @@
-# GAME_NAME C++ Client
+# Saloon C++ Client
 
-This is the root of your AI. Stay out of the `joueur/` folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.hpp` and `games/game_name/ai.cpp` files for you to make smarter.
+This is the root of your AI. Stay out of the `joueur/` folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/Saloon/`, with your very own AI living in `games/Saloon/ai.hpp` and `games/Saloon/ai.cpp` files for you to make smarter.
 
 ## How to Run
 
@@ -29,7 +29,7 @@ There are two ways to get this client working on Windows.
 
 You'll also need to use the following command line arguments when running the client to connect to our game server:
 
-`GAME_NAME -s r99acm.device.mst.edu`
+`Saloon -s r99acm.device.mst.edu`
 
 #### MinGW
 
