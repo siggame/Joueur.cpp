@@ -37,7 +37,7 @@ Beaver Job_::recruit(const Tile& tile)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
     //reference - just pull the id
     auto doc = info->as<rapidjson::Document*>();

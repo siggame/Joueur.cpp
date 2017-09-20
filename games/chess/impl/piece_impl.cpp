@@ -39,7 +39,7 @@ Move Piece_::move(const std::string& file, int rank, const std::string& promotio
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Chess::instance()->handle_response());
+        info = Chess::instance()->handle_response();
     } while(info->type() == typeid(bool));
     //reference - just pull the id
     auto doc = info->as<rapidjson::Document*>();

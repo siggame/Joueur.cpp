@@ -40,7 +40,7 @@ bool Cowboy_::act(const Tile& tile, const std::string& drunk_direction)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Saloon::instance()->handle_response());
+        info = Saloon::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -68,7 +68,7 @@ bool Cowboy_::move(const Tile& tile)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Saloon::instance()->handle_response());
+        info = Saloon::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -96,7 +96,7 @@ bool Cowboy_::play(const Furnishing& piano)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Saloon::instance()->handle_response());
+        info = Saloon::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");

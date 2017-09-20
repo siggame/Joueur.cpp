@@ -41,7 +41,7 @@ bool Brood_mother_::consume(const Spiderling& spiderling)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Spiders::instance()->handle_response());
+        info = Spiders::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -69,7 +69,7 @@ Spiderling Brood_mother_::spawn(const std::string& spiderling_type)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Spiders::instance()->handle_response());
+        info = Spiders::instance()->handle_response();
     } while(info->type() == typeid(bool));
     //reference - just pull the id
     auto doc = info->as<rapidjson::Document*>();

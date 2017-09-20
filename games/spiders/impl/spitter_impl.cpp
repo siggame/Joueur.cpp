@@ -41,7 +41,7 @@ bool Spitter_::spit(const Nest& nest)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Spiders::instance()->handle_response());
+        info = Spiders::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");

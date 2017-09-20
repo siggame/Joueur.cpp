@@ -37,7 +37,7 @@ bool Beaver_::attack(const Beaver& beaver)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -63,7 +63,7 @@ bool Beaver_::build_lodge()
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -95,7 +95,7 @@ bool Beaver_::drop(const Tile& tile, const std::string& resource, int amount)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -123,7 +123,7 @@ bool Beaver_::harvest(const Spawner& spawner)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -151,7 +151,7 @@ bool Beaver_::move(const Tile& tile)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -183,7 +183,7 @@ bool Beaver_::pickup(const Tile& tile, const std::string& resource, int amount)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");

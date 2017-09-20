@@ -118,8 +118,7 @@ namespace attr_wrapper
       {
          throw genTypeError(name, " string");
       }
-      std::string temp(loc->value.GetString(), loc->value.GetStringLength());
-      return std::move(temp);
+      return std::string(loc->value.GetString(), loc->value.GetStringLength());
    }
 
    template<>

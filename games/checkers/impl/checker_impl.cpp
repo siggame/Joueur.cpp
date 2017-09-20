@@ -32,7 +32,7 @@ bool Checker_::is_mine()
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Checkers::instance()->handle_response());
+        info = Checkers::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -62,7 +62,7 @@ Checker Checker_::move(int x, int y)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Checkers::instance()->handle_response());
+        info = Checkers::instance()->handle_response();
     } while(info->type() == typeid(bool));
     //reference - just pull the id
     auto doc = info->as<rapidjson::Document*>();

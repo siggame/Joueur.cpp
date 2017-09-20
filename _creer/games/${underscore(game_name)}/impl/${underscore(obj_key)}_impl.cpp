@@ -43,7 +43,7 @@ ${return_type} ${obj_key_name}_::${name}(${args})
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(${underscore(game_name).capitalize()}::instance()->handle_response());
+        info = ${underscore(game_name).capitalize()}::instance()->handle_response();
     } while(info->type() == typeid(bool));
 % if return_type == 'void':
     return;
