@@ -64,7 +64,7 @@ public:
     const int& rank;
 
     /// <summary>
-    /// The type of chess Piece this is, either: 'King', 'Queen', 'Knight', 'Rook', 'Bishop', or 'Pawn'.
+    /// The type of chess Piece this is, either 'King, 'Queen', 'Knight', 'Rook', 'Bishop', or 'Pawn'.
     /// </summary>
     const std::string& type;
 

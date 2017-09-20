@@ -32,7 +32,7 @@ bool Weaver_::strengthen(const Web& web)
     std::string order = R"({"event": "run", "data": {"functionName": "strengthen", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"web\":") + "{\"id\":" + web->id + "}";
+    order += std::string("\"web\":") + (web ? (std::string("{\"id\":\"") + web->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Spiders::instance()->send(order);
@@ -43,7 +43,13 @@ bool Weaver_::strengthen(const Web& web)
     {
         info = std::move(Spiders::instance()->handle_response());
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -54,7 +60,7 @@ bool Weaver_::weaken(const Web& web)
     std::string order = R"({"event": "run", "data": {"functionName": "weaken", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"web\":") + "{\"id\":" + web->id + "}";
+    order += std::string("\"web\":") + (web ? (std::string("{\"id\":\"") + web->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Spiders::instance()->send(order);
@@ -65,7 +71,13 @@ bool Weaver_::weaken(const Web& web)
     {
         info = std::move(Spiders::instance()->handle_response());
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();

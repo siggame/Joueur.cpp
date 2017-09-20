@@ -89,6 +89,11 @@ std::unique_ptr<Any> Forecast_::add_key_value(const std::string& name, Any& key,
 
 bool Forecast_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -99,6 +104,12 @@ void Forecast_::rebind_by_name(Any* to_change, const std::string& member, std::s
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Forecast treated as a reference, but it is not a reference.");
 }
 

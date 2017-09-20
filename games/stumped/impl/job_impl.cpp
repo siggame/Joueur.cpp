@@ -28,7 +28,7 @@ Beaver Job_::recruit(const Tile& tile)
     std::string order = R"({"event": "run", "data": {"functionName": "recruit", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Stumped::instance()->send(order);
@@ -40,7 +40,13 @@ Beaver Job_::recruit(const Tile& tile)
         info = std::move(Stumped::instance()->handle_response());
     } while(info->type() == typeid(bool));
     //reference - just pull the id
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+        return nullptr;
+    }
+    auto& val = loc->value;
     if(val.IsNull())
     {
         return nullptr;

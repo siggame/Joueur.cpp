@@ -49,7 +49,13 @@ ${return_type} ${obj_key_name}_::${name}(${args})
     return;
 % elif shared['is_ref'](return_type):
     //reference - just pull the id
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+        return nullptr;
+    }
+    auto& val = loc->value;
     if(val.IsNull())
     {
         return nullptr;
@@ -60,7 +66,13 @@ ${return_type} ${obj_key_name}_::${name}(${args})
         return std::dynamic_pointer_cast<${return_type}_>(${underscore(game_name).capitalize()}::instance()->get_objects()[target]);
     }
 % else:
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<${return_type}>();

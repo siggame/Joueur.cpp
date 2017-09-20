@@ -30,7 +30,7 @@ int Warehouse_::ignite(const Building& building)
     std::string order = R"({"event": "run", "data": {"functionName": "ignite", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"building\":") + "{\"id\":" + building->id + "}";
+    order += std::string("\"building\":") + (building ? (std::string("{\"id\":\"") + building->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Anarchy::instance()->send(order);
@@ -41,7 +41,13 @@ int Warehouse_::ignite(const Building& building)
     {
         info = std::move(Anarchy::instance()->handle_response());
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<int>();
@@ -109,11 +115,22 @@ std::unique_ptr<Any> Warehouse_::add_key_value(const std::string& name, Any& key
 
 bool Warehouse_::is_map(const std::string& name)
 {
+    try
+    {
+        return Building_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
 void Warehouse_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   try
+   {
+      Building_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Warehouse treated as a reference, but it is not a reference.");
 }
 

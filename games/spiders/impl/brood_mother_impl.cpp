@@ -32,7 +32,7 @@ bool Brood_mother_::consume(const Spiderling& spiderling)
     std::string order = R"({"event": "run", "data": {"functionName": "consume", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"spiderling\":") + "{\"id\":" + spiderling->id + "}";
+    order += std::string("\"spiderling\":") + (spiderling ? (std::string("{\"id\":\"") + spiderling->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Spiders::instance()->send(order);
@@ -43,7 +43,13 @@ bool Brood_mother_::consume(const Spiderling& spiderling)
     {
         info = std::move(Spiders::instance()->handle_response());
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -66,7 +72,13 @@ Spiderling Brood_mother_::spawn(const std::string& spiderling_type)
         info = std::move(Spiders::instance()->handle_response());
     } while(info->type() == typeid(bool));
     //reference - just pull the id
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+        return nullptr;
+    }
+    auto& val = loc->value;
     if(val.IsNull())
     {
         return nullptr;

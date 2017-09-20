@@ -41,7 +41,13 @@ bool Weather_station_::intensify(bool negative)
     {
         info = std::move(Anarchy::instance()->handle_response());
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -63,7 +69,13 @@ bool Weather_station_::rotate(bool counterclockwise)
     {
         info = std::move(Anarchy::instance()->handle_response());
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -127,11 +139,22 @@ std::unique_ptr<Any> Weather_station_::add_key_value(const std::string& name, An
 
 bool Weather_station_::is_map(const std::string& name)
 {
+    try
+    {
+        return Building_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
 void Weather_station_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   try
+   {
+      Building_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Weather_station treated as a reference, but it is not a reference.");
 }
 

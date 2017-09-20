@@ -30,7 +30,7 @@ int Police_department_::raid(const Warehouse& warehouse)
     std::string order = R"({"event": "run", "data": {"functionName": "raid", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"warehouse\":") + "{\"id\":" + warehouse->id + "}";
+    order += std::string("\"warehouse\":") + (warehouse ? (std::string("{\"id\":\"") + warehouse->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Anarchy::instance()->send(order);
@@ -41,7 +41,13 @@ int Police_department_::raid(const Warehouse& warehouse)
     {
         info = std::move(Anarchy::instance()->handle_response());
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<int>();
@@ -105,11 +111,22 @@ std::unique_ptr<Any> Police_department_::add_key_value(const std::string& name, 
 
 bool Police_department_::is_map(const std::string& name)
 {
+    try
+    {
+        return Building_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
 void Police_department_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   try
+   {
+      Building_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Police_department treated as a reference, but it is not a reference.");
 }
 
