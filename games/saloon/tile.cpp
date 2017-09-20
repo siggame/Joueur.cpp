@@ -66,9 +66,7 @@ std::vector<Tile> Tile_::get_neighbors()
 /// <return>true if pathable, false otherwise</return>
 bool Tile_::is_pathable()
 {
-    // <<-- Creer-Merge: is_pathable_builtin -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
-    return false; // DEVELOPER ADD LOGIC HERE
-    // <<-- /Creer-Merge: is_pathable_builtin -->>
+    return !this->isBalcony && !this->cowboy && !this->furnishing;
 }
 
 /// <summary>
