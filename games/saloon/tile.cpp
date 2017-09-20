@@ -66,7 +66,7 @@ std::vector<Tile> Tile_::get_neighbors()
 /// <return>true if pathable, false otherwise</return>
 bool Tile_::is_pathable()
 {
-    return !this->isBalcony && !this->cowboy && !this->furnishing;
+    return !this->is_balcony && !this->cowboy && !this->furnishing;
 }
 
 /// <summary>
