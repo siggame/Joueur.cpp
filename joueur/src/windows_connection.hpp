@@ -22,7 +22,27 @@ public:
       const auto res = WSAStartup(MAKEWORD(2, 2), &wsa_data);
       if(res != 0)
       {
-         throw Communication_error("Initialization error - could not connect to server.");
+         throw Communication_error{"Initialization error - could not connect to server."};
+      }
+   }
+
+   // translates and throws a communication error on send or recieve
+   [[noreturn]] void throw_comm_error()
+   {
+      using ce = Communication_error;
+      switch(WSAGetLastError())
+      {
+      case WSANOTINITIALISED: throw ce{"WSA wasn't initalized??"};
+      case WSAENETDOWN:       throw ce{"Network subsystem failed."};
+      case WSAEACCES:         throw ce{"Address is a broadcast address."};
+      case WSAEFAULT:         throw ce{"Buffer out of user address space??"};
+      case WSAENOBUFS:        throw ce{"No buffers available."};
+      case WSAENOTCONN:       throw ce{"Socket not connected??"};
+      case WSAENOTSOCK:       throw ce{"Socket isn't a socket??"};
+      case WSAEMSGSIZE:       throw ce{"Message size too big."};
+      case WSAEHOSTUNREACH:   throw ce{"Host could not be reached."};
+      case WSAETIMEDOUT:      throw ce{"Connection timed out."};
+      default:                throw ce{"Uknown error."};
       }
    }
 
@@ -58,10 +78,10 @@ public:
             switch(resaddr)
             {
             case WSATRY_AGAIN:          continue;
-            case WSANO_RECOVERY:        throw ce("Could not resolve host name - Unrecoverable error.");
-            case WSA_NOT_ENOUGH_MEMORY: throw ce("Could not resolve host name - Out of memory.");
-            case WSAHOST_NOT_FOUND:     throw ce("Could not resolve host name - Host not found.");
-            default:                    throw ce("Could not resolve host name - Unknown error.");
+            case WSANO_RECOVERY:        throw ce{"Could not resolve host name - Unrecoverable error."};
+            case WSA_NOT_ENOUGH_MEMORY: throw ce{"Could not resolve host name - Out of memory."};
+            case WSAHOST_NOT_FOUND:     throw ce{"Could not resolve host name - Host not found."};
+            default:                    throw ce{"Could not resolve host name - Unknown error."};
             }
          }
          // now create the socket by trying to connect to all possible addresses
@@ -100,13 +120,6 @@ public:
                     &size_val);
          return static_cast<decltype(msg.size())>(size);
       }();
-      // error checking
-      const auto check_err = [](int err) {
-         if(err != SOCKET_ERROR)
-         {
-            throw Communication_error("Sending data failed.");
-         }
-      };
       const char* loc = msg.c_str();
       auto left = msg.size();
       // send the message in max_size chunks
@@ -114,7 +127,10 @@ public:
       {
          // std::min in parentheses because min is a Windows macro
          const auto to_send = (std::min)(max_size, left);
-         check_err(::send(sock_, loc, to_send, 0));
+         if(::send(sock_, loc, to_send, 0) == SOCKET_ERROR)
+         {
+            throw_comm_error();
+         }
          left -= to_send;
          loc += to_send;
       }
@@ -133,7 +149,7 @@ public:
          const auto received = recv(sock_, read_buffer.data(), read_buffer.size(), 0);
          if(received == SOCKET_ERROR)
          {
-            throw Communication_error("Receiving data failed.");
+            throw_comm_error();
          }
          to_return.append(read_buffer.data(), received);
          split_point = to_return.find('\x04');
