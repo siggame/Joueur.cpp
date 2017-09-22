@@ -32,9 +32,15 @@ bool Checker_::is_mine()
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Checkers::instance()->handle_response());
+        info = Checkers::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -56,10 +62,16 @@ Checker Checker_::move(int x, int y)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Checkers::instance()->handle_response());
+        info = Checkers::instance()->handle_response();
     } while(info->type() == typeid(bool));
     //reference - just pull the id
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+        return nullptr;
+    }
+    auto& val = loc->value;
     if(val.IsNull())
     {
         return nullptr;
@@ -137,6 +149,11 @@ std::unique_ptr<Any> Checker_::add_key_value(const std::string& name, Any& key, 
 
 bool Checker_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -147,6 +164,12 @@ void Checker_::rebind_by_name(Any* to_change, const std::string& member, std::sh
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Checker treated as a reference, but it is not a reference.");
 }
 

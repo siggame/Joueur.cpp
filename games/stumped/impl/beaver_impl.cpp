@@ -28,7 +28,7 @@ bool Beaver_::attack(const Beaver& beaver)
     std::string order = R"({"event": "run", "data": {"functionName": "attack", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"beaver\":") + "{\"id\":" + beaver->id + "}";
+    order += std::string("\"beaver\":") + (beaver ? (std::string("{\"id\":\"") + beaver->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Stumped::instance()->send(order);
@@ -37,9 +37,15 @@ bool Beaver_::attack(const Beaver& beaver)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -57,9 +63,15 @@ bool Beaver_::build_lodge()
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -70,7 +82,7 @@ bool Beaver_::drop(const Tile& tile, const std::string& resource, int amount)
     std::string order = R"({"event": "run", "data": {"functionName": "drop", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
 
     order += std::string(",\"resource\":") + std::string("\"") + resource + "\"";
 
@@ -83,9 +95,15 @@ bool Beaver_::drop(const Tile& tile, const std::string& resource, int amount)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -96,7 +114,7 @@ bool Beaver_::harvest(const Spawner& spawner)
     std::string order = R"({"event": "run", "data": {"functionName": "harvest", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"spawner\":") + "{\"id\":" + spawner->id + "}";
+    order += std::string("\"spawner\":") + (spawner ? (std::string("{\"id\":\"") + spawner->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Stumped::instance()->send(order);
@@ -105,9 +123,15 @@ bool Beaver_::harvest(const Spawner& spawner)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -118,7 +142,7 @@ bool Beaver_::move(const Tile& tile)
     std::string order = R"({"event": "run", "data": {"functionName": "move", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Stumped::instance()->send(order);
@@ -127,9 +151,15 @@ bool Beaver_::move(const Tile& tile)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -140,7 +170,7 @@ bool Beaver_::pickup(const Tile& tile, const std::string& resource, int amount)
     std::string order = R"({"event": "run", "data": {"functionName": "pickup", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
 
     order += std::string(",\"resource\":") + std::string("\"") + resource + "\"";
 
@@ -153,9 +183,15 @@ bool Beaver_::pickup(const Tile& tile, const std::string& resource, int amount)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Stumped::instance()->handle_response());
+        info = Stumped::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();

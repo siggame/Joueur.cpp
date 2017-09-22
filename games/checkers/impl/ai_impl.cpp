@@ -46,7 +46,7 @@ void AI::set_game(Base_game* ptr)
 
 void AI::set_player(std::shared_ptr<Base_object> obj)
 {
-    player = std::move(std::static_pointer_cast<Player_>(obj));
+    player = std::static_pointer_cast<Player_>(obj);
 }
 
 void AI::print_win_loss_info()

@@ -54,7 +54,7 @@ def trans_default(defer):
             return 'false'
     elif isinstance(defer, int) or isinstance(defer, float):
         return str(defer)
-    elif isinstance(defer, basestring):
+    elif isinstance(defer, str):
         return '"' + defer + '"'
     raise Exception("UNKNOWN DEFAULT ARGUMENT TYPE -- FATAL ERROR")
 

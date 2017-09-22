@@ -32,7 +32,7 @@ bool Spitter_::spit(const Nest& nest)
     std::string order = R"({"event": "run", "data": {"functionName": "spit", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"nest\":") + "{\"id\":" + nest->id + "}";
+    order += std::string("\"nest\":") + (nest ? (std::string("{\"id\":\"") + nest->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Spiders::instance()->send(order);
@@ -41,9 +41,15 @@ bool Spitter_::spit(const Nest& nest)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Spiders::instance()->handle_response());
+        info = Spiders::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();

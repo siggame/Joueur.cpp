@@ -108,7 +108,7 @@ std::vector<Tile> AI::find_path(const Tile& start, const Tile& goal)
         auto neighbors = inspect->get_neighbors();
 
         // cycle through the tile's neighbors.
-        for(int i = 0; i < neighbors.size(); i++)
+        for(unsigned i = 0; i < neighbors.size(); i++)
         {
             Tile neighbor = neighbors[i];
 

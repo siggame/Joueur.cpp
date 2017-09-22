@@ -32,7 +32,7 @@ bool Spiderling_::attack(const Spiderling& spiderling)
     std::string order = R"({"event": "run", "data": {"functionName": "attack", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"spiderling\":") + "{\"id\":" + spiderling->id + "}";
+    order += std::string("\"spiderling\":") + (spiderling ? (std::string("{\"id\":\"") + spiderling->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Spiders::instance()->send(order);
@@ -41,9 +41,15 @@ bool Spiderling_::attack(const Spiderling& spiderling)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Spiders::instance()->handle_response());
+        info = Spiders::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -54,7 +60,7 @@ bool Spiderling_::move(const Web& web)
     std::string order = R"({"event": "run", "data": {"functionName": "move", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"web\":") + "{\"id\":" + web->id + "}";
+    order += std::string("\"web\":") + (web ? (std::string("{\"id\":\"") + web->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Spiders::instance()->send(order);
@@ -63,9 +69,15 @@ bool Spiderling_::move(const Web& web)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Spiders::instance()->handle_response());
+        info = Spiders::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();

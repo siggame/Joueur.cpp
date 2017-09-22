@@ -126,6 +126,11 @@ std::unique_ptr<Any> Player_::add_key_value(const std::string& name, Any& key, A
 
 bool Player_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -141,6 +146,12 @@ void Player_::rebind_by_name(Any* to_change, const std::string& member, std::sha
       to_change->as<Young_gun>() = std::static_pointer_cast<Young_gun_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Player treated as a reference, but it is not a reference.");
 }
 
