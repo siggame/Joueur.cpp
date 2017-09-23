@@ -38,7 +38,7 @@ void Game_object_::log(const std::string& message)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Saloon::instance()->handle_response());
+        info = Saloon::instance()->handle_response();
     } while(info->type() == typeid(bool));
     return;
 }

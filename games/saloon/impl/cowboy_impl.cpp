@@ -29,7 +29,7 @@ bool Cowboy_::act(const Tile& tile, const std::string& drunk_direction)
     std::string order = R"({"event": "run", "data": {"functionName": "act", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
 
     order += std::string(",\"drunkDirection\":") + std::string("\"") + drunk_direction + "\"";
 
@@ -40,9 +40,15 @@ bool Cowboy_::act(const Tile& tile, const std::string& drunk_direction)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Saloon::instance()->handle_response());
+        info = Saloon::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -53,7 +59,7 @@ bool Cowboy_::move(const Tile& tile)
     std::string order = R"({"event": "run", "data": {"functionName": "move", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + "{\"id\":" + tile->id + "}";
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Saloon::instance()->send(order);
@@ -62,9 +68,15 @@ bool Cowboy_::move(const Tile& tile)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Saloon::instance()->handle_response());
+        info = Saloon::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -75,7 +87,7 @@ bool Cowboy_::play(const Furnishing& piano)
     std::string order = R"({"event": "run", "data": {"functionName": "play", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"piano\":") + "{\"id\":" + piano->id + "}";
+    order += std::string("\"piano\":") + (piano ? (std::string("{\"id\":\"") + piano->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Saloon::instance()->send(order);
@@ -84,9 +96,15 @@ bool Cowboy_::play(const Furnishing& piano)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Saloon::instance()->handle_response());
+        info = Saloon::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -172,6 +190,11 @@ std::unique_ptr<Any> Cowboy_::add_key_value(const std::string& name, Any& key, A
 
 bool Cowboy_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -187,6 +210,12 @@ void Cowboy_::rebind_by_name(Any* to_change, const std::string& member, std::sha
       to_change->as<Tile>() = std::static_pointer_cast<Tile_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Cowboy treated as a reference, but it is not a reference.");
 }
 

@@ -30,7 +30,7 @@ bool Fire_department_::extinguish(const Building& building)
     std::string order = R"({"event": "run", "data": {"functionName": "extinguish", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"building\":") + "{\"id\":" + building->id + "}";
+    order += std::string("\"building\":") + (building ? (std::string("{\"id\":\"") + building->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Anarchy::instance()->send(order);
@@ -39,9 +39,15 @@ bool Fire_department_::extinguish(const Building& building)
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Anarchy::instance()->handle_response());
+        info = Anarchy::instance()->handle_response();
     } while(info->type() == typeid(bool));
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
     Any to_return;
     morph_any(to_return, val);
     return to_return.as<bool>();
@@ -107,11 +113,22 @@ std::unique_ptr<Any> Fire_department_::add_key_value(const std::string& name, An
 
 bool Fire_department_::is_map(const std::string& name)
 {
+    try
+    {
+        return Building_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
 void Fire_department_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   try
+   {
+      Building_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Fire_department treated as a reference, but it is not a reference.");
 }
 

@@ -39,10 +39,16 @@ Move Piece_::move(const std::string& file, int rank, const std::string& promotio
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = std::move(Chess::instance()->handle_response());
+        info = Chess::instance()->handle_response();
     } while(info->type() == typeid(bool));
     //reference - just pull the id
-    auto& val = info->as<rapidjson::Document*>()->FindMember("data")->value;
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+        return nullptr;
+    }
+    auto& val = loc->value;
     if(val.IsNull())
     {
         return nullptr;
@@ -124,6 +130,11 @@ std::unique_ptr<Any> Piece_::add_key_value(const std::string& name, Any& key, An
 
 bool Piece_::is_map(const std::string& name)
 {
+    try
+    {
+        return Game_object_::is_map(name);
+    }
+    catch(...){}
     return false;
 }
 
@@ -134,6 +145,12 @@ void Piece_::rebind_by_name(Any* to_change, const std::string& member, std::shar
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
       return;
    }
+   try
+   {
+      Game_object_::rebind_by_name(to_change, member, ref);
+      return;
+   }
+   catch(...){}
    throw Bad_manipulation(member + " in Piece treated as a reference, but it is not a reference.");
 }
 

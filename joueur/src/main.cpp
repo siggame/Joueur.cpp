@@ -150,7 +150,7 @@ int main(int argc, const char* argv[])
       game.set_ai_parameters(string_args[ai_settings].getValue());
       game.go();
    }
-   // yuck a macro - best option here though...
+   // yuck, a macro - best option here though...
    #define CATCHER(x)                                                 \
       catch(const x& e)                                               \
       {                                                               \
