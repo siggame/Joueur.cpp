@@ -3,7 +3,8 @@
 
 #include "ai.hpp"
 
-${merge("// ", "includes", "// You can add #includes here for your AI.")}<%include file="functions.noCreer" />
+${merge("// ", "includes", "// You can add #includes here for your AI.")}
+<%include file="impl/functions.noCreer" />
 namespace cpp_client
 {
 

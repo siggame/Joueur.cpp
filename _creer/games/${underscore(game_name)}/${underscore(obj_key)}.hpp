@@ -15,7 +15,9 @@
 #include <string>
 #include <initializer_list>
 
-#include "../../joueur/src/any.hpp"<%include file="functions.noCreer" /><% obj_key_name = underscore(obj_key).capitalize()
+#include "../../joueur/src/any.hpp"
+<%include file="impl/functions.noCreer" />
+<% obj_key_name = underscore(obj_key).capitalize()
 parent_classes = []
 for par in obj['parentClasses']:
     parent_classes.append(underscore(par).capitalize() + '_')
