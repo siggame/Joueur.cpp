@@ -61,7 +61,7 @@ public:
     const Tile& tile;
 
     /// <summary>
-    /// The type of Structure this is ('shelter', 'monument', 'wall', 'road').
+    /// The type of Structure this is ('shelter', 'monument', 'wall', 'road', 'neutral').
     /// </summary>
     const std::string& type;
 

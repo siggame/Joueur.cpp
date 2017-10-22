@@ -58,7 +58,7 @@ public:
     /// <summary>
     /// The Structure on this Tile if present, otherwise null.
     /// </summary>
-    const std::string& structure;
+    const Structure& structure;
 
     /// <summary>
     /// The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
@@ -84,11 +84,6 @@ public:
     /// The amount of turns before this resource can be harvested.
     /// </summary>
     const int& turns_to_harvest;
-
-    /// <summary>
-    /// What type of Tile this is.
-    /// </summary>
-    const std::string& type;
 
     /// <summary>
     /// The Unit on this Tile if present, otherwise null.

@@ -37,7 +37,6 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"tileSouth", Any{std::decay<decltype(tile_south)>::type{}}},
         {"tileWest", Any{std::decay<decltype(tile_west)>::type{}}},
         {"turnsToHarvest", Any{std::decay<decltype(turns_to_harvest)>::type{}}},
-        {"type", Any{std::decay<decltype(type)>::type{}}},
         {"unit", Any{std::decay<decltype(unit)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
@@ -51,7 +50,6 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     tile_south(variables_["tileSouth"].as<std::decay<decltype(tile_south)>::type>()),
     tile_west(variables_["tileWest"].as<std::decay<decltype(tile_west)>::type>()),
     turns_to_harvest(variables_["turnsToHarvest"].as<std::decay<decltype(turns_to_harvest)>::type>()),
-    type(variables_["type"].as<std::decay<decltype(type)>::type>()),
     unit(variables_["unit"].as<std::decay<decltype(unit)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
     y(variables_["y"].as<std::decay<decltype(y)>::type>())
@@ -119,6 +117,11 @@ bool Tile_::is_map(const std::string& name)
 
 void Tile_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   if(member == "structure")
+   { 
+      to_change->as<Structure>() = std::static_pointer_cast<Structure_>(ref);
+      return;
+   }
    if(member == "tileEast")
    { 
       to_change->as<Tile>() = std::static_pointer_cast<Tile_>(ref);

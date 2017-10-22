@@ -114,8 +114,8 @@ public:
     /// <summary>
     /// changes this _unit's _job. _must be at max energy (100.0) to change _jobs.
     /// </summary>
-    /// <param name="job"> The Job to change to. </param>
-    bool change_job(const Job& job);
+    /// <param name="job"> The name of the Job to change to. </param>
+    bool change_job(const std::string& job);
 
     /// <summary>
     /// constructs a _structure on an adjacent _tile.

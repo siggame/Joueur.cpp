@@ -53,12 +53,12 @@ bool Unit_::attack(const Tile& tile)
     return to_return.as<bool>();
 }
 
-bool Unit_::change_job(const Job& job)
+bool Unit_::change_job(const std::string& job)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "changeJob", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"job\":") + (job ? (std::string("{\"id\":\"") + job->id + "\"}") : std::string("null"));
+    order += std::string("\"job\":") + std::string("\"") + job + "\"";
 
     order += "}}}";
     Catastrophe::instance()->send(order);
