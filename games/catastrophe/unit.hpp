@@ -106,7 +106,7 @@ public:
 
 
     /// <summary>
-    /// attacks an adjacent _tile. _costs an action for each _unit in this _unit's squad. _units in the squad without an action don't participate in combat. _units in combat cannot move afterwards.
+    /// attacks an adjacent _tile. _costs an action for each _unit in this _unit's squad. _units in the squad without an action don't participate in combat. _units in combat cannot move afterwards. _attacking structures will not give materials.
     /// </summary>
     /// <param name="tile"> The Tile to attack. </param>
     bool attack(const Tile& tile);
@@ -131,7 +131,7 @@ public:
     bool convert(const Tile& tile);
 
     /// <summary>
-    /// removes materials from an adjacent _tile's _structure. _soldiers do not gain materials from doing this, but can deconstruct friendly _structures as well.
+    /// removes materials from an adjacent _tile's _structure. _you cannot deconstruct friendly structures (see _unit.attack).
     /// </summary>
     /// <param name="tile"> The Tile to deconstruct. It must have a Structure on it. </param>
     bool deconstruct(const Tile& tile);

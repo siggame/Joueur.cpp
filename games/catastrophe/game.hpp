@@ -71,6 +71,11 @@ public:
     const std::vector<Job>& jobs;
 
     /// <summary>
+    /// The amount that the harvest rate is lowered each season.
+    /// </summary>
+    const int& lower_harvest_amount;
+
+    /// <summary>
     /// The number of Tiles in the map along the y (vertical) axis.
     /// </summary>
     const int& map_height;
@@ -86,6 +91,21 @@ public:
     const int& max_turns;
 
     /// <summary>
+    /// The multiplier for the cost of actions when performing them in range of a monument. Does not effect pickup cost.
+    /// </summary>
+    const double& monument_cost_mult;
+
+    /// <summary>
+    /// The number of materials in a monument.
+    /// </summary>
+    const int& monument_materials;
+
+    /// <summary>
+    /// The number of materials in a neutral Structure.
+    /// </summary>
+    const int& neutral_materials;
+
+    /// <summary>
     /// List of all the players in the game.
     /// </summary>
     const std::vector<Player>& players;
@@ -94,6 +114,11 @@ public:
     /// A unique identifier for the game instance that is being played.
     /// </summary>
     const std::string& session;
+
+    /// <summary>
+    /// The number of materials in a shelter.
+    /// </summary>
+    const int& shelter_materials;
 
     /// <summary>
     /// The multiplier for the amount of energy regenerated when resting while starving.
@@ -111,9 +136,29 @@ public:
     const std::vector<Tile>& tiles;
 
     /// <summary>
+    /// After a food tile is harvested, the number of turns before it can be harvested again.
+    /// </summary>
+    const int& turns_between_harvests;
+
+    /// <summary>
+    /// The number of turns between fresh humans being spawned on the road.
+    /// </summary>
+    const int& turns_to_create_human;
+
+    /// <summary>
+    /// The number of turns before the harvest rate is lowered (length of each season basically).
+    /// </summary>
+    const int& turns_to_lower_harvest;
+
+    /// <summary>
     /// Every Unit in the game.
     /// </summary>
     const std::vector<Unit>& units;
+
+    /// <summary>
+    /// The number of materials in a wall.
+    /// </summary>
+    const int& wall_materials;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
