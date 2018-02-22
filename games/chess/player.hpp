@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -75,7 +77,7 @@ public:
     const std::vector<Piece>& pieces;
 
     /// <summary>
-    /// The direction your Pieces must go along the rank axis until they reach the other side.
+    /// The direction your Pieces must go along the rank axis until they reach the other side. Will be +1 if the Player is 'White', or -1 if the Player is 'Black'.
     /// </summary>
     const int& rank_direction;
 
@@ -102,6 +104,11 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
 
 
+<<<<<<< HEAD
+=======
+
+   // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+>>>>>>> 6a0bd6c56c08cba0cae23ddeb979f05fd8aaaaf8
    // You can add additional methods here.
 
    ~Player_();

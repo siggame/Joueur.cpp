@@ -29,5 +29,14 @@ void Delta_mergable::erase(const std::string& to_erase)
    variables_.erase(to_erase);
 }
 
+std::ostream& operator<<(std::ostream& out, const Delta_mergable& obj)
+{
+   for(const auto& var : obj.variables_)
+   {
+      out << var.first << ": " << var.second << '\n';
+   }
+   return out;
+}
+
 } // namespace cpp_client
 

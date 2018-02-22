@@ -7,6 +7,7 @@
 #include <unordered_map>
 #include <vector>
 #include <memory>
+#include <ostream>
 
 namespace cpp_client
 {
@@ -43,6 +44,8 @@ public:
    virtual bool is_map(const std::string& name) = 0;
    virtual void rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref) = 0;
 };
+
+std::ostream& operator<<(std::ostream& out, const Delta_mergable& obj);
 
 }
 

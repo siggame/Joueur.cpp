@@ -9,6 +9,8 @@
 // Instead, you should only be reading its variables and calling its functions.
 
 #include <vector>
+#include <queue>
+#include <deque>
 #include <unordered_map>
 #include <string>
 #include <initializer_list>
@@ -60,7 +62,7 @@ public:
     const int& rank;
 
     /// <summary>
-    /// The type of chess Piece this is, either: 'King', 'Queen', 'Knight', 'Rook', 'Bishop', or 'Pawn'.
+    /// The type of chess Piece this is, either 'King, 'Queen', 'Knight', 'Rook', 'Bishop', or 'Pawn'.
     /// </summary>
     const std::string& type;
 
@@ -75,6 +77,11 @@ public:
     /// <param name="promotion_type"> If this is a Pawn moving to the end of the board then this parameter is what to promote it to. When used must be 'Queen', 'Knight', 'Rook', or 'Bishop'. </param>
     Move move(const std::string& file, int rank, const std::string& promotion_type = "");
 
+<<<<<<< HEAD
+=======
+
+   // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
+>>>>>>> 6a0bd6c56c08cba0cae23ddeb979f05fd8aaaaf8
    // You can add additional methods here.
 
    ~Piece_();

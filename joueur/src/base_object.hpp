@@ -55,7 +55,7 @@ public:
       add_key_value(const std::string& name, Any& key, Any& value) override;
    virtual bool is_map(const std::string& name) override { return false; }
    virtual Base_game* get_game() { return nullptr; }
-   virtual void rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref) {}
+   virtual void rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref) override {}
    /// \endcond
 
 private:
