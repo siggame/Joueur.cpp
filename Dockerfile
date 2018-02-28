@@ -1,8 +1,5 @@
 FROM siggame/joueur:cpp-onbuild as build
 
-FROM debian:buster-slim
+FROM siggame/joueur:cpp-base
 
-COPY --from=build /usr/src/client/build/cpp-client /client/cpp-client
-WORKDIR /client
-
-ENTRYPOINT ["./cpp-client", GAME_NAME]
+COPY --from=build --chown=siggame:siggame /usr/src/client/build/cpp-client /client/cpp-client
