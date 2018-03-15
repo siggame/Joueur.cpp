@@ -3,6 +3,9 @@
 
 #include "ai.hpp"
 
+#include <ctime>
+#include <cstdlib>
+
 // You can add #includes here for your AI.
 
 namespace cpp_client
