@@ -1,6 +1,10 @@
-# GAME_NAME C++ Client
+# C++ Joueur Client
 
-This is the root of your AI. Stay out of the `joueur/` folder, it does most of the heavy lifting to play on our game servers. Your AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.hpp` and `games/game_name/ai.cpp` files for you to make smarter.
+This is the client for the [Cadre][cadre] AI framework. It can play multiple different games, though you will probably only be interested in one at a time.
+
+In general, try to stay out of the `joueur/` folder, it does most of the heavy lifting to play on our game servers.
+
+Each AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.hpp` and `games/game_name/ai.cpp` files for you to make smarter.
 
 ## How to Run
 
