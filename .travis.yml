@@ -1,0 +1,16 @@
+python: "3.6"
+
+before_deploy:
+  # run the docs
+  - cd docs
+  - python3 generate_docs.py
+  # file to tell GitHub pages not to try to run jekyll stuff (can break urls)
+  - touch output/.nojekyll
+
+deploy:
+  provider: pages
+  skip-cleanup: true
+  local-dir: docs/output
+  github-token: $GH_TOKEN
+  on:
+    branch: master
