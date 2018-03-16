@@ -1,4 +1,9 @@
+language: cpp
 python: "3.6"
+
+script:
+  # ensure it builds
+  - make
 
 before_deploy:
   # run the docs
