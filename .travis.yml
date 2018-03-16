@@ -1,8 +1,32 @@
 language: cpp
+compiler: gcc
 python: "3.6"
 
+dist: trusty
+sudo: require
+
+addons:
+  apt:
+    sources:
+      - ubuntu-toolchain-r-test
+    packages:
+      - gcc-6
+      - g++-6
+      - cmake
+
+before_install:
+  # Link gcc-6 and g++-6 to their standard commands
+  - ln -s /usr/bin/gcc-6 /usr/local/bin/gcc
+  - ln -s /usr/bin/g++-6 /usr/local/bin/g++
+  # Export CC and CXX to tell cmake which compiler to use
+  - export CC=/usr/bin/gcc-6
+  - export CXX=/usr/bin/g++-6
+  # Check versions of gcc, g++ and cmake
+  - gcc -v && g++ -v && cmake --version
+  # Run your build commands next
+
 script:
-  # ensure it builds
+  # ensure it builds (should now be using gcc-6)
   - make
 
 before_deploy:
