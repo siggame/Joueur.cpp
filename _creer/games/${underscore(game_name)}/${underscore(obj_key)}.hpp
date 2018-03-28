@@ -1,7 +1,6 @@
 #ifndef GAMES_${game_name.upper()}_${underscore(obj_key).upper()}_H
 #define GAMES_${game_name.upper()}_${underscore(obj_key).upper()}_H
-
-// ${obj_key}
+<%include file="impl/functions.noCreer" />// ${obj_key}
 // ${obj['description']}
 
 // DO NOT MODIFY THIS FILE
@@ -16,7 +15,6 @@
 #include <initializer_list>
 
 #include "../../joueur/src/any.hpp"
-<%include file="impl/functions.noCreer" />
 <% obj_key_name = underscore(obj_key).capitalize()
 parent_classes = []
 for par in obj['parentClasses']:
@@ -46,6 +44,11 @@ ${merge("// ", "includes", "// you can add additional #includes here")}
 namespace cpp_client
 {
 
+% if obj_key == "Game":
+/// <summary>
+/// ${game['description']}
+/// </summary>
+% endif
 namespace ${underscore(game_name)}
 {
 
@@ -111,14 +114,14 @@ args = shared['make_args'](function_params, True)
     /// <summary>
     /// Checks if a Tile is pathable to units
     /// </summary>
-    /// <return>true if pathable, false otherwise</return>
+    /// <returns>true if pathable, false otherwise</returns>
     bool is_pathable();
 
     /// <summary>
     /// Checks if this Tile has a specific neighboring Tile
     /// </summary>
     /// <param name="tile">Tile to check against</param>
-    /// <return>if the tile is a neighbor of this Tile, false otherwise</return>
+    /// <returns>if the tile is a neighbor of this Tile, false otherwise</returns>
     bool has_neighbor(const Tile& tile);
 % endif
 

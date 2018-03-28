@@ -28,6 +28,9 @@
 namespace cpp_client
 {
 
+/// <summary>
+/// The traditional 8x8 chess board with pieces.
+/// </summary>
 namespace chess
 {
 

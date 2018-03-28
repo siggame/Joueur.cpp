@@ -18,8 +18,6 @@
 #include "../../joueur/src/any.hpp"
 
 
-
-
 #include "../../joueur/src/base_game.hpp"
 #include "impl/catastrophe_fwd.hpp"
 
@@ -30,6 +28,9 @@
 namespace cpp_client
 {
 
+/// <summary>
+/// Convert as many humans to as you can to survive in this post-apocalyptic wasteland.
+/// </summary>
 namespace catastrophe
 {
 

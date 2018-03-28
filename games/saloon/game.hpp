@@ -28,6 +28,9 @@
 namespace cpp_client
 {
 
+/// <summary>
+/// Use cowboys to have a good time and play some music on a Piano, while brawling with enemy Cowboys.
+/// </summary>
 namespace saloon
 {
 

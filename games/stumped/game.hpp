@@ -28,6 +28,9 @@
 namespace cpp_client
 {
 
+/// <summary>
+/// Gather branches and build up your lodge as beavers fight to survive.
+/// </summary>
 namespace stumped
 {
 

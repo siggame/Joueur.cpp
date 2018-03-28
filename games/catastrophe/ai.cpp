@@ -7,7 +7,6 @@
 // You can add #includes here for your AI.
 // <<-- /Creer-Merge: includes -->>
 
-
 namespace cpp_client
 {
 
