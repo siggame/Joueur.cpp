@@ -99,7 +99,7 @@ public:
     /// attacks either crew, a ship, or a port on a _tile in range.
     /// </summary>
     /// <param name="tile"> The Tile to attack. </param>
-    /// <param name="target"> Whether to attack 'crew', 'ship', or 'port'. Crew deal damage to crew, and ships deal damage to ships and ports. Consumes any remaining moves. </param>
+    /// <param name="target"> Whether to attack 'crew', 'ship', or 'port'. Crew deal damage to crew, and ships deal damage to ships. Both can attack ports as well. Units cannot attack other units in ports. Consumes any remaining moves. </param>
     bool attack(const Tile& tile, const std::string& target);
 
     /// <summary>
@@ -111,11 +111,11 @@ public:
     /// <summary>
     /// buries gold on this _unit's _tile.
     /// </summary>
-    /// <param name="amount"> How much gold this Unit should bury. </param>
+    /// <param name="amount"> How much gold this Unit should bury. Amounts <= 0 will bury as much as possible. </param>
     bool bury(int amount);
 
     /// <summary>
-    /// puts gold into an adjacent _port. _if that _port is the _player's main port, the gold is added to that _player. _if that _port is owned by merchants, adds to the investment.
+    /// puts gold into an adjacent _port. _if that _port is the _player's main port, the gold is added to that _player. _if that _port is owned by merchants, it adds to that _port's investment.
     /// </summary>
     /// <param name="amount"> The amount of gold to deposit. Amounts <= 0 will deposit all the gold on this Unit. </param>
     bool deposit(int amount = 0);
@@ -135,9 +135,7 @@ public:
     /// <summary>
     /// regenerates this _unit's health. _must be used in range of a port.
     /// </summary>
-    /// <param name="tile"> The Tile to move the crew to. </param>
-    /// <param name="amount"> The number of crew to move onto that Tile. Amount <= 0 will move all the crew to that Tile. </param>
-    bool rest(const Tile& tile, int amount = 1);
+    bool rest();
 
     /// <summary>
     /// moves a number of crew from this _unit to the given _tile. _this will consume a move from those crew.

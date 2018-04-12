@@ -96,7 +96,7 @@ public:
     const int& map_width;
 
     /// <summary>
-    /// The Euclidean distance from a Player port required to reach maxInterestRate.
+    /// The Euclidean distance from a Player Port required to reach maxInterestRate.
     /// </summary>
     const double& max_interest_distance;
 
@@ -109,6 +109,21 @@ public:
     /// The maximum number of turns before the game will automatically end.
     /// </summary>
     const int& max_turns;
+
+    /// <summary>
+    /// How much gold it costs a merchant Port to create a crew member.
+    /// </summary>
+    const int& merchant_crew_cost;
+
+    /// <summary>
+    /// How much gold merchant Ports get per turn. They gain (Port.investment * merchantInvestmentRate) gold each turn.
+    /// </summary>
+    const double& merchant_investment_rate;
+
+    /// <summary>
+    /// How much gold it costs a merchant Port to create a ship.
+    /// </summary>
+    const int& merchant_ship_cost;
 
     /// <summary>
     /// List of all the players in the game.

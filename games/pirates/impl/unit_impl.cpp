@@ -194,14 +194,10 @@ bool Unit_::move(const Tile& tile)
     return to_return.as<bool>();
 }
 
-bool Unit_::rest(const Tile& tile, int amount)
+bool Unit_::rest()
 {
     std::string order = R"({"event": "run", "data": {"functionName": "rest", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
-
-    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
-
-    order += std::string(",\"amount\":") + std::to_string(amount);
 
     order += "}}}";
     Pirates::instance()->send(order);
