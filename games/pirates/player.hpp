@@ -73,7 +73,7 @@ public:
     /// <summary>
     /// The Port owned by this Player.
     /// </summary>
-    const Port& ports;
+    const Port& port;
 
     /// <summary>
     /// The reason why the player lost the game.

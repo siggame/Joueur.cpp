@@ -33,7 +33,7 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"lost", Any{std::decay<decltype(lost)>::type{}}},
         {"name", Any{std::decay<decltype(name)>::type{}}},
         {"opponent", Any{std::decay<decltype(opponent)>::type{}}},
-        {"ports", Any{std::decay<decltype(ports)>::type{}}},
+        {"port", Any{std::decay<decltype(port)>::type{}}},
         {"reasonLost", Any{std::decay<decltype(reason_lost)>::type{}}},
         {"reasonWon", Any{std::decay<decltype(reason_won)>::type{}}},
         {"timeRemaining", Any{std::decay<decltype(time_remaining)>::type{}}},
@@ -46,7 +46,7 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     lost(variables_["lost"].as<std::decay<decltype(lost)>::type>()),
     name(variables_["name"].as<std::decay<decltype(name)>::type>()),
     opponent(variables_["opponent"].as<std::decay<decltype(opponent)>::type>()),
-    ports(variables_["ports"].as<std::decay<decltype(ports)>::type>()),
+    port(variables_["port"].as<std::decay<decltype(port)>::type>()),
     reason_lost(variables_["reasonLost"].as<std::decay<decltype(reason_lost)>::type>()),
     reason_won(variables_["reasonWon"].as<std::decay<decltype(reason_won)>::type>()),
     time_remaining(variables_["timeRemaining"].as<std::decay<decltype(time_remaining)>::type>()),
@@ -137,7 +137,7 @@ void Player_::rebind_by_name(Any* to_change, const std::string& member, std::sha
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
       return;
    }
-   if(member == "ports")
+   if(member == "port")
    { 
       to_change->as<Port>() = std::static_pointer_cast<Port_>(ref);
       return;
