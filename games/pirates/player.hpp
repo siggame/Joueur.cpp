@@ -71,9 +71,9 @@ public:
     const Player& opponent;
 
     /// <summary>
-    /// The ports owned by this Player.
+    /// The Port owned by this Player.
     /// </summary>
-    const std::vector<Port>& ports;
+    const Port& ports;
 
     /// <summary>
     /// The reason why the player lost the game.
@@ -84,11 +84,6 @@ public:
     /// The reason why the player won the game.
     /// </summary>
     const std::string& reason_won;
-
-    /// <summary>
-    /// This Player's starting port.
-    /// </summary>
-    const Port& starting_port;
 
     /// <summary>
     /// The amount of time (in ns) remaining for this AI to send commands.

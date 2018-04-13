@@ -41,6 +41,11 @@ class Tile_ : public Game_object_
 public:
 
     /// <summary>
+    /// (Visualizer only) Whether this tile is deep sea or grassy. This has no effect on gameplay, but feel free to use it if you want.
+    /// </summary>
+    const bool& decoration;
+
+    /// <summary>
     /// The amount of gold buried on this tile.
     /// </summary>
     const int& gold;

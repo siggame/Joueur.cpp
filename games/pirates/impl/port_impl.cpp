@@ -55,18 +55,12 @@ bool Port_::spawn(const std::string& type)
 
 Port_::Port_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
-        {"cooldown", Any{std::decay<decltype(cooldown)>::type{}}},
-        {"destroyable", Any{std::decay<decltype(destroyable)>::type{}}},
         {"gold", Any{std::decay<decltype(gold)>::type{}}},
-        {"health", Any{std::decay<decltype(health)>::type{}}},
         {"investment", Any{std::decay<decltype(investment)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
     },
-    cooldown(variables_["cooldown"].as<std::decay<decltype(cooldown)>::type>()),
-    destroyable(variables_["destroyable"].as<std::decay<decltype(destroyable)>::type>()),
     gold(variables_["gold"].as<std::decay<decltype(gold)>::type>()),
-    health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     investment(variables_["investment"].as<std::decay<decltype(investment)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     tile(variables_["tile"].as<std::decay<decltype(tile)>::type>())

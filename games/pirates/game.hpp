@@ -41,6 +41,11 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
+    /// The rate buried gold increases each turn.
+    /// </summary>
+    const double& bury_interest_rate;
+
+    /// <summary>
     /// How much gold it costs to construct a single crew.
     /// </summary>
     const int& crew_cost;
@@ -96,54 +101,34 @@ public:
     const int& map_width;
 
     /// <summary>
-    /// The Euclidean distance from a Player Port required to reach maxInterestRate.
-    /// </summary>
-    const double& max_interest_distance;
-
-    /// <summary>
-    /// The maximum rate buried gold can increase over time.
-    /// </summary>
-    const double& max_interest_rate;
-
-    /// <summary>
     /// The maximum number of turns before the game will automatically end.
     /// </summary>
     const int& max_turns;
 
     /// <summary>
-    /// How much gold it costs a merchant Port to create a crew member.
+    /// How much gold merchant Ports get each turn.
     /// </summary>
-    const int& merchant_crew_cost;
+    const double& merchant_gold_rate;
 
     /// <summary>
-    /// How much gold merchant Ports get per turn. They gain (Port.investment * merchantInvestmentRate) gold each turn.
+    /// When a merchant ship spawns, the amount of additional gold it has relative to the Port's investment.
     /// </summary>
-    const double& merchant_investment_rate;
+    const double& merchant_interest_rate;
 
     /// <summary>
-    /// How much gold it costs a merchant Port to create a ship.
+    /// Every Port in the game. Merchant ports have owner set to null.
     /// </summary>
-    const int& merchant_ship_cost;
+    const std::vector<Port>& merchant_ports;
+
+    /// <summary>
+    /// The Euclidean distance buried gold must be from the Player's Port to accumulate interest.
+    /// </summary>
+    const double& min_interest_distance;
 
     /// <summary>
     /// List of all the players in the game.
     /// </summary>
     const std::vector<Player>& players;
-
-    /// <summary>
-    /// How much gold it costs to construct a port.
-    /// </summary>
-    const int& port_cost;
-
-    /// <summary>
-    /// The maximum amount of health a Port can have.
-    /// </summary>
-    const int& port_health;
-
-    /// <summary>
-    /// Every Port in the game.
-    /// </summary>
-    const std::vector<Port>& ports;
 
     /// <summary>
     /// How far a Unit can be from a Port to rest. Range is circular.
@@ -186,7 +171,7 @@ public:
     const std::vector<Tile>& tiles;
 
     /// <summary>
-    /// Every Unit in the game.
+    /// Every Unit in the game. Merchant units have targetPort set to a port.
     /// </summary>
     const std::vector<Unit>& units;
 

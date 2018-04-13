@@ -36,7 +36,6 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"ports", Any{std::decay<decltype(ports)>::type{}}},
         {"reasonLost", Any{std::decay<decltype(reason_lost)>::type{}}},
         {"reasonWon", Any{std::decay<decltype(reason_won)>::type{}}},
-        {"startingPort", Any{std::decay<decltype(starting_port)>::type{}}},
         {"timeRemaining", Any{std::decay<decltype(time_remaining)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
         {"won", Any{std::decay<decltype(won)>::type{}}},
@@ -50,7 +49,6 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     ports(variables_["ports"].as<std::decay<decltype(ports)>::type>()),
     reason_lost(variables_["reasonLost"].as<std::decay<decltype(reason_lost)>::type>()),
     reason_won(variables_["reasonWon"].as<std::decay<decltype(reason_won)>::type>()),
-    starting_port(variables_["startingPort"].as<std::decay<decltype(starting_port)>::type>()),
     time_remaining(variables_["timeRemaining"].as<std::decay<decltype(time_remaining)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>()),
     won(variables_["won"].as<std::decay<decltype(won)>::type>())
@@ -65,13 +63,7 @@ Player_::~Player_() = default;
 
 void Player_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "ports")
-    {
-        auto& vec = variables_["ports"].as<std::decay<decltype(ports)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "units")
+    if(name == "units")
     {
         auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
         vec.resize(size);
@@ -88,17 +80,7 @@ void Player_::resize(const std::string& name, std::size_t size)
 
 void Player_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "ports")
-    {
-        using type = std::decay<decltype(ports)>::type;
-        auto& vec = variables_["ports"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "units")
+    if(name == "units")
     {
         using type = std::decay<decltype(units)>::type;
         auto& vec = variables_["units"].as<type>();
@@ -155,7 +137,7 @@ void Player_::rebind_by_name(Any* to_change, const std::string& member, std::sha
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
       return;
    }
-   if(member == "startingPort")
+   if(member == "ports")
    { 
       to_change->as<Port>() = std::static_pointer_cast<Port_>(ref);
       return;

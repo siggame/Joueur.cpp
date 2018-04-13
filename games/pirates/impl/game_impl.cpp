@@ -27,6 +27,7 @@ namespace pirates
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
+        {"buryInterestRate", Any{std::decay<decltype(bury_interest_rate)>::type{}}},
         {"crewCost", Any{std::decay<decltype(crew_cost)>::type{}}},
         {"crewDamage", Any{std::decay<decltype(crew_damage)>::type{}}},
         {"crewHealth", Any{std::decay<decltype(crew_health)>::type{}}},
@@ -38,16 +39,12 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"healFactor", Any{std::decay<decltype(heal_factor)>::type{}}},
         {"mapHeight", Any{std::decay<decltype(map_height)>::type{}}},
         {"mapWidth", Any{std::decay<decltype(map_width)>::type{}}},
-        {"maxInterestDistance", Any{std::decay<decltype(max_interest_distance)>::type{}}},
-        {"maxInterestRate", Any{std::decay<decltype(max_interest_rate)>::type{}}},
         {"maxTurns", Any{std::decay<decltype(max_turns)>::type{}}},
-        {"merchantCrewCost", Any{std::decay<decltype(merchant_crew_cost)>::type{}}},
-        {"merchantInvestmentRate", Any{std::decay<decltype(merchant_investment_rate)>::type{}}},
-        {"merchantShipCost", Any{std::decay<decltype(merchant_ship_cost)>::type{}}},
+        {"merchantGoldRate", Any{std::decay<decltype(merchant_gold_rate)>::type{}}},
+        {"merchantInterestRate", Any{std::decay<decltype(merchant_interest_rate)>::type{}}},
+        {"merchantPorts", Any{std::decay<decltype(merchant_ports)>::type{}}},
+        {"minInterestDistance", Any{std::decay<decltype(min_interest_distance)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
-        {"portCost", Any{std::decay<decltype(port_cost)>::type{}}},
-        {"portHealth", Any{std::decay<decltype(port_health)>::type{}}},
-        {"ports", Any{std::decay<decltype(ports)>::type{}}},
         {"restRange", Any{std::decay<decltype(rest_range)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"shipCost", Any{std::decay<decltype(ship_cost)>::type{}}},
@@ -58,6 +55,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
     },
+    bury_interest_rate(variables_["buryInterestRate"].as<std::decay<decltype(bury_interest_rate)>::type>()),
     crew_cost(variables_["crewCost"].as<std::decay<decltype(crew_cost)>::type>()),
     crew_damage(variables_["crewDamage"].as<std::decay<decltype(crew_damage)>::type>()),
     crew_health(variables_["crewHealth"].as<std::decay<decltype(crew_health)>::type>()),
@@ -69,16 +67,12 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     heal_factor(variables_["healFactor"].as<std::decay<decltype(heal_factor)>::type>()),
     map_height(variables_["mapHeight"].as<std::decay<decltype(map_height)>::type>()),
     map_width(variables_["mapWidth"].as<std::decay<decltype(map_width)>::type>()),
-    max_interest_distance(variables_["maxInterestDistance"].as<std::decay<decltype(max_interest_distance)>::type>()),
-    max_interest_rate(variables_["maxInterestRate"].as<std::decay<decltype(max_interest_rate)>::type>()),
     max_turns(variables_["maxTurns"].as<std::decay<decltype(max_turns)>::type>()),
-    merchant_crew_cost(variables_["merchantCrewCost"].as<std::decay<decltype(merchant_crew_cost)>::type>()),
-    merchant_investment_rate(variables_["merchantInvestmentRate"].as<std::decay<decltype(merchant_investment_rate)>::type>()),
-    merchant_ship_cost(variables_["merchantShipCost"].as<std::decay<decltype(merchant_ship_cost)>::type>()),
+    merchant_gold_rate(variables_["merchantGoldRate"].as<std::decay<decltype(merchant_gold_rate)>::type>()),
+    merchant_interest_rate(variables_["merchantInterestRate"].as<std::decay<decltype(merchant_interest_rate)>::type>()),
+    merchant_ports(variables_["merchantPorts"].as<std::decay<decltype(merchant_ports)>::type>()),
+    min_interest_distance(variables_["minInterestDistance"].as<std::decay<decltype(min_interest_distance)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
-    port_cost(variables_["portCost"].as<std::decay<decltype(port_cost)>::type>()),
-    port_health(variables_["portHealth"].as<std::decay<decltype(port_health)>::type>()),
-    ports(variables_["ports"].as<std::decay<decltype(ports)>::type>()),
     rest_range(variables_["restRange"].as<std::decay<decltype(rest_range)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     ship_cost(variables_["shipCost"].as<std::decay<decltype(ship_cost)>::type>()),
@@ -99,15 +93,15 @@ Game_::~Game_() = default;
 
 void Game_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "players")
+    if(name == "merchantPorts")
     {
-        auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
+        auto& vec = variables_["merchantPorts"].as<std::decay<decltype(merchant_ports)>::type>();
         vec.resize(size);
         return;
     }
-    else if(name == "ports")
+    else if(name == "players")
     {
-        auto& vec = variables_["ports"].as<std::decay<decltype(ports)>::type>();
+        auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
         vec.resize(size);
         return;
     }
@@ -128,20 +122,20 @@ void Game_::resize(const std::string& name, std::size_t size)
 
 void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "players")
+    if(name == "merchantPorts")
     {
-        using type = std::decay<decltype(players)>::type;
-        auto& vec = variables_["players"].as<type>();
+        using type = std::decay<decltype(merchant_ports)>::type;
+        auto& vec = variables_["merchantPorts"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
         }
         return;
     } 
-    else if(name == "ports")
+    else if(name == "players")
     {
-        using type = std::decay<decltype(ports)>::type;
-        auto& vec = variables_["ports"].as<type>();
+        using type = std::decay<decltype(players)>::type;
+        auto& vec = variables_["players"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);

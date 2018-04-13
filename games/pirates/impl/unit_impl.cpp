@@ -54,34 +54,6 @@ bool Unit_::attack(const Tile& tile, const std::string& target)
     return to_return.as<bool>();
 }
 
-bool Unit_::build(const Tile& tile)
-{
-    std::string order = R"({"event": "run", "data": {"functionName": "build", "caller": {"id": ")";
-    order += this->id + R"("}, "args": {)";
-
-    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
-
-    order += "}}}";
-    Pirates::instance()->send(order);
-    //Go until not a delta
-    std::unique_ptr<Any> info;
-    //until a not bool is seen (i.e., the delta has been processed)
-    do
-    {
-        info = Pirates::instance()->handle_response();
-    } while(info->type() == typeid(bool));
-    auto doc = info->as<rapidjson::Document*>();
-    auto loc = doc->FindMember("data");
-    if(loc == doc->MemberEnd())
-    {
-       return {};
-    }
-    auto& val = loc->value;
-    Any to_return;
-    morph_any(to_return, val);
-    return to_return.as<bool>();
-}
-
 bool Unit_::bury(int amount)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "bury", "caller": {"id": ")";
@@ -291,6 +263,7 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"path", Any{std::decay<decltype(path)>::type{}}},
         {"shipHealth", Any{std::decay<decltype(ship_health)>::type{}}},
+        {"stunTurns", Any{std::decay<decltype(stun_turns)>::type{}}},
         {"targetPort", Any{std::decay<decltype(target_port)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
     },
@@ -302,6 +275,7 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     path(variables_["path"].as<std::decay<decltype(path)>::type>()),
     ship_health(variables_["shipHealth"].as<std::decay<decltype(ship_health)>::type>()),
+    stun_turns(variables_["stunTurns"].as<std::decay<decltype(stun_turns)>::type>()),
     target_port(variables_["targetPort"].as<std::decay<decltype(target_port)>::type>()),
     tile(variables_["tile"].as<std::decay<decltype(tile)>::type>())
 {

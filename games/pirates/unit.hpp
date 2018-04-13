@@ -81,6 +81,11 @@ public:
     const int& ship_health;
 
     /// <summary>
+    /// (Merchants only) The number of turns this merchant ship won't be able to move. They will still attack. Merchant ships are stunned when they're attacked.
+    /// </summary>
+    const int& stun_turns;
+
+    /// <summary>
     /// (Merchants only) The Port this Unit is moving to.
     /// </summary>
     const Port& target_port;
@@ -96,26 +101,20 @@ public:
 
 
     /// <summary>
-    /// attacks either crew, a ship, or a port on a _tile in range.
+    /// attacks either the 'crew' or 'ship' on a _tile in range.
     /// </summary>
     /// <param name="tile"> The Tile to attack. </param>
-    /// <param name="target"> Whether to attack 'crew', 'ship', or 'port'. Crew deal damage to crew, and ships deal damage to ships. Both can attack ports as well. Units cannot attack other units in ports. Consumes any remaining moves. </param>
+    /// <param name="target"> Whether to attack 'crew' or 'ship'. Crew deal damage to crew and ships deal damage to ships. Consumes any remaining moves. </param>
     bool attack(const Tile& tile, const std::string& target);
 
     /// <summary>
-    /// builds a _port on the given _tile.
-    /// </summary>
-    /// <param name="tile"> The Tile to build the Port on. </param>
-    bool build(const Tile& tile);
-
-    /// <summary>
-    /// buries gold on this _unit's _tile.
+    /// buries gold on this _unit's _tile. _gold must be a certain distance away for it to get interest (_game.min_interest_distance).
     /// </summary>
     /// <param name="amount"> How much gold this Unit should bury. Amounts <= 0 will bury as much as possible. </param>
     bool bury(int amount);
 
     /// <summary>
-    /// puts gold into an adjacent _port. _if that _port is the _player's main port, the gold is added to that _player. _if that _port is owned by merchants, it adds to that _port's investment.
+    /// puts gold into an adjacent _port. _if that _port is the _player's port, the gold is added to that _player. _if that _port is owned by merchants, it adds to that _port's investment.
     /// </summary>
     /// <param name="amount"> The amount of gold to deposit. Amounts <= 0 will deposit all the gold on this Unit. </param>
     bool deposit(int amount = 0);
@@ -127,7 +126,7 @@ public:
     bool dig(int amount = 0);
 
     /// <summary>
-    /// moves this _unit from its current _tile to an adjacent _tile.
+    /// moves this _unit from its current _tile to an adjacent _tile. _if this _unit merges with another one, the other _unit will be destroyed and its tile will be set to null. _make sure to check that your _unit's tile is not null before doing things with it.
     /// </summary>
     /// <param name="tile"> The Tile this Unit should move to. </param>
     bool move(const Tile& tile);
@@ -146,7 +145,7 @@ public:
     bool split(const Tile& tile, int amount = 1, int gold = 0);
 
     /// <summary>
-    /// takes gold from the _player. _you can only withdraw from your main port.
+    /// takes gold from the _player. _you can only withdraw from your own _port.
     /// </summary>
     /// <param name="amount"> The amount of gold to withdraw. Amounts <= 0 will withdraw everything. </param>
     bool withdraw(int amount = 0);

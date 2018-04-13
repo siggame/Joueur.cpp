@@ -27,6 +27,7 @@ namespace pirates
 
 Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
+        {"decoration", Any{std::decay<decltype(decoration)>::type{}}},
         {"gold", Any{std::decay<decltype(gold)>::type{}}},
         {"port", Any{std::decay<decltype(port)>::type{}}},
         {"tileEast", Any{std::decay<decltype(tile_east)>::type{}}},
@@ -38,6 +39,7 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
     },
+    decoration(variables_["decoration"].as<std::decay<decltype(decoration)>::type>()),
     gold(variables_["gold"].as<std::decay<decltype(gold)>::type>()),
     port(variables_["port"].as<std::decay<decltype(port)>::type>()),
     tile_east(variables_["tileEast"].as<std::decay<decltype(tile_east)>::type>()),
