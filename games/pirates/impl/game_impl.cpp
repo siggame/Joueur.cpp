@@ -42,9 +42,9 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"maxTurns", Any{std::decay<decltype(max_turns)>::type{}}},
         {"merchantGoldRate", Any{std::decay<decltype(merchant_gold_rate)>::type{}}},
         {"merchantInterestRate", Any{std::decay<decltype(merchant_interest_rate)>::type{}}},
-        {"merchantPorts", Any{std::decay<decltype(merchant_ports)>::type{}}},
         {"minInterestDistance", Any{std::decay<decltype(min_interest_distance)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
+        {"ports", Any{std::decay<decltype(ports)>::type{}}},
         {"restRange", Any{std::decay<decltype(rest_range)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"shipCost", Any{std::decay<decltype(ship_cost)>::type{}}},
@@ -70,9 +70,9 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     max_turns(variables_["maxTurns"].as<std::decay<decltype(max_turns)>::type>()),
     merchant_gold_rate(variables_["merchantGoldRate"].as<std::decay<decltype(merchant_gold_rate)>::type>()),
     merchant_interest_rate(variables_["merchantInterestRate"].as<std::decay<decltype(merchant_interest_rate)>::type>()),
-    merchant_ports(variables_["merchantPorts"].as<std::decay<decltype(merchant_ports)>::type>()),
     min_interest_distance(variables_["minInterestDistance"].as<std::decay<decltype(min_interest_distance)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
+    ports(variables_["ports"].as<std::decay<decltype(ports)>::type>()),
     rest_range(variables_["restRange"].as<std::decay<decltype(rest_range)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     ship_cost(variables_["shipCost"].as<std::decay<decltype(ship_cost)>::type>()),
@@ -93,15 +93,15 @@ Game_::~Game_() = default;
 
 void Game_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "merchantPorts")
+    if(name == "players")
     {
-        auto& vec = variables_["merchantPorts"].as<std::decay<decltype(merchant_ports)>::type>();
+        auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
         vec.resize(size);
         return;
     }
-    else if(name == "players")
+    else if(name == "ports")
     {
-        auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
+        auto& vec = variables_["ports"].as<std::decay<decltype(ports)>::type>();
         vec.resize(size);
         return;
     }
@@ -122,20 +122,20 @@ void Game_::resize(const std::string& name, std::size_t size)
 
 void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "merchantPorts")
+    if(name == "players")
     {
-        using type = std::decay<decltype(merchant_ports)>::type;
-        auto& vec = variables_["merchantPorts"].as<type>();
+        using type = std::decay<decltype(players)>::type;
+        auto& vec = variables_["players"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
         }
         return;
     } 
-    else if(name == "players")
+    else if(name == "ports")
     {
-        using type = std::decay<decltype(players)>::type;
-        auto& vec = variables_["players"].as<type>();
+        using type = std::decay<decltype(ports)>::type;
+        auto& vec = variables_["ports"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);

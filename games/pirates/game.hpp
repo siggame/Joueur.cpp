@@ -116,11 +116,6 @@ public:
     const double& merchant_interest_rate;
 
     /// <summary>
-    /// Every Port in the game. Merchant ports have owner set to null.
-    /// </summary>
-    const std::vector<Port>& merchant_ports;
-
-    /// <summary>
     /// The Euclidean distance buried gold must be from the Player's Port to accumulate interest.
     /// </summary>
     const double& min_interest_distance;
@@ -129,6 +124,11 @@ public:
     /// List of all the players in the game.
     /// </summary>
     const std::vector<Player>& players;
+
+    /// <summary>
+    /// Every Port in the game. Merchant ports have owner set to null.
+    /// </summary>
+    const std::vector<Port>& ports;
 
     /// <summary>
     /// How far a Unit can be from a Port to rest. Range is circular.
