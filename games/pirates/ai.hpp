@@ -1,7 +1,6 @@
 #ifndef GAMES_PIRATES_AI_HPP
 #define GAMES_PIRATES_AI_HPP
 
-
 #include "impl/pirates.hpp"
 #include "game.hpp"
 #include "game_object.hpp"

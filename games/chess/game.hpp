@@ -52,7 +52,7 @@ public:
     const int& current_turn;
 
     /// <summary>
-    /// Forsyth–Edwards Notation, a notation that describes the game board.
+    /// Forsythâ€“Edwards Notation, a notation that describes the game board.
     /// </summary>
     const std::string& fen;
 
