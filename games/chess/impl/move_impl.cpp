@@ -2,6 +2,8 @@
 // Never try to directly create an instance of this class, or modify its member variables.
 // This contains implementation details, written by code, and only useful to code
 
+
+
 #include "../move.hpp"
 #include "../../../joueur/src/base_ai.hpp"
 #include "../../../joueur/src/any.hpp"

@@ -4,8 +4,7 @@
 #include "ai.hpp"
 
 ${merge("// ", "includes", "// You can add #includes here for your AI.")}
-<%include file="impl/functions.noCreer" />
-namespace cpp_client
+<%include file="impl/functions.noCreer" />namespace cpp_client
 {
 
 namespace ${underscore(game_name)}

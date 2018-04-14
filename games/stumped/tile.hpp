@@ -122,14 +122,14 @@ public:
     /// <summary>
     /// Checks if a Tile is pathable to units
     /// </summary>
-    /// <return>true if pathable, false otherwise</return>
+    /// <returns>true if pathable, false otherwise</returns>
     bool is_pathable();
 
     /// <summary>
     /// Checks if this Tile has a specific neighboring Tile
     /// </summary>
     /// <param name="tile">Tile to check against</param>
-    /// <return>if the tile is a neighbor of this Tile, false otherwise</return>
+    /// <returns>if the tile is a neighbor of this Tile, false otherwise</returns>
     bool has_neighbor(const Tile& tile);
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

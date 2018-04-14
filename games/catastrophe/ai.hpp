@@ -1,7 +1,6 @@
 #ifndef GAMES_CATASTROPHE_AI_HPP
 #define GAMES_CATASTROPHE_AI_HPP
 
-
 #include "impl/catastrophe.hpp"
 #include "game.hpp"
 #include "game_object.hpp"
