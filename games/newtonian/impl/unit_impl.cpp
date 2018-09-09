@@ -81,12 +81,14 @@ bool Unit_::attack(const Tile& tile)
     return to_return.as<bool>();
 }
 
-bool Unit_::drop(int amount, const std::string& material)
+bool Unit_::drop(const Tile& tile, int amount, const std::string& material)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "drop", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"amount\":") + std::to_string(amount);
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
+
+    order += std::string(",\"amount\":") + std::to_string(amount);
 
     order += std::string(",\"material\":") + std::string("\"") + material + "\"";
 
@@ -139,12 +141,14 @@ bool Unit_::move(const Tile& tile)
     return to_return.as<bool>();
 }
 
-bool Unit_::pickup(int amount, const std::string& material)
+bool Unit_::pickup(const Tile& tile, int amount, const std::string& material)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "pickup", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"amount\":") + std::to_string(amount);
+    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
+
+    order += std::string(",\"amount\":") + std::to_string(amount);
 
     order += std::string(",\"material\":") + std::string("\"") + material + "\"";
 

@@ -28,9 +28,7 @@ namespace newtonian
 
 Machine_::Machine_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
-        {"input", Any{std::decay<decltype(input)>::type{}}},
         {"oreType", Any{std::decay<decltype(ore_type)>::type{}}},
-        {"output", Any{std::decay<decltype(output)>::type{}}},
         {"refineInput", Any{std::decay<decltype(refine_input)>::type{}}},
         {"refineOutput", Any{std::decay<decltype(refine_output)>::type{}}},
         {"refineTime", Any{std::decay<decltype(refine_time)>::type{}}},
@@ -38,9 +36,7 @@ Machine_::Machine_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"timeLeft", Any{std::decay<decltype(time_left)>::type{}}},
         {"worked", Any{std::decay<decltype(worked)>::type{}}},
     },
-    input(variables_["input"].as<std::decay<decltype(input)>::type>()),
     ore_type(variables_["oreType"].as<std::decay<decltype(ore_type)>::type>()),
-    output(variables_["output"].as<std::decay<decltype(output)>::type>()),
     refine_input(variables_["refineInput"].as<std::decay<decltype(refine_input)>::type>()),
     refine_output(variables_["refineOutput"].as<std::decay<decltype(refine_output)>::type>()),
     refine_time(variables_["refineTime"].as<std::decay<decltype(refine_time)>::type>()),

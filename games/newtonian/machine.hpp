@@ -39,19 +39,9 @@ class Machine_ : public Game_object_
 public:
 
     /// <summary>
-    /// The amount of ore that is in the machine. Cannot be higher than the refineInput value.
-    /// </summary>
-    const int& input;
-
-    /// <summary>
     /// What type of ore the machine takes it, also determins the type of material it outputs.
     /// </summary>
     const std::string& ore_type;
-
-    /// <summary>
-    /// The amount of material that is waiting to be collected in the machine.
-    /// </summary>
-    const int& output;
 
     /// <summary>
     /// The amount of ore that needs to be inputted into the machine.
