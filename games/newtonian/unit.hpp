@@ -54,7 +54,7 @@ public:
     const int& blueium_ore;
 
     /// <summary>
-    /// If a ship is on this Tile, how much health it has remaining.
+    /// The remaining health of a unit.
     /// </summary>
     const int& health;
 
@@ -118,9 +118,10 @@ public:
     /// <summary>
     /// drops material at the units feat
     /// </summary>
+    /// <param name="tile"> The tile the materials will be dropped on. </param>
     /// <param name="amount"> The amount of materials to dropped. Amounts <= 0 will drop all the materials on the Unit. </param>
     /// <param name="material"> The material the unit will drop. </param>
-    bool drop(int amount, const std::string& material);
+    bool drop(const Tile& tile, int amount, const std::string& material);
 
     /// <summary>
     /// moves this _unit from its current _tile to an adjacent _tile.
@@ -131,9 +132,10 @@ public:
     /// <summary>
     /// picks up material at the units feat
     /// </summary>
+    /// <param name="tile"> The tile the materials will be dropped on. </param>
     /// <param name="amount"> The amount of materials to pick up. Amounts <= 0 will pick up all the materials on the Unit. </param>
     /// <param name="material"> The material the unit will pick up. </param>
-    bool pickup(int amount, const std::string& material);
+    bool pickup(const Tile& tile, int amount, const std::string& material);
 
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

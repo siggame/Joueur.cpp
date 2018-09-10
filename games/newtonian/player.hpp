@@ -44,11 +44,6 @@ public:
     const std::string& client_type;
 
     /// <summary>
-    /// Every generator tile owned by this Player.
-    /// </summary>
-    const std::vector<Tile>& generator_tiles;
-
-    /// <summary>
     /// The amount of heat this Player has.
     /// </summary>
     const int& heat;

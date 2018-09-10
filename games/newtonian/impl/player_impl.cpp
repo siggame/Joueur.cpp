@@ -29,7 +29,6 @@ namespace newtonian
 Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"clientType", Any{std::decay<decltype(client_type)>::type{}}},
-        {"generatorTiles", Any{std::decay<decltype(generator_tiles)>::type{}}},
         {"heat", Any{std::decay<decltype(heat)>::type{}}},
         {"internSpawn", Any{std::decay<decltype(intern_spawn)>::type{}}},
         {"lost", Any{std::decay<decltype(lost)>::type{}}},
@@ -45,7 +44,6 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"won", Any{std::decay<decltype(won)>::type{}}},
     },
     client_type(variables_["clientType"].as<std::decay<decltype(client_type)>::type>()),
-    generator_tiles(variables_["generatorTiles"].as<std::decay<decltype(generator_tiles)>::type>()),
     heat(variables_["heat"].as<std::decay<decltype(heat)>::type>()),
     intern_spawn(variables_["internSpawn"].as<std::decay<decltype(intern_spawn)>::type>()),
     lost(variables_["lost"].as<std::decay<decltype(lost)>::type>()),
@@ -70,13 +68,7 @@ Player_::~Player_() = default;
 
 void Player_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "generatorTiles")
-    {
-        auto& vec = variables_["generatorTiles"].as<std::decay<decltype(generator_tiles)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "units")
+    if(name == "units")
     {
         auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
         vec.resize(size);
@@ -93,17 +85,7 @@ void Player_::resize(const std::string& name, std::size_t size)
 
 void Player_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "generatorTiles")
-    {
-        using type = std::decay<decltype(generator_tiles)>::type;
-        auto& vec = variables_["generatorTiles"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "units")
+    if(name == "units")
     {
         using type = std::decay<decltype(units)>::type;
         auto& vec = variables_["units"].as<type>();

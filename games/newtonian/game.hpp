@@ -122,6 +122,11 @@ public:
     const int& spawn_time;
 
     /// <summary>
+    /// How many turns a unit is stunned.
+    /// </summary>
+    const int& stun_time;
+
+    /// <summary>
     /// All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     /// </summary>
     const std::vector<Tile>& tiles;
@@ -130,6 +135,11 @@ public:
     /// The amount of time (in nano-seconds) added after each player performs a turn.
     /// </summary>
     const int& time_added_per_turn;
+
+    /// <summary>
+    /// How many turns a unit is immune to being stunned.
+    /// </summary>
+    const int& time_immune;
 
     /// <summary>
     /// Every Unit in the game.

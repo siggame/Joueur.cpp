@@ -44,8 +44,10 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"refinedValue", Any{std::decay<decltype(refined_value)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"spawnTime", Any{std::decay<decltype(spawn_time)>::type{}}},
+        {"stunTime", Any{std::decay<decltype(stun_time)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
         {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
+        {"timeImmune", Any{std::decay<decltype(time_immune)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
     },
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
@@ -64,8 +66,10 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     refined_value(variables_["refinedValue"].as<std::decay<decltype(refined_value)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     spawn_time(variables_["spawnTime"].as<std::decay<decltype(spawn_time)>::type>()),
+    stun_time(variables_["stunTime"].as<std::decay<decltype(stun_time)>::type>()),
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
     time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
+    time_immune(variables_["timeImmune"].as<std::decay<decltype(time_immune)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>())
 {
     for(auto&& obj : init)
