@@ -52,7 +52,7 @@ public:
     const int& current_turn;
 
     /// <summary>
-    /// Determins the rate at which the highest value victory points degrade.
+    /// Percent loss from the difference of Heat and Pressure. (0 to 1).
     /// </summary>
     const double& degrade_rate;
 
@@ -62,12 +62,12 @@ public:
     const std::unordered_map<std::string, Game_object>& game_objects;
 
     /// <summary>
-    /// How many interns a player can have.
+    /// The maximum number of interns a player can have.
     /// </summary>
     const int& intern_cap;
 
     /// <summary>
-    /// Every job in the game.
+    /// A list of all jobs. first item is intern, second is physicists, and third is manager.
     /// </summary>
     const std::vector<Job>& jobs;
 
@@ -77,7 +77,7 @@ public:
     const std::vector<Machine>& machines;
 
     /// <summary>
-    /// How many managers a player can have.
+    /// The maximum number of managers a player can have.
     /// </summary>
     const int& manager_cap;
 
@@ -92,12 +92,17 @@ public:
     const int& map_width;
 
     /// <summary>
+    /// The number of materials that spawn per spawn cycle.
+    /// </summary>
+    const int& material_spawn;
+
+    /// <summary>
     /// The maximum number of turns before the game will automatically end.
     /// </summary>
     const int& max_turns;
 
     /// <summary>
-    /// How many physicists a player can have.
+    /// The maximum number of physicists a player can have.
     /// </summary>
     const int& physicist_cap;
 
@@ -107,7 +112,7 @@ public:
     const std::vector<Player>& players;
 
     /// <summary>
-    /// How much each refined ore adds when put in the generator.
+    /// The amount of victory points added when a refined ore is consumed by the generator.
     /// </summary>
     const int& refined_value;
 
@@ -117,12 +122,12 @@ public:
     const std::string& session;
 
     /// <summary>
-    /// The number of turns between spawning unit waves.
+    /// The amount of turns it takes a unit to spawn.
     /// </summary>
     const int& spawn_time;
 
     /// <summary>
-    /// How many turns a unit is stunned.
+    /// The amount of turns a unit cannot do anything when stunned.
     /// </summary>
     const int& stun_time;
 
@@ -137,7 +142,7 @@ public:
     const int& time_added_per_turn;
 
     /// <summary>
-    /// How many turns a unit is immune to being stunned.
+    /// The number turns a unit is immune to being stunned.
     /// </summary>
     const int& time_immune;
 

@@ -1,5 +1,5 @@
 // Machine
-// A machine on a tile.
+// A machine in the game. Used to refine ore.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.

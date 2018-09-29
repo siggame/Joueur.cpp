@@ -44,12 +44,17 @@ public:
     const std::string& client_type;
 
     /// <summary>
+    /// Every generator Tile owned by this Player. (listed from the outer edges inward, from top to bottom).
+    /// </summary>
+    const std::vector<Tile>& generator_tiles;
+
+    /// <summary>
     /// The amount of heat this Player has.
     /// </summary>
     const int& heat;
 
     /// <summary>
-    /// Time left till a intern spawns.
+    /// The time left till a intern spawns. (0 to spawnTime).
     /// </summary>
     const int& intern_spawn;
 
@@ -59,7 +64,7 @@ public:
     const bool& lost;
 
     /// <summary>
-    /// Time left till a manager spawns.
+    /// The time left till a manager spawns. (0 to spawnTime).
     /// </summary>
     const int& manager_spawn;
 
@@ -74,7 +79,7 @@ public:
     const Player& opponent;
 
     /// <summary>
-    /// Time left till a physicist spawns.
+    /// The time left till a physicist spawns. (0 to spawnTime).
     /// </summary>
     const int& physicist_spawn;
 
@@ -92,6 +97,11 @@ public:
     /// The reason why the player won the game.
     /// </summary>
     const std::string& reason_won;
+
+    /// <summary>
+    /// All the tiles this Player's units can spawn on. (listed from the outer edges inward, from top to bottom).
+    /// </summary>
+    const std::vector<Tile>& spawn_tiles;
 
     /// <summary>
     /// The amount of time (in ns) remaining for this AI to send commands.

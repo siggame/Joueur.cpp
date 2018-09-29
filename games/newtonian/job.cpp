@@ -1,5 +1,5 @@
 // Job
-// Information about a units's job.
+// Information about a unit's job.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.

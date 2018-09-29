@@ -2,7 +2,7 @@
 #define GAMES_NEWTONIAN_JOB_H
 
 // Job
-// Information about a units's job.
+// Information about a unit's job.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -32,14 +32,14 @@ namespace newtonian
 {
 
 /// <summary>
-/// Information about a units's job.
+/// Information about a unit's job.
 /// </summary>
 class Job_ : public Game_object_
 {
 public:
 
     /// <summary>
-    /// How many combined resources a beaver with this Job can hold at once.
+    /// How many combined resources a unit with this Job can hold at once.
     /// </summary>
     const int& carry_limit;
 

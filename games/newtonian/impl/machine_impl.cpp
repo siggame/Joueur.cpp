@@ -33,7 +33,6 @@ Machine_::Machine_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"refineOutput", Any{std::decay<decltype(refine_output)>::type{}}},
         {"refineTime", Any{std::decay<decltype(refine_time)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
-        {"timeLeft", Any{std::decay<decltype(time_left)>::type{}}},
         {"worked", Any{std::decay<decltype(worked)>::type{}}},
     },
     ore_type(variables_["oreType"].as<std::decay<decltype(ore_type)>::type>()),
@@ -41,7 +40,6 @@ Machine_::Machine_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     refine_output(variables_["refineOutput"].as<std::decay<decltype(refine_output)>::type>()),
     refine_time(variables_["refineTime"].as<std::decay<decltype(refine_time)>::type>()),
     tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
-    time_left(variables_["timeLeft"].as<std::decay<decltype(time_left)>::type>()),
     worked(variables_["worked"].as<std::decay<decltype(worked)>::type>())
 {
     for(auto&& obj : init)

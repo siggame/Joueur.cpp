@@ -49,22 +49,22 @@ public:
     const int& blueium_ore;
 
     /// <summary>
-    /// (Visualizer only) Different tile tipes, cracked, slightly dirty, ect. This has no effect on gameplay, but feel free to use it if you want.
+    /// (Visualizer only) Different tile types, cracked, slightly dirty, etc. This has no effect on gameplay, but feel free to use it if you want.
     /// </summary>
     const int& decoration;
 
     /// <summary>
-    /// The direction of a conveyor belt ('blank', 'north', 'east', 'south', or 'west'). blank mean no conveyor.
+    /// The direction of a conveyor belt ('blank', 'north', 'east', 'south', or 'west'). blank means conveyor doesn't move.
     /// </summary>
     const std::string& direction;
 
     /// <summary>
-    /// Weither or not the tile is a wall.
+    /// Whether or not the tile is a wall.
     /// </summary>
     const bool& is_wall;
 
     /// <summary>
-    /// The machine on this Tile if present, otherwise null.
+    /// The Machine on this Tile if present, otherwise null.
     /// </summary>
     const Machine& machine;
 
