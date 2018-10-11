@@ -120,7 +120,7 @@ public:
     /// </summary>
     /// <param name="tile"> The tile the materials will be dropped on. </param>
     /// <param name="amount"> The number of materials to dropped. Amounts <= 0 will drop all the materials. </param>
-    /// <param name="material"> The material the unit will drop. </param>
+    /// <param name="material"> The material the unit will drop. 'redium', 'blueium', 'redium ore', or 'blueium ore'. </param>
     bool drop(const Tile& tile, int amount, const std::string& material);
 
     /// <summary>
@@ -134,7 +134,7 @@ public:
     /// </summary>
     /// <param name="tile"> The tile the materials will be picked up from. </param>
     /// <param name="amount"> The amount of materials to pick up. Amounts <= 0 will pick up all the materials that the unit can. </param>
-    /// <param name="material"> The material the unit will pick up. </param>
+    /// <param name="material"> The material the unit will pick up. 'redium', 'blueium', 'redium ore', or 'blueium ore'. </param>
     bool pickup(const Tile& tile, int amount, const std::string& material);
 
 

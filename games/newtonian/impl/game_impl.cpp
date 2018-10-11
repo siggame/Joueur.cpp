@@ -50,6 +50,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
         {"timeImmune", Any{std::decay<decltype(time_immune)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
+        {"victoryAmount", Any{std::decay<decltype(victory_amount)>::type{}}},
     },
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
@@ -72,7 +73,8 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
     time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
     time_immune(variables_["timeImmune"].as<std::decay<decltype(time_immune)>::type>()),
-    units(variables_["units"].as<std::decay<decltype(units)>::type>())
+    units(variables_["units"].as<std::decay<decltype(units)>::type>()),
+    victory_amount(variables_["victoryAmount"].as<std::decay<decltype(victory_amount)>::type>())
 {
     for(auto&& obj : init)
     {

@@ -151,6 +151,11 @@ public:
     /// </summary>
     const std::vector<Unit>& units;
 
+    /// <summary>
+    /// The amount of combined heat and pressure that you need to win.
+    /// </summary>
+    const int& victory_amount;
+
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
