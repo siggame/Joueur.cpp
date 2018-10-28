@@ -59,7 +59,7 @@ public:
     const int& moves;
 
     /// <summary>
-    /// The Job title.
+    /// The Job title. 'intern', 'manager', or 'physicist'.
     /// </summary>
     const std::string& title;
 
