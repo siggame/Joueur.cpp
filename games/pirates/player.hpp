@@ -17,8 +17,6 @@
 
 #include "../../joueur/src/any.hpp"
 
-
-
 #include "game_object.hpp"
 
 #include "impl/pirates_fwd.hpp"

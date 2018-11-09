@@ -18,8 +18,6 @@
 #include "../../joueur/src/any.hpp"
 
 
-
-
 #include "../../joueur/src/base_game.hpp"
 #include "impl/pirates_fwd.hpp"
 
@@ -30,6 +28,9 @@
 namespace cpp_client
 {
 
+/// <summary>
+/// Steal from merchants and become the most infamous pirate.
+/// </summary>
 namespace pirates
 {
 

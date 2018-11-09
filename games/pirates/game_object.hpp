@@ -18,8 +18,6 @@
 #include "../../joueur/src/any.hpp"
 
 
-
-
 #include "../../joueur/src/base_object.hpp"
 #include "impl/pirates_fwd.hpp"
 
