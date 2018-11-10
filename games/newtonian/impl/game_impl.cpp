@@ -28,9 +28,9 @@ namespace newtonian
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
+        {"RegenerateRate", Any{std::decay<decltype(regenerate_rate)>::type{}}},
         {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
         {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
-        {"degradeRate", Any{std::decay<decltype(degrade_rate)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
         {"internCap", Any{std::decay<decltype(intern_cap)>::type{}}},
         {"jobs", Any{std::decay<decltype(jobs)>::type{}}},
@@ -52,9 +52,9 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"units", Any{std::decay<decltype(units)>::type{}}},
         {"victoryAmount", Any{std::decay<decltype(victory_amount)>::type{}}},
     },
+    regenerate_rate(variables_["RegenerateRate"].as<std::decay<decltype(regenerate_rate)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
-    degrade_rate(variables_["degradeRate"].as<std::decay<decltype(degrade_rate)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
     intern_cap(variables_["internCap"].as<std::decay<decltype(intern_cap)>::type>()),
     jobs(variables_["jobs"].as<std::decay<decltype(jobs)>::type>()),

@@ -104,7 +104,7 @@ public:
 
 
     /// <summary>
-    /// makes the unit do something to a machine adjacent to its tile. _interns sabotage, physicists work. _interns stun physicist, physicist stuns manager, manager stuns intern.
+    /// makes the unit do something to a machine or unit adjacent to its tile. _interns sabotage, physicists work. _interns stun physicist, physicist stuns manager, manager stuns intern.
     /// </summary>
     /// <param name="tile"> The tile the unit acts on. </param>
     bool act(const Tile& tile);
