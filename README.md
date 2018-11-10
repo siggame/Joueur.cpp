@@ -33,7 +33,7 @@ There are two ways to get this client working on Windows.
 
 You'll also need to use the following command line arguments when running the client to connect to our game server:
 
-`GAME_NAME -s r99acm.device.mst.edu`
+`GAME_NAME -s game.siggame.io`
 
 #### MinGW
 
