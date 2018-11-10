@@ -66,6 +66,250 @@ bool AI::run_turn()
 {
     // <<-- Creer-Merge: runTurn -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // Put your game logic here for run_turn here
+
+	/*
+	 * Please Note: this code is intentionally bad. you should try to optimize everything here.
+	 * The code here is only to show ou how to use the game's mechanics with the MegaMinerAI server framework.
+	 */
+	
+	// Go through all the units that you own.
+	for (auto unit : player->units)
+	{
+		// Only tries to do something if the unit actually exists. 
+		// if a unit does not have a tile, then they are dead. 
+		if (unit != nullptr && unit->tile != nullptr)
+		{
+			if (unit->job->title == "physicist")
+			{
+				// If the unit is a physicist, tries to work on machines that are ready, but if there are none,
+				// it finds and attacks enemy managers.
+				
+				// Tries to find a workable machine for blueium ore.
+				// Note: you need to get redium ore as well.
+				Tile target = nullptr;
+
+				// Goes through all the machines in the game and picks one that is ready to process the ore as its target.
+				for (auto machine : game->machines)
+				{
+					if (machine->tile->blueium_ore >= machine->refine_input)
+					{
+						target = machine->tile;
+					}
+				}
+
+				if (target == nullptr)
+				{
+					// Chases down enemy managers if there are no machines that are ready to be worked.
+					for (auto enemy : player->opponent->units)
+					{
+						// Only does anything if the unit that we found is a manager.
+						if (enemy->tile != nullptr && enemy->job->title == "manager")
+						{
+							// Moves towards the manager.
+							while (unit->moves > 0 && !find_path(unit->tile, enemy->tile).empty())
+							{
+								// Moves unit there are no moves left for the physicist.
+								if (!unit->move(find_path(unit->tile, enemy->tile)[0]))
+								{
+									break;
+								}
+							}
+
+							if (enemy->tile->has_neighbor(unit->tile))
+							{
+								if (enemy->stun_time == 0 && enemy->stun_immune == 0)
+								{
+									// Stuns the enemy manager if they are not stunned and not immune.
+								}
+								else
+								{
+									// Attacks the manager otherwise.
+									unit->attack(enemy->tile);
+								}
+							}
+
+							break;
+						}
+					}
+				}
+				else
+				{
+					// Gets the tile of the targeted machine if adjacent to it.
+					bool adjacent = false;
+
+					for (auto tile : target->get_neighbors())
+					{
+						if (tile == unit->tile)
+						{
+							adjacent = true;
+						}
+					}
+
+					// If there is a machine that is waiting to be worked on, go to it.
+					while ( unit->moves > 0 && !find_path(unit->tile, target).empty() && !adjacent)
+					{
+						if (!unit->move(find_path(unit->tile, target)[0]))
+						{
+							break;
+						}
+					}
+
+					// Acts on the target machine to run it if the physicist is adjacent.
+					if (adjacent && !unit->acted)
+					{
+						unit->act(target);
+					}
+				}
+			}
+			else if (unit->job->title == "intern")
+			{
+                // If the unit is an intern, collects blueium ore.
+                // Note: You also need to collect redium ore.
+
+                // Goes to gather resources if currently carrying less than the carry limit.
+                if (unit->blueium_ore < unit->job->carry_limit)
+                {
+                    // Your intern's current target.
+                    Tile target = nullptr;
+
+                    // Goes to collect blueium ore that isn't on a machine.
+                    for (auto tile : game->tiles)
+                    {
+                        if (tile->blueium_ore > 0 && tile->machine == nullptr)
+                        {
+                            target = tile;
+                            break;
+                        }
+                    }
+
+                    // Moves towards our target until at the target or out of moves.
+                    if (!find_path(unit->tile, target).empty())
+                    {
+                        while (unit->moves > 0 && !find_path(unit->tile, target).empty())
+                        {
+                            if (!unit->move(find_path(unit->tile, target)[0]))
+                                break;
+                        }
+                    }
+
+                    // Picks up the appropriate resource once we reach our target's tile.
+                    if (unit->tile == target && target->blueium_ore > 0)
+                    {
+                        unit->pickup(target, 0, "blueium ore");
+                    }
+
+	                
+                }
+                else
+				{
+                    // Deposits blueium ore in a machine for it if we have any.
+
+                    // Finds a machine in the game's tiles that takes blueium ore.
+                    for (auto tile : game->tiles)
+                    {
+                        if (tile->machine != nullptr && tile->machine->ore_type == "blueium")
+                        {
+                            // Moves towards the found machine until we reach it or are out of moves.
+                            while (unit->moves > 0 && !find_path(unit->tile, tile).empty())
+                            {
+                                if (!unit->move(find_path(unit->tile, tile)[0]))
+                                {
+                                    break;
+                                }
+                            }
+
+                            // Deposits blueium ore on the machine if we have reached it.
+                            if (find_path(unit->tile, tile).size() <= 1)
+                            {
+                                unit->drop(tile, 0, "blueium ore");
+                            }
+                        }
+                    }
+				}
+			}
+            else if (unit->job->title == "manager")
+            {
+                // Finds enemy interns, stuns, && attacks them if there is no blueium to take to the generator.
+                Tile target = nullptr;
+
+                for (auto tile : game->tiles)
+                {
+                    if (tile->blueium > 1 && unit->blueium < unit->job->carry_limit)
+                        target = tile;
+                }
+
+                if (target  == nullptr && unit->blueium == 0)
+                {
+                    for (auto enemy : game->units)
+                    {
+                        // Only does anything for an intern that is owned by your opponent.
+                        if (enemy->tile != nullptr && enemy->owner == player->opponent && enemy->job->title == "intern")
+                        {
+                            // Moves towards the intern until reached or out of moves.
+                            while (unit->moves > 0 && !find_path(unit->tile, enemy->tile).empty())
+                                if (!unit->move(find_path(unit->tile, enemy->tile)[0]))
+                                    break;
+
+                            // Either stuns or attacks the intern if we are within range.
+                            if (enemy->tile->has_neighbor(unit->tile))
+                            {
+                                if (enemy->stun_time == 0 && enemy->stun_immune == 0)
+                                {
+                                    // Stuns the enemy intern if they are !stunned && !immune.
+                                    unit->act(enemy->tile);
+                                }
+                                else
+								{
+                                    // Attacks the intern otherwise.
+                                    unit->attack(enemy->tile);
+								}
+
+                            break;
+                            }
+                        }
+                    }
+                }
+                else if (target != nullptr)
+                {
+                    // Moves towards our target until at the target or out of moves.
+                    while (unit->moves > 0 && find_path(unit->tile, target).size() > 1)
+					{
+                    	if (!unit->move(find_path(unit->tile, target)[0]))
+						{
+                    		break;
+						}
+					}
+
+                    // Picks up blueium once we reach our target's tile.
+                    if (find_path(unit->tile, target).size() <= 1 && target->blueium > 0)
+                    {
+                        unit->pickup(target, 0, "blueium");
+                    }
+                }
+				else if (target == nullptr && unit->blueium > 0)
+                {
+                    // Stores a tile that is part of your generator.
+                    Tile gen_tile = player->generator_tiles[0];
+
+                    // Goes to your generator && drops blueium in.
+                    while (unit->moves > 0 && !find_path(unit->tile, gen_tile).empty())
+					{
+                        if (!unit->move(find_path(unit->tile, gen_tile)[0]))
+						{
+                        	break;
+						}
+					}
+
+                    // Deposits blueium in our generator if we have reached it.
+                    if (find_path(unit->tile, gen_tile).empty())
+                    {
+                        unit->drop(gen_tile, 0, "blueium");
+                    }
+                }
+            }
+		}
+	}
+
     // <<-- /Creer-Merge: runTurn -->>
     return true;
 }
