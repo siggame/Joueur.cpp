@@ -19,9 +19,9 @@ std::string AI::invoke_by_name(const std::string& name,
                                const std::unordered_map<std::string, Any>& args)
 {
 
-    if(name == "runTurn")
+    if(name == "makeMove")
     {
-        auto ret = run_turn(
+        auto ret = make_move(
 
         );
         return attr_wrapper::json_val(ret);

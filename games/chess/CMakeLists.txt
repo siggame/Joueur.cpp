@@ -35,12 +35,6 @@ set(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/game_object.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game_object.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/game_object_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/move.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/move.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/move_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/piece.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/piece.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/piece_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/player.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/player_impl.cpp

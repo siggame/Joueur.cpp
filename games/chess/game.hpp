@@ -42,17 +42,7 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
-    /// The player whose turn it is currently. That player can send commands. Other players cannot.
-    /// </summary>
-    const Player& current_player;
-
-    /// <summary>
-    /// The current turn number, starting at 0 for the first player's turn.
-    /// </summary>
-    const int& current_turn;
-
-    /// <summary>
-    /// Forsythâ€“Edwards Notation, a notation that describes the game board.
+    /// Forsyth-Edwards Notation (fen), a notation that describes the game board state.
     /// </summary>
     const std::string& fen;
 
@@ -62,19 +52,9 @@ public:
     const std::unordered_map<std::string, Game_object>& game_objects;
 
     /// <summary>
-    /// The maximum number of turns before the game will automatically end.
+    /// The list of [known] moves that have occured in the game, in Standard Algebriac Notation (SAN) format. The first element is the first move, with the last being the most recent.
     /// </summary>
-    const int& max_turns;
-
-    /// <summary>
-    /// The list of Moves that have occurred, in order.
-    /// </summary>
-    const std::vector<Move>& moves;
-
-    /// <summary>
-    /// All the uncaptured Pieces in the game.
-    /// </summary>
-    const std::vector<Piece>& pieces;
+    const std::vector<std::string>& history;
 
     /// <summary>
     /// List of all the players in the game.
@@ -85,11 +65,6 @@ public:
     /// A unique identifier for the game instance that is being played.
     /// </summary>
     const std::string& session;
-
-    /// <summary>
-    /// How many turns until the game ends because no pawn has moved and no Piece has been taken.
-    /// </summary>
-    const int& turns_to_draw;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.

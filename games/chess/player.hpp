@@ -44,24 +44,14 @@ public:
     const std::string& client_type;
 
     /// <summary>
-    /// The color (side) of this player. Either 'White' or 'Black', with the 'White' player having the first move.
+    /// The color (side) of this player. Either 'white' or 'black', with the 'white' player having the first move.
     /// </summary>
     const std::string& color;
-
-    /// <summary>
-    /// True if this player is currently in check, and must move out of check, false otherwise.
-    /// </summary>
-    const bool& in_check;
 
     /// <summary>
     /// If the player lost the game or not.
     /// </summary>
     const bool& lost;
-
-    /// <summary>
-    /// If the Player has made their move for the turn. true means they can no longer move a Piece this turn.
-    /// </summary>
-    const bool& made_move;
 
     /// <summary>
     /// The name of the player.
@@ -72,16 +62,6 @@ public:
     /// This player's opponent in the game.
     /// </summary>
     const Player& opponent;
-
-    /// <summary>
-    /// All the uncaptured chess Pieces owned by this player.
-    /// </summary>
-    const std::vector<Piece>& pieces;
-
-    /// <summary>
-    /// The direction your Pieces must go along the rank axis until they reach the other side. Will be +1 if the Player is 'White', or -1 if the Player is 'Black'.
-    /// </summary>
-    const int& rank_direction;
 
     /// <summary>
     /// The reason why the player lost the game.

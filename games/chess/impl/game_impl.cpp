@@ -10,8 +10,6 @@
 #include "../../../joueur/src/exceptions.hpp"
 #include "../../../joueur/src/delta.hpp"
 #include "../game_object.hpp"
-#include "../move.hpp"
-#include "../piece.hpp"
 #include "../player.hpp"
 #include "chess.hpp"
 
@@ -26,27 +24,17 @@ namespace chess
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
-        {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
-        {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
         {"fen", Any{std::decay<decltype(fen)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
-        {"maxTurns", Any{std::decay<decltype(max_turns)>::type{}}},
-        {"moves", Any{std::decay<decltype(moves)>::type{}}},
-        {"pieces", Any{std::decay<decltype(pieces)>::type{}}},
+        {"history", Any{std::decay<decltype(history)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
-        {"turnsToDraw", Any{std::decay<decltype(turns_to_draw)>::type{}}},
     },
-    current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
-    current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
     fen(variables_["fen"].as<std::decay<decltype(fen)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
-    max_turns(variables_["maxTurns"].as<std::decay<decltype(max_turns)>::type>()),
-    moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
-    pieces(variables_["pieces"].as<std::decay<decltype(pieces)>::type>()),
+    history(variables_["history"].as<std::decay<decltype(history)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
-    session(variables_["session"].as<std::decay<decltype(session)>::type>()),
-    turns_to_draw(variables_["turnsToDraw"].as<std::decay<decltype(turns_to_draw)>::type>())
+    session(variables_["session"].as<std::decay<decltype(session)>::type>())
 {
     for(auto&& obj : init)
     {
@@ -58,15 +46,9 @@ Game_::~Game_() = default;
 
 void Game_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "moves")
+    if(name == "history")
     {
-        auto& vec = variables_["moves"].as<std::decay<decltype(moves)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "pieces")
-    {
-        auto& vec = variables_["pieces"].as<std::decay<decltype(pieces)>::type>();
+        auto& vec = variables_["history"].as<std::decay<decltype(history)>::type>();
         vec.resize(size);
         return;
     }
@@ -81,23 +63,13 @@ void Game_::resize(const std::string& name, std::size_t size)
 
 void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "moves")
+    if(name == "history")
     {
-        using type = std::decay<decltype(moves)>::type;
-        auto& vec = variables_["moves"].as<type>();
+        using type = std::decay<decltype(history)>::type;
+        auto& vec = variables_["history"].as<type>();
         for(auto&& val : values)
         { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "pieces")
-    {
-        using type = std::decay<decltype(pieces)>::type;
-        auto& vec = variables_["pieces"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
+            vec[val.first] = std::move(val.second.as<type::value_type>());
         }
         return;
     } 
@@ -154,11 +126,6 @@ bool Game_::is_map(const std::string& name)
 
 void Game_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
-   if(member == "currentPlayer")
-   { 
-      to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
-      return;
-   }
    throw Bad_manipulation(member + " in Game treated as a reference, but it is not a reference.");
 }
 

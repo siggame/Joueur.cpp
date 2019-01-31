@@ -28,14 +28,6 @@ std::shared_ptr<Base_object> Chess::generate_object(const std::string& type)
     {
         return std::make_shared<Game_object_>();
     }
-    else if(type == "Move")
-    {
-        return std::make_shared<Move_>();
-    }
-    else if(type == "Piece")
-    {
-        return std::make_shared<Piece_>();
-    }
     else if(type == "Player")
     {
         return std::make_shared<Player_>();

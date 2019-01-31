@@ -18,12 +18,6 @@ namespace chess
 class Game_object_;
 using Game_object = std::shared_ptr<Game_object_>;
 
-class Move_;
-using Move = std::shared_ptr<Move_>;
-
-class Piece_;
-using Piece = std::shared_ptr<Piece_>;
-
 class Player_;
 using Player = std::shared_ptr<Player_>;
 

@@ -11,8 +11,6 @@
 #include "../../joueur/src/exceptions.hpp"
 #include "../../joueur/src/delta.hpp"
 #include "game_object.hpp"
-#include "move.hpp"
-#include "piece.hpp"
 #include "player.hpp"
 #include "impl/chess.hpp"
 

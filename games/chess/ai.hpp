@@ -4,8 +4,6 @@
 #include "impl/chess.hpp"
 #include "game.hpp"
 #include "game_object.hpp"
-#include "move.hpp"
-#include "piece.hpp"
 #include "player.hpp"
 
 #include "../../joueur/src/base_ai.hpp"
@@ -66,10 +64,10 @@ public:
     virtual void game_updated() override;
 
     /// <summary>
-    /// This is called every time it is this AI.player's turn.
+    /// This is called every time it is this AI.player's turn to make a move.
     /// </summary>
-    /// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
-    bool run_turn();
+    /// <returns>A string in Standard Algebriac Notation (SAN) for the move you want to make. If the move is invalid or not properly formatted you will lose the game.</returns>
+    std::string make_move();
 
     // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional methods here.
