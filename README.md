@@ -1,10 +1,10 @@
-# C++ Joueur Client
+# C++ Chess Client
 
 This is the client for the [Cadre][cadre] AI framework. It can play multiple different games, though you will probably only be interested in one at a time.
 
 In general, try to stay out of the `joueur/` folder, it does most of the heavy lifting to play on our game servers.
 
-Each AI, and the game objects it manipulates are all in `games/game_name/`, with your very own AI living in `games/game_name/ai.hpp` and `games/game_name/ai.cpp` files for you to make smarter.
+Each AI, and the game objects it manipulates are all in `games/chess/`, with your very own AI living in `games/chess/ai.hpp` and `games/chess/ai.cpp` files for you to make smarter.
 
 ## How to Run
 
@@ -33,7 +33,7 @@ There are two ways to get this client working on Windows.
 
 You'll also need to use the following command line arguments when running the client to connect to our game server:
 
-`GAME_NAME -s game.siggame.io`
+`chess -s game.siggame.io`
 
 #### MinGW
 

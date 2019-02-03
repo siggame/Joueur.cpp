@@ -9,9 +9,7 @@
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/attr_wrapper.hpp"
 
-// <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // You can add additional #includes here
-// <<-- /Creer-Merge: includes -->>
 
 namespace cpp_client
 {
@@ -35,9 +33,7 @@ public:
     /// </summary>
     Player player;
 
-    //<<-- Creer-Merge: class variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional class variables here.
-    //<<-- /Creer-Merge: class variables -->>
 
     /// <summary>
     /// This returns your AI's name to the game server.
@@ -69,9 +65,7 @@ public:
     /// <returns>A string in Standard Algebriac Notation (SAN) for the move you want to make. If the move is invalid or not properly formatted you will lose the game.</returns>
     std::string make_move();
 
-    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional methods here.
-    // <<-- /Creer-Merge: methods -->>
 
 
 
