@@ -27,6 +27,9 @@ using Job = std::shared_ptr<Job_>;
 class Player_;
 using Player = std::shared_ptr<Player_>;
 
+class Projectile_;
+using Projectile = std::shared_ptr<Projectile_>;
+
 class Unit_;
 using Unit = std::shared_ptr<Unit_>;
 

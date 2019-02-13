@@ -14,6 +14,7 @@
 #include "game_object.hpp"
 #include "job.hpp"
 #include "player.hpp"
+#include "projectile.hpp"
 #include "unit.hpp"
 #include "impl/stardash.hpp"
 

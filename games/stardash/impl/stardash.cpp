@@ -40,6 +40,10 @@ std::shared_ptr<Base_object> Stardash::generate_object(const std::string& type)
     {
         return std::make_shared<Player_>();
     }
+    else if(type == "Projectile")
+    {
+        return std::make_shared<Projectile_>();
+    }
     else if(type == "Unit")
     {
         return std::make_shared<Unit_>();

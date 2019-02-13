@@ -13,6 +13,7 @@
 #include "../game_object.hpp"
 #include "../job.hpp"
 #include "../player.hpp"
+#include "../projectile.hpp"
 #include "../unit.hpp"
 #include "stardash.hpp"
 
@@ -33,13 +34,15 @@ Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
         {"shield", Any{std::decay<decltype(shield)>::type{}}},
         {"title", Any{std::decay<decltype(title)>::type{}}},
+        {"unitCost", Any{std::decay<decltype(unit_cost)>::type{}}},
     },
     carry_limit(variables_["carryLimit"].as<std::decay<decltype(carry_limit)>::type>()),
     damage(variables_["damage"].as<std::decay<decltype(damage)>::type>()),
     energy(variables_["energy"].as<std::decay<decltype(energy)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
     shield(variables_["shield"].as<std::decay<decltype(shield)>::type>()),
-    title(variables_["title"].as<std::decay<decltype(title)>::type>())
+    title(variables_["title"].as<std::decay<decltype(title)>::type>()),
+    unit_cost(variables_["unitCost"].as<std::decay<decltype(unit_cost)>::type>())
 {
     for(auto&& obj : init)
     {
