@@ -44,6 +44,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"planetRechargeRate", Any{std::decay<decltype(planet_recharge_rate)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"projectileSpeed", Any{std::decay<decltype(projectile_speed)>::type{}}},
+        {"projectiles", Any{std::decay<decltype(projectiles)>::type{}}},
         {"regenerateRate", Any{std::decay<decltype(regenerate_rate)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"sizeX", Any{std::decay<decltype(size_x)>::type{}}},
@@ -67,6 +68,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     planet_recharge_rate(variables_["planetRechargeRate"].as<std::decay<decltype(planet_recharge_rate)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
     projectile_speed(variables_["projectileSpeed"].as<std::decay<decltype(projectile_speed)>::type>()),
+    projectiles(variables_["projectiles"].as<std::decay<decltype(projectiles)>::type>()),
     regenerate_rate(variables_["regenerateRate"].as<std::decay<decltype(regenerate_rate)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     size_x(variables_["sizeX"].as<std::decay<decltype(size_x)>::type>()),
@@ -99,6 +101,12 @@ void Game_::resize(const std::string& name, std::size_t size)
     else if(name == "players")
     {
         auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "projectiles")
+    {
+        auto& vec = variables_["projectiles"].as<std::decay<decltype(projectiles)>::type>();
         vec.resize(size);
         return;
     }
@@ -137,6 +145,16 @@ void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std
     {
         using type = std::decay<decltype(players)>::type;
         auto& vec = variables_["players"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "projectiles")
+    {
+        using type = std::decay<decltype(projectiles)>::type;
+        auto& vec = variables_["projectiles"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
