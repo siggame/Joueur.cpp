@@ -14,14 +14,14 @@
 #include "../job.hpp"
 #include "../player.hpp"
 #include "../unit.hpp"
-#include "star_dash.hpp"
+#include "stardash.hpp"
 
 #include <type_traits>
 
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 
@@ -114,6 +114,6 @@ void Job_::rebind_by_name(Any* to_change, const std::string& member, std::shared
 }
 
 
-} // star_dash
+} // stardash
 
 } // cpp_client

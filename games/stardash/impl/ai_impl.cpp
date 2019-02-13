@@ -11,7 +11,7 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 
@@ -56,7 +56,7 @@ void AI::print_win_loss_info()
     std::cout << sgr::reset;
 }
 
-} // end namespace star_dash
+} // end namespace stardash
 
 } // end namespace cpp_client
 
