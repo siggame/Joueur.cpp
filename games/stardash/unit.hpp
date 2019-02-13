@@ -135,11 +135,10 @@ public:
     bool open(const double& x, const double& y);
 
     /// <summary>
-    /// tell you if there is a open path to that location.
+    /// attacks the specified projectile.
     /// </summary>
-    /// <param name="x"> The x position of the destination you wish to check to. </param>
-    /// <param name="y"> The y position of the destination you wish to check to. </param>
-    bool pathable(const double& x, const double& y);
+    /// <param name="missile"> The projectile being shot down. </param>
+    bool shoot_down(const Projectile& missile);
 
     /// <summary>
     /// grab materials from a friendly unit. _doesn't use a action.

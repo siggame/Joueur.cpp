@@ -87,6 +87,11 @@ public:
     const int& min_asteroid;
 
     /// <summary>
+    /// The rate at which miners grab minerals from asteroids.
+    /// </summary>
+    const int& mining_speed;
+
+    /// <summary>
     /// The rarity modifier of the most common ore. This controls how much spawns.
     /// </summary>
     const double& ore_rarity1;
@@ -110,6 +115,11 @@ public:
     /// List of all the players in the game.
     /// </summary>
     const std::vector<Player>& players;
+
+    /// <summary>
+    /// The amount of distance missiles travel through space.
+    /// </summary>
+    const int& projectile_speed;
 
     /// <summary>
     /// The regeneration rate of asteroids.

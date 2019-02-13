@@ -44,6 +44,9 @@ set(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/player.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/player_impl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/projectile.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/projectile.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/projectile_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/unit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/unit.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/unit_impl.cpp

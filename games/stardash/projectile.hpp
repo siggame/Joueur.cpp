@@ -1,8 +1,8 @@
-#ifndef GAMES_STARDASH_JOB_H
-#define GAMES_STARDASH_JOB_H
+#ifndef GAMES_STARDASH_PROJECTILE_H
+#define GAMES_STARDASH_PROJECTILE_H
 
-// Job
-// Information about a unit's job.
+// Projectile
+// Tracks any projectiles moving through space.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -32,46 +32,36 @@ namespace stardash
 {
 
 /// <summary>
-/// Information about a unit's job.
+/// Tracks any projectiles moving through space.
 /// </summary>
-class Job_ : public Game_object_
+class Projectile_ : public Game_object_
 {
 public:
 
     /// <summary>
-    /// How many combined resources a unit with this Job can hold at once.
+    /// The Player that owns and can control this Unit.
     /// </summary>
-    const int& carry_limit;
+    const Player& owner;
 
     /// <summary>
-    /// The amount of damage this Job does per attack.
+    /// The radius of the circle this projectile occupies.
     /// </summary>
-    const int& damage;
+    const double& radius;
 
     /// <summary>
-    /// The amount of starting health this Job has.
+    /// The unit that is being attacked by this projectile.
     /// </summary>
-    const int& energy;
+    const Unit& target;
 
     /// <summary>
-    /// The distance this job can move per turn.
+    /// The x value this projectile is on.
     /// </summary>
-    const int& moves;
+    const double& x;
 
     /// <summary>
-    /// The reserve the martyr use to protect allies.
+    /// The y value this projectile is on.
     /// </summary>
-    const int& shield;
-
-    /// <summary>
-    /// The Job title. 'corvette', 'missleboat', 'martyr', 'transport', or 'miner'. (in this order from 0-4).
-    /// </summary>
-    const std::string& title;
-
-    /// <summary>
-    /// How much money it costs to spawn a unit.
-    /// </summary>
-    const int& unit_cost;
+    const double& y;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
@@ -83,14 +73,14 @@ public:
    // You can add additional methods here.
    // <<-- /Creer-Merge: methods -->>
 
-   ~Job_();
+   ~Projectile_();
 
    // ####################
    // Don't edit these!
    // ####################
    /// \cond FALSE
-   Job_(std::initializer_list<std::pair<std::string, Any&&>> init);
-   Job_() : Job_({}){}
+   Projectile_(std::initializer_list<std::pair<std::string, Any&&>> init);
+   Projectile_() : Projectile_({}){}
    virtual void resize(const std::string& name, std::size_t size) override;
    virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) override;
    virtual void remove_key(const std::string& name, Any& key) override;
@@ -107,4 +97,4 @@ public:
 
 } // cpp_client
 
-#endif // GAMES_STARDASH_JOB_H
+#endif // GAMES_STARDASH_PROJECTILE_H

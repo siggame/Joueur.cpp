@@ -13,6 +13,7 @@
 #include "../game_object.hpp"
 #include "../job.hpp"
 #include "../player.hpp"
+#include "../projectile.hpp"
 #include "../unit.hpp"
 #include "stardash.hpp"
 
@@ -140,14 +141,12 @@ bool Unit_::open(const double& x, const double& y)
     return to_return.as<bool>();
 }
 
-bool Unit_::pathable(const double& x, const double& y)
+bool Unit_::shoot_down(const Projectile& missile)
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "pathable", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "shootDown", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"x\":") + std::to_string(x);
-
-    order += std::string(",\"y\":") + std::to_string(y);
+    order += std::string("\"missile\":") + (missile ? (std::string("{\"id\":\"") + missile->id + "\"}") : std::string("null"));
 
     order += "}}}";
     Stardash::instance()->send(order);

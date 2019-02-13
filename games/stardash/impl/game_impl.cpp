@@ -13,6 +13,7 @@
 #include "../game_object.hpp"
 #include "../job.hpp"
 #include "../player.hpp"
+#include "../projectile.hpp"
 #include "../unit.hpp"
 #include "stardash.hpp"
 
@@ -36,11 +37,13 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"maxAsteroid", Any{std::decay<decltype(max_asteroid)>::type{}}},
         {"maxTurns", Any{std::decay<decltype(max_turns)>::type{}}},
         {"minAsteroid", Any{std::decay<decltype(min_asteroid)>::type{}}},
+        {"miningSpeed", Any{std::decay<decltype(mining_speed)>::type{}}},
         {"oreRarity1", Any{std::decay<decltype(ore_rarity1)>::type{}}},
         {"oreRarity2", Any{std::decay<decltype(ore_rarity2)>::type{}}},
         {"oreRarity3", Any{std::decay<decltype(ore_rarity3)>::type{}}},
         {"planetRechargeRate", Any{std::decay<decltype(planet_recharge_rate)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
+        {"projectileSpeed", Any{std::decay<decltype(projectile_speed)>::type{}}},
         {"regenerateRate", Any{std::decay<decltype(regenerate_rate)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"sizeX", Any{std::decay<decltype(size_x)>::type{}}},
@@ -57,11 +60,13 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     max_asteroid(variables_["maxAsteroid"].as<std::decay<decltype(max_asteroid)>::type>()),
     max_turns(variables_["maxTurns"].as<std::decay<decltype(max_turns)>::type>()),
     min_asteroid(variables_["minAsteroid"].as<std::decay<decltype(min_asteroid)>::type>()),
+    mining_speed(variables_["miningSpeed"].as<std::decay<decltype(mining_speed)>::type>()),
     ore_rarity1(variables_["oreRarity1"].as<std::decay<decltype(ore_rarity1)>::type>()),
     ore_rarity2(variables_["oreRarity2"].as<std::decay<decltype(ore_rarity2)>::type>()),
     ore_rarity3(variables_["oreRarity3"].as<std::decay<decltype(ore_rarity3)>::type>()),
     planet_recharge_rate(variables_["planetRechargeRate"].as<std::decay<decltype(planet_recharge_rate)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
+    projectile_speed(variables_["projectileSpeed"].as<std::decay<decltype(projectile_speed)>::type>()),
     regenerate_rate(variables_["regenerateRate"].as<std::decay<decltype(regenerate_rate)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     size_x(variables_["sizeX"].as<std::decay<decltype(size_x)>::type>()),
