@@ -69,6 +69,11 @@ public:
     const Player& opponent;
 
     /// <summary>
+    /// Every Projectile owned by this Player.
+    /// </summary>
+    const std::vector<Projectile>& projectiles;
+
+    /// <summary>
     /// The reason why the player lost the game.
     /// </summary>
     const std::string& reason_lost;

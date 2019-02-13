@@ -122,6 +122,11 @@ public:
     const int& projectile_speed;
 
     /// <summary>
+    /// Every projectile in the game.
+    /// </summary>
+    const std::vector<Projectile>& projectiles;
+
+    /// <summary>
     /// The regeneration rate of asteroids.
     /// </summary>
     const double& regenerate_rate;

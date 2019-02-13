@@ -34,6 +34,7 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"money", Any{std::decay<decltype(money)>::type{}}},
         {"name", Any{std::decay<decltype(name)>::type{}}},
         {"opponent", Any{std::decay<decltype(opponent)>::type{}}},
+        {"projectiles", Any{std::decay<decltype(projectiles)>::type{}}},
         {"reasonLost", Any{std::decay<decltype(reason_lost)>::type{}}},
         {"reasonWon", Any{std::decay<decltype(reason_won)>::type{}}},
         {"timeRemaining", Any{std::decay<decltype(time_remaining)>::type{}}},
@@ -47,6 +48,7 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     money(variables_["money"].as<std::decay<decltype(money)>::type>()),
     name(variables_["name"].as<std::decay<decltype(name)>::type>()),
     opponent(variables_["opponent"].as<std::decay<decltype(opponent)>::type>()),
+    projectiles(variables_["projectiles"].as<std::decay<decltype(projectiles)>::type>()),
     reason_lost(variables_["reasonLost"].as<std::decay<decltype(reason_lost)>::type>()),
     reason_won(variables_["reasonWon"].as<std::decay<decltype(reason_won)>::type>()),
     time_remaining(variables_["timeRemaining"].as<std::decay<decltype(time_remaining)>::type>()),
@@ -64,7 +66,13 @@ Player_::~Player_() = default;
 
 void Player_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "units")
+    if(name == "projectiles")
+    {
+        auto& vec = variables_["projectiles"].as<std::decay<decltype(projectiles)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "units")
     {
         auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
         vec.resize(size);
@@ -81,7 +89,17 @@ void Player_::resize(const std::string& name, std::size_t size)
 
 void Player_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "units")
+    if(name == "projectiles")
+    {
+        using type = std::decay<decltype(projectiles)>::type;
+        auto& vec = variables_["projectiles"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "units")
     {
         using type = std::decay<decltype(units)>::type;
         auto& vec = variables_["units"].as<type>();
