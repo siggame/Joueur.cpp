@@ -5,7 +5,7 @@
 
 file(READ ${CMAKE_CURRENT_SOURCE_DIR}/additional_files.txt extras)
 
-add_custom_target(StarDash_additional ALL
+add_custom_target(Stardash_additional ALL
     COMMAND ${CMAKE_COMMAND} -E touch ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt
     DEPENDS ${CMAKE_CURRENT_SOURCE_DIR}/additional_files.txt)
 
@@ -23,15 +23,15 @@ foreach(file IN ITEMS ${extras})
 endforeach(file)
 
 
-add_dependencies(dependencies StarDash_additional)
+add_dependencies(dependencies Stardash_additional)
 
 set(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/ai.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/ai.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/ai_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/star_dash.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/star_dash.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/star_dash_fwd.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/stardash.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/stardash.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/stardash_fwd.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/body.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/body.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/body_impl.cpp

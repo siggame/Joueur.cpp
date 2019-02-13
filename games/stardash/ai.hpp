@@ -1,7 +1,7 @@
-#ifndef GAMES_STAR_DASH_AI_HPP
-#define GAMES_STAR_DASH_AI_HPP
+#ifndef GAMES_STARDASH_AI_HPP
+#define GAMES_STARDASH_AI_HPP
 
-#include "impl/star_dash.hpp"
+#include "impl/stardash.hpp"
 #include "game.hpp"
 #include "body.hpp"
 #include "game_object.hpp"
@@ -19,11 +19,11 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 /// <summary>
-/// This is the header file for building your StarDash AI
+/// This is the header file for building your Stardash AI
 /// </summary>
 class AI : public Base_ai
 {
@@ -94,8 +94,8 @@ public:
 
 };
 
-} // STAR_DASH
+} // STARDASH
 
 } // cpp_client
 
-#endif // GAMES_STAR_DASH_AI_HPP
+#endif // GAMES_STARDASH_AI_HPP

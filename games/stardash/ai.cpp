@@ -10,7 +10,7 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 /// <summary>
@@ -22,7 +22,7 @@ std::string AI::get_name() const
 {
     // <<-- Creer-Merge: get-name -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // REPLACE WITH YOUR TEAM NAME!
-    return "StarDash C++ Player";
+    return "Stardash C++ Player";
     // <<-- /Creer-Merge: get-name -->>
 }
 
@@ -74,6 +74,6 @@ bool AI::run_turn()
 // You can add additional methods here for your AI to call
 //<<-- /Creer-Merge: methods -->>
 
-} // star_dash
+} // stardash
 
 } // cpp_client

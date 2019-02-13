@@ -1,8 +1,8 @@
-#ifndef GAMES_STARDASH_PLAYER_H
-#define GAMES_STARDASH_PLAYER_H
+#ifndef GAMES_STARDASH_BODY_H
+#define GAMES_STARDASH_BODY_H
 
-// Player
-// A player in this game. Every AI controls one player.
+// Body
+// A celestial body located within the game.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -19,7 +19,7 @@
 
 #include "game_object.hpp"
 
-#include "impl/star_dash_fwd.hpp"
+#include "impl/stardash_fwd.hpp"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // you can add additional #includes here
@@ -28,94 +28,72 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 /// <summary>
-/// A player in this game. Every AI controls one player.
+/// A celestial body located within the game.
 /// </summary>
-class Player_ : public Game_object_
+class Body_ : public Game_object_
 {
 public:
 
     /// <summary>
-    /// What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
+    /// The amount of material the object has.
     /// </summary>
-    const std::string& client_type;
+    const int& amount;
 
     /// <summary>
-    /// The home base of the player.
+    /// The type of celestial body it is.
     /// </summary>
-    const Body& home_base;
+    const std::string& body_type;
 
     /// <summary>
-    /// If the player lost the game or not.
+    /// The type of material the celestial body has.
     /// </summary>
-    const bool& lost;
+    const std::string& material_type;
 
     /// <summary>
-    /// The amount of money this Player has.
+    /// The radius of the circle that this body takes up.
     /// </summary>
-    const int& money;
+    const double& radius;
 
     /// <summary>
-    /// The name of the player.
+    /// The x value this celestial body is on.
     /// </summary>
-    const std::string& name;
+    const double& x;
 
     /// <summary>
-    /// This player's opponent in the game.
+    /// The y value this celestial body is on.
     /// </summary>
-    const Player& opponent;
-
-    /// <summary>
-    /// The reason why the player lost the game.
-    /// </summary>
-    const std::string& reason_lost;
-
-    /// <summary>
-    /// The reason why the player won the game.
-    /// </summary>
-    const std::string& reason_won;
-
-    /// <summary>
-    /// The amount of time (in ns) remaining for this AI to send commands.
-    /// </summary>
-    const double& time_remaining;
-
-    /// <summary>
-    /// Every Unit owned by this Player.
-    /// </summary>
-    const std::vector<Unit>& units;
-
-    /// <summary>
-    /// The number of victory points the player has.
-    /// </summary>
-    const int& victory_points;
-
-    /// <summary>
-    /// If the player won the game or not.
-    /// </summary>
-    const bool& won;
+    const double& y;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
 
+    /// <summary>
+    /// spawn a unit on some value of this celestial body.
+    /// </summary>
+    /// <param name="x"> The x value of the spawned unit. </param>
+    /// <param name="y"> The y value of the spawned unit. </param>
+    /// <param name="title"> The job title of the unit being spawned. </param>
+    bool spawn(const double& x, const double& y, const std::string& title);
+
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
    // <<-- /Creer-Merge: methods -->>
 
-   ~Player_();
+   ~Body_();
 
    // ####################
    // Don't edit these!
    // ####################
    /// \cond FALSE
-   Player_(std::initializer_list<std::pair<std::string, Any&&>> init);
-   Player_() : Player_({}){}
+   Body_(std::initializer_list<std::pair<std::string, Any&&>> init);
+   Body_() : Body_({}){}
    virtual void resize(const std::string& name, std::size_t size) override;
    virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) override;
    virtual void remove_key(const std::string& name, Any& key) override;
@@ -128,8 +106,8 @@ public:
     // ####################
 };
 
-} // starDash
+} // stardash
 
 } // cpp_client
 
-#endif // GAMES_STARDASH_PLAYER_H
+#endif // GAMES_STARDASH_BODY_H

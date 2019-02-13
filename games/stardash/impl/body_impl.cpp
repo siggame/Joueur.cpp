@@ -14,14 +14,14 @@
 #include "../job.hpp"
 #include "../player.hpp"
 #include "../unit.hpp"
-#include "star_dash.hpp"
+#include "stardash.hpp"
 
 #include <type_traits>
 
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 bool Body_::spawn(const double& x, const double& y, const std::string& title)
@@ -36,13 +36,13 @@ bool Body_::spawn(const double& x, const double& y, const std::string& title)
     order += std::string(",\"title\":") + std::string("\"") + title + "\"";
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -146,6 +146,6 @@ void Body_::rebind_by_name(Any* to_change, const std::string& member, std::share
 }
 
 
-} // star_dash
+} // stardash
 
 } // cpp_client

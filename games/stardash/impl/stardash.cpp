@@ -2,7 +2,7 @@
 // Never try to directly create an instance of this class, or modify its member variables.
 // This contains implementation details, written by code, and only useful to code
 
-#include "star_dash.hpp"
+#include "stardash.hpp"
 #include "../../../joueur/src/register.hpp"
 
 #include "../../../joueur/src/exceptions.hpp"
@@ -10,19 +10,19 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 //register the game
-Game_registry registration("Star_dash",
-                           std::unique_ptr<Star_dash>(new Star_dash));
+Game_registry registration("Stardash",
+                           std::unique_ptr<Stardash>(new Stardash));
 
-std::unique_ptr<Base_ai> Star_dash::generate_ai()
+std::unique_ptr<Base_ai> Stardash::generate_ai()
 {
     return std::unique_ptr<Base_ai>(new AI);
 }
 
-std::shared_ptr<Base_object> Star_dash::generate_object(const std::string& type)
+std::shared_ptr<Base_object> Stardash::generate_object(const std::string& type)
 {
     if(type == "Body")
     {
@@ -47,6 +47,6 @@ std::shared_ptr<Base_object> Star_dash::generate_object(const std::string& type)
     throw Unknown_type("Unknown type " + type + " encountered.");
 }
 
-} // star_dash
+} // stardash
 
 } // cpp_client

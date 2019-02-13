@@ -14,14 +14,14 @@
 #include "../job.hpp"
 #include "../player.hpp"
 #include "../unit.hpp"
-#include "star_dash.hpp"
+#include "stardash.hpp"
 
 #include <type_traits>
 
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 bool Unit_::attack(const Unit& enemy)
@@ -32,13 +32,13 @@ bool Unit_::attack(const Unit& enemy)
     order += std::string("\"enemy\":") + (enemy ? (std::string("{\"id\":\"") + enemy->id + "\"}") : std::string("null"));
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -60,13 +60,13 @@ bool Unit_::mine(const Body& body)
     order += std::string("\"body\":") + (body ? (std::string("{\"id\":\"") + body->id + "\"}") : std::string("null"));
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -90,13 +90,13 @@ bool Unit_::move(const double& x, const double& y)
     order += std::string(",\"y\":") + std::to_string(y);
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -120,13 +120,13 @@ bool Unit_::open(const double& x, const double& y)
     order += std::string(",\"y\":") + std::to_string(y);
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -150,13 +150,13 @@ bool Unit_::pathable(const double& x, const double& y)
     order += std::string(",\"y\":") + std::to_string(y);
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -182,13 +182,13 @@ bool Unit_::transfer(const Unit& unit, int amount, const std::string& material)
     order += std::string(",\"material\":") + std::string("\"") + material + "\"";
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     auto doc = info->as<rapidjson::Document*>();
     auto loc = doc->FindMember("data");
@@ -316,6 +316,6 @@ void Unit_::rebind_by_name(Any* to_change, const std::string& member, std::share
 }
 
 
-} // star_dash
+} // stardash
 
 } // cpp_client

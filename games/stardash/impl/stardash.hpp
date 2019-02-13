@@ -2,8 +2,8 @@
 // Never try to directly create an instance of this class, or modify its member variables.
 // This contains implementation details, written by code, and only useful to code
 
-#ifndef GAMES_STAR_DASH_HPP
-#define GAMES_STAR_DASH_HPP
+#ifndef GAMES_STARDASH_HPP
+#define GAMES_STARDASH_HPP
 
 #include "../../../joueur/src/base_game.hpp"
 #include "../ai.hpp"
@@ -17,18 +17,18 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
-class Star_dash : public Game_
+class Stardash : public Game_
 {
 public:
-    Star_dash() :
+    Stardash() :
         Game_{}
     {
         instance(this);
     }
-    virtual std::string get_game_name() const noexcept override { return "Star_dash"; }
+    virtual std::string get_game_name() const noexcept override { return "Stardash"; }
     virtual std::unique_ptr<Base_ai> generate_ai() override;
     virtual std::shared_ptr<Base_object> generate_object(const std::string& type) override;
     virtual std::unordered_map<std::string, std::shared_ptr<Base_object>>& get_objects() override
@@ -43,20 +43,20 @@ public:
         static Base_game* the_game = init;
         if(!the_game)
         {
-            throw Unknown_error("StarDash instance is nullptr(??\?)");
+            throw Unknown_error("Stardash instance is nullptr(??\?)");
         }
         else if(the_game && init && the_game != init)
         {
-            throw Unknown_error("StarDash created twice(??\?)");
+            throw Unknown_error("Stardash created twice(??\?)");
         }
         return the_game;
     }
 };
 
-} // star_dash
+} // stardash
 
 } // cpp_client
 
 /// \endcond
 
-#endif // GAMES_STAR_DASH_HPP
+#endif // GAMES_STARDASH_HPP

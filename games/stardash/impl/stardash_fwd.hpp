@@ -2,8 +2,8 @@
 // Never try to directly create an instance of this class, or modify its member variables.
 // This contains implementation details, written by code, and only useful to code
 
-#ifndef GAMES_STAR_DASH_FWD_H
-#define GAMES_STAR_DASH_FWD_H
+#ifndef GAMES_STARDASH_FWD_H
+#define GAMES_STARDASH_FWD_H
 
 //include declarations for all of the internal classes in the game's namespace
 #include <memory>
@@ -11,7 +11,7 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 
@@ -37,4 +37,4 @@ using Game = Game_*;
 
 }
 
-#endif // GAMES_STAR_DASH_H
+#endif // GAMES_STARDASH_H

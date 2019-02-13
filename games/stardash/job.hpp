@@ -1,8 +1,8 @@
-#ifndef GAMES_STARDASH_BODY_H
-#define GAMES_STARDASH_BODY_H
+#ifndef GAMES_STARDASH_JOB_H
+#define GAMES_STARDASH_JOB_H
 
-// Body
-// A celestial body located within the game.
+// Job
+// Information about a unit's job.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -19,7 +19,7 @@
 
 #include "game_object.hpp"
 
-#include "impl/star_dash_fwd.hpp"
+#include "impl/stardash_fwd.hpp"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // you can add additional #includes here
@@ -28,72 +28,64 @@
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 /// <summary>
-/// A celestial body located within the game.
+/// Information about a unit's job.
 /// </summary>
-class Body_ : public Game_object_
+class Job_ : public Game_object_
 {
 public:
 
     /// <summary>
-    /// The amount of material the object has.
+    /// How many combined resources a unit with this Job can hold at once.
     /// </summary>
-    const int& amount;
+    const int& carry_limit;
 
     /// <summary>
-    /// The type of celestial body it is.
+    /// The amount of damage this Job does per attack.
     /// </summary>
-    const std::string& body_type;
+    const int& damage;
 
     /// <summary>
-    /// The type of material the celestial body has.
+    /// The amount of starting health this Job has.
     /// </summary>
-    const std::string& material_type;
+    const int& energy;
 
     /// <summary>
-    /// The radius of the circle that this body takes up.
+    /// The distance this job can move per turn.
     /// </summary>
-    const double& radius;
+    const int& moves;
 
     /// <summary>
-    /// The x value this celestial body is on.
+    /// The reserve the martyr use to protect allies.
     /// </summary>
-    const double& x;
+    const int& shield;
 
     /// <summary>
-    /// The y value this celestial body is on.
+    /// The Job title. 'corvette', 'missleboat', 'martyr', 'transport', or 'miner'. (in this order from 0-4).
     /// </summary>
-    const double& y;
+    const std::string& title;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
 
-    /// <summary>
-    /// spawn a unit on some value of this celestial body.
-    /// </summary>
-    /// <param name="x"> The x value of the spawned unit. </param>
-    /// <param name="y"> The y value of the spawned unit. </param>
-    /// <param name="title"> The job title of the unit being spawned. </param>
-    bool spawn(const double& x, const double& y, const std::string& title);
-
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
    // <<-- /Creer-Merge: methods -->>
 
-   ~Body_();
+   ~Job_();
 
    // ####################
    // Don't edit these!
    // ####################
    /// \cond FALSE
-   Body_(std::initializer_list<std::pair<std::string, Any&&>> init);
-   Body_() : Body_({}){}
+   Job_(std::initializer_list<std::pair<std::string, Any&&>> init);
+   Job_() : Job_({}){}
    virtual void resize(const std::string& name, std::size_t size) override;
    virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) override;
    virtual void remove_key(const std::string& name, Any& key) override;
@@ -106,8 +98,8 @@ public:
     // ####################
 };
 
-} // starDash
+} // stardash
 
 } // cpp_client
 
-#endif // GAMES_STARDASH_BODY_H
+#endif // GAMES_STARDASH_JOB_H

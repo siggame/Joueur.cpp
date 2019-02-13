@@ -14,14 +14,14 @@
 #include "../job.hpp"
 #include "../player.hpp"
 #include "../unit.hpp"
-#include "star_dash.hpp"
+#include "stardash.hpp"
 
 #include <type_traits>
 
 namespace cpp_client
 {
 
-namespace star_dash
+namespace stardash
 {
 
 void Game_object_::log(const std::string& message)
@@ -32,13 +32,13 @@ void Game_object_::log(const std::string& message)
     order += std::string("\"message\":") + std::string("\"") + message + "\"";
 
     order += "}}}";
-    Star_dash::instance()->send(order);
+    Stardash::instance()->send(order);
     //Go until not a delta
     std::unique_ptr<Any> info;
     //until a not bool is seen (i.e., the delta has been processed)
     do
     {
-        info = Star_dash::instance()->handle_response();
+        info = Stardash::instance()->handle_response();
     } while(info->type() == typeid(bool));
     return;
 }
@@ -108,8 +108,8 @@ void Game_object_::rebind_by_name(Any* to_change, const std::string& member, std
    throw Bad_manipulation(member + " in Game_object treated as a reference, but it is not a reference.");
 }
 
-    Base_game* Game_object_::get_game() { return Star_dash::instance(); }
+    Base_game* Game_object_::get_game() { return Stardash::instance(); }
 
-} // star_dash
+} // stardash
 
 } // cpp_client

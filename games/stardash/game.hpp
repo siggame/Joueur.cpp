@@ -19,7 +19,7 @@
 
 
 #include "../../joueur/src/base_game.hpp"
-#include "impl/star_dash_fwd.hpp"
+#include "impl/stardash_fwd.hpp"
 
 // <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // you can add additional #includes here
@@ -31,7 +31,7 @@ namespace cpp_client
 /// <summary>
 /// Collect of the most of the rarest mineral orbiting aroung the sun and outcompete your competetor.
 /// </summary>
-namespace star_dash
+namespace stardash
 {
 
 /// <summary>
@@ -171,7 +171,7 @@ public:
     // ####################
 };
 
-} // starDash
+} // stardash
 
 } // cpp_client
 
