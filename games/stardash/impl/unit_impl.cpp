@@ -213,6 +213,7 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
         {"mythicite", Any{std::decay<decltype(mythicite)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
+        {"protector", Any{std::decay<decltype(protector)>::type{}}},
         {"radius", Any{std::decay<decltype(radius)>::type{}}},
         {"rarium", Any{std::decay<decltype(rarium)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
@@ -227,6 +228,7 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
     mythicite(variables_["mythicite"].as<std::decay<decltype(mythicite)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
+    protector(variables_["protector"].as<std::decay<decltype(protector)>::type>()),
     radius(variables_["radius"].as<std::decay<decltype(radius)>::type>()),
     rarium(variables_["rarium"].as<std::decay<decltype(rarium)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
@@ -303,6 +305,11 @@ void Unit_::rebind_by_name(Any* to_change, const std::string& member, std::share
    if(member == "owner")
    { 
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
+      return;
+   }
+   if(member == "protector")
+   { 
+      to_change->as<Unit>() = std::static_pointer_cast<Unit_>(ref);
       return;
    }
    try

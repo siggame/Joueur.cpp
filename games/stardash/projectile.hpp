@@ -39,6 +39,11 @@ class Projectile_ : public Game_object_
 public:
 
     /// <summary>
+    /// The amount of remaining distance the projectile can move.
+    /// </summary>
+    const int& fuel;
+
+    /// <summary>
     /// The Player that owns and can control this Unit.
     /// </summary>
     const Player& owner;
