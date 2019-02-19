@@ -84,6 +84,11 @@ public:
     const Player& owner;
 
     /// <summary>
+    /// The martyr ship that is currently shielding this ship if any.
+    /// </summary>
+    const Unit& protector;
+
+    /// <summary>
     /// The radius of the circle this unit occupies.
     /// </summary>
     const double& radius;

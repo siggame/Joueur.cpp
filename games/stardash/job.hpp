@@ -59,6 +59,11 @@ public:
     const int& moves;
 
     /// <summary>
+    /// The distance at which this job can effect things.
+    /// </summary>
+    const int& range;
+
+    /// <summary>
     /// The reserve the martyr use to protect allies.
     /// </summary>
     const int& shield;

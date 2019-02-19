@@ -32,6 +32,7 @@ Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"damage", Any{std::decay<decltype(damage)>::type{}}},
         {"energy", Any{std::decay<decltype(energy)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
+        {"range", Any{std::decay<decltype(range)>::type{}}},
         {"shield", Any{std::decay<decltype(shield)>::type{}}},
         {"title", Any{std::decay<decltype(title)>::type{}}},
         {"unitCost", Any{std::decay<decltype(unit_cost)>::type{}}},
@@ -40,6 +41,7 @@ Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     damage(variables_["damage"].as<std::decay<decltype(damage)>::type>()),
     energy(variables_["energy"].as<std::decay<decltype(energy)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
+    range(variables_["range"].as<std::decay<decltype(range)>::type>()),
     shield(variables_["shield"].as<std::decay<decltype(shield)>::type>()),
     title(variables_["title"].as<std::decay<decltype(title)>::type>()),
     unit_cost(variables_["unitCost"].as<std::decay<decltype(unit_cost)>::type>())
