@@ -54,6 +54,11 @@ public:
     const std::string& material_type;
 
     /// <summary>
+    /// The Player that owns and can control this Unit.
+    /// </summary>
+    const Player& owner;
+
+    /// <summary>
     /// The radius of the circle that this body takes up.
     /// </summary>
     const double& radius;

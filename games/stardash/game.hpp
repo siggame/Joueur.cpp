@@ -57,6 +57,11 @@ public:
     const int& current_turn;
 
     /// <summary>
+    /// Radius of the no dash zone around the sun.
+    /// </summary>
+    const int& dash_block;
+
+    /// <summary>
     /// The distance traveled each turn by dashing.
     /// </summary>
     const int& dash_distance;
@@ -135,6 +140,11 @@ public:
     /// A unique identifier for the game instance that is being played.
     /// </summary>
     const std::string& session;
+
+    /// <summary>
+    /// The standard size of ships.
+    /// </summary>
+    const int& ship_radius;
 
     /// <summary>
     /// The size of the map in the X direction.

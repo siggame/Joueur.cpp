@@ -205,6 +205,8 @@ bool Unit_::transfer(const Unit& unit, int amount, const std::string& material)
 Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"acted", Any{std::decay<decltype(acted)>::type{}}},
+        {"dashX", Any{std::decay<decltype(dash_x)>::type{}}},
+        {"dashY", Any{std::decay<decltype(dash_y)>::type{}}},
         {"energy", Any{std::decay<decltype(energy)>::type{}}},
         {"genarium", Any{std::decay<decltype(genarium)>::type{}}},
         {"isDashing", Any{std::decay<decltype(is_dashing)>::type{}}},
@@ -220,6 +222,8 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"y", Any{std::decay<decltype(y)>::type{}}},
     },
     acted(variables_["acted"].as<std::decay<decltype(acted)>::type>()),
+    dash_x(variables_["dashX"].as<std::decay<decltype(dash_x)>::type>()),
+    dash_y(variables_["dashY"].as<std::decay<decltype(dash_y)>::type>()),
     energy(variables_["energy"].as<std::decay<decltype(energy)>::type>()),
     genarium(variables_["genarium"].as<std::decay<decltype(genarium)>::type>()),
     is_dashing(variables_["isDashing"].as<std::decay<decltype(is_dashing)>::type>()),
