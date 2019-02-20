@@ -63,6 +63,7 @@ Body_::Body_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"amount", Any{std::decay<decltype(amount)>::type{}}},
         {"bodyType", Any{std::decay<decltype(body_type)>::type{}}},
         {"materialType", Any{std::decay<decltype(material_type)>::type{}}},
+        {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"radius", Any{std::decay<decltype(radius)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
@@ -70,6 +71,7 @@ Body_::Body_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     amount(variables_["amount"].as<std::decay<decltype(amount)>::type>()),
     body_type(variables_["bodyType"].as<std::decay<decltype(body_type)>::type>()),
     material_type(variables_["materialType"].as<std::decay<decltype(material_type)>::type>()),
+    owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     radius(variables_["radius"].as<std::decay<decltype(radius)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
     y(variables_["y"].as<std::decay<decltype(y)>::type>())
@@ -137,6 +139,11 @@ bool Body_::is_map(const std::string& name)
 
 void Body_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   if(member == "owner")
+   { 
+      to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
+      return;
+   }
    try
    {
       Game_object_::rebind_by_name(to_change, member, ref);

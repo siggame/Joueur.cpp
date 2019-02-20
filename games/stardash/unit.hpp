@@ -44,6 +44,16 @@ public:
     const bool& acted;
 
     /// <summary>
+    /// The x value this unit is dashing to.
+    /// </summary>
+    const double& dash_x;
+
+    /// <summary>
+    /// The y value this unit is dashing to.
+    /// </summary>
+    const double& dash_y;
+
+    /// <summary>
     /// The remaining health of a unit.
     /// </summary>
     const int& energy;
@@ -133,7 +143,7 @@ public:
     bool move(const double& x, const double& y);
 
     /// <summary>
-    /// tells you if your ship can be at that location.
+    /// tells you if your ship can dash to that location.
     /// </summary>
     /// <param name="x"> The x position of the location you wish to check. </param>
     /// <param name="y"> The y position of the location you wish to check. </param>
