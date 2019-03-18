@@ -99,17 +99,17 @@ public:
     /// <summary>
     /// The rarity modifier of the most common ore. This controls how much spawns.
     /// </summary>
-    const double& ore_rarity1;
+    const double& ore_rarity_genarium;
 
     /// <summary>
     /// The rarity modifier of the second rarest ore. This controls how much spawns.
     /// </summary>
-    const double& ore_rarity2;
+    const double& ore_rarity_rarium;
 
     /// <summary>
     /// The rarity modifier of the rarest ore. This controls how much spawns.
     /// </summary>
-    const double& ore_rarity3;
+    const double& ore_raritylegendarium;
 
     /// <summary>
     /// The amount of energy the planets restore each round.
@@ -120,6 +120,11 @@ public:
     /// List of all the players in the game.
     /// </summary>
     const std::vector<Player>& players;
+
+    /// <summary>
+    /// The standard size of ships.
+    /// </summary>
+    const int& projectile_radius;
 
     /// <summary>
     /// The amount of distance missiles travel through space.
