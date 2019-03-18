@@ -53,6 +53,36 @@ bool Unit_::attack(const Unit& enemy)
     return to_return.as<bool>();
 }
 
+bool Unit_::dash(const double& x, const double& y)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "dash", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"x\":") + std::to_string(x);
+
+    order += std::string(",\"y\":") + std::to_string(y);
+
+    order += "}}}";
+    Stardash::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Stardash::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<bool>();
+}
+
 bool Unit_::mine(const Body& body)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "mine", "caller": {"id": ")";
@@ -216,8 +246,8 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"mythicite", Any{std::decay<decltype(mythicite)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"protector", Any{std::decay<decltype(protector)>::type{}}},
-        {"radius", Any{std::decay<decltype(radius)>::type{}}},
         {"rarium", Any{std::decay<decltype(rarium)>::type{}}},
+        {"shield", Any{std::decay<decltype(shield)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
     },
@@ -233,8 +263,8 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     mythicite(variables_["mythicite"].as<std::decay<decltype(mythicite)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     protector(variables_["protector"].as<std::decay<decltype(protector)>::type>()),
-    radius(variables_["radius"].as<std::decay<decltype(radius)>::type>()),
     rarium(variables_["rarium"].as<std::decay<decltype(rarium)>::type>()),
+    shield(variables_["shield"].as<std::decay<decltype(shield)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
     y(variables_["y"].as<std::decay<decltype(y)>::type>())
 {

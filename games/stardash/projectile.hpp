@@ -49,11 +49,6 @@ public:
     const Player& owner;
 
     /// <summary>
-    /// The radius of the circle this projectile occupies.
-    /// </summary>
-    const double& radius;
-
-    /// <summary>
     /// The unit that is being attacked by this projectile.
     /// </summary>
     const Unit& target;
