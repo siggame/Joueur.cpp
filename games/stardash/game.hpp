@@ -72,9 +72,19 @@ public:
     const std::unordered_map<std::string, Game_object>& game_objects;
 
     /// <summary>
+    /// The value of every unit of genarium.
+    /// </summary>
+    const double& genarium_value;
+
+    /// <summary>
     /// A list of all jobs. first item is corvette, second is missleboat, third is martyr, fourth is transport, and fifth is miner.
     /// </summary>
     const std::vector<Job>& jobs;
+
+    /// <summary>
+    /// The value of every unit of legendarium.
+    /// </summary>
+    const double& legendarium_value;
 
     /// <summary>
     /// The highest amount of material, barring rarity, that can be in a asteroid.
@@ -97,9 +107,19 @@ public:
     const int& mining_speed;
 
     /// <summary>
+    /// The amount of mythicite that spawns at the start of the game.
+    /// </summary>
+    const double& mythicite_amount;
+
+    /// <summary>
     /// The rarity modifier of the most common ore. This controls how much spawns.
     /// </summary>
     const double& ore_rarity_genarium;
+
+    /// <summary>
+    /// The rarity modifier of the rarest ore. This controls how much spawns.
+    /// </summary>
+    const double& ore_rarity_legendarium;
 
     /// <summary>
     /// The rarity modifier of the second rarest ore. This controls how much spawns.
@@ -107,9 +127,9 @@ public:
     const double& ore_rarity_rarium;
 
     /// <summary>
-    /// The rarity modifier of the rarest ore. This controls how much spawns.
+    /// The amount of energy a planet can hold at once.
     /// </summary>
-    const double& ore_raritylegendarium;
+    const int& planet_energy_cap;
 
     /// <summary>
     /// The amount of energy the planets restore each round.
@@ -135,6 +155,11 @@ public:
     /// Every projectile in the game.
     /// </summary>
     const std::vector<Projectile>& projectiles;
+
+    /// <summary>
+    /// The value of every unit of rarium.
+    /// </summary>
+    const double& rarium_value;
 
     /// <summary>
     /// The regeneration rate of asteroids.

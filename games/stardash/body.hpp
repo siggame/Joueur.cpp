@@ -39,7 +39,7 @@ class Body_ : public Game_object_
 public:
 
     /// <summary>
-    /// The amount of material the object has.
+    /// The amount of material the object has, or energy if it is a planet.
     /// </summary>
     const int& amount;
 
