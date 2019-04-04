@@ -25,6 +25,62 @@ namespace cpp_client
 namespace stardash
 {
 
+int Body_::next_x(int num)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "nextX", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"num\":") + std::to_string(num);
+
+    order += "}}}";
+    Stardash::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Stardash::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<int>();
+}
+
+int Body_::next_y(int num)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "nextY", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"num\":") + std::to_string(num);
+
+    order += "}}}";
+    Stardash::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Stardash::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<int>();
+}
+
 bool Body_::spawn(const double& x, const double& y, const std::string& title)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "spawn", "caller": {"id": ")";

@@ -42,7 +42,7 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
-    /// All the celestial bodies in the game.
+    /// All the celestial bodies in the game. The first two are planets and the third is the sun. The fourth is the VP asteroid. Everything else is normal asteroids.
     /// </summary>
     const std::vector<Body>& bodies;
 
@@ -60,6 +60,11 @@ public:
     /// Radius of the no dash zone around the sun.
     /// </summary>
     const int& dash_block;
+
+    /// <summary>
+    /// The cost of dashing.
+    /// </summary>
+    const int& dash_cost;
 
     /// <summary>
     /// The distance traveled each turn by dashing.
@@ -87,7 +92,7 @@ public:
     const double& legendarium_value;
 
     /// <summary>
-    /// The highest amount of material, barring rarity, that can be in a asteroid.
+    /// The highest amount of material, that can be in a asteroid.
     /// </summary>
     const int& max_asteroid;
 
@@ -97,7 +102,7 @@ public:
     const int& max_turns;
 
     /// <summary>
-    /// The smallest amount of material, barring rarity, that can be in a asteroid.
+    /// The smallest amount of material, that can be in a asteroid.
     /// </summary>
     const int& min_asteroid;
 
@@ -110,6 +115,11 @@ public:
     /// The amount of mythicite that spawns at the start of the game.
     /// </summary>
     const double& mythicite_amount;
+
+    /// <summary>
+    /// The number of orbit updates you cannot mine the mithicite asteroid.
+    /// </summary>
+    const int& orbits_protected;
 
     /// <summary>
     /// The rarity modifier of the most common ore. This controls how much spawns.
@@ -190,6 +200,11 @@ public:
     /// The amount of time (in nano-seconds) added after each player performs a turn.
     /// </summary>
     const int& time_added_per_turn;
+
+    /// <summary>
+    /// The number of turns it takes for a asteroid to orbit the sun. (Asteroids move after each players turn).
+    /// </summary>
+    const int& turns_to_orbit;
 
     /// <summary>
     /// Every Unit in the game.

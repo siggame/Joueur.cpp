@@ -54,7 +54,7 @@ public:
     const std::string& material_type;
 
     /// <summary>
-    /// The Player that owns and can control this Unit.
+    /// The Player that owns and can control this Body.
     /// </summary>
     const Player& owner;
 
@@ -77,6 +77,18 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
+
+    /// <summary>
+    /// the x value of this body a number of turns from now. (0-how many you want).
+    /// </summary>
+    /// <param name="num"> The number of turns in the future you wish to check. </param>
+    int next_x(int num);
+
+    /// <summary>
+    /// the x value of this body a number of turns from now. (0-how many you want).
+    /// </summary>
+    /// <param name="num"> The number of turns in the future you wish to check. </param>
+    int next_y(int num);
 
     /// <summary>
     /// spawn a unit on some value of this celestial body.

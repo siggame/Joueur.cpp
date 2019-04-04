@@ -44,7 +44,7 @@ public:
     const int& fuel;
 
     /// <summary>
-    /// The Player that owns and can control this Unit.
+    /// The Player that owns and can control this Projectile.
     /// </summary>
     const Player& owner;
 
