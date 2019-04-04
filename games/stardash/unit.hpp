@@ -154,7 +154,7 @@ public:
     /// </summary>
     /// <param name="x"> The x position of the location you wish to check. </param>
     /// <param name="y"> The y position of the location you wish to check. </param>
-    bool open(const double& x, const double& y);
+    bool safe(const double& x, const double& y);
 
     /// <summary>
     /// attacks the specified projectile.

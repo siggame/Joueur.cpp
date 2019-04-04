@@ -141,9 +141,9 @@ bool Unit_::move(const double& x, const double& y)
     return to_return.as<bool>();
 }
 
-bool Unit_::open(const double& x, const double& y)
+bool Unit_::safe(const double& x, const double& y)
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "open", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "safe", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
     order += std::string("\"x\":") + std::to_string(x);
