@@ -59,7 +59,7 @@ public:
     const int& energy;
 
     /// <summary>
-    /// The amount of Generium ore carried by this unit. (0 to job carry capacity - other carried items).
+    /// The amount of Genarium ore carried by this unit. (0 to job carry capacity - other carried items).
     /// </summary>
     const int& genarium;
 
@@ -137,6 +137,13 @@ public:
     bool dash(const double& x, const double& y);
 
     /// <summary>
+    /// tells you if your ship dash to that location.
+    /// </summary>
+    /// <param name="x"> The x position of the location you wish to arrive. </param>
+    /// <param name="y"> The y position of the location you wish to arrive. </param>
+    bool dashable(const double& x, const double& y);
+
+    /// <summary>
     /// allows a miner to mine a asteroid
     /// </summary>
     /// <param name="body"> The object to be mined. </param>
@@ -150,10 +157,10 @@ public:
     bool move(const double& x, const double& y);
 
     /// <summary>
-    /// tells you if your ship can be at that location.
+    /// tells you if your ship can move to that location.
     /// </summary>
-    /// <param name="x"> The x position of the location you wish to check. </param>
-    /// <param name="y"> The y position of the location you wish to check. </param>
+    /// <param name="x"> The x position of the location you wish to arrive. </param>
+    /// <param name="y"> The y position of the location you wish to arrive. </param>
     bool safe(const double& x, const double& y);
 
     /// <summary>
