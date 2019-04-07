@@ -118,6 +118,7 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
    else if(event == "delta")
    {
       apply_delta(doc, *this);
+      ai_->game_updated();
    }
    else if(event == "start")
    {
