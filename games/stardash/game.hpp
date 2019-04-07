@@ -57,11 +57,6 @@ public:
     const int& current_turn;
 
     /// <summary>
-    /// Radius of the no dash zone around the sun.
-    /// </summary>
-    const int& dash_block;
-
-    /// <summary>
     /// The cost of dashing.
     /// </summary>
     const int& dash_cost;
@@ -82,7 +77,7 @@ public:
     const double& genarium_value;
 
     /// <summary>
-    /// A list of all jobs. first item is corvette, second is missleboat, third is martyr, fourth is transport, and fifth is miner.
+    /// A list of all jobs. first item is corvette, second is missileboat, third is martyr, fourth is transport, and fifth is miner.
     /// </summary>
     const std::vector<Job>& jobs;
 
