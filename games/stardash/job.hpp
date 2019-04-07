@@ -69,7 +69,7 @@ public:
     const int& shield;
 
     /// <summary>
-    /// The Job title. 'corvette', 'missleboat', 'martyr', 'transport', or 'miner'. (in this order from 0-4).
+    /// The Job title. 'corvette', 'missileboat', 'martyr', 'transport', or 'miner'. (in this order from 0-4).
     /// </summary>
     const std::string& title;
 
