@@ -64,9 +64,9 @@ public:
     const int& genarium;
 
     /// <summary>
-    /// Tracks wheither or not the ship is dashing.
+    /// Tracks wheither or not the ship is dashing or Mining. If true, it cannot do anything else.
     /// </summary>
-    const bool& is_dashing;
+    const bool& is_busy;
 
     /// <summary>
     /// The Job this Unit has.
