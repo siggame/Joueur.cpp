@@ -54,7 +54,7 @@ public:
     const double& dash_y;
 
     /// <summary>
-    /// The remaining health of a unit.
+    /// The remaining health of the unit.
     /// </summary>
     const int& energy;
 

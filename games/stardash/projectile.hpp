@@ -39,6 +39,11 @@ class Projectile_ : public Game_object_
 public:
 
     /// <summary>
+    /// The remaining health of the projectile.
+    /// </summary>
+    const int& energy;
+
+    /// <summary>
     /// The amount of remaining distance the projectile can move.
     /// </summary>
     const int& fuel;

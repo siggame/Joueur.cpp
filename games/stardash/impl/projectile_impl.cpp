@@ -28,12 +28,14 @@ namespace stardash
 
 Projectile_::Projectile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
+        {"energy", Any{std::decay<decltype(energy)>::type{}}},
         {"fuel", Any{std::decay<decltype(fuel)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"target", Any{std::decay<decltype(target)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
     },
+    energy(variables_["energy"].as<std::decay<decltype(energy)>::type>()),
     fuel(variables_["fuel"].as<std::decay<decltype(fuel)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     target(variables_["target"].as<std::decay<decltype(target)>::type>()),
