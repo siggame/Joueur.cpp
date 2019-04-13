@@ -160,14 +160,14 @@ public:
     /// attacks the specified projectile.
     /// </summary>
     /// <param name="missile"> The projectile being shot down. </param>
-    bool shoot_down(const Projectile& missile);
+    bool shootdown(const Projectile& missile);
 
     /// <summary>
     /// grab materials from a friendly unit. _doesn't use a action.
     /// </summary>
     /// <param name="unit"> The unit you are grabbing the resources from. </param>
     /// <param name="amount"> The amount of materials to you with to grab. Amounts <= 0 will pick up all the materials that the unit can. </param>
-    /// <param name="material"> The material the unit will pick up. 'resource1', 'resource2', or 'resource3'. </param>
+    /// <param name="material"> The material the unit will pick up. 'genarium', 'rarium', 'legendarium', or 'mythicite'. </param>
     bool transfer(const Unit& unit, int amount, const std::string& material);
 
 

@@ -69,7 +69,7 @@ public:
     const Player& opponent;
 
     /// <summary>
-    /// Every Projectile owned by this Player.
+    /// Every Projectile owned by this Player. The earlier in the list the older they are.
     /// </summary>
     const std::vector<Projectile>& projectiles;
 
@@ -89,7 +89,7 @@ public:
     const double& time_remaining;
 
     /// <summary>
-    /// Every Unit owned by this Player.
+    /// Every Unit owned by this Player. The earlier in the list the older they are.
     /// </summary>
     const std::vector<Unit>& units;
 
