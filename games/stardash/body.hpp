@@ -44,12 +44,12 @@ public:
     const int& amount;
 
     /// <summary>
-    /// The type of celestial body it is.
+    /// The type of celestial body it is. Either 'planet', 'asteroid', or 'sun'.
     /// </summary>
     const std::string& body_type;
 
     /// <summary>
-    /// The type of material the celestial body has.
+    /// The type of material the celestial body has. Either 'none', 'genarium', 'rarium', 'legendarium', or 'mythicite'.
     /// </summary>
     const std::string& material_type;
 

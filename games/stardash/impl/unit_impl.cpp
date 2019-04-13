@@ -171,9 +171,9 @@ bool Unit_::safe(const double& x, const double& y)
     return to_return.as<bool>();
 }
 
-bool Unit_::shoot_down(const Projectile& missile)
+bool Unit_::shootdown(const Projectile& missile)
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "shootDown", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "shootdown", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
     order += std::string("\"missile\":") + (missile ? (std::string("{\"id\":\"") + missile->id + "\"}") : std::string("null"));
