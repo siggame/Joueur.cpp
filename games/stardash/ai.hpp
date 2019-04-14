@@ -75,6 +75,8 @@ public:
 
     // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional methods here.
+    double distance(double const& x1, double const& x2, double const& y1, double const& y2);
+    void find_dash(const Unit unit, double const& x, double const& y);
     // <<-- /Creer-Merge: methods -->>
 
 
