@@ -26,6 +26,62 @@ namespace cpp_client
 namespace necrowar
 {
 
+bool Player_::spawn_unit(const std::string& type)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "spawnUnit", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"type\":") + std::string("\"") + type + "\"";
+
+    order += "}}}";
+    Necrowar::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Necrowar::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<bool>();
+}
+
+bool Player_::spawn_worker(const std::string& type)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "spawnWorker", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"type\":") + std::string("\"") + type + "\"";
+
+    order += "}}}";
+    Necrowar::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Necrowar::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<bool>();
+}
+
 
 Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{

@@ -26,6 +26,34 @@ namespace cpp_client
 namespace necrowar
 {
 
+bool Tile_::res(int number)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "res", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"number\":") + std::to_string(number);
+
+    order += "}}}";
+    Necrowar::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Necrowar::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<bool>();
+}
+
 
 Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
@@ -36,6 +64,9 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"isRiver", Any{std::decay<decltype(is_river)>::type{}}},
         {"isTower", Any{std::decay<decltype(is_tower)>::type{}}},
         {"isWall", Any{std::decay<decltype(is_wall)>::type{}}},
+        {"numOfGhouls", Any{std::decay<decltype(num_of_ghouls)>::type{}}},
+        {"numOfHounds", Any{std::decay<decltype(num_of_hounds)>::type{}}},
+        {"numOfZombies", Any{std::decay<decltype(num_of_zombies)>::type{}}},
         {"tileEast", Any{std::decay<decltype(tile_east)>::type{}}},
         {"tileNorth", Any{std::decay<decltype(tile_north)>::type{}}},
         {"tileSouth", Any{std::decay<decltype(tile_south)>::type{}}},
@@ -53,6 +84,9 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     is_river(variables_["isRiver"].as<std::decay<decltype(is_river)>::type>()),
     is_tower(variables_["isTower"].as<std::decay<decltype(is_tower)>::type>()),
     is_wall(variables_["isWall"].as<std::decay<decltype(is_wall)>::type>()),
+    num_of_ghouls(variables_["numOfGhouls"].as<std::decay<decltype(num_of_ghouls)>::type>()),
+    num_of_hounds(variables_["numOfHounds"].as<std::decay<decltype(num_of_hounds)>::type>()),
+    num_of_zombies(variables_["numOfZombies"].as<std::decay<decltype(num_of_zombies)>::type>()),
     tile_east(variables_["tileEast"].as<std::decay<decltype(tile_east)>::type>()),
     tile_north(variables_["tileNorth"].as<std::decay<decltype(tile_north)>::type>()),
     tile_south(variables_["tileSouth"].as<std::decay<decltype(tile_south)>::type>()),
