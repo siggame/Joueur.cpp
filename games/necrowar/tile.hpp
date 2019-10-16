@@ -74,6 +74,21 @@ public:
     const bool& is_wall;
 
     /// <summary>
+    /// The amount of Ghouls on this tile at the moment.
+    /// </summary>
+    const int& num_of_ghouls;
+
+    /// <summary>
+    /// The amount of Hell Hounds on this tile at the moment.
+    /// </summary>
+    const int& num_of_hounds;
+
+    /// <summary>
+    /// The amount of animated zombies on this tile at the moment.
+    /// </summary>
+    const int& num_of_zombies;
+
+    /// <summary>
     /// The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
     /// </summary>
     const Tile& tile_east;
@@ -99,7 +114,7 @@ public:
     const Tower& tower;
 
     /// <summary>
-    /// The type of Tile this is ('normal', 'path', 'river', or 'spawn').
+    /// The type of Tile this is ('normal', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
     /// </summary>
     const std::string& type;
 
@@ -122,6 +137,12 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
+
+    /// <summary>
+    /// resurrect the corpses on this tile into zombies.
+    /// </summary>
+    /// <param name="number"> Number of zombies on the tile that are being resurrected. </param>
+    bool res(int number);
 
     /// <summary>
     /// The list of all valid directions Tiles can be in
