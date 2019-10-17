@@ -30,7 +30,6 @@ namespace necrowar
 U_job_::U_job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"damage", Any{std::decay<decltype(damage)>::type{}}},
-        {"damageVsTowers", Any{std::decay<decltype(damage_vs_towers)>::type{}}},
         {"goldCost", Any{std::decay<decltype(gold_cost)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"manaCost", Any{std::decay<decltype(mana_cost)>::type{}}},
@@ -40,7 +39,6 @@ U_job_::U_job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"title", Any{std::decay<decltype(title)>::type{}}},
     },
     damage(variables_["damage"].as<std::decay<decltype(damage)>::type>()),
-    damage_vs_towers(variables_["damageVsTowers"].as<std::decay<decltype(damage_vs_towers)>::type>()),
     gold_cost(variables_["goldCost"].as<std::decay<decltype(gold_cost)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     mana_cost(variables_["manaCost"].as<std::decay<decltype(mana_cost)>::type>()),

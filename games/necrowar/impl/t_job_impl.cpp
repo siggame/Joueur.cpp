@@ -41,6 +41,7 @@ T_job_::T_job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"manaCost", Any{std::decay<decltype(mana_cost)>::type{}}},
         {"range", Any{std::decay<decltype(range)>::type{}}},
         {"title", Any{std::decay<decltype(title)>::type{}}},
+        {"turnsBetweenAttacks", Any{std::decay<decltype(turns_between_attacks)>::type{}}},
     },
     all_units(variables_["allUnits"].as<std::decay<decltype(all_units)>::type>()),
     damage_vs_abomination(variables_["damageVsAbomination"].as<std::decay<decltype(damage_vs_abomination)>::type>()),
@@ -53,7 +54,8 @@ T_job_::T_job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     mana_cost(variables_["manaCost"].as<std::decay<decltype(mana_cost)>::type>()),
     range(variables_["range"].as<std::decay<decltype(range)>::type>()),
-    title(variables_["title"].as<std::decay<decltype(title)>::type>())
+    title(variables_["title"].as<std::decay<decltype(title)>::type>()),
+    turns_between_attacks(variables_["turnsBetweenAttacks"].as<std::decay<decltype(turns_between_attacks)>::type>())
 {
     for(auto&& obj : init)
     {
