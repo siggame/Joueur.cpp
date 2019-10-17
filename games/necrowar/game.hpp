@@ -67,11 +67,6 @@ public:
     const int& island_income_per_unit;
 
     /// <summary>
-    /// The maximum number of workers that can occupy the mine on the island at a given time.
-    /// </summary>
-    const int& island_unit_cap;
-
-    /// <summary>
     /// The Amount of gold income per turn per unit fishing on the river side.
     /// </summary>
     const int& mana_income_per_unit;

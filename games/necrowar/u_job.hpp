@@ -44,11 +44,6 @@ public:
     const int& damage;
 
     /// <summary>
-    /// Amount of damage this type does against towers on a given turn.
-    /// </summary>
-    const int& damage_vs_towers;
-
-    /// <summary>
     /// How much does this type cost in gold.
     /// </summary>
     const int& gold_cost;

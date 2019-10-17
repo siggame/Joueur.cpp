@@ -98,6 +98,11 @@ public:
     /// </summary>
     const std::string& title;
 
+    /// <summary>
+    /// How many turns this tower type needs to take between attacks.
+    /// </summary>
+    const int& turns_between_attacks;
+
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>

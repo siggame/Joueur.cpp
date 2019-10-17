@@ -93,7 +93,7 @@ public:
     bool fish(const Tile& tile);
 
     /// <summary>
-    /// enters a mine and is put to work gathering resources.
+    /// enters an empty mine tile and is put to work gathering resources.
     /// </summary>
     /// <param name="tile"> The tile the mine is located on. </param>
     bool mine(const Tile& tile);
