@@ -119,7 +119,7 @@ public:
     const std::string& type;
 
     /// <summary>
-    /// The Unit on this Tile if present, otherwise null.
+    /// The list of Units on this Tile if present, otherwise null.
     /// </summary>
     const Unit& unit;
 

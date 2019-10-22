@@ -44,36 +44,6 @@ public:
     const bool& all_units;
 
     /// <summary>
-    /// The amount of damage this type does per attack against abominations.
-    /// </summary>
-    const int& damage_vs_abomination;
-
-    /// <summary>
-    /// The amount of damage this type does per attack against ghouls.
-    /// </summary>
-    const int& damage_vs_ghoul;
-
-    /// <summary>
-    /// The amount of damage this type does per attack against horseman.
-    /// </summary>
-    const int& damage_vs_horseman;
-
-    /// <summary>
-    /// The amount of damage this type does per attack against hounds.
-    /// </summary>
-    const int& damage_vs_hound;
-
-    /// <summary>
-    /// The amount of damage this type does per attack against wraiths.
-    /// </summary>
-    const int& damage_vs_wraith;
-
-    /// <summary>
-    /// The amount of damage this type does per attack against zombies.
-    /// </summary>
-    const int& damage_vs_zombie;
-
-    /// <summary>
     /// How much does this type cost in gold.
     /// </summary>
     const int& gold_cost;

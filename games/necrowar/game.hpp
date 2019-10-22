@@ -87,11 +87,6 @@ public:
     const int& max_turns;
 
     /// <summary>
-    /// The maximum number of workers that can occupy a mine at a given time.
-    /// </summary>
-    const int& mine_unit_cap;
-
-    /// <summary>
     /// List of all the players in the game.
     /// </summary>
     const std::vector<Player>& players;
