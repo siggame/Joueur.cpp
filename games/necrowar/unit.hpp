@@ -39,14 +39,24 @@ class Unit_ : public Game_object_
 public:
 
     /// <summary>
-    /// Whether or not this Unit has performed its action this turn (attack or build).
+    /// Whether or not this Unit has attacked this turn or not.
     /// </summary>
-    const bool& acted;
+    const bool& attacked;
+
+    /// <summary>
+    /// Whether or not this Unit has built a tower (workers only) this turn or not.
+    /// </summary>
+    const bool& built;
 
     /// <summary>
     /// The remaining health of a unit.
     /// </summary>
     const int& health;
+
+    /// <summary>
+    /// Whether or not this Unit has moved yet this turn.
+    /// </summary>
+    const bool& moved;
 
     /// <summary>
     /// The number of moves this unit has left this turn.

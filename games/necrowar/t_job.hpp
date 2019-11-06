@@ -44,6 +44,11 @@ public:
     const bool& all_units;
 
     /// <summary>
+    /// How much damage this tower type does in a single turn of attack.
+    /// </summary>
+    const int& damage;
+
+    /// <summary>
     /// How much does this type cost in gold.
     /// </summary>
     const int& gold_cost;

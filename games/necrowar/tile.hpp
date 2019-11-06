@@ -44,9 +44,19 @@ public:
     const int& corpses;
 
     /// <summary>
+    /// Whether or not the tile is where a player's castle rests.
+    /// </summary>
+    const bool& is_castle;
+
+    /// <summary>
     /// Whether or not the tile is considered to be a gold mine or not.
     /// </summary>
     const bool& is_gold_mine;
+
+    /// <summary>
+    /// Whether or not the tile can be moved on by workers.
+    /// </summary>
+    const bool& is_grass;
 
     /// <summary>
     /// Whether or not the tile is considered to be the island gold mine or not.
@@ -69,9 +79,14 @@ public:
     const bool& is_tower;
 
     /// <summary>
-    /// Whether or not the tile can be moved on by workers.
+    /// Whether or not this tile is this player's Unit spawn.
     /// </summary>
-    const bool& is_wall;
+    const bool& is_unit_spawn;
+
+    /// <summary>
+    /// Whether or not this tile is this player's Worker spawn.
+    /// </summary>
+    const bool& is_worker_spawn;
 
     /// <summary>
     /// The amount of Ghouls on this tile at the moment.
@@ -114,7 +129,7 @@ public:
     const Tower& tower;
 
     /// <summary>
-    /// The type of Tile this is ('normal', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
+    /// The type of Tile this is ('grass', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
     /// </summary>
     const std::string& type;
 
