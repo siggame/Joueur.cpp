@@ -30,6 +30,7 @@ namespace necrowar
 T_job_::T_job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"allUnits", Any{std::decay<decltype(all_units)>::type{}}},
+        {"damage", Any{std::decay<decltype(damage)>::type{}}},
         {"goldCost", Any{std::decay<decltype(gold_cost)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"manaCost", Any{std::decay<decltype(mana_cost)>::type{}}},
@@ -38,6 +39,7 @@ T_job_::T_job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"turnsBetweenAttacks", Any{std::decay<decltype(turns_between_attacks)>::type{}}},
     },
     all_units(variables_["allUnits"].as<std::decay<decltype(all_units)>::type>()),
+    damage(variables_["damage"].as<std::decay<decltype(damage)>::type>()),
     gold_cost(variables_["goldCost"].as<std::decay<decltype(gold_cost)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     mana_cost(variables_["manaCost"].as<std::decay<decltype(mana_cost)>::type>()),
