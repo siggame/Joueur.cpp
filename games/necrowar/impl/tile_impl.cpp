@@ -26,12 +26,12 @@ namespace cpp_client
 namespace necrowar
 {
 
-bool Tile_::res(int number)
+bool Tile_::res(int num)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "res", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"number\":") + std::to_string(number);
+    order += std::string("\"num\":") + std::to_string(num);
 
     order += "}}}";
     Necrowar::instance()->send(order);
@@ -122,6 +122,9 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"isUnitSpawn", Any{std::decay<decltype(is_unit_spawn)>::type{}}},
         {"isWall", Any{std::decay<decltype(is_wall)>::type{}}},
         {"isWorkerSpawn", Any{std::decay<decltype(is_worker_spawn)>::type{}}},
+        {"numGhouls", Any{std::decay<decltype(num_ghouls)>::type{}}},
+        {"numHounds", Any{std::decay<decltype(num_hounds)>::type{}}},
+        {"numZombies", Any{std::decay<decltype(num_zombies)>::type{}}},
         {"tileEast", Any{std::decay<decltype(tile_east)>::type{}}},
         {"tileNorth", Any{std::decay<decltype(tile_north)>::type{}}},
         {"tileSouth", Any{std::decay<decltype(tile_south)>::type{}}},
@@ -143,6 +146,9 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     is_unit_spawn(variables_["isUnitSpawn"].as<std::decay<decltype(is_unit_spawn)>::type>()),
     is_wall(variables_["isWall"].as<std::decay<decltype(is_wall)>::type>()),
     is_worker_spawn(variables_["isWorkerSpawn"].as<std::decay<decltype(is_worker_spawn)>::type>()),
+    num_ghouls(variables_["numGhouls"].as<std::decay<decltype(num_ghouls)>::type>()),
+    num_hounds(variables_["numHounds"].as<std::decay<decltype(num_hounds)>::type>()),
+    num_zombies(variables_["numZombies"].as<std::decay<decltype(num_zombies)>::type>()),
     tile_east(variables_["tileEast"].as<std::decay<decltype(tile_east)>::type>()),
     tile_north(variables_["tileNorth"].as<std::decay<decltype(tile_north)>::type>()),
     tile_south(variables_["tileSouth"].as<std::decay<decltype(tile_south)>::type>()),
