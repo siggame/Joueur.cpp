@@ -54,14 +54,12 @@ bool Unit_::attack(const Tile& tile)
     return to_return.as<bool>();
 }
 
-bool Unit_::build(const Tile& tile, const T_job& t_job)
+bool Unit_::build(const std::string& title)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "build", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
 
-    order += std::string("\"tile\":") + (tile ? (std::string("{\"id\":\"") + tile->id + "\"}") : std::string("null"));
-
-    order += std::string(",\"tJob\":") + (tJob ? (std::string("{\"id\":\"") + tJob->id + "\"}") : std::string("null"));
+    order += std::string("\"title\":") + std::string("\"") + title + "\"";
 
     order += "}}}";
     Necrowar::instance()->send(order);
