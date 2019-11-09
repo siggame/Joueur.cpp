@@ -49,12 +49,12 @@ public:
     const int& gold;
 
     /// <summary>
-    /// The amount of health remaining for this player's Castle.
+    /// The amount of health remaining for this player's main unit.
     /// </summary>
     const int& health;
 
     /// <summary>
-    /// The tiles that the home base is located on.
+    /// The tile that the home base is located on.
     /// </summary>
     const std::vector<Tile>& home_base;
 
@@ -117,18 +117,6 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
-
-    /// <summary>
-    /// spawn a fighting _unit on this player's path spawn tile.
-    /// </summary>
-    /// <param name="type"> What type of Unit to create (ghoul, hound, abomination, wraith, or horseman). </param>
-    bool spawn_unit(const std::string& type);
-
-    /// <summary>
-    /// spawn a worker _unit on this player's worker spawn tile.
-    /// </summary>
-    /// <param name="type"> What type of Unit to create (worker, zombie, ghoul). </param>
-    bool spawn_worker(const std::string& type);
 
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

@@ -44,7 +44,7 @@ public:
     const int& corpses;
 
     /// <summary>
-    /// Whether or not the tile is where a player's castle rests.
+    /// Whether or not the tile is a castle tile.
     /// </summary>
     const bool& is_castle;
 
@@ -54,7 +54,7 @@ public:
     const bool& is_gold_mine;
 
     /// <summary>
-    /// Whether or not the tile can be moved on by workers.
+    /// Whether or not the tile is considered grass or not (Workers can walk on grass).
     /// </summary>
     const bool& is_grass;
 
@@ -64,7 +64,7 @@ public:
     const bool& is_island_gold_mine;
 
     /// <summary>
-    /// Whether or not the tile is considered a path or not.
+    /// Whether or not the tile is considered a path or not (Units can walk on paths).
     /// </summary>
     const bool& is_path;
 
@@ -79,29 +79,19 @@ public:
     const bool& is_tower;
 
     /// <summary>
-    /// Whether or not this tile is this player's Unit spawn.
+    /// Whether or not the tile is the unit spawn.
     /// </summary>
     const bool& is_unit_spawn;
 
     /// <summary>
-    /// Whether or not this tile is this player's Worker spawn.
+    /// Whether or not the tile can be moved on by workers.
+    /// </summary>
+    const bool& is_wall;
+
+    /// <summary>
+    /// Whether or not the tile is the worker spawn.
     /// </summary>
     const bool& is_worker_spawn;
-
-    /// <summary>
-    /// The amount of Ghouls on this tile at the moment.
-    /// </summary>
-    const int& num_of_ghouls;
-
-    /// <summary>
-    /// The amount of Hell Hounds on this tile at the moment.
-    /// </summary>
-    const int& num_of_hounds;
-
-    /// <summary>
-    /// The amount of animated zombies on this tile at the moment.
-    /// </summary>
-    const int& num_of_zombies;
 
     /// <summary>
     /// The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
@@ -129,12 +119,12 @@ public:
     const Tower& tower;
 
     /// <summary>
-    /// The type of Tile this is ('grass', 'path', 'river', 'mine', 'castle', 'pathSpawn', or 'workerSpawn').
+    /// The type of Tile this is ('normal', 'path', 'river', or 'spawn').
     /// </summary>
     const std::string& type;
 
     /// <summary>
-    /// The list of Units on this Tile if present, otherwise null.
+    /// The Unit on this Tile if present, otherwise null.
     /// </summary>
     const Unit& unit;
 
@@ -154,10 +144,21 @@ public:
 
 
     /// <summary>
-    /// resurrect the corpses on this tile into zombies.
+    /// resurrect the corpses on this tile into _zombies.
     /// </summary>
-    /// <param name="number"> Number of zombies on the tile that are being resurrected. </param>
+    /// <param name="number"> Number of zombies to resurrect. </param>
     bool res(int number);
+
+    /// <summary>
+    /// spawns a fighting unit on the correct tile.
+    /// </summary>
+    /// <param name="title"> The title of the desired unit type. </param>
+    bool spawn_unit(const std::string& title);
+
+    /// <summary>
+    /// spawns a worker on the correct tile.
+    /// </summary>
+    bool spawn_worker();
 
     /// <summary>
     /// The list of all valid directions Tiles can be in

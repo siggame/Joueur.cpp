@@ -39,24 +39,14 @@ class Unit_ : public Game_object_
 public:
 
     /// <summary>
-    /// Whether or not this Unit has attacked this turn or not.
+    /// Whether or not this Unit has performed its action this turn (attack or build).
     /// </summary>
-    const bool& attacked;
-
-    /// <summary>
-    /// Whether or not this Unit has built a tower (workers only) this turn or not.
-    /// </summary>
-    const bool& built;
+    const bool& acted;
 
     /// <summary>
     /// The remaining health of a unit.
     /// </summary>
     const int& health;
-
-    /// <summary>
-    /// Whether or not this Unit has moved yet this turn.
-    /// </summary>
-    const bool& moved;
 
     /// <summary>
     /// The number of moves this unit has left this turn.
@@ -103,7 +93,7 @@ public:
     bool fish(const Tile& tile);
 
     /// <summary>
-    /// enters an empty mine tile and is put to work gathering resources.
+    /// enters a mine and is put to work gathering resources.
     /// </summary>
     /// <param name="tile"> The tile the mine is located on. </param>
     bool mine(const Tile& tile);
