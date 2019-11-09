@@ -67,11 +67,6 @@ public:
     const int& island_income_per_unit;
 
     /// <summary>
-    /// The maximum number of workers that can occupy the mine on the island at a given time.
-    /// </summary>
-    const int& island_unit_cap;
-
-    /// <summary>
     /// The Amount of gold income per turn per unit fishing on the river side.
     /// </summary>
     const int& mana_income_per_unit;
@@ -90,11 +85,6 @@ public:
     /// The maximum number of turns before the game will automatically end.
     /// </summary>
     const int& max_turns;
-
-    /// <summary>
-    /// The maximum number of workers that can occupy a mine at a given time.
-    /// </summary>
-    const int& mine_unit_cap;
 
     /// <summary>
     /// List of all the players in the game.

@@ -94,6 +94,21 @@ public:
     const bool& is_worker_spawn;
 
     /// <summary>
+    /// The amount of Ghouls on this tile.
+    /// </summary>
+    const int& num_ghouls;
+
+    /// <summary>
+    /// The amount of Hounds on this tile.
+    /// </summary>
+    const int& num_hounds;
+
+    /// <summary>
+    /// The amount of Zombies on this tile.
+    /// </summary>
+    const int& num_zombies;
+
+    /// <summary>
     /// The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
     /// </summary>
     const Tile& tile_east;
@@ -146,8 +161,8 @@ public:
     /// <summary>
     /// resurrect the corpses on this tile into _zombies.
     /// </summary>
-    /// <param name="number"> Number of zombies to resurrect. </param>
-    bool res(int number);
+    /// <param name="num"> Number of zombies to resurrect. </param>
+    bool res(int num);
 
     /// <summary>
     /// spawns a fighting unit on the correct tile.
