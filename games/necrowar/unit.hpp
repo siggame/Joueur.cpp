@@ -82,9 +82,8 @@ public:
     /// <summary>
     /// unit, if it is a worker, builds a tower on the tile it is on, only workers can do this.
     /// </summary>
-    /// <param name="tile"> The tile the unit is on/builds on. </param>
-    /// <param name="t_job"> The type of tower that is being built. 'arrow', 'aoe', 'ballista', or 'cleansing'. </param>
-    bool build(const Tile& tile, const T_job& t_job);
+    /// <param name="title"> The tower type to build, as a string. </param>
+    bool build(const std::string& title);
 
     /// <summary>
     /// stops adjacent to a river tile and begins fishing for mana.
