@@ -171,19 +171,15 @@ bool Unit_::move(const Tile& tile)
 
 Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
-        {"attacked", Any{std::decay<decltype(attacked)>::type{}}},
-        {"built", Any{std::decay<decltype(built)>::type{}}},
+        {"acted", Any{std::decay<decltype(acted)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
-        {"moved", Any{std::decay<decltype(moved)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
         {"uJob", Any{std::decay<decltype(u_job)>::type{}}},
     },
-    attacked(variables_["attacked"].as<std::decay<decltype(attacked)>::type>()),
-    built(variables_["built"].as<std::decay<decltype(built)>::type>()),
+    acted(variables_["acted"].as<std::decay<decltype(acted)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
-    moved(variables_["moved"].as<std::decay<decltype(moved)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
