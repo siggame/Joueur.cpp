@@ -49,6 +49,11 @@ public:
     const int& health;
 
     /// <summary>
+    /// The type of unit this is.
+    /// </summary>
+    const Unit_job& job;
+
+    /// <summary>
     /// The number of moves this unit has left this turn.
     /// </summary>
     const int& moves;
@@ -62,11 +67,6 @@ public:
     /// The Tile this Unit is on.
     /// </summary>
     const Tile& tile;
-
-    /// <summary>
-    /// The type of unit this is.
-    /// </summary>
-    const U_job& u_job;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.

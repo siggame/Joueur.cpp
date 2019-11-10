@@ -7,9 +7,9 @@
 #include "player.hpp"
 #include "tile.hpp"
 #include "tower.hpp"
+#include "tower_job.hpp"
 #include "unit.hpp"
-#include "t_job.hpp"
-#include "u_job.hpp"
+#include "unit_job.hpp"
 
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/attr_wrapper.hpp"

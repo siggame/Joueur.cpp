@@ -42,6 +42,16 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
+    /// A list of every tower type / job.
+    /// </summary>
+    const std::vector<Tower_job>& tower_jobs;
+
+    /// <summary>
+    /// A list of every unit type / job.
+    /// </summary>
+    const std::vector<Unit_job>& unit_jobs;
+
+    /// <summary>
     /// The player whose turn it is currently. That player can send commands. Other players cannot.
     /// </summary>
     const Player& current_player;
@@ -102,11 +112,6 @@ public:
     const std::string& session;
 
     /// <summary>
-    /// A list of every tower type / job.
-    /// </summary>
-    const std::vector<T_job>& t_jobs;
-
-    /// <summary>
     /// All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     /// </summary>
     const std::vector<Tile>& tiles;
@@ -120,11 +125,6 @@ public:
     /// Every Tower in the game.
     /// </summary>
     const std::vector<Tower>& towers;
-
-    /// <summary>
-    /// A list of every unit type / job.
-    /// </summary>
-    const std::vector<U_job>& u_jobs;
 
     /// <summary>
     /// Every Unit in the game.

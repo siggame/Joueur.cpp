@@ -44,15 +44,15 @@ set(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/tower.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tower.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/tower_impl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tower_job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/tower_job.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/tower_job_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/unit.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/unit.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/unit_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/t_job.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/t_job.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/t_job_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/u_job.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/u_job.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/u_job_impl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/unit_job.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/unit_job.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/unit_job_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/game_impl.cpp

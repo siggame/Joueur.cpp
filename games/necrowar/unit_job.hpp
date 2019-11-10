@@ -1,8 +1,8 @@
-#ifndef GAMES_NECROWAR_TOWER_H
-#define GAMES_NECROWAR_TOWER_H
+#ifndef GAMES_NECROWAR_UNIT_JOB_H
+#define GAMES_NECROWAR_UNIT_JOB_H
 
-// Tower
-// A tower in the game. Used to combat enemy waves.
+// UnitJob
+// Information about a unit's job/type.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -32,61 +32,70 @@ namespace necrowar
 {
 
 /// <summary>
-/// A tower in the game. Used to combat enemy waves.
+/// Information about a unit's job/type.
 /// </summary>
-class Tower_ : public Game_object_
+class Unit_job_ : public Game_object_
 {
 public:
 
     /// <summary>
-    /// Whether this tower has attacked this turn or not.
+    /// The amount of damage this type does per attack.
     /// </summary>
-    const bool& attacked;
+    const int& damage;
 
     /// <summary>
-    /// How much remaining health this tower has.
+    /// How much does this type cost in gold.
+    /// </summary>
+    const int& gold_cost;
+
+    /// <summary>
+    /// The amount of starting health this type has.
     /// </summary>
     const int& health;
 
     /// <summary>
-    /// What type of tower this is (it's job).
+    /// How much does this type cost in mana.
     /// </summary>
-    const Tower_job& job;
+    const int& mana_cost;
 
     /// <summary>
-    /// The player that built / owns this tower.
+    /// The number of moves this type can make per turn.
     /// </summary>
-    const Player& owner;
+    const int& moves;
 
     /// <summary>
-    /// The Tile this Tower is on.
+    /// How many of this type of unit can take up one tile.
     /// </summary>
-    const Tile& tile;
+    const int& per_tile;
+
+    /// <summary>
+    /// Amount of tiles away this type has to be in order to be effective.
+    /// </summary>
+    const int& range;
+
+    /// <summary>
+    /// The type title. 'worker', 'zombie', 'ghoul', 'hound', 'abomination', 'wraith' or 'horseman'.
+    /// </summary>
+    const std::string& title;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
 
-    /// <summary>
-    /// attacks an enemy unit on an tile within it's range.
-    /// </summary>
-    /// <param name="tile"> The Tile to attack. </param>
-    bool attack(const Tile& tile);
-
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
    // <<-- /Creer-Merge: methods -->>
 
-   ~Tower_();
+   ~Unit_job_();
 
    // ####################
    // Don't edit these!
    // ####################
    /// \cond FALSE
-   Tower_(std::initializer_list<std::pair<std::string, Any&&>> init);
-   Tower_() : Tower_({}){}
+   Unit_job_(std::initializer_list<std::pair<std::string, Any&&>> init);
+   Unit_job_() : Unit_job_({}){}
    virtual void resize(const std::string& name, std::size_t size) override;
    virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) override;
    virtual void remove_key(const std::string& name, Any& key) override;
@@ -103,4 +112,4 @@ public:
 
 } // cpp_client
 
-#endif // GAMES_NECROWAR_TOWER_H
+#endif // GAMES_NECROWAR_UNIT_JOB_H
