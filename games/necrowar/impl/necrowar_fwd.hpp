@@ -27,14 +27,14 @@ using Tile = std::shared_ptr<Tile_>;
 class Tower_;
 using Tower = std::shared_ptr<Tower_>;
 
+class Tower_job_;
+using Tower_job = std::shared_ptr<Tower_job_>;
+
 class Unit_;
 using Unit = std::shared_ptr<Unit_>;
 
-class T_job_;
-using T_job = std::shared_ptr<T_job_>;
-
-class U_job_;
-using U_job = std::shared_ptr<U_job_>;
+class Unit_job_;
+using Unit_job = std::shared_ptr<Unit_job_>;
 
 class Game_;
 using Game = Game_*;

@@ -40,17 +40,17 @@ std::shared_ptr<Base_object> Necrowar::generate_object(const std::string& type)
     {
         return std::make_shared<Tower_>();
     }
+    else if(type == "TowerJob")
+    {
+        return std::make_shared<Tower_job_>();
+    }
     else if(type == "Unit")
     {
         return std::make_shared<Unit_>();
     }
-    else if(type == "tJob")
+    else if(type == "UnitJob")
     {
-        return std::make_shared<T_job_>();
-    }
-    else if(type == "uJob")
-    {
-        return std::make_shared<U_job_>();
+        return std::make_shared<Unit_job_>();
     }
     throw Unknown_type("Unknown type " + type + " encountered.");
 }

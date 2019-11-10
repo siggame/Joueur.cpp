@@ -13,9 +13,9 @@
 #include "../player.hpp"
 #include "../tile.hpp"
 #include "../tower.hpp"
+#include "../tower_job.hpp"
 #include "../unit.hpp"
-#include "../t_job.hpp"
-#include "../u_job.hpp"
+#include "../unit_job.hpp"
 #include "necrowar.hpp"
 
 #include <type_traits>
@@ -29,6 +29,8 @@ namespace necrowar
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
+        {"TowerJobs", Any{std::decay<decltype(tower_jobs)>::type{}}},
+        {"UnitJobs", Any{std::decay<decltype(unit_jobs)>::type{}}},
         {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
         {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
@@ -41,13 +43,13 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"riverPhase", Any{std::decay<decltype(river_phase)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
-        {"tJobs", Any{std::decay<decltype(t_jobs)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
         {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
         {"towers", Any{std::decay<decltype(towers)>::type{}}},
-        {"uJobs", Any{std::decay<decltype(u_jobs)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
     },
+    tower_jobs(variables_["TowerJobs"].as<std::decay<decltype(tower_jobs)>::type>()),
+    unit_jobs(variables_["UnitJobs"].as<std::decay<decltype(unit_jobs)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
@@ -60,11 +62,9 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
     river_phase(variables_["riverPhase"].as<std::decay<decltype(river_phase)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
-    t_jobs(variables_["tJobs"].as<std::decay<decltype(t_jobs)>::type>()),
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
     time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
     towers(variables_["towers"].as<std::decay<decltype(towers)>::type>()),
-    u_jobs(variables_["uJobs"].as<std::decay<decltype(u_jobs)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>())
 {
     for(auto&& obj : init)
@@ -77,15 +77,21 @@ Game_::~Game_() = default;
 
 void Game_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "players")
+    if(name == "TowerJobs")
     {
-        auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
+        auto& vec = variables_["TowerJobs"].as<std::decay<decltype(tower_jobs)>::type>();
         vec.resize(size);
         return;
     }
-    else if(name == "tJobs")
+    else if(name == "UnitJobs")
     {
-        auto& vec = variables_["tJobs"].as<std::decay<decltype(t_jobs)>::type>();
+        auto& vec = variables_["UnitJobs"].as<std::decay<decltype(unit_jobs)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "players")
+    {
+        auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
         vec.resize(size);
         return;
     }
@@ -101,12 +107,6 @@ void Game_::resize(const std::string& name, std::size_t size)
         vec.resize(size);
         return;
     }
-    else if(name == "uJobs")
-    {
-        auto& vec = variables_["uJobs"].as<std::decay<decltype(u_jobs)>::type>();
-        vec.resize(size);
-        return;
-    }
     else if(name == "units")
     {
         auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
@@ -118,23 +118,33 @@ void Game_::resize(const std::string& name, std::size_t size)
 
 void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "players")
+    if(name == "TowerJobs")
     {
-        using type = std::decay<decltype(players)>::type;
-        auto& vec = variables_["players"].as<type>();
+        using type = std::decay<decltype(tower_jobs)>::type;
+        auto& vec = variables_["TowerJobs"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
         }
         return;
     } 
-    else if(name == "tJobs")
+    else if(name == "UnitJobs")
     {
-        using type = std::decay<decltype(t_jobs)>::type;
-        auto& vec = variables_["tJobs"].as<type>();
+        using type = std::decay<decltype(unit_jobs)>::type;
+        auto& vec = variables_["UnitJobs"].as<type>();
         for(auto&& val : values)
         { 
-            vec[val.first] = std::move(val.second.as<type::value_type>());
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "players")
+    {
+        using type = std::decay<decltype(players)>::type;
+        auto& vec = variables_["players"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
         }
         return;
     } 
@@ -155,16 +165,6 @@ void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "uJobs")
-    {
-        using type = std::decay<decltype(u_jobs)>::type;
-        auto& vec = variables_["uJobs"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::move(val.second.as<type::value_type>());
         }
         return;
     } 

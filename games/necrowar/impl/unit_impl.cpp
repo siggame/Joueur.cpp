@@ -13,9 +13,9 @@
 #include "../player.hpp"
 #include "../tile.hpp"
 #include "../tower.hpp"
+#include "../tower_job.hpp"
 #include "../unit.hpp"
-#include "../t_job.hpp"
-#include "../u_job.hpp"
+#include "../unit_job.hpp"
 #include "necrowar.hpp"
 
 #include <type_traits>
@@ -171,17 +171,17 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"acted", Any{std::decay<decltype(acted)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
+        {"job", Any{std::decay<decltype(job)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
-        {"uJob", Any{std::decay<decltype(u_job)>::type{}}},
     },
     acted(variables_["acted"].as<std::decay<decltype(acted)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
+    job(variables_["job"].as<std::decay<decltype(job)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
-    tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
-    u_job(variables_["uJob"].as<std::decay<decltype(u_job)>::type>())
+    tile(variables_["tile"].as<std::decay<decltype(tile)>::type>())
 {
     for(auto&& obj : init)
     {
@@ -246,6 +246,11 @@ bool Unit_::is_map(const std::string& name)
 
 void Unit_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   if(member == "job")
+   { 
+      to_change->as<Unit_job>() = std::static_pointer_cast<Unit_job_>(ref);
+      return;
+   }
    if(member == "owner")
    { 
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
