@@ -69,7 +69,7 @@ public:
     const int& range;
 
     /// <summary>
-    /// The type title. 'arrow', 'aoe', 'ballista', or 'cleansing'.
+    /// The type title. 'arrow', 'aoe', 'ballista', 'cleansing', or 'castle'.
     /// </summary>
     const std::string& title;
 

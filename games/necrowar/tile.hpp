@@ -109,6 +109,11 @@ public:
     const int& num_zombies;
 
     /// <summary>
+    /// Which player owns this tile, only applies to grass tiles for workers, NULL otherwise.
+    /// </summary>
+    const Player& owner;
+
+    /// <summary>
     /// The Tile to the 'East' of this one (x+1, y). Null if out of bounds of the map.
     /// </summary>
     const Tile& tile_east;
@@ -132,11 +137,6 @@ public:
     /// The Tower on this Tile if present, otherwise null.
     /// </summary>
     const Tower& tower;
-
-    /// <summary>
-    /// The type of Tile this is ('normal', 'path', 'river', or 'spawn').
-    /// </summary>
-    const std::string& type;
 
     /// <summary>
     /// The Unit on this Tile if present, otherwise null.
