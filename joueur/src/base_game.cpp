@@ -169,9 +169,10 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
       const auto name = attr_wrapper::get_attribute<std::string>(data, "name");
       const auto index = attr_wrapper::get_attribute<unsigned>(data, "index");
       //loop through all parameters and make a map out of them
-      const auto& args = attr_wrapper::get_loc(data, "args");
+      attr_wrapper::get_loc(data, "args");
       std::unordered_map<std::string, Any> params;
       //TODO: arguments for orders (apparently they are positional)
+      //const auto& args = attr_wrapper::get_loc(data, "args");
       //send finished event with data:
       const std::string order_done =
          R"({"event":"finished","data":{"orderIndex":)" + std::to_string(index)
