@@ -172,6 +172,11 @@ public:
     const std::vector<Tile>& tiles;
 
     /// <summary>
+    /// The amount of time (in nano-seconds) added after each player performs a turn.
+    /// </summary>
+    const int& time_added_per_turn;
+
+    /// <summary>
     /// Every Unit in the game. Merchant units have targetPort set to a port.
     /// </summary>
     const std::vector<Unit>& units;

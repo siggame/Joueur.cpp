@@ -45,6 +45,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"nextForecast", Any{std::decay<decltype(next_forecast)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
+        {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
     },
     base_bribes_per_turn(variables_["baseBribesPerTurn"].as<std::decay<decltype(base_bribes_per_turn)>::type>()),
     buildings(variables_["buildings"].as<std::decay<decltype(buildings)>::type>()),
@@ -60,7 +61,8 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     max_turns(variables_["maxTurns"].as<std::decay<decltype(max_turns)>::type>()),
     next_forecast(variables_["nextForecast"].as<std::decay<decltype(next_forecast)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
-    session(variables_["session"].as<std::decay<decltype(session)>::type>())
+    session(variables_["session"].as<std::decay<decltype(session)>::type>()),
+    time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>())
 {
     for(auto&& obj : init)
     {

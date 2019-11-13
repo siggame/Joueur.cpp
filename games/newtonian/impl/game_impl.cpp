@@ -28,7 +28,6 @@ namespace newtonian
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
-        {"RegenerateRate", Any{std::decay<decltype(regenerate_rate)>::type{}}},
         {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
         {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
@@ -43,6 +42,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"physicistCap", Any{std::decay<decltype(physicist_cap)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"refinedValue", Any{std::decay<decltype(refined_value)>::type{}}},
+        {"regenerateRate", Any{std::decay<decltype(regenerate_rate)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"spawnTime", Any{std::decay<decltype(spawn_time)>::type{}}},
         {"stunTime", Any{std::decay<decltype(stun_time)>::type{}}},
@@ -52,7 +52,6 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"units", Any{std::decay<decltype(units)>::type{}}},
         {"victoryAmount", Any{std::decay<decltype(victory_amount)>::type{}}},
     },
-    regenerate_rate(variables_["RegenerateRate"].as<std::decay<decltype(regenerate_rate)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
@@ -67,6 +66,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     physicist_cap(variables_["physicistCap"].as<std::decay<decltype(physicist_cap)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
     refined_value(variables_["refinedValue"].as<std::decay<decltype(refined_value)>::type>()),
+    regenerate_rate(variables_["regenerateRate"].as<std::decay<decltype(regenerate_rate)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     spawn_time(variables_["spawnTime"].as<std::decay<decltype(spawn_time)>::type>()),
     stun_time(variables_["stunTime"].as<std::decay<decltype(stun_time)>::type>()),

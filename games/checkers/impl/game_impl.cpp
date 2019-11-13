@@ -36,6 +36,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"maxTurns", Any{std::decay<decltype(max_turns)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
+        {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
     },
     board_height(variables_["boardHeight"].as<std::decay<decltype(board_height)>::type>()),
     board_width(variables_["boardWidth"].as<std::decay<decltype(board_width)>::type>()),
@@ -47,7 +48,8 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
     max_turns(variables_["maxTurns"].as<std::decay<decltype(max_turns)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
-    session(variables_["session"].as<std::decay<decltype(session)>::type>())
+    session(variables_["session"].as<std::decay<decltype(session)>::type>()),
+    time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>())
 {
     for(auto&& obj : init)
     {

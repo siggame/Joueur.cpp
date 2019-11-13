@@ -89,7 +89,7 @@ public:
     const Tile& tile_west;
 
     /// <summary>
-    /// What type of Tile this is, either 'Water' or 'Land'.
+    /// What type of Tile this is, either 'water' or 'land'.
     /// </summary>
     const std::string& type;
 

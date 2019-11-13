@@ -32,11 +32,13 @@ namespace spiders
 
 Nest_::Nest_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
+        {"controllingPlayer", Any{std::decay<decltype(controlling_player)>::type{}}},
         {"spiders", Any{std::decay<decltype(spiders)>::type{}}},
         {"webs", Any{std::decay<decltype(webs)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
     },
+    controlling_player(variables_["controllingPlayer"].as<std::decay<decltype(controlling_player)>::type>()),
     spiders(variables_["spiders"].as<std::decay<decltype(spiders)>::type>()),
     webs(variables_["webs"].as<std::decay<decltype(webs)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
@@ -137,6 +139,11 @@ bool Nest_::is_map(const std::string& name)
 
 void Nest_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   if(member == "controllingPlayer")
+   { 
+      to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
+      return;
+   }
    try
    {
       Game_object_::rebind_by_name(to_change, member, ref);

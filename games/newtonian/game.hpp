@@ -42,11 +42,6 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
-    /// The percent of max HP regained when a unit end their turn on a tile owned by their player.
-    /// </summary>
-    const double& regenerate_rate;
-
-    /// <summary>
     /// The player whose turn it is currently. That player can send commands. Other players cannot.
     /// </summary>
     const Player& current_player;
@@ -115,6 +110,11 @@ public:
     /// The amount of victory points added when a refined ore is consumed by the generator.
     /// </summary>
     const int& refined_value;
+
+    /// <summary>
+    /// The percent of max HP regained when a unit end their turn on a tile owned by their player.
+    /// </summary>
+    const double& regenerate_rate;
 
     /// <summary>
     /// A unique identifier for the game instance that is being played.

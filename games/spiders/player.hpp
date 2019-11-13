@@ -64,6 +64,11 @@ public:
     const std::string& name;
 
     /// <summary>
+    /// The number of nests this player controls.
+    /// </summary>
+    const int& number_of_nests_controlled;
+
+    /// <summary>
     /// This player's opponent in the game.
     /// </summary>
     const Player& opponent;

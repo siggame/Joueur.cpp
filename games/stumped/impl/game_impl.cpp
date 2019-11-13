@@ -45,6 +45,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"spawnerHarvestConstant", Any{std::decay<decltype(spawner_harvest_constant)>::type{}}},
         {"spawnerTypes", Any{std::decay<decltype(spawner_types)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
+        {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
     },
     beavers(variables_["beavers"].as<std::decay<decltype(beavers)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
@@ -62,7 +63,8 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     spawner(variables_["spawner"].as<std::decay<decltype(spawner)>::type>()),
     spawner_harvest_constant(variables_["spawnerHarvestConstant"].as<std::decay<decltype(spawner_harvest_constant)>::type>()),
     spawner_types(variables_["spawnerTypes"].as<std::decay<decltype(spawner_types)>::type>()),
-    tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>())
+    tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
+    time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>())
 {
     for(auto&& obj : init)
     {

@@ -116,6 +116,11 @@ public:
     /// </summary>
     const std::string& session;
 
+    /// <summary>
+    /// The amount of time (in nano-seconds) added after each player performs a turn.
+    /// </summary>
+    const int& time_added_per_turn;
+
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>

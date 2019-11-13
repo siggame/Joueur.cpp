@@ -53,6 +53,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"shipMoves", Any{std::decay<decltype(ship_moves)>::type{}}},
         {"shipRange", Any{std::decay<decltype(ship_range)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
+        {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
     },
     bury_interest_rate(variables_["buryInterestRate"].as<std::decay<decltype(bury_interest_rate)>::type>()),
@@ -81,6 +82,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     ship_moves(variables_["shipMoves"].as<std::decay<decltype(ship_moves)>::type>()),
     ship_range(variables_["shipRange"].as<std::decay<decltype(ship_range)>::type>()),
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
+    time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>())
 {
     for(auto&& obj : init)
