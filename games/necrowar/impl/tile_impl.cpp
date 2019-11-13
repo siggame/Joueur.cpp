@@ -125,12 +125,12 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"numGhouls", Any{std::decay<decltype(num_ghouls)>::type{}}},
         {"numHounds", Any{std::decay<decltype(num_hounds)>::type{}}},
         {"numZombies", Any{std::decay<decltype(num_zombies)>::type{}}},
+        {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"tileEast", Any{std::decay<decltype(tile_east)>::type{}}},
         {"tileNorth", Any{std::decay<decltype(tile_north)>::type{}}},
         {"tileSouth", Any{std::decay<decltype(tile_south)>::type{}}},
         {"tileWest", Any{std::decay<decltype(tile_west)>::type{}}},
         {"tower", Any{std::decay<decltype(tower)>::type{}}},
-        {"type", Any{std::decay<decltype(type)>::type{}}},
         {"unit", Any{std::decay<decltype(unit)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
@@ -149,12 +149,12 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     num_ghouls(variables_["numGhouls"].as<std::decay<decltype(num_ghouls)>::type>()),
     num_hounds(variables_["numHounds"].as<std::decay<decltype(num_hounds)>::type>()),
     num_zombies(variables_["numZombies"].as<std::decay<decltype(num_zombies)>::type>()),
+    owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     tile_east(variables_["tileEast"].as<std::decay<decltype(tile_east)>::type>()),
     tile_north(variables_["tileNorth"].as<std::decay<decltype(tile_north)>::type>()),
     tile_south(variables_["tileSouth"].as<std::decay<decltype(tile_south)>::type>()),
     tile_west(variables_["tileWest"].as<std::decay<decltype(tile_west)>::type>()),
     tower(variables_["tower"].as<std::decay<decltype(tower)>::type>()),
-    type(variables_["type"].as<std::decay<decltype(type)>::type>()),
     unit(variables_["unit"].as<std::decay<decltype(unit)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
     y(variables_["y"].as<std::decay<decltype(y)>::type>())
@@ -222,6 +222,11 @@ bool Tile_::is_map(const std::string& name)
 
 void Tile_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   if(member == "owner")
+   { 
+      to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
+      return;
+   }
    if(member == "tileEast")
    { 
       to_change->as<Tile>() = std::static_pointer_cast<Tile_>(ref);
