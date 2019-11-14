@@ -15,6 +15,7 @@ namespace ${underscore(game_name)}
 
 //register the game
 Game_registry registration("${underscore(game_name).capitalize()}",
+                           "${game_version}",
                            std::unique_ptr<${underscore(game_name).capitalize()}>(new ${underscore(game_name).capitalize()}));
 
 std::unique_ptr<Base_ai> ${underscore(game_name).capitalize()}::generate_ai()

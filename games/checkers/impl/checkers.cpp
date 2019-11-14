@@ -15,6 +15,7 @@ namespace checkers
 
 //register the game
 Game_registry registration("Checkers",
+                           "49f1e5586cc4c62b6f74081e803d8edf9f54e8315f221c62c638f963cea8ab31",
                            std::unique_ptr<Checkers>(new Checkers));
 
 std::unique_ptr<Base_ai> Checkers::generate_ai()

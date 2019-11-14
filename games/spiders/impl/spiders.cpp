@@ -15,6 +15,7 @@ namespace spiders
 
 //register the game
 Game_registry registration("Spiders",
+                           "a8df6038306b6855bb35959d7698f8dcbf98f48e7e148de59fef940ccb241bdf",
                            std::unique_ptr<Spiders>(new Spiders));
 
 std::unique_ptr<Base_ai> Spiders::generate_ai()

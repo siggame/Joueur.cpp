@@ -15,6 +15,7 @@ namespace stumped
 
 //register the game
 Game_registry registration("Stumped",
+                           "7de307cae4a9a163a9b3600cb20c4b376b9f9cc42f1b990852878fea0127eed3",
                            std::unique_ptr<Stumped>(new Stumped));
 
 std::unique_ptr<Base_ai> Stumped::generate_ai()

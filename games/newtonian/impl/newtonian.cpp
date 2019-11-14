@@ -15,6 +15,7 @@ namespace newtonian
 
 //register the game
 Game_registry registration("Newtonian",
+                           "7c19f909ee5faa0ac3faf4e989032b5a37ba94aeb5d6ae7654a15a2bb1401bbe",
                            std::unique_ptr<Newtonian>(new Newtonian));
 
 std::unique_ptr<Base_ai> Newtonian::generate_ai()
