@@ -85,7 +85,7 @@ bool AI::run_turn()
    int numUnits = 0;
    for (int i = 0; i < this->player->units.size(); ++i)
    {
-      if (player->units[i]->job->title->equals("worker"))
+	   if (this->player->units[i]->job->title->equals("worker"))
       {
          numWorkers++;
       }
@@ -114,7 +114,7 @@ bool AI::run_turn()
    }
 
    Tile target = NULL;
-   for (Unit unit : this->player->units)
+   for (int i = 0; i < this->player->units.size(); ++i)
    {
       // Only tries to do something if the unit actually exists.
       // if a unit does not have a tile, then they are dead.
