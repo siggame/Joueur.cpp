@@ -83,14 +83,15 @@ bool AI::run_turn()
    int mana = this->player->mana;
    int numWorkers = 0;
    int numUnits = 0;
-   for (Unit unit : this->player->units)
+   for (int i = 0; i < this->player->units.size(); ++i)
    {
-      if (unit.job.title.equals("worker"))
+      if (player->units[i]->job->title->equals("worker"))
       {
          numWorkers++;
       }
-      {
-         else numUnits++;
+      else 
+	  {
+		  numUnits++;
       }
    }
    if (numWorkers < 5)
