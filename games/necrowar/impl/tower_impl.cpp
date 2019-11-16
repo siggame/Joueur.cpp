@@ -58,12 +58,14 @@ bool Tower_::attack(const Tile& tile)
 Tower_::Tower_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"attacked", Any{std::decay<decltype(attacked)>::type{}}},
+        {"cooldown", Any{std::decay<decltype(cooldown)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"job", Any{std::decay<decltype(job)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
     },
     attacked(variables_["attacked"].as<std::decay<decltype(attacked)>::type>()),
+    cooldown(variables_["cooldown"].as<std::decay<decltype(cooldown)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     job(variables_["job"].as<std::decay<decltype(job)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
