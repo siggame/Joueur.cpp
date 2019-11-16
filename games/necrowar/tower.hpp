@@ -44,6 +44,11 @@ public:
     const bool& attacked;
 
     /// <summary>
+    /// How many turns are left before it can fire again.
+    /// </summary>
+    const int& cooldown;
+
+    /// <summary>
     /// How much remaining health this tower has.
     /// </summary>
     const int& health;
