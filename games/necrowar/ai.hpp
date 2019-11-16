@@ -42,6 +42,16 @@ public:
 
     //<<-- Creer-Merge: class variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional class variables here.
+
+    Tile spawnUnitTile;
+    Tile spawnWorkerTile;
+    std::vector<Tile> goldMines;
+    std::vector<Unit> miners;
+    std::vector<Unit> builders;
+    std::vector<Unit> units;
+    std::vector<Tile> grassByPath;
+    Tower enemyCastle;
+    Tower myCastle;
     //<<-- /Creer-Merge: class variables -->>
 
     /// <summary>
@@ -76,6 +86,8 @@ public:
 
     // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional methods here.
+    std::vector<Tile> find_path_worker(const Tile& start, const Tile& goal);
+    bool isDead(Unit u);
     // <<-- /Creer-Merge: methods -->>
 
 /// A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
