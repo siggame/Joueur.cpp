@@ -1,5 +1,6 @@
 #include "base_game.hpp"
 #include "base_ai.hpp"
+#include "register.hpp"
 
 #include "delta.hpp"
 #include "attr_wrapper.hpp"
@@ -36,6 +37,7 @@ void Base_game::go()
    std::string alias = R"({"event": "alias", "data": ")" + get_game_name() + "\"}";
    conn_.send(alias);
    const auto game_name = handle_response("named")->as<std::string>();
+   auto& game_version = Game_registry::get_version(game_name);
    //start with the same thing each time
    std::string to_send = R"({"event": "play", "data": {"clientType": "c++", "playerIndex": )";
    //now fill in the details
@@ -74,7 +76,7 @@ void Base_game::go()
    to_send += R"(","gameName":")" + game_name + R"("}})";
    conn_.send(to_send);
    //Expecting the "lobbied" message
-   handle_response("lobbied");
+   handle_response("lobbied", game_version);
    //Next the delta message will be received
    handle_response("delta");
    //Start should be next
@@ -86,7 +88,7 @@ void Base_game::go()
    }
 }
 
-std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
+std::unique_ptr<Any> Base_game::handle_response(const std::string& expected, const std::string& version)
 {
    doc_raw_.reset(new rapidjson::Document);
    //first get the response
@@ -104,6 +106,16 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
    if(event == "lobbied")
    {
       const auto& data = attr_wrapper::get_loc(doc, "data")->value;
+      const auto& server_game_version = attr_wrapper::get_attribute<std::string>(data, "gameVersion");
+      if (server_game_version != version) {
+         std::cout << sgr::text_yellow
+                   << "WARNING: Game versions do not match.\n"
+                   << "-> Your local game version is:     " << version.substr(0, 8) << std::endl
+                   << "-> Game Server's game version is:  " << server_game_version.substr(0, 8) << std::endl
+                   << std::endl
+                   << "Version mismatch means that unexpected crashes may happen due to differing game structures!" << std::endl;
+      }
+
       const auto& constants = attr_wrapper::get_loc(data, "constants")->value;
       //extract game constants
       len_string_ = attr_wrapper::get_attribute<std::string>(constants, "DELTA_LIST_LENGTH");
@@ -169,9 +181,10 @@ std::unique_ptr<Any> Base_game::handle_response(const std::string& expected)
       const auto name = attr_wrapper::get_attribute<std::string>(data, "name");
       const auto index = attr_wrapper::get_attribute<unsigned>(data, "index");
       //loop through all parameters and make a map out of them
-      const auto& args = attr_wrapper::get_loc(data, "args");
+      attr_wrapper::get_loc(data, "args");
       std::unordered_map<std::string, Any> params;
       //TODO: arguments for orders (apparently they are positional)
+      //const auto& args = attr_wrapper::get_loc(data, "args");
       //send finished event with data:
       const std::string order_done =
          R"({"event":"finished","data":{"orderIndex":)" + std::to_string(index)

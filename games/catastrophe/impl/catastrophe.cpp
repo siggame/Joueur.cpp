@@ -15,6 +15,7 @@ namespace catastrophe
 
 //register the game
 Game_registry registration("Catastrophe",
+                           "ede84ab86376b00287c09558f05e8f2a61b92109d93aad9ebd3379ff4215fb53",
                            std::unique_ptr<Catastrophe>(new Catastrophe));
 
 std::unique_ptr<Base_ai> Catastrophe::generate_ai()

@@ -41,7 +41,7 @@ public:
     /// <summary>
     /// How many eggs the BroodMother has to spawn Spiderlings this turn.
     /// </summary>
-    const double& eggs;
+    const int& eggs;
 
     /// <summary>
     /// How much health this BroodMother has left. When it reaches 0, she dies and her owner loses.

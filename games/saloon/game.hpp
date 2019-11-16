@@ -137,6 +137,11 @@ public:
     const std::vector<Tile>& tiles;
 
     /// <summary>
+    /// The amount of time (in nano-seconds) added after each player performs a turn.
+    /// </summary>
+    const int& time_added_per_turn;
+
+    /// <summary>
     /// How many turns a Cowboy will be drunk for if a bottle breaks on it.
     /// </summary>
     const int& turns_drunk;

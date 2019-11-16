@@ -39,7 +39,7 @@ class Tile_ : public Game_object_
 public:
 
     /// <summary>
-    /// The beer Bottle currently flying over this Tile.
+    /// The beer Bottle currently flying over this Tile, null otherwise.
     /// </summary>
     const Bottle& bottle;
 

@@ -122,6 +122,11 @@ public:
     const int& shelter_materials;
 
     /// <summary>
+    /// The amount of food Players start with.
+    /// </summary>
+    const int& starting_food;
+
+    /// <summary>
     /// The multiplier for the amount of energy regenerated when resting while starving.
     /// </summary>
     const double& starving_energy_mult;
@@ -135,6 +140,11 @@ public:
     /// All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
     /// </summary>
     const std::vector<Tile>& tiles;
+
+    /// <summary>
+    /// The amount of time (in nano-seconds) added after each player performs a turn.
+    /// </summary>
+    const int& time_added_per_turn;
 
     /// <summary>
     /// After a food tile is harvested, the number of turns before it can be harvested again.

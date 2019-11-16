@@ -138,7 +138,7 @@ public:
     /// drops some of the given resource on or adjacent to the _unit's _tile. _does not count as an action.
     /// </summary>
     /// <param name="tile"> The Tile to drop materials/food on. </param>
-    /// <param name="resource"> The type of resource to drop ('material' or 'food'). </param>
+    /// <param name="resource"> The type of resource to drop ('materials' or 'food'). </param>
     /// <param name="amount"> The amount of the resource to drop. Amounts <= 0 will drop as much as possible. </param>
     bool drop(const Tile& tile, const std::string& resource, int amount = 0);
 
@@ -158,7 +158,7 @@ public:
     /// picks up some materials or food on or adjacent to the _unit's _tile. _does not count as an action.
     /// </summary>
     /// <param name="tile"> The Tile to pickup materials/food from. </param>
-    /// <param name="resource"> The type of resource to pickup ('material' or 'food'). </param>
+    /// <param name="resource"> The type of resource to pickup ('materials' or 'food'). </param>
     /// <param name="amount"> The amount of the resource to pickup. Amounts <= 0 will pickup as much as possible. </param>
     bool pickup(const Tile& tile, const std::string& resource, int amount = 0);
 

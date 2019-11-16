@@ -15,6 +15,7 @@ namespace saloon
 
 //register the game
 Game_registry registration("Saloon",
+                           "fbaeac2bae9020bdd5a8816cb9ae38215c277e4bf7874a2f70c3995cd8eee8d3",
                            std::unique_ptr<Saloon>(new Saloon));
 
 std::unique_ptr<Base_ai> Saloon::generate_ai()

@@ -15,6 +15,7 @@ namespace pirates
 
 //register the game
 Game_registry registration("Pirates",
+                           "d51fca49d06cb7164f9dbf9c3515ab0f9b5a17113a5946bddcc75aaba125967f",
                            std::unique_ptr<Pirates>(new Pirates));
 
 std::unique_ptr<Base_ai> Pirates::generate_ai()

@@ -108,7 +108,7 @@ public:
     /// drops some of the given resource on the beaver's _tile.
     /// </summary>
     /// <param name="tile"> The Tile to drop branches/food on. Must be the same Tile that the Beaver is on, or an adjacent one. </param>
-    /// <param name="resource"> The type of resource to drop ('branch' or 'food'). </param>
+    /// <param name="resource"> The type of resource to drop ('branches' or 'food'). </param>
     /// <param name="amount"> The amount of the resource to drop, numbers <= 0 will drop all the resource type. </param>
     bool drop(const Tile& tile, const std::string& resource, int amount = 0);
 
@@ -128,7 +128,7 @@ public:
     /// picks up some branches or food on the beaver's tile.
     /// </summary>
     /// <param name="tile"> The Tile to pickup branches/food from. Must be the same Tile that the Beaver is on, or an adjacent one. </param>
-    /// <param name="resource"> The type of resource to pickup ('branch' or 'food'). </param>
+    /// <param name="resource"> The type of resource to pickup ('branches' or 'food'). </param>
     /// <param name="amount"> The amount of the resource to drop, numbers <= 0 will pickup all of the resource type. </param>
     bool pickup(const Tile& tile, const std::string& resource, int amount = 0);
 

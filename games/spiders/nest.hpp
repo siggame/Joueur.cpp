@@ -39,6 +39,11 @@ class Nest_ : public Game_object_
 public:
 
     /// <summary>
+    /// The Player that 'controls' this Nest as they have the most Spiders on this nest.
+    /// </summary>
+    const Player& controlling_player;
+
+    /// <summary>
     /// All the Spiders currently located on this Nest.
     /// </summary>
     const std::vector<Spider>& spiders;

@@ -77,6 +77,11 @@ public:
     const int& max_turns;
 
     /// <summary>
+    /// The maximum strength a web can be strengthened to.
+    /// </summary>
+    const int& max_web_strength;
+
+    /// <summary>
     /// The speed at which Spiderlings move on Webs.
     /// </summary>
     const int& movement_speed;
@@ -100,6 +105,11 @@ public:
     /// The speed at which Spitters work to spit new Webs.
     /// </summary>
     const int& spit_speed;
+
+    /// <summary>
+    /// The amount of time (in nano-seconds) added after each player performs a turn.
+    /// </summary>
+    const int& time_added_per_turn;
 
     /// <summary>
     /// How much web strength is added or removed from Webs when they are weaved.

@@ -15,6 +15,7 @@ namespace stardash
 
 //register the game
 Game_registry registration("Stardash",
+                           "0fa378e83ac567ebdf3e9805d3f130023f936e2740acda173d238b37f2b5d541",
                            std::unique_ptr<Stardash>(new Stardash));
 
 std::unique_ptr<Base_ai> Stardash::generate_ai()

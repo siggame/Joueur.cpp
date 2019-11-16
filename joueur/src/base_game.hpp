@@ -96,7 +96,7 @@ public:
    //If a certain action is expected it can be given here
    //the Any returned converts to false if the game is over; converts to true if the game
    //is still continuing
-   std::unique_ptr<Any> handle_response(const std::string& expected = "");
+   std::unique_ptr<Any> handle_response(const std::string& expected = "", const std::string& version = "");
 
 protected:
    //return the name of the game

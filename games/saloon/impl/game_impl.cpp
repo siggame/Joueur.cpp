@@ -48,6 +48,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"sharpshooterDamage", Any{std::decay<decltype(sharpshooter_damage)>::type{}}},
         {"siestaLength", Any{std::decay<decltype(siesta_length)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
+        {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
         {"turnsDrunk", Any{std::decay<decltype(turns_drunk)>::type{}}},
     },
     bartender_cooldown(variables_["bartenderCooldown"].as<std::decay<decltype(bartender_cooldown)>::type>()),
@@ -69,6 +70,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     sharpshooter_damage(variables_["sharpshooterDamage"].as<std::decay<decltype(sharpshooter_damage)>::type>()),
     siesta_length(variables_["siestaLength"].as<std::decay<decltype(siesta_length)>::type>()),
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
+    time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
     turns_drunk(variables_["turnsDrunk"].as<std::decay<decltype(turns_drunk)>::type>())
 {
     for(auto&& obj : init)
