@@ -33,17 +33,6 @@ void AI::start()
    // <<-- Creer-Merge: start -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // This is a good place to initialize any variables
 
-   // Print starting stats
-   std::cout << "GOLD: " << this->player->gold << std::endl;
-   std::cout << "MANA: " << this->player->mana << std::endl;
-   std::cout << "UNITS: ";
-   for (Unit u : this->player->units)
-        std::cout << u->job->title << ", ";
-   std::cout << "\nTOWERS:";
-   for (Tower t : this->player->towers)
-        std::cout << t->job->title << ", ";
-    std::cout << "\nCastle Health: " << this->player->towers[0]->health << std::endl;
-
     // Set up variables to track relevant info
     this->enemyCastle = this->player->opponent->towers[0];
     this->myCastle = this->player->towers[0];
@@ -84,21 +73,6 @@ void AI::ended(bool won, const std::string &reason)
 {
    //<<-- Creer-Merge: ended -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can do any cleanup of your AI here.  The program ends when this function returns.
-
-   // Print final stats
-   std::cout << "GOLD: " << this->player->gold << std::endl;
-   std::cout << "MANA: " << this->player->mana << std::endl;
-   std::cout << "UNITS: ";
-   for (Unit u : this->player->units)
-        std::cout << u->job->title << ", ";
-   std::cout << "\nTOWERS:";
-   for (Tower t : this->player->towers)
-        std::cout << t->job->title << ", ";
-
-    if (this->player->towers[0]->job->title == "castle")
-        std::cout << "\nCastle Health: " << this->player->towers[0]->health << std::endl;
-    else
-        std::cout << "No castle left :(" << std::endl;
    //<<-- /Creer-Merge: ended -->>
 }
 
