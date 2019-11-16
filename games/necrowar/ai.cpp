@@ -84,7 +84,7 @@ bool AI::run_turn()
    int numWorkers = 0;
    int numUnits = 0;
    for (int i = 0; i < this->player->units.size(); ++i)
-   {
+   { 
 	   if (this->player->units[i]->job->title==("worker"))
       {
          numWorkers++;
@@ -119,20 +119,20 @@ bool AI::run_turn()
       // Only tries to do something if the unit actually exists.
       // if a unit does not have a tile, then they are dead.
 
-      if (unit != NULL && unit->tile != NULL)
+      if (this->player->units[i] != NULL && this->player->units[i]->tile != NULL)
       {
-         if (unit->job.title.equals("worker"))
+         if (this->player->units[i]->job->title==("worker"))
          {
             target = NULL;
 
             for (Tile tile : this->game->tiles)
             {
-               if (tile->is_gold_mine && this->player->side->contains(tile) && tile->unit == NULL)
+               if (tile->is_gold_mine && std::count(this->player->side.begin, this->player->side.end, tile) > 0 && tile->unit == NULL)
                {
                   target = tile;
                }
 
-               else if (tile->is_tower && player->side->contains(tile) && tile->unit == NULL)
+               else if (tile->is_tower && std::count(this->player->side.begin, this->player->side.end, tile) > 0 && tile->unit == NULL)
                {
                   target = tile;
                }
@@ -142,7 +142,7 @@ bool AI::run_turn()
                std::vector<Tile> riverSpots;
                for (Tile tile : game->tiles)
                {
-                  if (tile->is_river && player->side->contains(tile))
+                  if (tile->is_river && std::count(this->player->side.begin, this->player->side.end, tile) > 0)
                   {
                      riverSpots.push_back(tile);
                   }
@@ -152,10 +152,10 @@ bool AI::run_turn()
                   bool foundRiverSpot = false;
                   for (Tile spot : riverSpots)
                   {
-                     foundRiverSpot = tile->get_neighbors()->contains(spot);
+                     foundRiverSpot = std::count(tile->get_neighbors().begin, tile->get_neighbors().end, spot) > 0;
                   }
 
-                  if (foundRiverSpot && player->side->contains(tile))
+                  if (foundRiverSpot && std::count(this->player->side.begin, this->player->side.end, tile) > 0)
                   {
                      while (unit->moves > 0 && !find_path(unit->tile, tile).empty())
                      {
