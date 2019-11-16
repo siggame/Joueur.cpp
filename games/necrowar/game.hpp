@@ -42,16 +42,6 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
-    /// A list of every tower type / job.
-    /// </summary>
-    const std::vector<Tower_job>& tower_jobs;
-
-    /// <summary>
-    /// A list of every unit type / job.
-    /// </summary>
-    const std::vector<Unit_job>& unit_jobs;
-
-    /// <summary>
     /// The player whose turn it is currently. That player can send commands. Other players cannot.
     /// </summary>
     const Player& current_player;
@@ -122,9 +112,19 @@ public:
     const int& time_added_per_turn;
 
     /// <summary>
+    /// A list of every tower type / job.
+    /// </summary>
+    const std::vector<Tower_job>& tower_jobs;
+
+    /// <summary>
     /// Every Tower in the game.
     /// </summary>
     const std::vector<Tower>& towers;
+
+    /// <summary>
+    /// A list of every unit type / job.
+    /// </summary>
+    const std::vector<Unit_job>& unit_jobs;
 
     /// <summary>
     /// Every Unit in the game.
