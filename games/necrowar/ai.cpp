@@ -157,17 +157,17 @@ bool AI::run_turn()
 
                   if (foundRiverSpot && std::count(this->player->side.begin, this->player->side.end, tile) > 0)
                   {
-                     while (unit->moves > 0 && !find_path(unit->tile, tile).empty())
+                     while (this->player->units[i]->moves > 0 && !find_path(this->player->units[i]->tile, tile).empty())
                      {
-                        if (!unit->move(find_path(unit->tile, tile)[0]))
+                        if (!this->player->units[i]->move(find_path(this->player->units[i]->tile, tile)[0]))
                         {
-                           unit->move(target);
+							this->player->units[i]->move(target);
                         }
                      }
 
-                     if (!unit->acted)
+                     if (!this->player->units[i]->acted)
                      {
-                        unit->fish(tile);
+						 this->player->units[i]->fish(tile);
                      }
 
                      break;
@@ -176,49 +176,46 @@ bool AI::run_turn()
             }
             else
             {
-               while (unit->moves > 0 && !find_path(unit->tile, target).empty())
+               while (this->player->units[i]->moves > 0 && !find_path(this->player->units[i]->tile, target).empty())
                {
-                  if (!unit->move(find_path(unit->tile, target)[0]))
+                  if (!this->player->units[i]->move(find_path(this->player->units[i]->tile, target)[0]))
                   {
-                     unit->move(target);
+					  this->player->units[i]->move(target);
                   }
                }
 
-               if (!unit->acted)
+               if (!this->player->units[i]->acted)
                {
                   if (target->is_gold_mine)
                   {
-                     unit->acted = true;
-                     unit->mine(unit->tile);
+                     this->player->units[i]->mine(this->player->units[i]->tile);
                   }
                   else if (target->is_tower)
-                  {
-                     unit->acted = true;
-                     unit->build("arrow");
+				  {
+                     this->player->units[i]->build("arrow");
                   }
                }
             }
          }
-         else if (unit->job.title.equals("ghoul"))
+         else if (this->player->units[i]->job->title == ("ghoul"))
          {
             target = NULL;
 
             for (int i =0; i < this->game->tiles.size(); i++)
             {
-               if (tile->is_tower && enemy->side.contains(tile) && tile->unit != NULL)
+               if (this->game->tiles[i]->is_tower && std::count(this->player->opponent->side.begin, this->player->opponent->side.end, this->game->tiles[i]) > 0 && this->game->tiles[i]->unit != NULL)
                {
-                  target = tile;
+                  target = this->game->tiles[i];
 
-                  while (unit->moves > 0 && find_path(unit->tile, target).size() > 1)
+                  while (this->player->units[i]->moves > 0 && find_path(this->player->units[i]->tile, target).size() > 1)
                   {
-                     if (!unit->move(find_path(unit->tile, target)[0]))
+                     if (!this->player->units[i]->move(find_path(this->player->units[i]->tile, target)[0]))
                      {
-                        unit->move(target);
+                        this->player->units[i]->move(target);
                      }
-                     if (!unit->acted)
+                     if (!this->player->units[i]->acted)
                      {
-                        unit->attack(target);
-                        unit->acted = true;
+                        this->player->units[i]->attack(target);
                      }
                   }
                }
@@ -227,20 +224,19 @@ bool AI::run_turn()
                   target = NULL;
                   for (Tile tileTarget : game->tiles)
                   {
-                     if (tileTarget->is_castle && enemy->side->contains(tileTarget) && tileTarget->unit != NULL)
+                     if (tileTarget->is_castle && std::count(this->player->opponent->side.begin, this->player->opponent->side.end, tileTarget) > 0 && tileTarget->unit != NULL)
                      {
                         target = tileTarget;
 
-                        while (unit->moves > 0 && find_path(unit->tile, target).size() > 1)
+                        while (this->player->units[i]->moves > 0 && find_path(this->player->units[i]->tile, target).size() > 1)
                         {
-                           if (!unit->move(find_path(unit->tile, target)[0]))
+                           if (!this->player->units[i]->move(find_path(this->player->units[i]->tile, target)[0]))
                            {
-                              unit->move(target);
+                              this->player->units[i]->move(target);
                            }
-                           if (!unit->acted)
+                           if (!this->player->units[i]->acted)
                            {
-                              unit->attack(target);
-                              unit->acted = true;
+                              this->player->units[i]->attack(target);
                            }
                         }
                      }
@@ -255,6 +251,9 @@ bool AI::run_turn()
       // <<-- /Creer-Merge: runTurn -->>
       return true;
    }
+
+
+
 
    /// A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
    /// <param name="start">the starting Tile</param>
