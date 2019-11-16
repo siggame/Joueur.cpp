@@ -85,7 +85,7 @@ bool AI::run_turn()
    int numUnits = 0;
    for (int i = 0; i < this->player->units.size(); ++i)
    {
-	   if (this->player->units[i]->job->title->equals("worker"))
+	   if (this->player->units[i]->job->title==("worker"))
       {
          numWorkers++;
       }
@@ -203,7 +203,7 @@ bool AI::run_turn()
          {
             target = NULL;
 
-            for (Tile tile : game->tiles)
+            for (int i =0; i < this->game->tiles.size(); i++)
             {
                if (tile->is_tower && enemy->side.contains(tile) && tile->unit != NULL)
                {
