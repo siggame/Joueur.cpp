@@ -201,6 +201,8 @@ public:
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
+
+   bool is_pathable_worker();
    // <<-- /Creer-Merge: methods -->>
 
    ~Tile_();
