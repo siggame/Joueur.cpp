@@ -24,6 +24,32 @@ namespace cpp_client
 namespace coreminer
 {
 
+bool Tile_::spawn_miner()
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "spawnMiner", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += "}}}";
+    Coreminer::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Coreminer::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<bool>();
+}
+
 
 Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
@@ -40,6 +66,7 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"tileNorth", Any{std::decay<decltype(tile_north)>::type{}}},
         {"tileSouth", Any{std::decay<decltype(tile_south)>::type{}}},
         {"tileWest", Any{std::decay<decltype(tile_west)>::type{}}},
+        {"units", Any{std::decay<decltype(units)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
     },
@@ -56,6 +83,7 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     tile_north(variables_["tileNorth"].as<std::decay<decltype(tile_north)>::type>()),
     tile_south(variables_["tileSouth"].as<std::decay<decltype(tile_south)>::type>()),
     tile_west(variables_["tileWest"].as<std::decay<decltype(tile_west)>::type>()),
+    units(variables_["units"].as<std::decay<decltype(units)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
     y(variables_["y"].as<std::decay<decltype(y)>::type>())
 {
@@ -69,6 +97,12 @@ Tile_::~Tile_() = default;
 
 void Tile_::resize(const std::string& name, std::size_t size)
 {
+    if(name == "units")
+    {
+        auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
+        vec.resize(size);
+        return;
+    }
     try
     {
         Game_object_::resize(name, size);
@@ -80,6 +114,16 @@ void Tile_::resize(const std::string& name, std::size_t size)
 
 void Tile_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
+    if(name == "units")
+    {
+        using type = std::decay<decltype(units)>::type;
+        auto& vec = variables_["units"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
     try
     {
         Game_object_::change_vec_values(name, values);

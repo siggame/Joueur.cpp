@@ -103,11 +103,6 @@ public:
     // <<-- /Creer-Merge: member variables -->>
 
 
-    /// <summary>
-    /// spawns a _miner _unit on this _player's _base _tile.
-    /// </summary>
-    bool spawn_miner();
-
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.

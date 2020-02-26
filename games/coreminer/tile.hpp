@@ -104,6 +104,11 @@ public:
     const Tile& tile_west;
 
     /// <summary>
+    /// An array of the Units on this Tile.
+    /// </summary>
+    const std::vector<Unit>& units;
+
+    /// <summary>
     /// The x (horizontal) position of this Tile.
     /// </summary>
     const int& x;
@@ -117,6 +122,11 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
+
+    /// <summary>
+    /// spawns a _miner _unit on this _tile - _must be on the surface on their side of the map.
+    /// </summary>
+    bool spawn_miner();
 
     /// <summary>
     /// The list of all valid directions Tiles can be in
