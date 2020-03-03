@@ -61,7 +61,7 @@ void AI::ended(bool won, const std::string& reason)
 /// <summary>
 /// This is called every time it is this AI.player's turn to make a move.
 /// </summary>
-/// <returns>A string in Standard Algebraic Notation (SAN) for the move you want to make. If the move is invalid or not properly formatted you will lose the game.</returns>
+/// <returns>A string in Universal Chess Inferface (UCI) or Standard Algebraic Notation (SAN) formatting for the move you want to make. If the move is invalid or not properly formatted you will lose the game.</returns>
 std::string AI::make_move()
 {
     // <<-- Creer-Merge: makeMove -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
