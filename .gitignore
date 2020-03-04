@@ -258,3 +258,7 @@ docs/temp
 
 # vscode
 .vscode
+
+# OS Junk files
+desktop.ini
+.DS_Store

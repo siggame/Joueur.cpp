@@ -1,24 +1,31 @@
-#ifndef GAMES_CHESS_AI_HPP
-#define GAMES_CHESS_AI_HPP
+#ifndef GAMES_NECROWAR_AI_HPP
+#define GAMES_NECROWAR_AI_HPP
 
-#include "impl/chess.hpp"
+#include "impl/necrowar.hpp"
 #include "game.hpp"
 #include "game_object.hpp"
 #include "player.hpp"
+#include "tile.hpp"
+#include "tower.hpp"
+#include "tower_job.hpp"
+#include "unit.hpp"
+#include "unit_job.hpp"
 
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/attr_wrapper.hpp"
 
+// <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // You can add additional #includes here
+// <<-- /Creer-Merge: includes -->>
 
 namespace cpp_client
 {
 
-namespace chess
+namespace necrowar
 {
 
 /// <summary>
-/// This is the header file for building your Chess AI
+/// This is the header file for building your Necrowar AI
 /// </summary>
 class AI : public Base_ai
 {
@@ -33,7 +40,9 @@ public:
     /// </summary>
     Player player;
 
+    //<<-- Creer-Merge: class variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional class variables here.
+    //<<-- /Creer-Merge: class variables -->>
 
     /// <summary>
     /// This returns your AI's name to the game server.
@@ -60,12 +69,20 @@ public:
     virtual void game_updated() override;
 
     /// <summary>
-    /// This is called every time it is this AI.player's turn to make a move.
+    /// This is called every time it is this AI.player's turn.
     /// </summary>
-    /// <returns>A string in Universal Chess Inferface (UCI) or Standard Algebraic Notation (SAN) formatting for the move you want to make. If the move is invalid or not properly formatted you will lose the game.</returns>
-    std::string make_move();
+    /// <returns>Represents if you want to end your turn. True means end your turn, False means to keep your turn going and re-call this function.</returns>
+    bool run_turn();
 
+    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional methods here.
+    // <<-- /Creer-Merge: methods -->>
+
+/// A very basic path finding algorithm (Breadth First Search) that when given a starting Tile, will return a valid path to the goal Tile.
+/// <param name="start">the starting Tile</param>
+/// <param name="goal">the goal Tile</param>
+/// <return>A List of Tiles representing the path, the the first element being a valid adjacent Tile to the start, and the last element being the goal. Or an empty list if no path found.</return>
+std::vector<Tile> find_path(const Tile& start, const Tile& goal);
 
 
 
@@ -85,8 +102,8 @@ public:
 
 };
 
-} // CHESS
+} // NECROWAR
 
 } // cpp_client
 
-#endif // GAMES_CHESS_AI_HPP
+#endif // GAMES_NECROWAR_AI_HPP

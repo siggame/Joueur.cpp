@@ -154,8 +154,8 @@ int main(int argc, const char* argv[])
    #define CATCHER(x)                                                 \
       catch(const x& e)                                               \
       {                                                               \
-         std::cerr << sgr::text_red << "[" #x "] An error occured:\n" \
-                   << e.what() << sgr::reset << std::endl;            \
+         std::cerr << sgr::text_red << "---\nError: " #x "\n---\n"    \
+                   << e.what() << "\n---" << sgr::reset << std::endl;   \
       }
    CATCHER(Game_not_found)
    CATCHER(Communication_error)
@@ -168,12 +168,12 @@ int main(int argc, const char* argv[])
    CATCHER(Unknown_error)
    catch(const std::exception& e)
    {
-      std::cerr << sgr::text_red << "Some error occurred:\n" << e.what() << sgr::reset << std::endl;
+      std::cerr << sgr::text_red << e.what() << "\n---" << sgr::reset << std::endl;
       return 1;
    }
    catch(...)
    {
-      std::cerr << sgr::text_red << "An unknown error occurred." << sgr::reset << std::endl;
+      std::cerr << sgr::text_red << "An unknown error occurred.\n---" << sgr::reset << std::endl;
       return 2;
    }
    #undef CATCHER

@@ -21,11 +21,15 @@ public:
    //connect a game name to a game object
    //if the game name already exists then it is re-associated with the new game
    Game_registry(const std::string& name,
+                 const std::string& version,
                  std::unique_ptr<Base_game> game);
 
    //get a non-owning pointer to a game object
    //throws a range_error exception if the game does not exist
    static Base_game& get_game(const std::string& name);
+
+   //get a string of the version hash of a specific game name
+   static std::string& get_version(const std::string& name);
 
 private:
    struct Hasher
@@ -76,6 +80,12 @@ private:
                                 Hasher,
                                 Comper> data;
       return data;
+   }
+
+   static std::unordered_map<std::string, std::string>& version_map()
+   {
+      static std::unordered_map<std::string, std::string> version_data;
+      return version_data;
    }
 };
 

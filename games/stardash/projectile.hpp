@@ -1,8 +1,8 @@
-#ifndef GAMES_CHESS_GAME_H
-#define GAMES_CHESS_GAME_H
+#ifndef GAMES_STARDASH_PROJECTILE_H
+#define GAMES_STARDASH_PROJECTILE_H
 
-// Game
-// The traditional 8x8 chess board with pieces.
+// Projectile
+// Tracks any projectiles moving through space.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -17,67 +17,75 @@
 
 #include "../../joueur/src/any.hpp"
 
+#include "game_object.hpp"
 
-#include "../../joueur/src/base_game.hpp"
-#include "impl/chess_fwd.hpp"
+#include "impl/stardash_fwd.hpp"
 
+// <<-- Creer-Merge: includes -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
 // you can add additional #includes here
+// <<-- /Creer-Merge: includes -->>
 
 namespace cpp_client
 {
 
-/// <summary>
-/// The traditional 8x8 chess board with pieces.
-/// </summary>
-namespace chess
+namespace stardash
 {
 
 /// <summary>
-/// The traditional 8x8 chess board with pieces.
+/// Tracks any projectiles moving through space.
 /// </summary>
-class Game_ : public Base_game
+class Projectile_ : public Game_object_
 {
 public:
 
     /// <summary>
-    /// Forsyth-Edwards Notation (fen), a notation that describes the game board state.
+    /// The remaining health of the projectile.
     /// </summary>
-    const std::string& fen;
+    const int& energy;
 
     /// <summary>
-    /// A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
+    /// The amount of remaining distance the projectile can move.
     /// </summary>
-    const std::unordered_map<std::string, Game_object>& game_objects;
+    const int& fuel;
 
     /// <summary>
-    /// The list of [known] moves that have occurred in the game, in Universal Chess Inferface (UCI) format. The first element is the first move, with the last element being the most recent.
+    /// The Player that owns and can control this Projectile.
     /// </summary>
-    const std::vector<std::string>& history;
+    const Player& owner;
 
     /// <summary>
-    /// List of all the players in the game.
+    /// The unit that is being attacked by this projectile.
     /// </summary>
-    const std::vector<Player>& players;
+    const Unit& target;
 
     /// <summary>
-    /// A unique identifier for the game instance that is being played.
+    /// The x value this projectile is on.
     /// </summary>
-    const std::string& session;
+    const double& x;
 
+    /// <summary>
+    /// The y value this projectile is on.
+    /// </summary>
+    const double& y;
+
+    // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
+    // <<-- /Creer-Merge: member variables -->>
 
 
 
+   // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
+   // <<-- /Creer-Merge: methods -->>
 
-   ~Game_();
+   ~Projectile_();
 
    // ####################
    // Don't edit these!
    // ####################
    /// \cond FALSE
-   Game_(std::initializer_list<std::pair<std::string, Any&&>> init);
-   Game_() : Game_({}){}
+   Projectile_(std::initializer_list<std::pair<std::string, Any&&>> init);
+   Projectile_() : Projectile_({}){}
    virtual void resize(const std::string& name, std::size_t size) override;
    virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) override;
    virtual void remove_key(const std::string& name, Any& key) override;
@@ -90,8 +98,8 @@ public:
     // ####################
 };
 
-} // chess
+} // stardash
 
 } // cpp_client
 
-#endif // GAMES_CHESS_GAME_H
+#endif // GAMES_STARDASH_PROJECTILE_H
