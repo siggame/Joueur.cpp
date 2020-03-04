@@ -94,17 +94,17 @@ public:
 
 
     /// <summary>
-    /// builds a support, shield, ladder, or bomb on _unit's tile, or an adjacent _tile.
+    /// builds a support, shield, or ladder on _unit's tile, or an adjacent _tile.
     /// </summary>
     /// <param name="tile"> The Tile to build on. </param>
-    /// <param name="type"> The structure to build (support, ladder, shield, or bomb). </param>
+    /// <param name="type"> The structure to build (support, ladder, or shield). </param>
     bool build(const Tile& tile, const std::string& type);
 
     /// <summary>
     /// dumps materials from cargo to an adjacent tile.
     /// </summary>
     /// <param name="tile"> The tile the materials will be dumped on. </param>
-    /// <param name="material"> The material the Unit will drop. 'dirt' or 'ore'. </param>
+    /// <param name="material"> The material the Unit will drop. 'dirt', 'ore', or 'bomb'. </param>
     /// <param name="amount"> The number of materials to drop. Amounts <= 0 will drop all the materials. </param>
     bool dump(const Tile& tile, const std::string& material, int amount);
 
