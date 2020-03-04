@@ -121,7 +121,7 @@ std::string AI::make_move()
     // This will only work if we are black move the pawn at b2 to b3.
     // Otherwise we will lose.
     // Your job is to code SOMETHING to parse the FEN string in some way to determine a valid move, in SAN format.
-    return "b3";
+    return "b2b3";
 }
 
 // You can add additional methods here for your AI to call
