@@ -44,6 +44,11 @@ public:
     const Tile& base_tile;
 
     /// <summary>
+    /// The bombs stored in the Player's supply.
+    /// </summary>
+    const int& bombs;
+
+    /// <summary>
     /// What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     /// </summary>
     const std::string& client_type;
@@ -57,6 +62,11 @@ public:
     /// If the player lost the game or not.
     /// </summary>
     const bool& lost;
+
+    /// <summary>
+    /// The amount of money this Player currently has.
+    /// </summary>
+    const int& money;
 
     /// <summary>
     /// The name of the player.
@@ -77,6 +87,16 @@ public:
     /// The reason why the player won the game.
     /// </summary>
     const std::string& reason_won;
+
+    /// <summary>
+    /// The Tiles on this Player's side of the map.
+    /// </summary>
+    const std::vector<Tile>& side;
+
+    /// <summary>
+    /// The Tiles this Player may spawn Units on.
+    /// </summary>
+    const std::vector<Tile>& spawn_tiles;
 
     /// <summary>
     /// The amount of time (in ns) remaining for this AI to send commands.

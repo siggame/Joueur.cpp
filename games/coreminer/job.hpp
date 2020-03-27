@@ -39,44 +39,29 @@ class Job_ : public Game_object_
 public:
 
     /// <summary>
-    /// The amount of cargo capacity this Unit starts with.
+    /// The amount of cargo capacity this Unit starts with per level.
     /// </summary>
-    const int& cargo_capacity;
+    const std::vector<int>& cargo_capacity;
 
     /// <summary>
-    /// The amount of starting health this Job has.
+    /// The cost of spawning a Unit with this Job.
     /// </summary>
-    const int& health;
+    const int& cost;
 
     /// <summary>
-    /// The maximum amount of cargo capacity this Unit can have.
+    /// The amount of starting health this Job has per level.
     /// </summary>
-    const int& max_cargo_capacity;
+    const std::vector<int>& health;
 
     /// <summary>
-    /// The maximum amount of health this Job can have.
+    /// The amount of mining power this Unit has per turn per level.
     /// </summary>
-    const int& max_health;
+    const std::vector<int>& mining_power;
 
     /// <summary>
-    /// The maximum amount of mining power this Unit can have.
+    /// The number of moves this Job can make per turn per level.
     /// </summary>
-    const int& max_mining_power;
-
-    /// <summary>
-    /// The maximum number of moves this Job can have.
-    /// </summary>
-    const int& max_moves;
-
-    /// <summary>
-    /// The amount of mining power this Unit has per turn.
-    /// </summary>
-    const int& mining_power;
-
-    /// <summary>
-    /// The number of moves this Job can make per turn.
-    /// </summary>
-    const int& moves;
+    const std::vector<int>& moves;
 
     /// <summary>
     /// The Job title. 'miner' or 'bomb'.

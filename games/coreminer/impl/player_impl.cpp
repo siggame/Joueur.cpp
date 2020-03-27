@@ -28,26 +28,34 @@ namespace coreminer
 Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"baseTile", Any{std::decay<decltype(base_tile)>::type{}}},
+        {"bombs", Any{std::decay<decltype(bombs)>::type{}}},
         {"clientType", Any{std::decay<decltype(client_type)>::type{}}},
         {"hopperTiles", Any{std::decay<decltype(hopper_tiles)>::type{}}},
         {"lost", Any{std::decay<decltype(lost)>::type{}}},
+        {"money", Any{std::decay<decltype(money)>::type{}}},
         {"name", Any{std::decay<decltype(name)>::type{}}},
         {"opponent", Any{std::decay<decltype(opponent)>::type{}}},
         {"reasonLost", Any{std::decay<decltype(reason_lost)>::type{}}},
         {"reasonWon", Any{std::decay<decltype(reason_won)>::type{}}},
+        {"side", Any{std::decay<decltype(side)>::type{}}},
+        {"spawnTiles", Any{std::decay<decltype(spawn_tiles)>::type{}}},
         {"timeRemaining", Any{std::decay<decltype(time_remaining)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
         {"value", Any{std::decay<decltype(value)>::type{}}},
         {"won", Any{std::decay<decltype(won)>::type{}}},
     },
     base_tile(variables_["baseTile"].as<std::decay<decltype(base_tile)>::type>()),
+    bombs(variables_["bombs"].as<std::decay<decltype(bombs)>::type>()),
     client_type(variables_["clientType"].as<std::decay<decltype(client_type)>::type>()),
     hopper_tiles(variables_["hopperTiles"].as<std::decay<decltype(hopper_tiles)>::type>()),
     lost(variables_["lost"].as<std::decay<decltype(lost)>::type>()),
+    money(variables_["money"].as<std::decay<decltype(money)>::type>()),
     name(variables_["name"].as<std::decay<decltype(name)>::type>()),
     opponent(variables_["opponent"].as<std::decay<decltype(opponent)>::type>()),
     reason_lost(variables_["reasonLost"].as<std::decay<decltype(reason_lost)>::type>()),
     reason_won(variables_["reasonWon"].as<std::decay<decltype(reason_won)>::type>()),
+    side(variables_["side"].as<std::decay<decltype(side)>::type>()),
+    spawn_tiles(variables_["spawnTiles"].as<std::decay<decltype(spawn_tiles)>::type>()),
     time_remaining(variables_["timeRemaining"].as<std::decay<decltype(time_remaining)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>()),
     value(variables_["value"].as<std::decay<decltype(value)>::type>()),
@@ -66,6 +74,18 @@ void Player_::resize(const std::string& name, std::size_t size)
     if(name == "hopperTiles")
     {
         auto& vec = variables_["hopperTiles"].as<std::decay<decltype(hopper_tiles)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "side")
+    {
+        auto& vec = variables_["side"].as<std::decay<decltype(side)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "spawnTiles")
+    {
+        auto& vec = variables_["spawnTiles"].as<std::decay<decltype(spawn_tiles)>::type>();
         vec.resize(size);
         return;
     }
@@ -90,6 +110,26 @@ void Player_::change_vec_values(const std::string& name, std::vector<std::pair<s
     {
         using type = std::decay<decltype(hopper_tiles)>::type;
         auto& vec = variables_["hopperTiles"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "side")
+    {
+        using type = std::decay<decltype(side)>::type;
+        auto& vec = variables_["side"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "spawnTiles")
+    {
+        using type = std::decay<decltype(spawn_tiles)>::type;
+        auto& vec = variables_["spawnTiles"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);

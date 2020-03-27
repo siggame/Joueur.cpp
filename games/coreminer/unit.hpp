@@ -64,6 +64,26 @@ public:
     const Job& job;
 
     /// <summary>
+    /// The maximum amount of cargo this Unit can carry.
+    /// </summary>
+    const int& max_cargo_capacity;
+
+    /// <summary>
+    /// The maximum health of this Unit.
+    /// </summary>
+    const int& max_health;
+
+    /// <summary>
+    /// The maximum mining power of this Unit.
+    /// </summary>
+    const int& max_mining_power;
+
+    /// <summary>
+    /// The maximum moves this Unit can have.
+    /// </summary>
+    const int& max_moves;
+
+    /// <summary>
     /// The remaining mining power this Unit has this turn.
     /// </summary>
     const int& mining_power;

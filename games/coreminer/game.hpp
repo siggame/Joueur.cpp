@@ -67,6 +67,11 @@ public:
     const std::vector<Job>& jobs;
 
     /// <summary>
+    /// The amount of building material required to build a ladder.
+    /// </summary>
+    const int& ladder_cost;
+
+    /// <summary>
     /// The number of Tiles in the map along the y (vertical) axis.
     /// </summary>
     const int& map_height;
@@ -95,6 +100,16 @@ public:
     /// A unique identifier for the game instance that is being played.
     /// </summary>
     const std::string& session;
+
+    /// <summary>
+    /// The amount of building material required to shield a Tile.
+    /// </summary>
+    const int& shield_cost;
+
+    /// <summary>
+    /// The amount of building material required to build a support.
+    /// </summary>
+    const int& support_cost;
 
     /// <summary>
     /// All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.

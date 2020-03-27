@@ -28,21 +28,15 @@ namespace coreminer
 Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"cargoCapacity", Any{std::decay<decltype(cargo_capacity)>::type{}}},
+        {"cost", Any{std::decay<decltype(cost)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
-        {"maxCargoCapacity", Any{std::decay<decltype(max_cargo_capacity)>::type{}}},
-        {"maxHealth", Any{std::decay<decltype(max_health)>::type{}}},
-        {"maxMiningPower", Any{std::decay<decltype(max_mining_power)>::type{}}},
-        {"maxMoves", Any{std::decay<decltype(max_moves)>::type{}}},
         {"miningPower", Any{std::decay<decltype(mining_power)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
         {"title", Any{std::decay<decltype(title)>::type{}}},
     },
     cargo_capacity(variables_["cargoCapacity"].as<std::decay<decltype(cargo_capacity)>::type>()),
+    cost(variables_["cost"].as<std::decay<decltype(cost)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
-    max_cargo_capacity(variables_["maxCargoCapacity"].as<std::decay<decltype(max_cargo_capacity)>::type>()),
-    max_health(variables_["maxHealth"].as<std::decay<decltype(max_health)>::type>()),
-    max_mining_power(variables_["maxMiningPower"].as<std::decay<decltype(max_mining_power)>::type>()),
-    max_moves(variables_["maxMoves"].as<std::decay<decltype(max_moves)>::type>()),
     mining_power(variables_["miningPower"].as<std::decay<decltype(mining_power)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
     title(variables_["title"].as<std::decay<decltype(title)>::type>())
@@ -57,6 +51,30 @@ Job_::~Job_() = default;
 
 void Job_::resize(const std::string& name, std::size_t size)
 {
+    if(name == "cargoCapacity")
+    {
+        auto& vec = variables_["cargoCapacity"].as<std::decay<decltype(cargo_capacity)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "health")
+    {
+        auto& vec = variables_["health"].as<std::decay<decltype(health)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "miningPower")
+    {
+        auto& vec = variables_["miningPower"].as<std::decay<decltype(mining_power)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "moves")
+    {
+        auto& vec = variables_["moves"].as<std::decay<decltype(moves)>::type>();
+        vec.resize(size);
+        return;
+    }
     try
     {
         Game_object_::resize(name, size);
@@ -68,6 +86,46 @@ void Job_::resize(const std::string& name, std::size_t size)
 
 void Job_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
+    if(name == "cargoCapacity")
+    {
+        using type = std::decay<decltype(cargo_capacity)>::type;
+        auto& vec = variables_["cargoCapacity"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::move(val.second.as<type::value_type>());
+        }
+        return;
+    } 
+    else if(name == "health")
+    {
+        using type = std::decay<decltype(health)>::type;
+        auto& vec = variables_["health"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::move(val.second.as<type::value_type>());
+        }
+        return;
+    } 
+    else if(name == "miningPower")
+    {
+        using type = std::decay<decltype(mining_power)>::type;
+        auto& vec = variables_["miningPower"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::move(val.second.as<type::value_type>());
+        }
+        return;
+    } 
+    else if(name == "moves")
+    {
+        using type = std::decay<decltype(moves)>::type;
+        auto& vec = variables_["moves"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::move(val.second.as<type::value_type>());
+        }
+        return;
+    } 
     try
     {
         Game_object_::change_vec_values(name, values);
