@@ -28,6 +28,7 @@ namespace coreminer
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
         {"bombCost", Any{std::decay<decltype(bomb_cost)>::type{}}},
+        {"bombSize", Any{std::decay<decltype(bomb_size)>::type{}}},
         {"buildingMaterialCost", Any{std::decay<decltype(building_material_cost)>::type{}}},
         {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
         {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
@@ -49,6 +50,7 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"victoryAmount", Any{std::decay<decltype(victory_amount)>::type{}}},
     },
     bomb_cost(variables_["bombCost"].as<std::decay<decltype(bomb_cost)>::type>()),
+    bomb_size(variables_["bombSize"].as<std::decay<decltype(bomb_size)>::type>()),
     building_material_cost(variables_["buildingMaterialCost"].as<std::decay<decltype(building_material_cost)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),

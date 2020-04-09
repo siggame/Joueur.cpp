@@ -47,6 +47,11 @@ public:
     const int& bomb_cost;
 
     /// <summary>
+    /// The amount of cargo space taken up by a bomb.
+    /// </summary>
+    const int& bomb_size;
+
+    /// <summary>
     /// The price of buying building materials.
     /// </summary>
     const int& building_material_cost;
