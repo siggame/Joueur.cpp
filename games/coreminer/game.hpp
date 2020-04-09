@@ -42,6 +42,16 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
+    /// The price of buying a bomb.
+    /// </summary>
+    const int& bomb_cost;
+
+    /// <summary>
+    /// The price of buying building materials.
+    /// </summary>
+    const int& building_material_cost;
+
+    /// <summary>
     /// The player whose turn it is currently. That player can send commands. Other players cannot.
     /// </summary>
     const Player& current_player;

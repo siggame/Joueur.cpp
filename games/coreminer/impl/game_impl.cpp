@@ -27,6 +27,8 @@ namespace coreminer
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
+        {"bombCost", Any{std::decay<decltype(bomb_cost)>::type{}}},
+        {"buildingMaterialCost", Any{std::decay<decltype(building_material_cost)>::type{}}},
         {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
         {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
         {"freeBombInterval", Any{std::decay<decltype(free_bomb_interval)>::type{}}},
@@ -46,6 +48,8 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"units", Any{std::decay<decltype(units)>::type{}}},
         {"victoryAmount", Any{std::decay<decltype(victory_amount)>::type{}}},
     },
+    bomb_cost(variables_["bombCost"].as<std::decay<decltype(bomb_cost)>::type>()),
+    building_material_cost(variables_["buildingMaterialCost"].as<std::decay<decltype(building_material_cost)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
     free_bomb_interval(variables_["freeBombInterval"].as<std::decay<decltype(free_bomb_interval)>::type>()),
