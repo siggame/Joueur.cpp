@@ -47,6 +47,10 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
         {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
+        {"upgradeCargoCapacityCost", Any{std::decay<decltype(upgrade_cargo_capacity_cost)>::type{}}},
+        {"upgradeHealthCost", Any{std::decay<decltype(upgrade_health_cost)>::type{}}},
+        {"upgradeMiningPowerCost", Any{std::decay<decltype(upgrade_mining_power_cost)>::type{}}},
+        {"upgradeMovesCost", Any{std::decay<decltype(upgrade_moves_cost)>::type{}}},
         {"victoryAmount", Any{std::decay<decltype(victory_amount)>::type{}}},
     },
     bomb_cost(variables_["bombCost"].as<std::decay<decltype(bomb_cost)>::type>()),
@@ -69,6 +73,10 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
     time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>()),
+    upgrade_cargo_capacity_cost(variables_["upgradeCargoCapacityCost"].as<std::decay<decltype(upgrade_cargo_capacity_cost)>::type>()),
+    upgrade_health_cost(variables_["upgradeHealthCost"].as<std::decay<decltype(upgrade_health_cost)>::type>()),
+    upgrade_mining_power_cost(variables_["upgradeMiningPowerCost"].as<std::decay<decltype(upgrade_mining_power_cost)>::type>()),
+    upgrade_moves_cost(variables_["upgradeMovesCost"].as<std::decay<decltype(upgrade_moves_cost)>::type>()),
     victory_amount(variables_["victoryAmount"].as<std::decay<decltype(victory_amount)>::type>())
 {
     for(auto&& obj : init)

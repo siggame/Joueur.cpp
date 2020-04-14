@@ -142,6 +142,26 @@ public:
     const std::vector<Unit>& units;
 
     /// <summary>
+    /// The cost to upgrade a Unit's cargo capacity.
+    /// </summary>
+    const int& upgrade_cargo_capacity_cost;
+
+    /// <summary>
+    /// The cost to upgrade a Unit's health.
+    /// </summary>
+    const int& upgrade_health_cost;
+
+    /// <summary>
+    /// The cost to upgrade a Unit's mining power.
+    /// </summary>
+    const int& upgrade_mining_power_cost;
+
+    /// <summary>
+    /// The cost to upgrade a Unit's movement speed.
+    /// </summary>
+    const int& upgrade_moves_cost;
+
+    /// <summary>
     /// The amount of victory points required to win.
     /// </summary>
     const int& victory_amount;

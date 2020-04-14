@@ -15,7 +15,7 @@ namespace coreminer
 
 //register the game
 Game_registry registration("Coreminer",
-                           "6414fff3d6e5957603f07cc0e7e14897d16437e4af5bbc05940fdc81df44c032",
+                           "46abaae0c6f41ba8536de3714cb964013777223bc6d6753f838182f9673db93e",
                            std::unique_ptr<Coreminer>(new Coreminer));
 
 std::unique_ptr<Base_ai> Coreminer::generate_ai()
