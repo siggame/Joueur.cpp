@@ -44,7 +44,7 @@ public:
     const int& dirt;
 
     /// <summary>
-    /// Whether or not the tile is an indestructible base Tile.
+    /// Whether or not the tile is a base Tile.
     /// </summary>
     const bool& is_base;
 
@@ -74,7 +74,7 @@ public:
     const int& ore;
 
     /// <summary>
-    /// The owner of this Tile, or undefined if owned by no-one. Only for bases and hoppers.
+    /// The owner of this Tile, or undefined if owned by no-one.
     /// </summary>
     const Player& owner;
 
@@ -122,11 +122,6 @@ public:
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
-
-    /// <summary>
-    /// spawns a _miner _unit on this _tile - _must be on the surface on their side of the map.
-    /// </summary>
-    bool spawn_miner();
 
     /// <summary>
     /// The list of all valid directions Tiles can be in

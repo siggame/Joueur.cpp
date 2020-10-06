@@ -108,6 +108,11 @@ public:
     /// </summary>
     const Tile& tile;
 
+    /// <summary>
+    /// The upgrade level of this unit. Starts at 0.
+    /// </summary>
+    const int& upgrade_level;
+
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
@@ -121,7 +126,7 @@ public:
     bool build(const Tile& tile, const std::string& type);
 
     /// <summary>
-    /// dumps materials from cargo to an adjacent tile.
+    /// dumps materials from cargo to an adjacent tile. _if the tile is a base or hopper tile, materials are sold instead of placed.
     /// </summary>
     /// <param name="tile"> The tile the materials will be dumped on. </param>
     /// <param name="material"> The material the Unit will drop. 'dirt', 'ore', or 'bomb'. </param>
@@ -142,10 +147,17 @@ public:
     bool move(const Tile& tile);
 
     /// <summary>
-    /// upgrade an attribute of this _unit. "health", "mining_power", "moves", or "capacity".
+    /// transfers a resource from the one _unit to another.
     /// </summary>
-    /// <param name="attribute"> The attribute of the Unit to be upgraded. </param>
-    bool upgrade(const std::string& attribute);
+    /// <param name="unit"> The Unit to transfer materials to. </param>
+    /// <param name="resource"> The type of resource to transfer. </param>
+    /// <param name="amount"> The amount of resource to transfer. </param>
+    bool transfer(const Unit& unit, const std::string& resource, int amount);
+
+    /// <summary>
+    /// upgrade this _unit.
+    /// </summary>
+    bool upgrade();
 
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

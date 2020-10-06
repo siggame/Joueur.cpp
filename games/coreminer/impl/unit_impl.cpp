@@ -144,12 +144,42 @@ bool Unit_::move(const Tile& tile)
     return to_return.as<bool>();
 }
 
-bool Unit_::upgrade(const std::string& attribute)
+bool Unit_::transfer(const Unit& unit, const std::string& resource, int amount)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "transfer", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"unit\":") + (unit ? (std::string("{\"id\":\"") + unit->id + "\"}") : std::string("null"));
+
+    order += std::string(",\"resource\":") + std::string("\"") + resource + "\"";
+
+    order += std::string(",\"amount\":") + std::to_string(amount);
+
+    order += "}}}";
+    Coreminer::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Coreminer::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<bool>();
+}
+
+bool Unit_::upgrade()
 {
     std::string order = R"({"event": "run", "data": {"functionName": "upgrade", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
-
-    order += std::string("\"attribute\":") + std::string("\"") + attribute + "\"";
 
     order += "}}}";
     Coreminer::instance()->send(order);
@@ -189,6 +219,7 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"ore", Any{std::decay<decltype(ore)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
+        {"upgradeLevel", Any{std::decay<decltype(upgrade_level)>::type{}}},
     },
     bombs(variables_["bombs"].as<std::decay<decltype(bombs)>::type>()),
     building_materials(variables_["buildingMaterials"].as<std::decay<decltype(building_materials)>::type>()),
@@ -203,7 +234,8 @@ Unit_::Unit_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),
     ore(variables_["ore"].as<std::decay<decltype(ore)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
-    tile(variables_["tile"].as<std::decay<decltype(tile)>::type>())
+    tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
+    upgrade_level(variables_["upgradeLevel"].as<std::decay<decltype(upgrade_level)>::type>())
 {
     for(auto&& obj : init)
     {

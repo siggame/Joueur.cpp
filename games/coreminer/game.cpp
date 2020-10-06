@@ -1,5 +1,5 @@
 // Game
-// Mine resources to obtain more wealth than your opponent.
+// Mine resources to obtain more value than your opponent.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.

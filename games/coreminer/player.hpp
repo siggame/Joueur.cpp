@@ -44,24 +44,9 @@ public:
     const Tile& base_tile;
 
     /// <summary>
-    /// The bombs stored in the Player's supply.
-    /// </summary>
-    const int& bombs;
-
-    /// <summary>
-    /// The building material stored in the Player's supply.
-    /// </summary>
-    const int& building_materials;
-
-    /// <summary>
     /// What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
     /// </summary>
     const std::string& client_type;
-
-    /// <summary>
-    /// The dirt stored in the Player's supply.
-    /// </summary>
-    const int& dirt;
 
     /// <summary>
     /// The Tiles this Player's hoppers are on.
@@ -134,19 +119,9 @@ public:
 
 
     /// <summary>
-    /// purchases a resource and adds it to the _player's supply.
+    /// spawns a _miner _unit on this _player's base tile.
     /// </summary>
-    /// <param name="resource"> The type of resource to buy. </param>
-    /// <param name="amount"> The amount of resource to buy. </param>
-    bool buy(const std::string& resource, int amount);
-
-    /// <summary>
-    /// transfers a resource from the _player's supply to a _unit.
-    /// </summary>
-    /// <param name="unit"> The Unit to transfer materials to. </param>
-    /// <param name="resource"> The type of resource to transfer. </param>
-    /// <param name="amount"> The amount of resource to transfer. </param>
-    bool transfer(const Unit& unit, const std::string& resource, int amount);
+    bool spawn_miner();
 
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.

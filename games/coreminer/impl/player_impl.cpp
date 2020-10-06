@@ -24,46 +24,10 @@ namespace cpp_client
 namespace coreminer
 {
 
-bool Player_::buy(const std::string& resource, int amount)
+bool Player_::spawn_miner()
 {
-    std::string order = R"({"event": "run", "data": {"functionName": "buy", "caller": {"id": ")";
+    std::string order = R"({"event": "run", "data": {"functionName": "spawnMiner", "caller": {"id": ")";
     order += this->id + R"("}, "args": {)";
-
-    order += std::string("\"resource\":") + std::string("\"") + resource + "\"";
-
-    order += std::string(",\"amount\":") + std::to_string(amount);
-
-    order += "}}}";
-    Coreminer::instance()->send(order);
-    //Go until not a delta
-    std::unique_ptr<Any> info;
-    //until a not bool is seen (i.e., the delta has been processed)
-    do
-    {
-        info = Coreminer::instance()->handle_response();
-    } while(info->type() == typeid(bool));
-    auto doc = info->as<rapidjson::Document*>();
-    auto loc = doc->FindMember("data");
-    if(loc == doc->MemberEnd())
-    {
-       return {};
-    }
-    auto& val = loc->value;
-    Any to_return;
-    morph_any(to_return, val);
-    return to_return.as<bool>();
-}
-
-bool Player_::transfer(const Unit& unit, const std::string& resource, int amount)
-{
-    std::string order = R"({"event": "run", "data": {"functionName": "transfer", "caller": {"id": ")";
-    order += this->id + R"("}, "args": {)";
-
-    order += std::string("\"unit\":") + (unit ? (std::string("{\"id\":\"") + unit->id + "\"}") : std::string("null"));
-
-    order += std::string(",\"resource\":") + std::string("\"") + resource + "\"";
-
-    order += std::string(",\"amount\":") + std::to_string(amount);
 
     order += "}}}";
     Coreminer::instance()->send(order);
@@ -90,10 +54,7 @@ bool Player_::transfer(const Unit& unit, const std::string& resource, int amount
 Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"baseTile", Any{std::decay<decltype(base_tile)>::type{}}},
-        {"bombs", Any{std::decay<decltype(bombs)>::type{}}},
-        {"buildingMaterials", Any{std::decay<decltype(building_materials)>::type{}}},
         {"clientType", Any{std::decay<decltype(client_type)>::type{}}},
-        {"dirt", Any{std::decay<decltype(dirt)>::type{}}},
         {"hopperTiles", Any{std::decay<decltype(hopper_tiles)>::type{}}},
         {"lost", Any{std::decay<decltype(lost)>::type{}}},
         {"money", Any{std::decay<decltype(money)>::type{}}},
@@ -109,10 +70,7 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"won", Any{std::decay<decltype(won)>::type{}}},
     },
     base_tile(variables_["baseTile"].as<std::decay<decltype(base_tile)>::type>()),
-    bombs(variables_["bombs"].as<std::decay<decltype(bombs)>::type>()),
-    building_materials(variables_["buildingMaterials"].as<std::decay<decltype(building_materials)>::type>()),
     client_type(variables_["clientType"].as<std::decay<decltype(client_type)>::type>()),
-    dirt(variables_["dirt"].as<std::decay<decltype(dirt)>::type>()),
     hopper_tiles(variables_["hopperTiles"].as<std::decay<decltype(hopper_tiles)>::type>()),
     lost(variables_["lost"].as<std::decay<decltype(lost)>::type>()),
     money(variables_["money"].as<std::decay<decltype(money)>::type>()),

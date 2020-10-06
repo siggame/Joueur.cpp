@@ -24,32 +24,6 @@ namespace cpp_client
 namespace coreminer
 {
 
-bool Tile_::spawn_miner()
-{
-    std::string order = R"({"event": "run", "data": {"functionName": "spawnMiner", "caller": {"id": ")";
-    order += this->id + R"("}, "args": {)";
-
-    order += "}}}";
-    Coreminer::instance()->send(order);
-    //Go until not a delta
-    std::unique_ptr<Any> info;
-    //until a not bool is seen (i.e., the delta has been processed)
-    do
-    {
-        info = Coreminer::instance()->handle_response();
-    } while(info->type() == typeid(bool));
-    auto doc = info->as<rapidjson::Document*>();
-    auto loc = doc->FindMember("data");
-    if(loc == doc->MemberEnd())
-    {
-       return {};
-    }
-    auto& val = loc->value;
-    Any to_return;
-    morph_any(to_return, val);
-    return to_return.as<bool>();
-}
-
 
 Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{

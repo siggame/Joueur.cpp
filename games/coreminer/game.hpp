@@ -2,7 +2,7 @@
 #define GAMES_COREMINER_GAME_H
 
 // Game
-// Mine resources to obtain more wealth than your opponent.
+// Mine resources to obtain more value than your opponent.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -29,22 +29,22 @@ namespace cpp_client
 {
 
 /// <summary>
-/// Mine resources to obtain more wealth than your opponent.
+/// Mine resources to obtain more value than your opponent.
 /// </summary>
 namespace coreminer
 {
 
 /// <summary>
-/// Mine resources to obtain more wealth than your opponent.
+/// Mine resources to obtain more value than your opponent.
 /// </summary>
 class Game_ : public Base_game
 {
 public:
 
     /// <summary>
-    /// The price of buying a bomb.
+    /// The monetary price of a bomb when bought or sold.
     /// </summary>
-    const int& bomb_cost;
+    const int& bomb_price;
 
     /// <summary>
     /// The amount of cargo space taken up by a bomb.
@@ -52,9 +52,9 @@ public:
     const int& bomb_size;
 
     /// <summary>
-    /// The price of buying building materials.
+    /// The monetary price of building materials when bought.
     /// </summary>
-    const int& building_material_cost;
+    const int& building_material_price;
 
     /// <summary>
     /// The player whose turn it is currently. That player can send commands. Other players cannot.
@@ -67,9 +67,9 @@ public:
     const int& current_turn;
 
     /// <summary>
-    /// The amount of turns it takes to gain a free Bomb.
+    /// The monetary price of dirt when bought or sold.
     /// </summary>
-    const int& free_bomb_interval;
+    const int& dirt_price;
 
     /// <summary>
     /// A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
@@ -102,7 +102,12 @@ public:
     const int& max_turns;
 
     /// <summary>
-    /// The amount of victory points awarded when ore is deposited in the base.
+    /// The amount of money awarded when ore is dumped in the base and sold.
+    /// </summary>
+    const int& ore_price;
+
+    /// <summary>
+    /// The amount of victory points awarded when ore is dumped in the base and sold.
     /// </summary>
     const int& ore_value;
 
@@ -120,6 +125,11 @@ public:
     /// The amount of building material required to shield a Tile.
     /// </summary>
     const int& shield_cost;
+
+    /// <summary>
+    /// The monetary price of spawning a Miner.
+    /// </summary>
+    const int& spawn_price;
 
     /// <summary>
     /// The amount of building material required to build a support.
@@ -142,24 +152,9 @@ public:
     const std::vector<Unit>& units;
 
     /// <summary>
-    /// The cost to upgrade a Unit's cargo capacity.
+    /// The cost to upgrade a Unit at each level.
     /// </summary>
-    const int& upgrade_cargo_capacity_cost;
-
-    /// <summary>
-    /// The cost to upgrade a Unit's health.
-    /// </summary>
-    const int& upgrade_health_cost;
-
-    /// <summary>
-    /// The cost to upgrade a Unit's mining power.
-    /// </summary>
-    const int& upgrade_mining_power_cost;
-
-    /// <summary>
-    /// The cost to upgrade a Unit's movement speed.
-    /// </summary>
-    const int& upgrade_moves_cost;
+    const std::vector<int>& upgrade_price;
 
     /// <summary>
     /// The amount of victory points required to win.

@@ -27,56 +27,54 @@ namespace coreminer
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
-        {"bombCost", Any{std::decay<decltype(bomb_cost)>::type{}}},
+        {"bombPrice", Any{std::decay<decltype(bomb_price)>::type{}}},
         {"bombSize", Any{std::decay<decltype(bomb_size)>::type{}}},
-        {"buildingMaterialCost", Any{std::decay<decltype(building_material_cost)>::type{}}},
+        {"buildingMaterialPrice", Any{std::decay<decltype(building_material_price)>::type{}}},
         {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
         {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
-        {"freeBombInterval", Any{std::decay<decltype(free_bomb_interval)>::type{}}},
+        {"dirtPrice", Any{std::decay<decltype(dirt_price)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
         {"jobs", Any{std::decay<decltype(jobs)>::type{}}},
         {"ladderCost", Any{std::decay<decltype(ladder_cost)>::type{}}},
         {"mapHeight", Any{std::decay<decltype(map_height)>::type{}}},
         {"mapWidth", Any{std::decay<decltype(map_width)>::type{}}},
         {"maxTurns", Any{std::decay<decltype(max_turns)>::type{}}},
+        {"orePrice", Any{std::decay<decltype(ore_price)>::type{}}},
         {"oreValue", Any{std::decay<decltype(ore_value)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"shieldCost", Any{std::decay<decltype(shield_cost)>::type{}}},
+        {"spawnPrice", Any{std::decay<decltype(spawn_price)>::type{}}},
         {"supportCost", Any{std::decay<decltype(support_cost)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
         {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
-        {"upgradeCargoCapacityCost", Any{std::decay<decltype(upgrade_cargo_capacity_cost)>::type{}}},
-        {"upgradeHealthCost", Any{std::decay<decltype(upgrade_health_cost)>::type{}}},
-        {"upgradeMiningPowerCost", Any{std::decay<decltype(upgrade_mining_power_cost)>::type{}}},
-        {"upgradeMovesCost", Any{std::decay<decltype(upgrade_moves_cost)>::type{}}},
+        {"upgradePrice", Any{std::decay<decltype(upgrade_price)>::type{}}},
         {"victoryAmount", Any{std::decay<decltype(victory_amount)>::type{}}},
     },
-    bomb_cost(variables_["bombCost"].as<std::decay<decltype(bomb_cost)>::type>()),
+    bomb_price(variables_["bombPrice"].as<std::decay<decltype(bomb_price)>::type>()),
     bomb_size(variables_["bombSize"].as<std::decay<decltype(bomb_size)>::type>()),
-    building_material_cost(variables_["buildingMaterialCost"].as<std::decay<decltype(building_material_cost)>::type>()),
+    building_material_price(variables_["buildingMaterialPrice"].as<std::decay<decltype(building_material_price)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
-    free_bomb_interval(variables_["freeBombInterval"].as<std::decay<decltype(free_bomb_interval)>::type>()),
+    dirt_price(variables_["dirtPrice"].as<std::decay<decltype(dirt_price)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
     jobs(variables_["jobs"].as<std::decay<decltype(jobs)>::type>()),
     ladder_cost(variables_["ladderCost"].as<std::decay<decltype(ladder_cost)>::type>()),
     map_height(variables_["mapHeight"].as<std::decay<decltype(map_height)>::type>()),
     map_width(variables_["mapWidth"].as<std::decay<decltype(map_width)>::type>()),
     max_turns(variables_["maxTurns"].as<std::decay<decltype(max_turns)>::type>()),
+    ore_price(variables_["orePrice"].as<std::decay<decltype(ore_price)>::type>()),
     ore_value(variables_["oreValue"].as<std::decay<decltype(ore_value)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     shield_cost(variables_["shieldCost"].as<std::decay<decltype(shield_cost)>::type>()),
+    spawn_price(variables_["spawnPrice"].as<std::decay<decltype(spawn_price)>::type>()),
     support_cost(variables_["supportCost"].as<std::decay<decltype(support_cost)>::type>()),
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
     time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>()),
-    upgrade_cargo_capacity_cost(variables_["upgradeCargoCapacityCost"].as<std::decay<decltype(upgrade_cargo_capacity_cost)>::type>()),
-    upgrade_health_cost(variables_["upgradeHealthCost"].as<std::decay<decltype(upgrade_health_cost)>::type>()),
-    upgrade_mining_power_cost(variables_["upgradeMiningPowerCost"].as<std::decay<decltype(upgrade_mining_power_cost)>::type>()),
-    upgrade_moves_cost(variables_["upgradeMovesCost"].as<std::decay<decltype(upgrade_moves_cost)>::type>()),
+    upgrade_price(variables_["upgradePrice"].as<std::decay<decltype(upgrade_price)>::type>()),
     victory_amount(variables_["victoryAmount"].as<std::decay<decltype(victory_amount)>::type>())
 {
     for(auto&& obj : init)
@@ -110,6 +108,12 @@ void Game_::resize(const std::string& name, std::size_t size)
     else if(name == "units")
     {
         auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "upgradePrice")
+    {
+        auto& vec = variables_["upgradePrice"].as<std::decay<decltype(upgrade_price)>::type>();
         vec.resize(size);
         return;
     }
@@ -155,6 +159,16 @@ void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "upgradePrice")
+    {
+        using type = std::decay<decltype(upgrade_price)>::type;
+        auto& vec = variables_["upgradePrice"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::move(val.second.as<type::value_type>());
         }
         return;
     } 
