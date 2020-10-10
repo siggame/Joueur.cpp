@@ -28,14 +28,12 @@ namespace coreminer
 Job_::Job_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"cargoCapacity", Any{std::decay<decltype(cargo_capacity)>::type{}}},
-        {"cost", Any{std::decay<decltype(cost)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"miningPower", Any{std::decay<decltype(mining_power)>::type{}}},
         {"moves", Any{std::decay<decltype(moves)>::type{}}},
         {"title", Any{std::decay<decltype(title)>::type{}}},
     },
     cargo_capacity(variables_["cargoCapacity"].as<std::decay<decltype(cargo_capacity)>::type>()),
-    cost(variables_["cost"].as<std::decay<decltype(cost)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     mining_power(variables_["miningPower"].as<std::decay<decltype(mining_power)>::type>()),
     moves(variables_["moves"].as<std::decay<decltype(moves)>::type>()),

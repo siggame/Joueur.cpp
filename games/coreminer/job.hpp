@@ -44,11 +44,6 @@ public:
     const std::vector<int>& cargo_capacity;
 
     /// <summary>
-    /// The cost of spawning a Unit with this Job.
-    /// </summary>
-    const int& cost;
-
-    /// <summary>
     /// The amount of starting health this Job has per level.
     /// </summary>
     const std::vector<int>& health;

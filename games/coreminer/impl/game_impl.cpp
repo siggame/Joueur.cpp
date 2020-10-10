@@ -111,12 +111,6 @@ void Game_::resize(const std::string& name, std::size_t size)
         vec.resize(size);
         return;
     }
-    else if(name == "upgradePrice")
-    {
-        auto& vec = variables_["upgradePrice"].as<std::decay<decltype(upgrade_price)>::type>();
-        vec.resize(size);
-        return;
-    }
     throw Bad_manipulation(name + " in Game treated as a vector, but it is not a vector.");
 }
 
@@ -159,16 +153,6 @@ void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "upgradePrice")
-    {
-        using type = std::decay<decltype(upgrade_price)>::type;
-        auto& vec = variables_["upgradePrice"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::move(val.second.as<type::value_type>());
         }
         return;
     } 

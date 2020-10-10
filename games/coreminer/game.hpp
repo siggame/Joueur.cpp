@@ -152,9 +152,9 @@ public:
     const std::vector<Unit>& units;
 
     /// <summary>
-    /// The cost to upgrade a Unit at each level.
+    /// The cost to upgrade a Unit.
     /// </summary>
-    const std::vector<int>& upgrade_price;
+    const int& upgrade_price;
 
     /// <summary>
     /// The amount of victory points required to win.
