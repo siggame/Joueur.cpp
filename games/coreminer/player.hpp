@@ -89,11 +89,6 @@ public:
     const std::vector<Tile>& side;
 
     /// <summary>
-    /// The Tiles this Player may spawn Units on.
-    /// </summary>
-    const std::vector<Tile>& spawn_tiles;
-
-    /// <summary>
     /// The amount of time (in ns) remaining for this AI to send commands.
     /// </summary>
     const double& time_remaining;

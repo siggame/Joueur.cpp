@@ -54,6 +54,36 @@ bool Unit_::build(const Tile& tile, const std::string& type)
     return to_return.as<bool>();
 }
 
+bool Unit_::buy(const std::string& resource, int amount)
+{
+    std::string order = R"({"event": "run", "data": {"functionName": "buy", "caller": {"id": ")";
+    order += this->id + R"("}, "args": {)";
+
+    order += std::string("\"resource\":") + std::string("\"") + resource + "\"";
+
+    order += std::string(",\"amount\":") + std::to_string(amount);
+
+    order += "}}}";
+    Coreminer::instance()->send(order);
+    //Go until not a delta
+    std::unique_ptr<Any> info;
+    //until a not bool is seen (i.e., the delta has been processed)
+    do
+    {
+        info = Coreminer::instance()->handle_response();
+    } while(info->type() == typeid(bool));
+    auto doc = info->as<rapidjson::Document*>();
+    auto loc = doc->FindMember("data");
+    if(loc == doc->MemberEnd())
+    {
+       return {};
+    }
+    auto& val = loc->value;
+    Any to_return;
+    morph_any(to_return, val);
+    return to_return.as<bool>();
+}
+
 bool Unit_::dump(const Tile& tile, const std::string& material, int amount)
 {
     std::string order = R"({"event": "run", "data": {"functionName": "dump", "caller": {"id": ")";

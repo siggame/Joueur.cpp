@@ -63,7 +63,6 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"reasonLost", Any{std::decay<decltype(reason_lost)>::type{}}},
         {"reasonWon", Any{std::decay<decltype(reason_won)>::type{}}},
         {"side", Any{std::decay<decltype(side)>::type{}}},
-        {"spawnTiles", Any{std::decay<decltype(spawn_tiles)>::type{}}},
         {"timeRemaining", Any{std::decay<decltype(time_remaining)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
         {"value", Any{std::decay<decltype(value)>::type{}}},
@@ -79,7 +78,6 @@ Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     reason_lost(variables_["reasonLost"].as<std::decay<decltype(reason_lost)>::type>()),
     reason_won(variables_["reasonWon"].as<std::decay<decltype(reason_won)>::type>()),
     side(variables_["side"].as<std::decay<decltype(side)>::type>()),
-    spawn_tiles(variables_["spawnTiles"].as<std::decay<decltype(spawn_tiles)>::type>()),
     time_remaining(variables_["timeRemaining"].as<std::decay<decltype(time_remaining)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>()),
     value(variables_["value"].as<std::decay<decltype(value)>::type>()),
@@ -104,12 +102,6 @@ void Player_::resize(const std::string& name, std::size_t size)
     else if(name == "side")
     {
         auto& vec = variables_["side"].as<std::decay<decltype(side)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "spawnTiles")
-    {
-        auto& vec = variables_["spawnTiles"].as<std::decay<decltype(spawn_tiles)>::type>();
         vec.resize(size);
         return;
     }
@@ -144,16 +136,6 @@ void Player_::change_vec_values(const std::string& name, std::vector<std::pair<s
     {
         using type = std::decay<decltype(side)>::type;
         auto& vec = variables_["side"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "spawnTiles")
-    {
-        using type = std::decay<decltype(spawn_tiles)>::type;
-        auto& vec = variables_["spawnTiles"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);

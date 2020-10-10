@@ -126,6 +126,13 @@ public:
     bool build(const Tile& tile, const std::string& type);
 
     /// <summary>
+    /// purchase a resource from the player's base or hopper.
+    /// </summary>
+    /// <param name="resource"> The type of resource to buy. </param>
+    /// <param name="amount"> The amount of resource to buy. </param>
+    bool buy(const std::string& resource, int amount);
+
+    /// <summary>
     /// dumps materials from cargo to an adjacent tile. _if the tile is a base or hopper tile, materials are sold instead of placed.
     /// </summary>
     /// <param name="tile"> The tile the materials will be dumped on. </param>
