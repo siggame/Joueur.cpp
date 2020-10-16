@@ -49,6 +49,11 @@ public:
     const int& building_materials;
 
     /// <summary>
+    /// The Upgrade this Miner is on.
+    /// </summary>
+    const Upgrade& current_upgrade;
+
+    /// <summary>
     /// The amount of dirt carried by this Miner.
     /// </summary>
     const int& dirt;
@@ -82,11 +87,6 @@ public:
     /// The Tile this Miner is on.
     /// </summary>
     const Tile& tile;
-
-    /// <summary>
-    /// The Upgrade this Miner is on.
-    /// </summary>
-    const Upgrade& upgrade;
 
     /// <summary>
     /// The upgrade level of this Miner. Starts at 0.

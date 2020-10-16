@@ -238,6 +238,7 @@ Miner_::Miner_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"bombs", Any{std::decay<decltype(bombs)>::type{}}},
         {"buildingMaterials", Any{std::decay<decltype(building_materials)>::type{}}},
+        {"currentUpgrade", Any{std::decay<decltype(current_upgrade)>::type{}}},
         {"dirt", Any{std::decay<decltype(dirt)>::type{}}},
         {"health", Any{std::decay<decltype(health)>::type{}}},
         {"miningPower", Any{std::decay<decltype(mining_power)>::type{}}},
@@ -245,11 +246,11 @@ Miner_::Miner_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"ore", Any{std::decay<decltype(ore)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"tile", Any{std::decay<decltype(tile)>::type{}}},
-        {"upgrade", Any{std::decay<decltype(upgrade)>::type{}}},
         {"upgradeLevel", Any{std::decay<decltype(upgrade_level)>::type{}}},
     },
     bombs(variables_["bombs"].as<std::decay<decltype(bombs)>::type>()),
     building_materials(variables_["buildingMaterials"].as<std::decay<decltype(building_materials)>::type>()),
+    current_upgrade(variables_["currentUpgrade"].as<std::decay<decltype(current_upgrade)>::type>()),
     dirt(variables_["dirt"].as<std::decay<decltype(dirt)>::type>()),
     health(variables_["health"].as<std::decay<decltype(health)>::type>()),
     mining_power(variables_["miningPower"].as<std::decay<decltype(mining_power)>::type>()),
@@ -257,7 +258,6 @@ Miner_::Miner_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     ore(variables_["ore"].as<std::decay<decltype(ore)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
-    upgrade(variables_["upgrade"].as<std::decay<decltype(upgrade)>::type>()),
     upgrade_level(variables_["upgradeLevel"].as<std::decay<decltype(upgrade_level)>::type>())
 {
     for(auto&& obj : init)
@@ -323,6 +323,11 @@ bool Miner_::is_map(const std::string& name)
 
 void Miner_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   if(member == "currentUpgrade")
+   { 
+      to_change->as<Upgrade>() = std::static_pointer_cast<Upgrade_>(ref);
+      return;
+   }
    if(member == "owner")
    { 
       to_change->as<Player>() = std::static_pointer_cast<Player_>(ref);
@@ -331,11 +336,6 @@ void Miner_::rebind_by_name(Any* to_change, const std::string& member, std::shar
    if(member == "tile")
    { 
       to_change->as<Tile>() = std::static_pointer_cast<Tile_>(ref);
-      return;
-   }
-   if(member == "upgrade")
-   { 
-      to_change->as<Upgrade>() = std::static_pointer_cast<Upgrade_>(ref);
       return;
    }
    try
