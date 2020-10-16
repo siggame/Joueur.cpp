@@ -15,7 +15,7 @@ namespace coreminer
 
 //register the game
 Game_registry registration("Coreminer",
-                           "d9d8a113b95637751dbb349edb0a873d53ebb6df7c375956772b72fba4dff9f3",
+                           "3418447660e65ea28b97e2a74d8d95ebd694f36bbb0b6f4bd8d43fc97a3ecd9e",
                            std::unique_ptr<Coreminer>(new Coreminer));
 
 std::unique_ptr<Base_ai> Coreminer::generate_ai()
@@ -25,13 +25,17 @@ std::unique_ptr<Base_ai> Coreminer::generate_ai()
 
 std::shared_ptr<Base_object> Coreminer::generate_object(const std::string& type)
 {
-    if(type == "GameObject")
+    if(type == "Bomb")
+    {
+        return std::make_shared<Bomb_>();
+    }
+    else if(type == "GameObject")
     {
         return std::make_shared<Game_object_>();
     }
-    else if(type == "Job")
+    else if(type == "Miner")
     {
-        return std::make_shared<Job_>();
+        return std::make_shared<Miner_>();
     }
     else if(type == "Player")
     {
@@ -41,9 +45,9 @@ std::shared_ptr<Base_object> Coreminer::generate_object(const std::string& type)
     {
         return std::make_shared<Tile_>();
     }
-    else if(type == "Unit")
+    else if(type == "Upgrade")
     {
-        return std::make_shared<Unit_>();
+        return std::make_shared<Upgrade_>();
     }
     throw Unknown_type("Unknown type " + type + " encountered.");
 }

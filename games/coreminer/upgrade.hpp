@@ -1,8 +1,8 @@
-#ifndef GAMES_COREMINER_PLAYER_H
-#define GAMES_COREMINER_PLAYER_H
+#ifndef GAMES_COREMINER_UPGRADE_H
+#define GAMES_COREMINER_UPGRADE_H
 
-// Player
-// A player in this game. Every AI controls one player.
+// Upgrade
+// Information about a Miner's Upgrade module.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
@@ -32,105 +32,55 @@ namespace coreminer
 {
 
 /// <summary>
-/// A player in this game. Every AI controls one player.
+/// Information about a Miner's Upgrade module.
 /// </summary>
-class Player_ : public Game_object_
+class Upgrade_ : public Game_object_
 {
 public:
 
     /// <summary>
-    /// The Tile this Player's base is on.
+    /// The amount of cargo capacity this Upgrade has.
     /// </summary>
-    const Tile& base_tile;
+    const int& cargo_capacity;
 
     /// <summary>
-    /// Every Bomb owned by this Player.
+    /// The maximum amount of health this Upgrade has.
     /// </summary>
-    const std::vector<Bomb>& bombs;
+    const int& health;
 
     /// <summary>
-    /// What type of client this is, e.g. 'Python', 'JavaScript', or some other language. For potential data mining purposes.
+    /// The amount of mining power this Upgrade has per turn.
     /// </summary>
-    const std::string& client_type;
+    const int& mining_power;
 
     /// <summary>
-    /// The Tiles this Player's hoppers are on.
+    /// The number of moves this Upgrade can make per turn.
     /// </summary>
-    const std::vector<Tile>& hopper_tiles;
+    const int& moves;
 
     /// <summary>
-    /// If the player lost the game or not.
+    /// The Upgrade title.
     /// </summary>
-    const bool& lost;
-
-    /// <summary>
-    /// Every Miner owned by this Player.
-    /// </summary>
-    const std::vector<Miner>& miners;
-
-    /// <summary>
-    /// The amount of money this Player currently has.
-    /// </summary>
-    const int& money;
-
-    /// <summary>
-    /// The name of the player.
-    /// </summary>
-    const std::string& name;
-
-    /// <summary>
-    /// This player's opponent in the game.
-    /// </summary>
-    const Player& opponent;
-
-    /// <summary>
-    /// The reason why the player lost the game.
-    /// </summary>
-    const std::string& reason_lost;
-
-    /// <summary>
-    /// The reason why the player won the game.
-    /// </summary>
-    const std::string& reason_won;
-
-    /// <summary>
-    /// The amount of time (in ns) remaining for this AI to send commands.
-    /// </summary>
-    const double& time_remaining;
-
-    /// <summary>
-    /// The amount of value (victory points) this Player has gained.
-    /// </summary>
-    const int& value;
-
-    /// <summary>
-    /// If the player won the game or not.
-    /// </summary>
-    const bool& won;
+    const std::string& title;
 
     // <<-- Creer-Merge: member variables -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
     // You can add additional member variables here. None of them will be tracked or updated by the server.
     // <<-- /Creer-Merge: member variables -->>
 
 
-    /// <summary>
-    /// spawns a _miner on this _player's base _tile.
-    /// </summary>
-    bool spawn_miner();
-
 
    // <<-- Creer-Merge: methods -->> - Code you add between this comment and the end comment will be preserved between Creer re-runs.
    // You can add additional methods here.
    // <<-- /Creer-Merge: methods -->>
 
-   ~Player_();
+   ~Upgrade_();
 
    // ####################
    // Don't edit these!
    // ####################
    /// \cond FALSE
-   Player_(std::initializer_list<std::pair<std::string, Any&&>> init);
-   Player_() : Player_({}){}
+   Upgrade_(std::initializer_list<std::pair<std::string, Any&&>> init);
+   Upgrade_() : Upgrade_({}){}
    virtual void resize(const std::string& name, std::size_t size) override;
    virtual void change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values) override;
    virtual void remove_key(const std::string& name, Any& key) override;
@@ -147,4 +97,4 @@ public:
 
 } // cpp_client
 
-#endif // GAMES_COREMINER_PLAYER_H
+#endif // GAMES_COREMINER_UPGRADE_H

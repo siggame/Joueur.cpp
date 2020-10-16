@@ -32,21 +32,24 @@ set(FILES
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/coreminer.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/coreminer.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/coreminer_fwd.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bomb.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/bomb.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/bomb_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game_object.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game_object.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/game_object_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/job.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/job.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/job_impl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/miner.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/miner.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/miner_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/player.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/player.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/player_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tile.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/tile.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/tile_impl.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/unit.cpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/unit.hpp
-    ${CMAKE_CURRENT_SOURCE_DIR}/impl/unit_impl.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/upgrade.cpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/upgrade.hpp
+    ${CMAKE_CURRENT_SOURCE_DIR}/impl/upgrade_impl.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game.cpp
     ${CMAKE_CURRENT_SOURCE_DIR}/game.hpp
     ${CMAKE_CURRENT_SOURCE_DIR}/impl/game_impl.cpp

@@ -10,11 +10,12 @@
 #include "../../joueur/src/any.hpp"
 #include "../../joueur/src/exceptions.hpp"
 #include "../../joueur/src/delta.hpp"
+#include "bomb.hpp"
 #include "game_object.hpp"
-#include "job.hpp"
+#include "miner.hpp"
 #include "player.hpp"
 #include "tile.hpp"
-#include "unit.hpp"
+#include "upgrade.hpp"
 #include "impl/coreminer.hpp"
 
 #include <type_traits>

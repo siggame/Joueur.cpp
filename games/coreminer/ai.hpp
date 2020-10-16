@@ -3,11 +3,12 @@
 
 #include "impl/coreminer.hpp"
 #include "game.hpp"
+#include "bomb.hpp"
 #include "game_object.hpp"
-#include "job.hpp"
+#include "miner.hpp"
 #include "player.hpp"
 #include "tile.hpp"
-#include "unit.hpp"
+#include "upgrade.hpp"
 
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/attr_wrapper.hpp"

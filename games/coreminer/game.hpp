@@ -47,9 +47,14 @@ public:
     const int& bomb_price;
 
     /// <summary>
-    /// The amount of cargo space taken up by a bomb.
+    /// The amount of cargo space taken up by a Bomb.
     /// </summary>
     const int& bomb_size;
+
+    /// <summary>
+    /// Every Bomb in the game.
+    /// </summary>
+    const std::vector<Bomb>& bombs;
 
     /// <summary>
     /// The monetary price of building materials when bought.
@@ -72,19 +77,39 @@ public:
     const int& dirt_price;
 
     /// <summary>
+    /// The amount of damage taken per Tile fallen.
+    /// </summary>
+    const int& fall_damage;
+
+    /// <summary>
+    /// The amount of extra damage taken for falling while carrying a large amount of cargo.
+    /// </summary>
+    const int& fall_weight_damage;
+
+    /// <summary>
     /// A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     /// </summary>
     const std::unordered_map<std::string, Game_object>& game_objects;
 
     /// <summary>
-    /// A list of all jobs.
-    /// </summary>
-    const std::vector<Job>& jobs;
-
-    /// <summary>
     /// The amount of building material required to build a ladder.
     /// </summary>
     const int& ladder_cost;
+
+    /// <summary>
+    /// The amount of mining power needed to remove a ladder from a Tile.
+    /// </summary>
+    const int& ladder_health;
+
+    /// <summary>
+    /// The amount deemed as a large amount of cargo.
+    /// </summary>
+    const int& large_cargo_size;
+
+    /// <summary>
+    /// The amount deemed as a large amount of material.
+    /// </summary>
+    const int& large_material_size;
 
     /// <summary>
     /// The number of Tiles in the map along the y (vertical) axis.
@@ -97,9 +122,24 @@ public:
     const int& map_width;
 
     /// <summary>
+    /// The maximum amount of shielding possible on a Tile.
+    /// </summary>
+    const int& max_shielding;
+
+    /// <summary>
     /// The maximum number of turns before the game will automatically end.
     /// </summary>
     const int& max_turns;
+
+    /// <summary>
+    /// The highest upgrade level allowed on a Miner.
+    /// </summary>
+    const int& max_upgrade_level;
+
+    /// <summary>
+    /// Every Miner in the game.
+    /// </summary>
+    const std::vector<Miner>& miners;
 
     /// <summary>
     /// The amount of money awarded when ore is dumped in the base and sold.
@@ -107,7 +147,7 @@ public:
     const int& ore_price;
 
     /// <summary>
-    /// The amount of victory points awarded when ore is dumped in the base and sold.
+    /// The amount of value awarded when ore is dumped in the base and sold.
     /// </summary>
     const int& ore_value;
 
@@ -127,14 +167,34 @@ public:
     const int& shield_cost;
 
     /// <summary>
+    /// The amount of mining power needed to remove one unit of shielding off a Tile.
+    /// </summary>
+    const int& shield_health;
+
+    /// <summary>
     /// The monetary price of spawning a Miner.
     /// </summary>
     const int& spawn_price;
 
     /// <summary>
+    /// The amount of damage taken when suffocating inside a filled Tile.
+    /// </summary>
+    const int& suffocation_damage;
+
+    /// <summary>
+    /// The amount of extra damage taken for suffocating under a large amount of material.
+    /// </summary>
+    const int& suffocation_weight_damage;
+
+    /// <summary>
     /// The amount of building material required to build a support.
     /// </summary>
     const int& support_cost;
+
+    /// <summary>
+    /// The amount of mining power needed to remove a support from a Tile.
+    /// </summary>
+    const int& support_health;
 
     /// <summary>
     /// All the tiles in the map, stored in Row-major order. Use `x + y * mapWidth` to access the correct index.
@@ -147,17 +207,17 @@ public:
     const int& time_added_per_turn;
 
     /// <summary>
-    /// Every Unit in the game.
-    /// </summary>
-    const std::vector<Unit>& units;
-
-    /// <summary>
-    /// The cost to upgrade a Unit.
+    /// The cost to upgrade a Miner.
     /// </summary>
     const int& upgrade_price;
 
     /// <summary>
-    /// The amount of victory points required to win.
+    /// Every Upgrade for a Miner in the game.
+    /// </summary>
+    const std::vector<Upgrade>& upgrades;
+
+    /// <summary>
+    /// The amount of victory points (value) required to win.
     /// </summary>
     const int& victory_amount;
 

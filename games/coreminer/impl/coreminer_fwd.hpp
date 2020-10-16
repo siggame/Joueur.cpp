@@ -15,11 +15,14 @@ namespace coreminer
 {
 
 
+class Bomb_;
+using Bomb = std::shared_ptr<Bomb_>;
+
 class Game_object_;
 using Game_object = std::shared_ptr<Game_object_>;
 
-class Job_;
-using Job = std::shared_ptr<Job_>;
+class Miner_;
+using Miner = std::shared_ptr<Miner_>;
 
 class Player_;
 using Player = std::shared_ptr<Player_>;
@@ -27,8 +30,8 @@ using Player = std::shared_ptr<Player_>;
 class Tile_;
 using Tile = std::shared_ptr<Tile_>;
 
-class Unit_;
-using Unit = std::shared_ptr<Unit_>;
+class Upgrade_;
+using Upgrade = std::shared_ptr<Upgrade_>;
 
 class Game_;
 using Game = Game_*;

@@ -9,11 +9,12 @@
 #include "../../../joueur/src/any.hpp"
 #include "../../../joueur/src/exceptions.hpp"
 #include "../../../joueur/src/delta.hpp"
+#include "../bomb.hpp"
 #include "../game_object.hpp"
-#include "../job.hpp"
+#include "../miner.hpp"
 #include "../player.hpp"
 #include "../tile.hpp"
-#include "../unit.hpp"
+#include "../upgrade.hpp"
 #include "coreminer.hpp"
 
 #include <type_traits>
@@ -54,32 +55,32 @@ bool Player_::spawn_miner()
 Player_::Player_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
         {"baseTile", Any{std::decay<decltype(base_tile)>::type{}}},
+        {"bombs", Any{std::decay<decltype(bombs)>::type{}}},
         {"clientType", Any{std::decay<decltype(client_type)>::type{}}},
         {"hopperTiles", Any{std::decay<decltype(hopper_tiles)>::type{}}},
         {"lost", Any{std::decay<decltype(lost)>::type{}}},
+        {"miners", Any{std::decay<decltype(miners)>::type{}}},
         {"money", Any{std::decay<decltype(money)>::type{}}},
         {"name", Any{std::decay<decltype(name)>::type{}}},
         {"opponent", Any{std::decay<decltype(opponent)>::type{}}},
         {"reasonLost", Any{std::decay<decltype(reason_lost)>::type{}}},
         {"reasonWon", Any{std::decay<decltype(reason_won)>::type{}}},
-        {"side", Any{std::decay<decltype(side)>::type{}}},
         {"timeRemaining", Any{std::decay<decltype(time_remaining)>::type{}}},
-        {"units", Any{std::decay<decltype(units)>::type{}}},
         {"value", Any{std::decay<decltype(value)>::type{}}},
         {"won", Any{std::decay<decltype(won)>::type{}}},
     },
     base_tile(variables_["baseTile"].as<std::decay<decltype(base_tile)>::type>()),
+    bombs(variables_["bombs"].as<std::decay<decltype(bombs)>::type>()),
     client_type(variables_["clientType"].as<std::decay<decltype(client_type)>::type>()),
     hopper_tiles(variables_["hopperTiles"].as<std::decay<decltype(hopper_tiles)>::type>()),
     lost(variables_["lost"].as<std::decay<decltype(lost)>::type>()),
+    miners(variables_["miners"].as<std::decay<decltype(miners)>::type>()),
     money(variables_["money"].as<std::decay<decltype(money)>::type>()),
     name(variables_["name"].as<std::decay<decltype(name)>::type>()),
     opponent(variables_["opponent"].as<std::decay<decltype(opponent)>::type>()),
     reason_lost(variables_["reasonLost"].as<std::decay<decltype(reason_lost)>::type>()),
     reason_won(variables_["reasonWon"].as<std::decay<decltype(reason_won)>::type>()),
-    side(variables_["side"].as<std::decay<decltype(side)>::type>()),
     time_remaining(variables_["timeRemaining"].as<std::decay<decltype(time_remaining)>::type>()),
-    units(variables_["units"].as<std::decay<decltype(units)>::type>()),
     value(variables_["value"].as<std::decay<decltype(value)>::type>()),
     won(variables_["won"].as<std::decay<decltype(won)>::type>())
 {
@@ -93,21 +94,21 @@ Player_::~Player_() = default;
 
 void Player_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "hopperTiles")
+    if(name == "bombs")
+    {
+        auto& vec = variables_["bombs"].as<std::decay<decltype(bombs)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "hopperTiles")
     {
         auto& vec = variables_["hopperTiles"].as<std::decay<decltype(hopper_tiles)>::type>();
         vec.resize(size);
         return;
     }
-    else if(name == "side")
+    else if(name == "miners")
     {
-        auto& vec = variables_["side"].as<std::decay<decltype(side)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "units")
-    {
-        auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
+        auto& vec = variables_["miners"].as<std::decay<decltype(miners)>::type>();
         vec.resize(size);
         return;
     }
@@ -122,7 +123,17 @@ void Player_::resize(const std::string& name, std::size_t size)
 
 void Player_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "hopperTiles")
+    if(name == "bombs")
+    {
+        using type = std::decay<decltype(bombs)>::type;
+        auto& vec = variables_["bombs"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "hopperTiles")
     {
         using type = std::decay<decltype(hopper_tiles)>::type;
         auto& vec = variables_["hopperTiles"].as<type>();
@@ -132,20 +143,10 @@ void Player_::change_vec_values(const std::string& name, std::vector<std::pair<s
         }
         return;
     } 
-    else if(name == "side")
+    else if(name == "miners")
     {
-        using type = std::decay<decltype(side)>::type;
-        auto& vec = variables_["side"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "units")
-    {
-        using type = std::decay<decltype(units)>::type;
-        auto& vec = variables_["units"].as<type>();
+        using type = std::decay<decltype(miners)>::type;
+        auto& vec = variables_["miners"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);

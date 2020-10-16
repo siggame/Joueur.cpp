@@ -39,17 +39,22 @@ class Tile_ : public Game_object_
 public:
 
     /// <summary>
+    /// An array of Bombs on this Tile.
+    /// </summary>
+    const std::vector<Bomb>& bombs;
+
+    /// <summary>
     /// The amount of dirt on this Tile.
     /// </summary>
     const int& dirt;
 
     /// <summary>
-    /// Whether or not the tile is a base Tile.
+    /// Whether or not the Tile is a base Tile.
     /// </summary>
     const bool& is_base;
 
     /// <summary>
-    /// Whether or not this tile is about to fall.
+    /// Whether or not this Tile is about to fall after this turn.
     /// </summary>
     const bool& is_falling;
 
@@ -67,6 +72,11 @@ public:
     /// Whether or not a support is built on this Tile.
     /// </summary>
     const bool& is_support;
+
+    /// <summary>
+    /// An array of the Miners on this Tile.
+    /// </summary>
+    const std::vector<Miner>& miners;
 
     /// <summary>
     /// The amount of ore on this Tile.
@@ -102,11 +112,6 @@ public:
     /// The Tile to the 'West' of this one (x-1, y). Null if out of bounds of the map.
     /// </summary>
     const Tile& tile_west;
-
-    /// <summary>
-    /// An array of the Units on this Tile.
-    /// </summary>
-    const std::vector<Unit>& units;
 
     /// <summary>
     /// The x (horizontal) position of this Tile.

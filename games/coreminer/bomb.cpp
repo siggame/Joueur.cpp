@@ -1,11 +1,11 @@
-// Player
-// A player in this game. Every AI controls one player.
+// Bomb
+// A Bomb in the game.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
 // Instead, you should only be reading its variables and calling its functions.
 
-#include "player.hpp"
+#include "bomb.hpp"
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/any.hpp"
 #include "../../joueur/src/exceptions.hpp"

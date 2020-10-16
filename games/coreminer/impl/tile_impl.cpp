@@ -9,11 +9,12 @@
 #include "../../../joueur/src/any.hpp"
 #include "../../../joueur/src/exceptions.hpp"
 #include "../../../joueur/src/delta.hpp"
+#include "../bomb.hpp"
 #include "../game_object.hpp"
-#include "../job.hpp"
+#include "../miner.hpp"
 #include "../player.hpp"
 #include "../tile.hpp"
-#include "../unit.hpp"
+#include "../upgrade.hpp"
 #include "coreminer.hpp"
 
 #include <type_traits>
@@ -27,12 +28,14 @@ namespace coreminer
 
 Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
+        {"bombs", Any{std::decay<decltype(bombs)>::type{}}},
         {"dirt", Any{std::decay<decltype(dirt)>::type{}}},
         {"isBase", Any{std::decay<decltype(is_base)>::type{}}},
         {"isFalling", Any{std::decay<decltype(is_falling)>::type{}}},
         {"isHopper", Any{std::decay<decltype(is_hopper)>::type{}}},
         {"isLadder", Any{std::decay<decltype(is_ladder)>::type{}}},
         {"isSupport", Any{std::decay<decltype(is_support)>::type{}}},
+        {"miners", Any{std::decay<decltype(miners)>::type{}}},
         {"ore", Any{std::decay<decltype(ore)>::type{}}},
         {"owner", Any{std::decay<decltype(owner)>::type{}}},
         {"shielding", Any{std::decay<decltype(shielding)>::type{}}},
@@ -40,16 +43,17 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"tileNorth", Any{std::decay<decltype(tile_north)>::type{}}},
         {"tileSouth", Any{std::decay<decltype(tile_south)>::type{}}},
         {"tileWest", Any{std::decay<decltype(tile_west)>::type{}}},
-        {"units", Any{std::decay<decltype(units)>::type{}}},
         {"x", Any{std::decay<decltype(x)>::type{}}},
         {"y", Any{std::decay<decltype(y)>::type{}}},
     },
+    bombs(variables_["bombs"].as<std::decay<decltype(bombs)>::type>()),
     dirt(variables_["dirt"].as<std::decay<decltype(dirt)>::type>()),
     is_base(variables_["isBase"].as<std::decay<decltype(is_base)>::type>()),
     is_falling(variables_["isFalling"].as<std::decay<decltype(is_falling)>::type>()),
     is_hopper(variables_["isHopper"].as<std::decay<decltype(is_hopper)>::type>()),
     is_ladder(variables_["isLadder"].as<std::decay<decltype(is_ladder)>::type>()),
     is_support(variables_["isSupport"].as<std::decay<decltype(is_support)>::type>()),
+    miners(variables_["miners"].as<std::decay<decltype(miners)>::type>()),
     ore(variables_["ore"].as<std::decay<decltype(ore)>::type>()),
     owner(variables_["owner"].as<std::decay<decltype(owner)>::type>()),
     shielding(variables_["shielding"].as<std::decay<decltype(shielding)>::type>()),
@@ -57,7 +61,6 @@ Tile_::Tile_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     tile_north(variables_["tileNorth"].as<std::decay<decltype(tile_north)>::type>()),
     tile_south(variables_["tileSouth"].as<std::decay<decltype(tile_south)>::type>()),
     tile_west(variables_["tileWest"].as<std::decay<decltype(tile_west)>::type>()),
-    units(variables_["units"].as<std::decay<decltype(units)>::type>()),
     x(variables_["x"].as<std::decay<decltype(x)>::type>()),
     y(variables_["y"].as<std::decay<decltype(y)>::type>())
 {
@@ -71,9 +74,15 @@ Tile_::~Tile_() = default;
 
 void Tile_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "units")
+    if(name == "bombs")
     {
-        auto& vec = variables_["units"].as<std::decay<decltype(units)>::type>();
+        auto& vec = variables_["bombs"].as<std::decay<decltype(bombs)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "miners")
+    {
+        auto& vec = variables_["miners"].as<std::decay<decltype(miners)>::type>();
         vec.resize(size);
         return;
     }
@@ -88,10 +97,20 @@ void Tile_::resize(const std::string& name, std::size_t size)
 
 void Tile_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "units")
+    if(name == "bombs")
     {
-        using type = std::decay<decltype(units)>::type;
-        auto& vec = variables_["units"].as<type>();
+        using type = std::decay<decltype(bombs)>::type;
+        auto& vec = variables_["bombs"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "miners")
+    {
+        using type = std::decay<decltype(miners)>::type;
+        auto& vec = variables_["miners"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_game()->get_objects()[val.second.as<std::string>()]);

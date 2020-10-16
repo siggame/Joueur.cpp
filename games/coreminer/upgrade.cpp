@@ -1,11 +1,11 @@
-// Player
-// A player in this game. Every AI controls one player.
+// Upgrade
+// Information about a Miner's Upgrade module.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.
 // Instead, you should only be reading its variables and calling its functions.
 
-#include "player.hpp"
+#include "upgrade.hpp"
 #include "../../joueur/src/base_ai.hpp"
 #include "../../joueur/src/any.hpp"
 #include "../../joueur/src/exceptions.hpp"
