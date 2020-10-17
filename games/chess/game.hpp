@@ -52,7 +52,7 @@ public:
     const std::unordered_map<std::string, Game_object>& game_objects;
 
     /// <summary>
-    /// The list of [known] moves that have occurred in the game, in Universal Chess Inferface (UCI) format. The first element is the first move, with the last element being the most recent.
+    /// The list of [known] moves that have occurred in the game, in Universal Chess Interface (UCI) format. The first element is the first move, with the last element being the most recent.
     /// </summary>
     const std::vector<std::string>& history;
 

@@ -1,5 +1,5 @@
 // Warehouse
-// A typical abandoned warehouse... that anarchists hang out in and can be bribed to burn down Buildings.
+// A typical abandoned warehouse that anarchists hang out in and can be bribed to burn down Buildings.
 
 // DO NOT MODIFY THIS FILE
 // Never try to directly create an instance of this class, or modify its member variables.

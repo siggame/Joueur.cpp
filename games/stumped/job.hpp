@@ -94,7 +94,7 @@ public:
 
 
     /// <summary>
-    /// recruits a _beaver of this _job to a lodge
+    /// recruits a _beaver of this _job to a lodge.
     /// </summary>
     /// <param name="tile"> The Tile that is a lodge owned by you that you wish to spawn the Beaver of this Job on. </param>
     Beaver recruit(const Tile& tile);

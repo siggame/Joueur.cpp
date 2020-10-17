@@ -110,7 +110,7 @@ public:
     bool attack(const Tile& tile);
 
     /// <summary>
-    /// changes this _unit's _job. _must be at max energy (100.0) to change _jobs.
+    /// changes this _unit's _job. _must be at max energy (100) to change _jobs.
     /// </summary>
     /// <param name="job"> The name of the Job to change to. </param>
     bool change_job(const std::string& job);
@@ -129,7 +129,7 @@ public:
     bool convert(const Tile& tile);
 
     /// <summary>
-    /// removes materials from an adjacent _tile's _structure. _you cannot deconstruct friendly structures (see _unit.attack).
+    /// removes materials from an adjacent _tile's _structure. _you cannot deconstruct friendly structures (see `_unit.attack`).
     /// </summary>
     /// <param name="tile"> The Tile to deconstruct. It must have a Structure on it. </param>
     bool deconstruct(const Tile& tile);
