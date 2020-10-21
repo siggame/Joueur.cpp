@@ -39,6 +39,11 @@ class Bomb_ : public Game_object_
 public:
 
     /// <summary>
+    /// The Tile this Miner is on.
+    /// </summary>
+    const Tile& tile;
+
+    /// <summary>
     /// The number of turns before this Bomb explodes. Zero means it will explode after the current turn.
     /// </summary>
     const int& timer;

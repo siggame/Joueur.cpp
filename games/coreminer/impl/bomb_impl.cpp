@@ -28,8 +28,10 @@ namespace coreminer
 
 Bomb_::Bomb_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Game_object_{
+        {"tile", Any{std::decay<decltype(tile)>::type{}}},
         {"timer", Any{std::decay<decltype(timer)>::type{}}},
     },
+    tile(variables_["tile"].as<std::decay<decltype(tile)>::type>()),
     timer(variables_["timer"].as<std::decay<decltype(timer)>::type>())
 {
     for(auto&& obj : init)
@@ -95,6 +97,11 @@ bool Bomb_::is_map(const std::string& name)
 
 void Bomb_::rebind_by_name(Any* to_change, const std::string& member, std::shared_ptr<Base_object> ref)
 {
+   if(member == "tile")
+   { 
+      to_change->as<Tile>() = std::static_pointer_cast<Tile_>(ref);
+      return;
+   }
    try
    {
       Game_object_::rebind_by_name(to_change, member, ref);
