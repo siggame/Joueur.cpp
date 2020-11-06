@@ -68,13 +68,13 @@ bool AI::run_turn()
     // Put your game logic here for run_turn here
     // <<-- /Creer-Merge: runTurn -->>
     // If we have no miners and can afford one, spawn one
-        while ( (self->player->miners.size() ) < 1 && ( self->player->money >= self->game->spawn_price) )
+        if ( (this->player->miners.size() < 1 ) && ( this->player->money >= this->game->spawn_price) )
         {
-            self->player.spawn_miner();
+            this->player.spawn_miner();
         }
 
         // For each miner
-        for (i = 0; i < self->player->miners.size(); i++)
+        for (i = 0; i < this->player->miners.size(); i++)
             // Move to tile next to base
             if (miner->tile->is_base == true
                 if (miner->tile->tile_east == true)
@@ -87,15 +87,15 @@ bool AI::run_turn()
                 }
             
             // Sell all materials
-            sellTile = self->game.get_tile_at(self->player->base_tile->x, miner->tile->y);
-            if (sellTile && ( sellTile->owner == self->player ) )
+            auto sellTile = this->game.get_tile_at(this->player->base_tile->x, miner->tile->y);
+            if (sellTile && ( sellTile->owner == this->player ) )
             {
                 miner.dump(sellTile, "dirt", -1);
                 miner.dump(sellTile, "ore", -1);
             }
 
-            eastTile = miner->tile->tile_east;
-            westTile = miner->tile->tile_west;
+            auto eastTile = miner->tile->tile_east;
+            auto westTile = miner->tile->tile_west;
 
             // Mine east and west tiles
             miner.mine(eastTile, -1);
