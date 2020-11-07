@@ -68,15 +68,14 @@ bool AI::run_turn()
     // Put your game logic here for run_turn here
     // <<-- /Creer-Merge: runTurn -->>
     // If we have no miners and can afford one, spawn one
-        if ( (this->player->miners->size() < 1 ) && ( this->player->money >= this->game->spawn_price ) )
+        if ( (this->player->miners.size() < 1 ) && ( this->player->money >= this->game->spawn_price ) )
         {
             this->player->spawn_miner();
         }
 
         // For each miner
-        for ( int i = 0; i < this->player->miners->size(); i++)
+        for (auto& miner : this->player->miners)
         {
-            auto miner = this->player->miners[i];
             // Move to tile next to base
             if (miner->tile->is_base)
             {
