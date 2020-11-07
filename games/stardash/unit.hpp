@@ -64,7 +64,7 @@ public:
     const int& genarium;
 
     /// <summary>
-    /// Tracks wheither or not the ship is dashing or Mining. If true, it cannot do anything else.
+    /// Tracks whether or not the ship is dashing or Mining. If true, it cannot do anything else.
     /// </summary>
     const bool& is_busy;
 
@@ -104,7 +104,7 @@ public:
     const int& rarium;
 
     /// <summary>
-    /// The sheild that a martyr ship has.
+    /// The shield that a martyr ship has.
     /// </summary>
     const int& shield;
 
@@ -137,7 +137,7 @@ public:
     bool dash(const double& x, const double& y);
 
     /// <summary>
-    /// allows a miner to mine a asteroid
+    /// allows a miner to mine a asteroid.
     /// </summary>
     /// <param name="body"> The object to be mined. </param>
     bool mine(const Body& body);

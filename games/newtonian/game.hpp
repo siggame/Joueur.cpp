@@ -62,7 +62,7 @@ public:
     const int& intern_cap;
 
     /// <summary>
-    /// A list of all jobs. first item is intern, second is physicists, and third is manager.
+    /// A list of all jobs. The first element is intern, second is physicists, and third is manager.
     /// </summary>
     const std::vector<Job>& jobs;
 

@@ -44,7 +44,7 @@ public:
 
 
     /// <summary>
-    /// bribe the weathermen to intensity the next _forecast by 1 or -1
+    /// bribe the weathermen to intensity the next _forecast by 1 or -1.
     /// </summary>
     /// <param name="negative"> By default the intensity will be increased by 1, setting this to true decreases the intensity by 1. </param>
     bool intensify(bool negative = false);

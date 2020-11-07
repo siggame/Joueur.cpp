@@ -29,8 +29,6 @@ namespace necrowar
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
-        {"TowerJobs", Any{std::decay<decltype(tower_jobs)>::type{}}},
-        {"UnitJobs", Any{std::decay<decltype(unit_jobs)>::type{}}},
         {"currentPlayer", Any{std::decay<decltype(current_player)>::type{}}},
         {"currentTurn", Any{std::decay<decltype(current_turn)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
@@ -45,11 +43,11 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
         {"session", Any{std::decay<decltype(session)>::type{}}},
         {"tiles", Any{std::decay<decltype(tiles)>::type{}}},
         {"timeAddedPerTurn", Any{std::decay<decltype(time_added_per_turn)>::type{}}},
+        {"towerJobs", Any{std::decay<decltype(tower_jobs)>::type{}}},
         {"towers", Any{std::decay<decltype(towers)>::type{}}},
+        {"unitJobs", Any{std::decay<decltype(unit_jobs)>::type{}}},
         {"units", Any{std::decay<decltype(units)>::type{}}},
     },
-    tower_jobs(variables_["TowerJobs"].as<std::decay<decltype(tower_jobs)>::type>()),
-    unit_jobs(variables_["UnitJobs"].as<std::decay<decltype(unit_jobs)>::type>()),
     current_player(variables_["currentPlayer"].as<std::decay<decltype(current_player)>::type>()),
     current_turn(variables_["currentTurn"].as<std::decay<decltype(current_turn)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
@@ -64,7 +62,9 @@ Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     session(variables_["session"].as<std::decay<decltype(session)>::type>()),
     tiles(variables_["tiles"].as<std::decay<decltype(tiles)>::type>()),
     time_added_per_turn(variables_["timeAddedPerTurn"].as<std::decay<decltype(time_added_per_turn)>::type>()),
+    tower_jobs(variables_["towerJobs"].as<std::decay<decltype(tower_jobs)>::type>()),
     towers(variables_["towers"].as<std::decay<decltype(towers)>::type>()),
+    unit_jobs(variables_["unitJobs"].as<std::decay<decltype(unit_jobs)>::type>()),
     units(variables_["units"].as<std::decay<decltype(units)>::type>())
 {
     for(auto&& obj : init)
@@ -77,19 +77,7 @@ Game_::~Game_() = default;
 
 void Game_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "TowerJobs")
-    {
-        auto& vec = variables_["TowerJobs"].as<std::decay<decltype(tower_jobs)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "UnitJobs")
-    {
-        auto& vec = variables_["UnitJobs"].as<std::decay<decltype(unit_jobs)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "players")
+    if(name == "players")
     {
         auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
         vec.resize(size);
@@ -101,9 +89,21 @@ void Game_::resize(const std::string& name, std::size_t size)
         vec.resize(size);
         return;
     }
+    else if(name == "towerJobs")
+    {
+        auto& vec = variables_["towerJobs"].as<std::decay<decltype(tower_jobs)>::type>();
+        vec.resize(size);
+        return;
+    }
     else if(name == "towers")
     {
         auto& vec = variables_["towers"].as<std::decay<decltype(towers)>::type>();
+        vec.resize(size);
+        return;
+    }
+    else if(name == "unitJobs")
+    {
+        auto& vec = variables_["unitJobs"].as<std::decay<decltype(unit_jobs)>::type>();
         vec.resize(size);
         return;
     }
@@ -118,27 +118,7 @@ void Game_::resize(const std::string& name, std::size_t size)
 
 void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "TowerJobs")
-    {
-        using type = std::decay<decltype(tower_jobs)>::type;
-        auto& vec = variables_["TowerJobs"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "UnitJobs")
-    {
-        using type = std::decay<decltype(unit_jobs)>::type;
-        auto& vec = variables_["UnitJobs"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
-        }
-        return;
-    } 
-    else if(name == "players")
+    if(name == "players")
     {
         using type = std::decay<decltype(players)>::type;
         auto& vec = variables_["players"].as<type>();
@@ -158,10 +138,30 @@ void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std
         }
         return;
     } 
+    else if(name == "towerJobs")
+    {
+        using type = std::decay<decltype(tower_jobs)>::type;
+        auto& vec = variables_["towerJobs"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
     else if(name == "towers")
     {
         using type = std::decay<decltype(towers)>::type;
         auto& vec = variables_["towers"].as<type>();
+        for(auto&& val : values)
+        { 
+            vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);
+        }
+        return;
+    } 
+    else if(name == "unitJobs")
+    {
+        using type = std::decay<decltype(unit_jobs)>::type;
+        auto& vec = variables_["unitJobs"].as<type>();
         for(auto&& val : values)
         { 
             vec[val.first] = std::static_pointer_cast<type::value_type::element_type>(get_objects()[val.second.as<std::string>()]);

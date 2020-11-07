@@ -15,6 +15,7 @@ namespace necrowar
 
 //register the game
 Game_registry registration("Necrowar",
+                           "935f0e64ba290cdce31688a40bd90d1eb5375f36aeebd67482238fc0da25ef86",
                            std::unique_ptr<Necrowar>(new Necrowar));
 
 std::unique_ptr<Base_ai> Necrowar::generate_ai()

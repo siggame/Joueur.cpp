@@ -59,7 +59,7 @@ public:
     const int& number_of_coworkers;
 
     /// <summary>
-    /// How much work needs to be done for this Spiderling to finish being busy. See docs for the Work forumla.
+    /// How much work needs to be done for this Spiderling to finish being busy. See docs for the Work formula.
     /// </summary>
     const double& work_remaining;
 
@@ -69,7 +69,7 @@ public:
 
 
     /// <summary>
-    /// attacks another _spiderling
+    /// attacks another _spiderling.
     /// </summary>
     /// <param name="spiderling"> The Spiderling to attack. </param>
     bool attack(const Spiderling& spiderling);
