@@ -68,44 +68,49 @@ bool AI::run_turn()
     // Put your game logic here for run_turn here
     // <<-- /Creer-Merge: runTurn -->>
     // If we have no miners and can afford one, spawn one
-        if ( (this->player->miners.size() < 1 ) && ( this->player->money >= this->game->spawn_price) )
+        if ( (this->player->miners->size() < 1 ) && ( this->player->money >= this->game->spawn_price ) )
         {
-            this->player.spawn_miner();
+            this->player->spawn_miner();
         }
 
         // For each miner
-        for (i = 0; i < this->player->miners.size(); i++)
+        for ( int i = 0; i < this->player->miners->size(); i++)
+        {
+            auto miner = this->player->miners[i];
             // Move to tile next to base
-            if (miner->tile->is_base == true
-                if (miner->tile->tile_east == true)
+            if (miner->tile->is_base)
+            {
+                if (miner->tile->tile_east != nullptr)
                 {
-                    miner.move(miner->tile->tile_east);
+                    miner->move(miner->tile->tile_east);
                 }
                 else
                 {
-                    miner.move(miner->tile->tile_west);
+                    miner->move(miner->tile->tile_west);
                 }
+            }
             
             // Sell all materials
-            auto sellTile = this->game.get_tile_at(this->player->base_tile->x, miner->tile->y);
+            auto sellTile = this->game->get_tile_at(this->player->base_tile->x, miner->tile->y);
             if (sellTile && ( sellTile->owner == this->player ) )
             {
-                miner.dump(sellTile, "dirt", -1);
-                miner.dump(sellTile, "ore", -1);
+                miner->dump(sellTile, "dirt", -1);
+                miner->dump(sellTile, "ore", -1);
             }
 
             auto eastTile = miner->tile->tile_east;
             auto westTile = miner->tile->tile_west;
 
             // Mine east and west tiles
-            miner.mine(eastTile, -1);
-            miner.mine(westTile, -1);
+            miner->mine(eastTile, -1);
+            miner->mine(westTile, -1);
 
             // Check to make sure east and west tiles are mined
             if ((eastTile && (eastTile->ore + eastTile->dirt == 0)) && (westTile && (westTile->ore + westTile->dirt == 0)))
             {   // Dig down
-                miner.mine(miner->tile->tile_south, -1);
+                miner->mine(miner->tile->tile_south, -1);
             }
+        }
 
     return true;
 }
