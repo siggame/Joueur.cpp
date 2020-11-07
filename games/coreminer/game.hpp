@@ -204,7 +204,7 @@ public:
     /// <summary>
     /// The amount of time (in nano-seconds) added after each player performs a turn.
     /// </summary>
-    const int& time_added_per_turn;
+    const double& time_added_per_turn;
 
     /// <summary>
     /// The cost to upgrade a Miner.
