@@ -6,6 +6,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 
 #include <string>
 #include <array>
