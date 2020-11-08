@@ -1,0 +1,25 @@
+var classcpp__client_1_1necrowar_1_1Player =
+[
+    [ "~Player_", "classcpp__client_1_1necrowar_1_1Player.html#a1bb02fdbb1042412b6dfb135341667df", null ],
+    [ "as", "classcpp__client_1_1necrowar_1_1Player.html#af7d6b8df284f19792b5a78f3095be84b", null ],
+    [ "is", "classcpp__client_1_1necrowar_1_1Player.html#a74f6e36278ccf95274facf088aaae227", null ],
+    [ "log", "classcpp__client_1_1necrowar_1_1Player.html#a90b52b824024b325868d2022f872164c", null ],
+    [ "client_type", "classcpp__client_1_1necrowar_1_1Player.html#aff3c0288b59d7e43e35057af92bc08fd", null ],
+    [ "game_object_name", "classcpp__client_1_1necrowar_1_1Player.html#a6788987be7ddad0c9a09fb8da8301abf", null ],
+    [ "gold", "classcpp__client_1_1necrowar_1_1Player.html#a6c1970a5e93c0c37dbf51fe820500725", null ],
+    [ "health", "classcpp__client_1_1necrowar_1_1Player.html#a92e27696aa126caf609e74e2d9a8f2cc", null ],
+    [ "home_base", "classcpp__client_1_1necrowar_1_1Player.html#a4929d4396742e37642f6980d6f2900eb", null ],
+    [ "id", "classcpp__client_1_1necrowar_1_1Player.html#a4574905afde2127a1873fa3a5da3c090", null ],
+    [ "logs", "classcpp__client_1_1necrowar_1_1Player.html#a1513aee4b4147dc5b55c869131aba7ef", null ],
+    [ "lost", "classcpp__client_1_1necrowar_1_1Player.html#aad52c5d1d5d81ea9cb3010d1dbf8f1fa", null ],
+    [ "mana", "classcpp__client_1_1necrowar_1_1Player.html#aae0d3ddcb2b8746715a4bbcb250a69b1", null ],
+    [ "name", "classcpp__client_1_1necrowar_1_1Player.html#a4284e7ae60e6b2b1cb5fcc3a69f089ac", null ],
+    [ "opponent", "classcpp__client_1_1necrowar_1_1Player.html#aa81513b93d6c670262df13e011033778", null ],
+    [ "reason_lost", "classcpp__client_1_1necrowar_1_1Player.html#ac6acde4bea87839428acf5994883acc3", null ],
+    [ "reason_won", "classcpp__client_1_1necrowar_1_1Player.html#a1a20ebee49e5766f6ce727cfafa3740e", null ],
+    [ "side", "classcpp__client_1_1necrowar_1_1Player.html#a84af1cad85fd7fa99f42e24da5aed7a0", null ],
+    [ "time_remaining", "classcpp__client_1_1necrowar_1_1Player.html#a33aa4abeeb4413b49f75750c0a24524f", null ],
+    [ "towers", "classcpp__client_1_1necrowar_1_1Player.html#a58c64cb9421bc73cc57bb4b455442858", null ],
+    [ "units", "classcpp__client_1_1necrowar_1_1Player.html#ae9436418ae321c082794639baaba15b0", null ],
+    [ "won", "classcpp__client_1_1necrowar_1_1Player.html#ae0aca57ffb65b9b8866fb1b88e31038d", null ]
+];

@@ -1,0 +1,28 @@
+var classcpp__client_1_1newtonian_1_1Game =
+[
+    [ "~Game_", "classcpp__client_1_1newtonian_1_1Game.html#aec4c0702fedcb3edc51b0af6ed5f4312", null ],
+    [ "get_tile_at", "classcpp__client_1_1newtonian_1_1Game.html#a6d68cf1326efff40980bbdc7dd23b2b6", null ],
+    [ "current_player", "classcpp__client_1_1newtonian_1_1Game.html#af6cfe20d908537b6a175034a95f194b2", null ],
+    [ "current_turn", "classcpp__client_1_1newtonian_1_1Game.html#acc1f1d2e02b97b915b615661d585dd6d", null ],
+    [ "game_objects", "classcpp__client_1_1newtonian_1_1Game.html#a3acddddc31d5f72af64e032a8a6c9d37", null ],
+    [ "intern_cap", "classcpp__client_1_1newtonian_1_1Game.html#a26603f7377e97004d256ba84b8e81d73", null ],
+    [ "jobs", "classcpp__client_1_1newtonian_1_1Game.html#a9110ba4347081a59b0e46c546d32aea8", null ],
+    [ "machines", "classcpp__client_1_1newtonian_1_1Game.html#a78b56a7c5ecfb72322fd4ab0f8a92231", null ],
+    [ "manager_cap", "classcpp__client_1_1newtonian_1_1Game.html#a5b12a09b94692c4aa0ffe621651ac19b", null ],
+    [ "map_height", "classcpp__client_1_1newtonian_1_1Game.html#a9c9db3422fc7124323eb8fba2fdb99f6", null ],
+    [ "map_width", "classcpp__client_1_1newtonian_1_1Game.html#aa8cd13ba84abb824dca0141748d1c51b", null ],
+    [ "material_spawn", "classcpp__client_1_1newtonian_1_1Game.html#a8daa810aeeb96061c6704e93ead0806b", null ],
+    [ "max_turns", "classcpp__client_1_1newtonian_1_1Game.html#a7c249b410617cd9b43f2ed47532a8616", null ],
+    [ "physicist_cap", "classcpp__client_1_1newtonian_1_1Game.html#aed0cfdbd4d06c4adde44f75d976389a0", null ],
+    [ "players", "classcpp__client_1_1newtonian_1_1Game.html#acc62198d4dc6f43dcdb731878b543f16", null ],
+    [ "refined_value", "classcpp__client_1_1newtonian_1_1Game.html#aca698205601a8e9e05e43a6f2014ad08", null ],
+    [ "regenerate_rate", "classcpp__client_1_1newtonian_1_1Game.html#a48396dfc5fa1f4185342cb7427df28b2", null ],
+    [ "session", "classcpp__client_1_1newtonian_1_1Game.html#aa01d84c60968efc98197f62754f38a23", null ],
+    [ "spawn_time", "classcpp__client_1_1newtonian_1_1Game.html#a85315183e0b7b57913bbc58b5ee9d015", null ],
+    [ "stun_time", "classcpp__client_1_1newtonian_1_1Game.html#a17441fc79d204906ce670642b479a7cd", null ],
+    [ "tiles", "classcpp__client_1_1newtonian_1_1Game.html#ad6278dfa110090a4074e8989aa466fe8", null ],
+    [ "time_added_per_turn", "classcpp__client_1_1newtonian_1_1Game.html#a6e5fdf3832dd25ea9a26f4bb88f650b9", null ],
+    [ "time_immune", "classcpp__client_1_1newtonian_1_1Game.html#ac7c0dc3f5737f2a691dbc731f674dda5", null ],
+    [ "units", "classcpp__client_1_1newtonian_1_1Game.html#a88fdd9cefdab5b935f3636dc67bfa33b", null ],
+    [ "victory_amount", "classcpp__client_1_1newtonian_1_1Game.html#a112cb540aa85ddbb55b10130463db805", null ]
+];

@@ -1,0 +1,28 @@
+var classcpp__client_1_1coreminer_1_1Miner =
+[
+    [ "~Miner_", "classcpp__client_1_1coreminer_1_1Miner.html#a4a59bf6e16c9598530c6a9843b881afe", null ],
+    [ "as", "classcpp__client_1_1coreminer_1_1Miner.html#af7d6b8df284f19792b5a78f3095be84b", null ],
+    [ "build", "classcpp__client_1_1coreminer_1_1Miner.html#a0cf851b4e8a1cebc15c6eb5daa1df806", null ],
+    [ "buy", "classcpp__client_1_1coreminer_1_1Miner.html#a6137f4c0e130dcc817aae1ecd97be4f6", null ],
+    [ "dump", "classcpp__client_1_1coreminer_1_1Miner.html#ac6b3634683677cf24698624f78a6c1b5", null ],
+    [ "is", "classcpp__client_1_1coreminer_1_1Miner.html#a74f6e36278ccf95274facf088aaae227", null ],
+    [ "log", "classcpp__client_1_1coreminer_1_1Miner.html#a3017a1fe83a70d20d774ac0649c32efd", null ],
+    [ "mine", "classcpp__client_1_1coreminer_1_1Miner.html#abb04def0aac9af04429865c77733babb", null ],
+    [ "move", "classcpp__client_1_1coreminer_1_1Miner.html#aa132256b807522fc919878c2b53e8473", null ],
+    [ "transfer", "classcpp__client_1_1coreminer_1_1Miner.html#a94f009efd2922f5e35f3c33cd8f9b3dd", null ],
+    [ "upgrade", "classcpp__client_1_1coreminer_1_1Miner.html#a55070db796a647d22a810ec6308116f2", null ],
+    [ "bombs", "classcpp__client_1_1coreminer_1_1Miner.html#a958fd4cc4a13ae813be42f141145b8dd", null ],
+    [ "building_materials", "classcpp__client_1_1coreminer_1_1Miner.html#a44310c8b98ad1a03eef43739308430f9", null ],
+    [ "current_upgrade", "classcpp__client_1_1coreminer_1_1Miner.html#afdf19c033474627f89f18c4c65727703", null ],
+    [ "dirt", "classcpp__client_1_1coreminer_1_1Miner.html#a1e1c330381c440f14ca5cce5bece49c1", null ],
+    [ "game_object_name", "classcpp__client_1_1coreminer_1_1Miner.html#a5465ad15aa0a8cc90c39b658679b04d4", null ],
+    [ "health", "classcpp__client_1_1coreminer_1_1Miner.html#aef9358584a56edec91f503a3783a8760", null ],
+    [ "id", "classcpp__client_1_1coreminer_1_1Miner.html#ae01c2a9e86d230a39c433e97c48b5c87", null ],
+    [ "logs", "classcpp__client_1_1coreminer_1_1Miner.html#aae7aa82c468d348df15fcaaabfc15567", null ],
+    [ "mining_power", "classcpp__client_1_1coreminer_1_1Miner.html#a1d6626b51cac046a88adbbe677eaa2c2", null ],
+    [ "moves", "classcpp__client_1_1coreminer_1_1Miner.html#aae8bb0f0525d84aedea37a3a2a777105", null ],
+    [ "ore", "classcpp__client_1_1coreminer_1_1Miner.html#a9066405d3cdc54f1876b88a95742bb1f", null ],
+    [ "owner", "classcpp__client_1_1coreminer_1_1Miner.html#af706a1518f9a669c9e1ba703e3db72f7", null ],
+    [ "tile", "classcpp__client_1_1coreminer_1_1Miner.html#a2b34323ad5bd54d6ab35b7cfe8447218", null ],
+    [ "upgrade_level", "classcpp__client_1_1coreminer_1_1Miner.html#afb2ad08c9d9a43eb521e08b76a1117e7", null ]
+];

@@ -1,0 +1,25 @@
+var classcpp__client_1_1anarchy_1_1Player =
+[
+    [ "~Player_", "classcpp__client_1_1anarchy_1_1Player.html#a1bad08adf3db5d43edec4c00de61e80e", null ],
+    [ "as", "classcpp__client_1_1anarchy_1_1Player.html#af7d6b8df284f19792b5a78f3095be84b", null ],
+    [ "is", "classcpp__client_1_1anarchy_1_1Player.html#a74f6e36278ccf95274facf088aaae227", null ],
+    [ "log", "classcpp__client_1_1anarchy_1_1Player.html#afd56fb5631bc915ce2f5f2a14039b006", null ],
+    [ "bribes_remaining", "classcpp__client_1_1anarchy_1_1Player.html#a0cc23dc5c30a01a01efaf7e0a7553e91", null ],
+    [ "buildings", "classcpp__client_1_1anarchy_1_1Player.html#aa47e1fdbbaa585f92518147551b37c82", null ],
+    [ "client_type", "classcpp__client_1_1anarchy_1_1Player.html#accf1f2a6fdb75fba3dec80c9ea10cece", null ],
+    [ "fire_departments", "classcpp__client_1_1anarchy_1_1Player.html#a5e90d016ab558e26244c5144546ebf6b", null ],
+    [ "game_object_name", "classcpp__client_1_1anarchy_1_1Player.html#adbcc2b082e7604f28bcc7587d61c45a3", null ],
+    [ "headquarters", "classcpp__client_1_1anarchy_1_1Player.html#af767bc7feeb94fbaf1b20792ef7e0ca5", null ],
+    [ "id", "classcpp__client_1_1anarchy_1_1Player.html#ac87a9c396baa4005a20a729fedbf50d0", null ],
+    [ "logs", "classcpp__client_1_1anarchy_1_1Player.html#acc1205b899bacf84a8986f6dd0881d92", null ],
+    [ "lost", "classcpp__client_1_1anarchy_1_1Player.html#a2ead3c444cc4ed2adc460611d610676a", null ],
+    [ "name", "classcpp__client_1_1anarchy_1_1Player.html#ab15c5a7c713ac510dda820c7df7f5e05", null ],
+    [ "opponent", "classcpp__client_1_1anarchy_1_1Player.html#a68c0696a4d98350a47378fe6ed86e340", null ],
+    [ "police_departments", "classcpp__client_1_1anarchy_1_1Player.html#ab23e79c4c548f5de655fd464c2b8fbd0", null ],
+    [ "reason_lost", "classcpp__client_1_1anarchy_1_1Player.html#a88a6319c71ee2a02f04c0c9157a5f361", null ],
+    [ "reason_won", "classcpp__client_1_1anarchy_1_1Player.html#a57c442d135a8899c36df3f2b52dc50ef", null ],
+    [ "time_remaining", "classcpp__client_1_1anarchy_1_1Player.html#aaa735fe7460d0e4c565f0da9e57e3088", null ],
+    [ "warehouses", "classcpp__client_1_1anarchy_1_1Player.html#ac3f647248534ba0fb215c4f4d1d9cb12", null ],
+    [ "weather_stations", "classcpp__client_1_1anarchy_1_1Player.html#a4f944dccee601cd68dc7d06e73087d76", null ],
+    [ "won", "classcpp__client_1_1anarchy_1_1Player.html#a96468d9a47adb8b20e46c3f3faefed8d", null ]
+];

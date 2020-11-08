@@ -1,0 +1,26 @@
+var classcpp__client_1_1saloon_1_1Game =
+[
+    [ "~Game_", "classcpp__client_1_1saloon_1_1Game.html#a8d6a8ef5c1708e267fdaac29600455d2", null ],
+    [ "get_tile_at", "classcpp__client_1_1saloon_1_1Game.html#aa5c1e6e34daefd975f0f1601c7b8facc", null ],
+    [ "bartender_cooldown", "classcpp__client_1_1saloon_1_1Game.html#a86ca03abdd0a4635698069be32ef4c5b", null ],
+    [ "bottles", "classcpp__client_1_1saloon_1_1Game.html#a0b9dcb56c30937ebb2b3bc1dcd391ed2", null ],
+    [ "brawler_damage", "classcpp__client_1_1saloon_1_1Game.html#a3b42cce5662c5c82a120f608eab0e36b", null ],
+    [ "cowboys", "classcpp__client_1_1saloon_1_1Game.html#a7ffd6fbdb2fcfed009c15a6fea39fca2", null ],
+    [ "current_player", "classcpp__client_1_1saloon_1_1Game.html#a6162d367924b51dc2f0078f937e70a34", null ],
+    [ "current_turn", "classcpp__client_1_1saloon_1_1Game.html#a616a17878e6025c6b7c1f2df1787bcf5", null ],
+    [ "furnishings", "classcpp__client_1_1saloon_1_1Game.html#a3c33454e52f7b03587ef15681b6e85bb", null ],
+    [ "game_objects", "classcpp__client_1_1saloon_1_1Game.html#a84aeb1e118d97928ce55aaba34bf9634", null ],
+    [ "jobs", "classcpp__client_1_1saloon_1_1Game.html#a6103409b56410445bdf26c77ba92ab29", null ],
+    [ "map_height", "classcpp__client_1_1saloon_1_1Game.html#ac6d79902995dd12b73777e2204361ded", null ],
+    [ "map_width", "classcpp__client_1_1saloon_1_1Game.html#a38cf4413ab0f8c437d53071b3e7429ef", null ],
+    [ "max_cowboys_per_job", "classcpp__client_1_1saloon_1_1Game.html#a3ca323dc5af3450e7940ed8a8ce56210", null ],
+    [ "max_turns", "classcpp__client_1_1saloon_1_1Game.html#a8debb8177886f9af4fa63d6bcbbceaec", null ],
+    [ "players", "classcpp__client_1_1saloon_1_1Game.html#a50aa6163169ec8e54fdeacfee4700fbb", null ],
+    [ "rowdiness_to_siesta", "classcpp__client_1_1saloon_1_1Game.html#a2c13976a38ffe76b13cc0758bc08c66c", null ],
+    [ "session", "classcpp__client_1_1saloon_1_1Game.html#a3232a8d38675588ca46915a51026de4c", null ],
+    [ "sharpshooter_damage", "classcpp__client_1_1saloon_1_1Game.html#a07191a2ab0962de52adce101ef8b0d38", null ],
+    [ "siesta_length", "classcpp__client_1_1saloon_1_1Game.html#ae6b5e759da61587f6a92bf1701162890", null ],
+    [ "tiles", "classcpp__client_1_1saloon_1_1Game.html#aeb9abfbbe5cfb41fbb7a34df210f8283", null ],
+    [ "time_added_per_turn", "classcpp__client_1_1saloon_1_1Game.html#a800e516f9c2068e3e0162b9cedf4a2a5", null ],
+    [ "turns_drunk", "classcpp__client_1_1saloon_1_1Game.html#aa21c5af973f108ec6c4f7e67264bd547", null ]
+];

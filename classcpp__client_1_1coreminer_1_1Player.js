@@ -1,0 +1,25 @@
+var classcpp__client_1_1coreminer_1_1Player =
+[
+    [ "~Player_", "classcpp__client_1_1coreminer_1_1Player.html#ac29b51205faf16b268b212d5fcd85fd6", null ],
+    [ "as", "classcpp__client_1_1coreminer_1_1Player.html#af7d6b8df284f19792b5a78f3095be84b", null ],
+    [ "is", "classcpp__client_1_1coreminer_1_1Player.html#a74f6e36278ccf95274facf088aaae227", null ],
+    [ "log", "classcpp__client_1_1coreminer_1_1Player.html#a3017a1fe83a70d20d774ac0649c32efd", null ],
+    [ "spawn_miner", "classcpp__client_1_1coreminer_1_1Player.html#afd0d90904b20eec333031aab270b96c0", null ],
+    [ "base_tile", "classcpp__client_1_1coreminer_1_1Player.html#a1cfb1373dab81f9092b2d47c6feb0818", null ],
+    [ "bombs", "classcpp__client_1_1coreminer_1_1Player.html#ad4babbffe18dfa284571ecba7ac374de", null ],
+    [ "client_type", "classcpp__client_1_1coreminer_1_1Player.html#a0d302fe513a74832d08be43861a942f9", null ],
+    [ "game_object_name", "classcpp__client_1_1coreminer_1_1Player.html#a5465ad15aa0a8cc90c39b658679b04d4", null ],
+    [ "hopper_tiles", "classcpp__client_1_1coreminer_1_1Player.html#a9465ece1324c5b967d0bc98c115d41c4", null ],
+    [ "id", "classcpp__client_1_1coreminer_1_1Player.html#ae01c2a9e86d230a39c433e97c48b5c87", null ],
+    [ "logs", "classcpp__client_1_1coreminer_1_1Player.html#aae7aa82c468d348df15fcaaabfc15567", null ],
+    [ "lost", "classcpp__client_1_1coreminer_1_1Player.html#ae451bc127694f856d1dddcd9f02f70a0", null ],
+    [ "miners", "classcpp__client_1_1coreminer_1_1Player.html#aa5135e14973cce10313bcc3dfab305e5", null ],
+    [ "money", "classcpp__client_1_1coreminer_1_1Player.html#a36deace6476f370d745c1d1a1e2c9451", null ],
+    [ "name", "classcpp__client_1_1coreminer_1_1Player.html#a4251cfa47b875bf29783de1c56d8c152", null ],
+    [ "opponent", "classcpp__client_1_1coreminer_1_1Player.html#a0511b1c313822fa99c9a0c2a2c6a4892", null ],
+    [ "reason_lost", "classcpp__client_1_1coreminer_1_1Player.html#a941284c674e5522cc73f3faac4dc9fd1", null ],
+    [ "reason_won", "classcpp__client_1_1coreminer_1_1Player.html#a0f8ee366192d4115871769219748f349", null ],
+    [ "time_remaining", "classcpp__client_1_1coreminer_1_1Player.html#ac74eca60f721ed722744db503f7af9a5", null ],
+    [ "value", "classcpp__client_1_1coreminer_1_1Player.html#a71d5eb490fb8a4856e8e83962a12f284", null ],
+    [ "won", "classcpp__client_1_1coreminer_1_1Player.html#af33730f454f5f34a272018ce4399c809", null ]
+];

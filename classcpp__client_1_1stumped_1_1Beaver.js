@@ -1,0 +1,26 @@
+var classcpp__client_1_1stumped_1_1Beaver =
+[
+    [ "~Beaver_", "classcpp__client_1_1stumped_1_1Beaver.html#a757b5bf168bff9f8dbf4d84206bf7aea", null ],
+    [ "as", "classcpp__client_1_1stumped_1_1Beaver.html#af7d6b8df284f19792b5a78f3095be84b", null ],
+    [ "attack", "classcpp__client_1_1stumped_1_1Beaver.html#a83ed0f20a0f51f1c5cf20af9f346de19", null ],
+    [ "build_lodge", "classcpp__client_1_1stumped_1_1Beaver.html#a4aa1eb554bd43284d9d1c592bcf984c5", null ],
+    [ "drop", "classcpp__client_1_1stumped_1_1Beaver.html#a24fb1012bb0f82bdeb3f5028080a0c74", null ],
+    [ "harvest", "classcpp__client_1_1stumped_1_1Beaver.html#a2105989b650d6504b897e8f96ec40a25", null ],
+    [ "is", "classcpp__client_1_1stumped_1_1Beaver.html#a74f6e36278ccf95274facf088aaae227", null ],
+    [ "log", "classcpp__client_1_1stumped_1_1Beaver.html#ac939e9e5c9476619aaf49334ff8eac42", null ],
+    [ "move", "classcpp__client_1_1stumped_1_1Beaver.html#a12f24f11233d11575f9d8334a95d95aa", null ],
+    [ "pickup", "classcpp__client_1_1stumped_1_1Beaver.html#abada62073922ee866c0c2ab195c7ecae", null ],
+    [ "actions", "classcpp__client_1_1stumped_1_1Beaver.html#a9d1ec07500102933fca5acdee07c1cbc", null ],
+    [ "branches", "classcpp__client_1_1stumped_1_1Beaver.html#a5d9d7ef70df493d59c28580e6eb37ab3", null ],
+    [ "food", "classcpp__client_1_1stumped_1_1Beaver.html#a289e2d5a0cb138a12b3788ac681307ea", null ],
+    [ "game_object_name", "classcpp__client_1_1stumped_1_1Beaver.html#ac4700e9dfb1f39e754e0f32c31b1ab28", null ],
+    [ "health", "classcpp__client_1_1stumped_1_1Beaver.html#a2ded530cb5d05278f2c21dcd0e90bd24", null ],
+    [ "id", "classcpp__client_1_1stumped_1_1Beaver.html#a961c9d4f198fc8c35f4cb2cc1b60f7a8", null ],
+    [ "job", "classcpp__client_1_1stumped_1_1Beaver.html#acf67516888d3cd27f33239d37c763ec5", null ],
+    [ "logs", "classcpp__client_1_1stumped_1_1Beaver.html#a7315fe33aaaab23affc0089aa1976002", null ],
+    [ "moves", "classcpp__client_1_1stumped_1_1Beaver.html#ae84825519115238eadfb789bee4b0b06", null ],
+    [ "owner", "classcpp__client_1_1stumped_1_1Beaver.html#a6c2d8a8e4ba4ebda0583015e43124007", null ],
+    [ "recruited", "classcpp__client_1_1stumped_1_1Beaver.html#a6aa18d3f448e9395e494cf850997870f", null ],
+    [ "tile", "classcpp__client_1_1stumped_1_1Beaver.html#a76e315bee9f024254621dc00cea0f1f8", null ],
+    [ "turns_distracted", "classcpp__client_1_1stumped_1_1Beaver.html#ae5d69d899e1ba4f941ca5265e07b7974", null ]
+];

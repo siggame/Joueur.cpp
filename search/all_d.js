@@ -1,0 +1,18 @@
+var searchData=
+[
+  ['name',['name',['../classcpp__client_1_1anarchy_1_1Player.html#ab15c5a7c713ac510dda820c7df7f5e05',1,'cpp_client::anarchy::Player::name()'],['../classcpp__client_1_1catastrophe_1_1Player.html#ab8289520c5a000d3bb7765ff4ef415e7',1,'cpp_client::catastrophe::Player::name()'],['../classcpp__client_1_1checkers_1_1Player.html#ac2a4336a2ff605979f135c53afad041c',1,'cpp_client::checkers::Player::name()'],['../classcpp__client_1_1chess_1_1Player.html#aed452e03ebeedb225dedce625ebb8aef',1,'cpp_client::chess::Player::name()'],['../classcpp__client_1_1coreminer_1_1Player.html#a4251cfa47b875bf29783de1c56d8c152',1,'cpp_client::coreminer::Player::name()'],['../classcpp__client_1_1necrowar_1_1Player.html#a4284e7ae60e6b2b1cb5fcc3a69f089ac',1,'cpp_client::necrowar::Player::name()'],['../classcpp__client_1_1newtonian_1_1Player.html#a69e90a95e26c967dc3373b1685032e43',1,'cpp_client::newtonian::Player::name()'],['../classcpp__client_1_1pirates_1_1Player.html#aae6ffe5c8e579e1dbb605d54adb3f18d',1,'cpp_client::pirates::Player::name()'],['../classcpp__client_1_1saloon_1_1Player.html#ab375a3f2d0cfcfffc07fb111025b21d3',1,'cpp_client::saloon::Player::name()'],['../classcpp__client_1_1spiders_1_1Player.html#a5a0eff112f79d4ab65eab635e7676af6',1,'cpp_client::spiders::Player::name()'],['../classcpp__client_1_1stardash_1_1Player.html#a7b5562b8c748bd3246034ae94cd8db2c',1,'cpp_client::stardash::Player::name()'],['../classcpp__client_1_1stumped_1_1Player.html#aa90b4e9aac4a7894a07da81763ecd694',1,'cpp_client::stumped::Player::name()']]],
+  ['nest',['Nest',['../classcpp__client_1_1spiders_1_1Nest.html',1,'cpp_client::spiders']]],
+  ['nest',['nest',['../classcpp__client_1_1spiders_1_1Spider.html#accb69eb59b453c92802a462bd07db8b3',1,'cpp_client::spiders::Spider']]],
+  ['nest_5fa',['nest_a',['../classcpp__client_1_1spiders_1_1Web.html#aa592da3a76479bf893493bba2aa90661',1,'cpp_client::spiders::Web']]],
+  ['nest_5fb',['nest_b',['../classcpp__client_1_1spiders_1_1Web.html#a77f1d449638b9f949aa9bd289c6baf0c',1,'cpp_client::spiders::Web']]],
+  ['nests',['nests',['../classcpp__client_1_1spiders_1_1Game.html#ac47d4769e70211671ecb7d6aea70d8de',1,'cpp_client::spiders::Game']]],
+  ['neutral_5fmaterials',['neutral_materials',['../classcpp__client_1_1catastrophe_1_1Game.html#aa5eb29efe239dffb27293ea7de71b544',1,'cpp_client::catastrophe::Game']]],
+  ['next_5fforecast',['next_forecast',['../classcpp__client_1_1anarchy_1_1Game.html#a6efb7fed81c145e701eb804f18d982e6',1,'cpp_client::anarchy::Game']]],
+  ['next_5fx',['next_x',['../classcpp__client_1_1stardash_1_1Body.html#a1ecd186d0d0a93fbb8ad66918a0ddf4d',1,'cpp_client::stardash::Body']]],
+  ['next_5fy',['next_y',['../classcpp__client_1_1stardash_1_1Body.html#a841717e93742a0f0a7f9012df46c7cb4',1,'cpp_client::stardash::Body']]],
+  ['num_5fghouls',['num_ghouls',['../classcpp__client_1_1necrowar_1_1Tile.html#a2f4f3e570e3d243d2fc6d5d419d963a4',1,'cpp_client::necrowar::Tile']]],
+  ['num_5fhounds',['num_hounds',['../classcpp__client_1_1necrowar_1_1Tile.html#a55e433ce7cc950c14fe8b6455b763e80',1,'cpp_client::necrowar::Tile']]],
+  ['num_5fzombies',['num_zombies',['../classcpp__client_1_1necrowar_1_1Tile.html#adc587d3ddc8e5abd62cc10fedf30da31',1,'cpp_client::necrowar::Tile']]],
+  ['number_5fof_5fcoworkers',['number_of_coworkers',['../classcpp__client_1_1spiders_1_1Spiderling.html#ab673698f5b7de33f8afdad236bba45f4',1,'cpp_client::spiders::Spiderling']]],
+  ['number_5fof_5fnests_5fcontrolled',['number_of_nests_controlled',['../classcpp__client_1_1spiders_1_1Player.html#a93777900ced29f90646b1ad4a9badbcb',1,'cpp_client::spiders::Player']]]
+];

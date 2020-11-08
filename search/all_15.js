@@ -1,0 +1,19 @@
+var searchData=
+[
+  ['wall_5fmaterials',['wall_materials',['../classcpp__client_1_1catastrophe_1_1Game.html#a1cb6a067ec151b8e177b458e413ec3e5',1,'cpp_client::catastrophe::Game']]],
+  ['warehouse',['Warehouse',['../classcpp__client_1_1anarchy_1_1Warehouse.html',1,'cpp_client::anarchy']]],
+  ['warehouses',['warehouses',['../classcpp__client_1_1anarchy_1_1Player.html#ac3f647248534ba0fb215c4f4d1d9cb12',1,'cpp_client::anarchy::Player']]],
+  ['weaken',['weaken',['../classcpp__client_1_1spiders_1_1Weaver.html#a7b9adbd2c3acce501e17ae9737449bdb',1,'cpp_client::spiders::Weaver']]],
+  ['weakening_5fweb',['weakening_web',['../classcpp__client_1_1spiders_1_1Weaver.html#a245628433988959a48505aab68c5df60',1,'cpp_client::spiders::Weaver']]],
+  ['weather_5fstation',['Weather_station',['../classcpp__client_1_1anarchy_1_1Weather__station.html',1,'cpp_client::anarchy']]],
+  ['weather_5fstations',['weather_stations',['../classcpp__client_1_1anarchy_1_1Player.html#a4f944dccee601cd68dc7d06e73087d76',1,'cpp_client::anarchy::Player']]],
+  ['weave_5fpower',['weave_power',['../classcpp__client_1_1spiders_1_1Game.html#aa56005ded3729bf36e664037536094d6',1,'cpp_client::spiders::Game']]],
+  ['weave_5fspeed',['weave_speed',['../classcpp__client_1_1spiders_1_1Game.html#a644e5a8f173028a764d8a0ac0aaadc20',1,'cpp_client::spiders::Game']]],
+  ['weaver',['Weaver',['../classcpp__client_1_1spiders_1_1Weaver.html',1,'cpp_client::spiders']]],
+  ['web',['Web',['../classcpp__client_1_1spiders_1_1Web.html',1,'cpp_client::spiders']]],
+  ['webs',['webs',['../classcpp__client_1_1spiders_1_1Game.html#a472274e09c585fd5f02af43535438850',1,'cpp_client::spiders::Game::webs()'],['../classcpp__client_1_1spiders_1_1Nest.html#aebcd78b1f4f3bd5ffb78ce7911eeccbf',1,'cpp_client::spiders::Nest::webs()']]],
+  ['withdraw',['withdraw',['../classcpp__client_1_1pirates_1_1Unit.html#a137ca097345673bd1eeef66fbb66facc',1,'cpp_client::pirates::Unit']]],
+  ['won',['won',['../classcpp__client_1_1anarchy_1_1Player.html#a96468d9a47adb8b20e46c3f3faefed8d',1,'cpp_client::anarchy::Player::won()'],['../classcpp__client_1_1catastrophe_1_1Player.html#a62a3c72bbc7c8aedf8cad43d69919436',1,'cpp_client::catastrophe::Player::won()'],['../classcpp__client_1_1checkers_1_1Player.html#acd1cbb50be12f09b9aa6a116f57f3851',1,'cpp_client::checkers::Player::won()'],['../classcpp__client_1_1chess_1_1Player.html#a56187712ed080b98fff2948505e23ef4',1,'cpp_client::chess::Player::won()'],['../classcpp__client_1_1coreminer_1_1Player.html#af33730f454f5f34a272018ce4399c809',1,'cpp_client::coreminer::Player::won()'],['../classcpp__client_1_1necrowar_1_1Player.html#ae0aca57ffb65b9b8866fb1b88e31038d',1,'cpp_client::necrowar::Player::won()'],['../classcpp__client_1_1newtonian_1_1Player.html#a901feaac3d80a48d08f481ef93f17ca9',1,'cpp_client::newtonian::Player::won()'],['../classcpp__client_1_1pirates_1_1Player.html#a9ec59d97d5f9342a2b15a36092019c57',1,'cpp_client::pirates::Player::won()'],['../classcpp__client_1_1saloon_1_1Player.html#ad40b53d5c49f6abe3e1b1bed4b5912fb',1,'cpp_client::saloon::Player::won()'],['../classcpp__client_1_1spiders_1_1Player.html#afc3374cc16bdd2e736c5c936edd621cc',1,'cpp_client::spiders::Player::won()'],['../classcpp__client_1_1stardash_1_1Player.html#a0e406b8b727f663f5ff9320f246617e0',1,'cpp_client::stardash::Player::won()'],['../classcpp__client_1_1stumped_1_1Player.html#a40f770d06afd2aa6547c86817545f9df',1,'cpp_client::stumped::Player::won()']]],
+  ['work_5fremaining',['work_remaining',['../classcpp__client_1_1spiders_1_1Spiderling.html#aee9569c0ec83d132b214d1018e798f96',1,'cpp_client::spiders::Spiderling']]],
+  ['worked',['worked',['../classcpp__client_1_1newtonian_1_1Machine.html#a108e86c2ade8fac63bb77fe25f674361',1,'cpp_client::newtonian::Machine']]]
+];
