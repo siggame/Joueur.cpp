@@ -73,6 +73,11 @@ public:
                close(sock_);
                sock_ = -1;
             }
+            else
+            {
+               int turn_on = 1;
+               setsockopt(sock_, IPPROTO_TCP, TCP_NODELAY, &turn_on, sizeof(turn_on));
+            }
          }
       }
       // if sock_ is invalid some sort of error occured
