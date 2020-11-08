@@ -6,6 +6,7 @@
 #include <netdb.h>
 #include <unistd.h>
 #include <netinet/in.h>
+#include <netinet/tcp.h>
 
 #include <string>
 #include <array>
@@ -72,6 +73,11 @@ public:
             {
                close(sock_);
                sock_ = -1;
+            }
+            else
+            {
+               int turn_on = 1;
+               setsockopt(sock_, IPPROTO_TCP, TCP_NODELAY, &turn_on, sizeof(turn_on));
             }
          }
       }
