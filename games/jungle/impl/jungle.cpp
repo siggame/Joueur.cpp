@@ -15,7 +15,7 @@ namespace jungle
 
 //register the game
 Game_registry registration("Jungle",
-                           "28f5663518c163e31771d87c52277b0c3f74033d97f89c1a234de5e6a15f6390",
+                           "f6cf5e4564b454201f45038752c7cbd6e7a6c2823a39b1b325c450262f871c79",
                            std::unique_ptr<Jungle>(new Jungle));
 
 std::unique_ptr<Base_ai> Jungle::generate_ai()

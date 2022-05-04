@@ -42,19 +42,14 @@ class Game_ : public Base_game
 public:
 
     /// <summary>
-    /// Forsyth-Edwards Notation (fen), a notation that describes the game board state.
-    /// </summary>
-    const std::string& fen;
-
-    /// <summary>
     /// A mapping of every game object's ID to the actual game object. Primarily used by the server and client to easily refer to the game objects via ID.
     /// </summary>
     const std::unordered_map<std::string, Game_object>& game_objects;
 
     /// <summary>
-    /// The list of [known] moves that have occurred in the game, in a format. The first element is the first move, with the last element being the most recent.
+    /// JungleFen is similar to chess FEN it starts with the board, the turn, half move, the full move.
     /// </summary>
-    const std::vector<std::string>& history;
+    const std::string& jungle_fen;
 
     /// <summary>
     /// List of all the players in the game.

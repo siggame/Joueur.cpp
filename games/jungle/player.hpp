@@ -44,7 +44,7 @@ public:
     const std::string& client_type;
 
     /// <summary>
-    /// A coin flip will decide if 'player1' or 'player2' will go first.
+    /// Blue will always start first.
     /// </summary>
     const std::string& color;
 

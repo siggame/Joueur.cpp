@@ -24,15 +24,13 @@ namespace jungle
 
 Game_::Game_(std::initializer_list<std::pair<std::string, Any&&>> init) :
     Base_game{
-        {"fen", Any{std::decay<decltype(fen)>::type{}}},
         {"gameObjects", Any{std::decay<decltype(game_objects)>::type{}}},
-        {"history", Any{std::decay<decltype(history)>::type{}}},
+        {"jungleFen", Any{std::decay<decltype(jungle_fen)>::type{}}},
         {"players", Any{std::decay<decltype(players)>::type{}}},
         {"session", Any{std::decay<decltype(session)>::type{}}},
     },
-    fen(variables_["fen"].as<std::decay<decltype(fen)>::type>()),
     game_objects(variables_["gameObjects"].as<std::decay<decltype(game_objects)>::type>()),
-    history(variables_["history"].as<std::decay<decltype(history)>::type>()),
+    jungle_fen(variables_["jungleFen"].as<std::decay<decltype(jungle_fen)>::type>()),
     players(variables_["players"].as<std::decay<decltype(players)>::type>()),
     session(variables_["session"].as<std::decay<decltype(session)>::type>())
 {
@@ -46,13 +44,7 @@ Game_::~Game_() = default;
 
 void Game_::resize(const std::string& name, std::size_t size)
 {
-    if(name == "history")
-    {
-        auto& vec = variables_["history"].as<std::decay<decltype(history)>::type>();
-        vec.resize(size);
-        return;
-    }
-    else if(name == "players")
+    if(name == "players")
     {
         auto& vec = variables_["players"].as<std::decay<decltype(players)>::type>();
         vec.resize(size);
@@ -63,17 +55,7 @@ void Game_::resize(const std::string& name, std::size_t size)
 
 void Game_::change_vec_values(const std::string& name, std::vector<std::pair<std::size_t, Any>>& values)
 {
-    if(name == "history")
-    {
-        using type = std::decay<decltype(history)>::type;
-        auto& vec = variables_["history"].as<type>();
-        for(auto&& val : values)
-        { 
-            vec[val.first] = std::move(val.second.as<type::value_type>());
-        }
-        return;
-    } 
-    else if(name == "players")
+    if(name == "players")
     {
         using type = std::decay<decltype(players)>::type;
         auto& vec = variables_["players"].as<type>();
